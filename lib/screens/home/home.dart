@@ -4,10 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
-import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
-import 'package:breakq/data/models/category_model.dart';
-import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/search_session_model.dart';
 import 'package:breakq/data/models/search_tab_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
@@ -21,7 +17,6 @@ import 'package:breakq/screens/home/widgets/search_result_list.dart';
 import 'package:breakq/screens/home/widgets/search_result_title.dart';
 import 'package:breakq/screens/home/widgets/search_tabs.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
-import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/widgets/product_list_item.dart';
 import 'package:breakq/utils/list.dart';
@@ -42,7 +37,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   List<SearchTabModel> categoryTabs = <SearchTabModel>[];
 
-  HomeBloc _HomeBloc;
+  HomeBloc _homeBloc;
 
   /// Search sort types.
   List<ToolbarOptionModel> searchSortTypes;
@@ -56,7 +51,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _HomeBloc = BlocProvider.of<HomeBloc>(context);
+    _homeBloc = BlocProvider.of<HomeBloc>(context);
 
     getIt.get<AppGlobals>().globalKeySearchTabs = GlobalKey<SearchTabsState>();
   }
@@ -167,7 +162,7 @@ class HomeScreenState extends State<HomeScreen> {
           _initGlobals(context);
 
           /// Initialize the search session.
-          _HomeBloc.add(SessionInitedHomeEvent(
+          _homeBloc.add(SessionInitedHomeEvent(
             activeSearchTab: categoryTabs.first.id,
             currentSort: searchSortTypes.first, // default is the first one
             currentListType: searchListTypes.first, // default is the first one
@@ -216,9 +211,8 @@ class HomeScreenState extends State<HomeScreen> {
                             currentListType: session.currentListType,
                             searchListTypes: searchListTypes,
                             onListTypeChange:
-                                (ToolbarOptionModel newListType) =>
-                                    _HomeBloc.add(
-                                        ListTypeChangedHomeEvent(newListType)),
+                                (ToolbarOptionModel newListType) => _homeBloc
+                                    .add(ListTypeChangedHomeEvent(newListType)),
                           ),
                         ]),
                       ),
@@ -248,8 +242,8 @@ class HomeScreenState extends State<HomeScreen> {
                                 _scaffoldKey.currentState.openEndDrawer();
                               },
                               onSortChange: (ToolbarOptionModel newSort) {
-                                _HomeBloc.add(
-                                    SortOrderChangedHomeEvent(newSort));
+                                _homeBloc
+                                    .add(SortOrderChangedHomeEvent(newSort));
                               },
                             ),
                           SearchResultList(
@@ -294,9 +288,9 @@ class HomeScreenState extends State<HomeScreen> {
     );
 
     if (queryString == null) {
-      _HomeBloc.add(FilteredListRequestedHomeEvent());
+      _homeBloc.add(FilteredListRequestedHomeEvent());
     } else {
-      _HomeBloc.add(KeywordChangedHomeEvent(queryString));
+      _homeBloc.add(KeywordChangedHomeEvent(queryString));
     }
 
     return queryString;

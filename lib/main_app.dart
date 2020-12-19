@@ -1,4 +1,5 @@
 import 'package:breakq/data/repositories/user_repository.dart';
+import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/home/home.dart';
 import 'package:breakq/screens/home_temp.dart';
 import 'package:flutter/material.dart';
@@ -115,8 +116,9 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           // if (appState is SetupSuccessApplicationState) {
-          homeWidget =
-              HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
+          homeWidget = HomeExploreScreen();
+          // homeWidget =
+          //     HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
           // } else if (appState is OnboardingInProgressApplicationState) {
           //   homeWidget = OnboardingScreen();
           // } else {

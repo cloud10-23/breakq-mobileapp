@@ -3,7 +3,6 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/screens/home/widgets/wavy_header_image.dart';
 import 'package:breakq/utils/text_style.dart';
 
 /// Delegate for configuring a [SliverPersistentHeader].

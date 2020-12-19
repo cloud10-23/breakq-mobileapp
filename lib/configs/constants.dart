@@ -128,6 +128,12 @@ class AssetsImages {
   static const String cardDiscover = 'assets/images/cc/discover.png';
   static const String cardMastercard = 'assets/images/cc/mastercard.png';
   static const String profileDefault = 'assets/images/profile.png';
+  static const String homeOffers = 'assets/images/offers.jpeg';
+
+  static const String cat = 'assets/images/categories/cat';
+
+  static const String quickShopping = 'assets/images/quick_shopping.png';
+  static const String setBudget = 'assets/images/orders.png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].
