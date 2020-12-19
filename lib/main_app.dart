@@ -148,6 +148,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
                   onGenerateRoute: Routes().generateRoute,
                   theme: getIt.get<AppTheme>().lightTheme,
                   darkTheme: getIt.get<AppTheme>().darkTheme,
+                  themeMode: ThemeMode.light,
                   home: homeWidget,
                 ),
               );
