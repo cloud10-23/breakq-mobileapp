@@ -25,143 +25,110 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
+    return SafeArea(
       child: Stack(
+        overflow: Overflow.clip,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
-          WavyHeaderImage(
-              shrinkOffsetPercentage: shrinkOffset / expandedHeight),
           Padding(
             padding: const EdgeInsets.only(
-              bottom: kPaddingL,
-              left: kPaddingL,
-              top: kToolbarHeight,
-              right: kPaddingL,
+              bottom: kPaddingS,
+              left: kPaddingM,
+              top: kPaddingM,
+              right: kPaddingM,
             ),
             child: Row(
               children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Spacer(),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                          child: Text(
-                            L10n.of(context).homeTitleHi,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4
-                                .white
-                                .w500,
-                          ),
-                        ),
-                        Flexible(
-                          child: Text(
-                            getIt.get<AppGlobals>().user?.displayName != null
-                                ? getIt.get<AppGlobals>().user.displayName
-                                : L10n.of(context).nameGuest,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4
-                                .white
-                                .w700,
-                            maxLines: 1,
-                            overflow: TextOverflow.fade,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      L10n.of(context).homeTitleHi,
+                      style: Theme.of(context).textTheme.headline6.w500,
                     ),
-                    // Expanded(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(top: kPaddingS),
-                    //     child: Text(
-                    //       L10n.of(context).homeHeaderSubtitle,
-                    //       style: Theme.of(context)
-                    //           .textTheme
-                    //           .bodyText1
-                    //           .copyWith(color: kWhite),
-                    //       maxLines: 1,
-                    //     ),
-                    //   ),
-                    // ),
-                    Spacer(flex: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: kPaddingS,
+                        left: kPaddingM,
+                      ),
+                      child: Text(
+                        getIt.get<AppGlobals>().user?.displayName != null
+                            ? getIt.get<AppGlobals>().user.displayName
+                            : L10n.of(context).nameGuest,
+                        // L10n.of(context).homeHeaderSubtitle,
+                        style: Theme.of(context).textTheme.headline4.w600,
+                        // .copyWith(color: kWhite),
+                        maxLines: 1,
+                      ),
+                    ),
                   ],
                 ),
                 Spacer(),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: kPaddingS),
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage(AssetsImages.profileDefault),
-                            fit: BoxFit.contain,
-                          ),
+                Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: kPaddingS),
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(AssetsImages.profileDefault),
+                          fit: BoxFit.contain,
                         ),
                       ),
-                      Spacer(),
-                    ],
-                  ),
+                    ),
+                    Spacer(),
+                  ],
                 ),
               ],
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: kPaddingL, left: kPaddingL, right: kPaddingL),
-              child: Card(
-                color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-                    ? Theme.of(context).accentColor
-                    : Theme.of(context).cardColor,
-                margin: const EdgeInsets.all(0),
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            padding: const EdgeInsets.all(kPaddingM),
+            height: 90,
+            child: Card(
+              color: getIt.get<AppGlobals>().isPlatformBrightnessDark
+                  ? Theme.of(context).accentColor
+                  : Theme.of(context).cardColor,
+              margin: const EdgeInsets.all(0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(kBoxDecorationRadius)),
+              elevation: 2,
+              child: FlatButton(
+                // color: kPrimaryAccentColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(kBoxDecorationRadius)),
-                elevation: 2,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(kBoxDecorationRadius / 2)),
-                    onPressed: () {
-                      // Switch to Search Tab
-                      // if (onPressed != null) {
-                      //   onPressed();
-                      // }
-                    },
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.search,
-                            color: Theme.of(context).hintColor,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              L10n.of(context).homePlaceholderSearch,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(color: Theme.of(context).hintColor),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ],
+                    borderRadius:
+                        BorderRadius.circular(kBoxDecorationRadius / 2)),
+                onPressed: () {
+                  // Switch to Search Tab
+                  // if (onPressed != null) {
+                  //   onPressed();
+                  // }
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.search,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    Spacer(),
+                    Expanded(
+                      flex: 9,
+                      child: Text(
+                        L10n.of(context).homePlaceholderSearch,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            .copyWith(color: Theme.of(context).hintColor),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -183,7 +150,7 @@ class HomeHeader extends SliverPersistentHeaderDelegate {
   ///
   /// This must return a value equal to or less than [maxExtent].
   @override
-  double get minExtent => 158;
+  double get minExtent => 90;
 
   /// Whether this delegate is meaningfully different from the old delegate.
   @override

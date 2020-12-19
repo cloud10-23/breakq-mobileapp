@@ -29,6 +29,7 @@ const double kTimelineDateSize = 88.0;
 
 // Colors
 const Color kPrimaryColor = Color(0xFFFDC500);
+const Color kPrimaryAccentColor = Color(0x77FDC500);
 const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF333333);
 const Color kGold = Color(0xFFF3C952);

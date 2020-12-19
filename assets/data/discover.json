@@ -50,6 +50,16 @@
       "image": "assets/images/products/wheat.jpeg",
       "price": 200,
       "available": 100
+    },
+    {
+      "id": 5,
+      "title": "Aashirvad Atta",
+      "category_id": 5,
+      "description": "Premium Wheat Flour packed and sealed in safe environment.",
+      "quantity": "500 gm",
+      "image": "assets/images/products/wheat.jpeg",
+      "price": 200,
+      "available": 100
     }
   ]
 }

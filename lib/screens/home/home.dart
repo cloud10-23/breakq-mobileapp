@@ -191,7 +191,7 @@ class HomeScreenState extends State<HomeScreen> {
             key: _scaffoldKey,
             endDrawerEnableOpenDragGesture: false,
             endDrawer: SearchFilterDrawer(),
-            body: Container(
+            body: SafeArea(
               child: Container(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: LoadingOverlay(
@@ -201,7 +201,7 @@ class HomeScreenState extends State<HomeScreen> {
                     slivers: <Widget>[
                       SliverPersistentHeader(
                         delegate: HomeHeader(
-                          expandedHeight: 300,
+                          expandedHeight: 210,
                           onPressed: () {
                             _quickSearch(session);
                           },

@@ -49,7 +49,7 @@ class SearchResultTitle extends StatelessWidget {
             child: Text(
               L10n.of(context).homeTitleExplore,
               // L10n.of(context).searchTitleResults(locations.length.toString()),
-              style: Theme.of(context).textTheme.headline4.bold,
+              style: Theme.of(context).textTheme.headline5.bold,
             ),
           ),
           const Spacer(),
