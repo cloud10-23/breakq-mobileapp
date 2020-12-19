@@ -116,7 +116,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           // if (appState is SetupSuccessApplicationState) {
-          homeWidget = HomeExploreScreen();
+          homeWidget = BottomNavigation();
           // homeWidget =
           //     HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
           // } else if (appState is OnboardingInProgressApplicationState) {

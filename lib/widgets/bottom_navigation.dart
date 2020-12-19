@@ -1,3 +1,4 @@
+import 'package:breakq/screens/home/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/bottom_bar_item_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/home.dart';
-import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/utils/bottom_bar_items.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -30,13 +30,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
     getIt
         .get<BottomBarItems>()
         .add(const BottomBarItemModel(id: 'home', icon: Icons.explore));
-    getIt.get<BottomBarItems>().add(
-        const BottomBarItemModel(id: 'appointments', icon: Icons.date_range));
-    getIt.get<BottomBarItems>().add(const BottomBarItemModel(
-        id: 'wallet', icon: Icons.account_balance_wallet));
     getIt
         .get<BottomBarItems>()
-        .add(const BottomBarItemModel(id: 'profile', icon: Icons.person));
+        .add(const BottomBarItemModel(id: 'search', icon: Icons.search));
 
     final List<BottomNavigationBarItem> bottomBarItems =
         <BottomNavigationBarItem>[];
@@ -60,8 +56,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           return IndexedStack(
             index: _selectedIndex,
             children: <Widget>[
+              HomeExploreScreen(
+                  key: getIt.get<AppGlobals>().globalKeyHomeScreen),
               HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen),
-              const ProfileScreen(),
+              // const ProfileScreen(),
             ],
           );
         },
