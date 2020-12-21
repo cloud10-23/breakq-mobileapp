@@ -28,7 +28,7 @@ class BoldTitle extends StatelessWidget {
           const EdgeInsets.only(
               left: kPaddingM,
               right: kPaddingS,
-              top: kPaddingL,
+              top: kPaddingM,
               bottom: kPaddingM),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class BoldTitle extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headline5.w800,
+              style: Theme.of(context).textTheme.headline6.w800,
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
               textAlign: textAlign ?? TextAlign.left,

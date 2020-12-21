@@ -1,7 +1,4 @@
 import 'package:breakq/data/repositories/user_repository.dart';
-import 'package:breakq/screens/home/explore.dart';
-import 'package:breakq/screens/home/home.dart';
-import 'package:breakq/screens/home_temp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,8 +10,6 @@ import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/onboarding.dart';
-import 'package:breakq/screens/splash.dart';
 import 'package:breakq/utils/localization.dart';
 import 'package:breakq/widgets/bottom_navigation.dart';
 
