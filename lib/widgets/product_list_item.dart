@@ -57,7 +57,7 @@ class ProductListItem extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                _showLocationScreen(context);
+                // _showLocationScreen(context);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +191,7 @@ class ProductListItem extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                _showLocationScreen(context);
+                // _showLocationScreen(context);
               },
               child: Container(
                 child: Column(
@@ -347,7 +347,7 @@ class ProductListItem extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                _showLocationScreen(context);
+                // _showLocationScreen(context);
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -407,39 +407,12 @@ class ProductListItem extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        product.price.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2
-                                            .bold,
-                                      ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(
-                                              right: kPaddingS / 2)),
-                                      const Padding(
-                                        padding: EdgeInsets.only(right: 2),
-                                        child: Icon(
-                                          Icons.star,
-                                          size: 22,
-                                          color: kPrimaryColor,
-                                        ),
-                                      ),
-                                      Text(
-                                        sprintf('(%s)', <String>[
-                                          L10n.of(context).locationTotalReviews(
-                                              product.price.toString())
-                                        ]),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .disabledColor),
-                                      ),
-                                    ],
+                                  child: Text(
+                                    product.price.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .bold,
                                   ),
                                 )
                               ],
@@ -484,7 +457,7 @@ class ProductListItem extends StatelessWidget {
       case ProductListItemViewType.search:
         return InkWell(
           onTap: () {
-            _showLocationScreen(context);
+            // _showLocationScreen(context);
           },
           child: Container(
             decoration: BoxDecoration(

@@ -71,9 +71,9 @@ class SearchTabsState extends State<SearchTabs> {
                 child: Text(
                   item.label,
                   style: isActive
-                      ? Theme.of(context).textTheme.subtitle1.bold.copyWith(
+                      ? Theme.of(context).textTheme.bodyText1.bold.copyWith(
                           color: Theme.of(context).tabBarTheme.labelColor)
-                      : Theme.of(context).textTheme.subtitle1.copyWith(
+                      : Theme.of(context).textTheme.bodyText1.copyWith(
                           color: Theme.of(context)
                               .tabBarTheme
                               .labelColor

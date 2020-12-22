@@ -1,3 +1,4 @@
+import 'package:breakq/screens/home/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/sign_in.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,16 @@ class Routes {
   static const String invite = '/invite';
   static const String wallet = '/wallet';
 
+  static const String listing = '/home/listing';
+
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case listing:
+        return MaterialPageRoute<Listing>(
+          builder: (BuildContext context) {
+            return const Listing();
+          },
+        );
       case location:
         return MaterialPageRoute<LocationScreen>(
           builder: (BuildContext context) {

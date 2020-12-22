@@ -1,5 +1,6 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/widgets/bold_title.dart';
@@ -35,7 +36,52 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: Drawer(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  color: kPrimaryAccentColor,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kPaddingM, vertical: kPaddingM),
+                  child: Row(
+                    children: [
+                      Text(
+                        L10n.of(context).homeTitleHi,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        getIt.get<AppGlobals>().user?.displayName != null
+                            ? getIt.get<AppGlobals>().user.displayName
+                            : L10n.of(context).nameGuest,
+                        // L10n.of(context).homeHeaderSubtitle,
+                        style: Theme.of(context).textTheme.headline6,
+                        // .copyWith(color: kWhite),
+                        maxLines: 1,
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: kPaddingS),
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(AssetsImages.profileDefault),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: SafeArea(
           child: Container(
             color: Theme.of(context).scaffoldBackgroundColor,
@@ -133,14 +179,6 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                       ),
                     ),
                   ),
-                  // SliverPersistentHeader(
-                  //   delegate: HomeHeaderPlain(
-                  //     expandedHeight: 150,
-                  //     onPressed: () {},
-                  //     label: '',
-                  //   ),
-                  //   floating: true,
-                  // ),
                   SliverToBoxAdapter(
                       child: SizedBox(
                     height: 180,
@@ -166,6 +204,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     ]),
                   ),
                   _showCategories(),
+                  _endPadding(),
                 ],
               ),
             ),
@@ -178,47 +217,22 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
   Widget _showQuickStart() {
     return Column(
       children: [
-        // Container(
-        //   color: kPrimaryAccentColor,
-        //   padding: const EdgeInsets.symmetric(
-        //       horizontal: kPaddingM, vertical: kPaddingM),
-        //   child: Row(
-        //     children: [
-        //       Text(
-        //         L10n.of(context).homeTitleHi,
-        //         style: Theme.of(context).textTheme.headline6,
-        //       ),
-        //       SizedBox(
-        //         width: 5.0,
-        //       ),
-        //       Text(
-        //         getIt.get<AppGlobals>().user?.displayName != null
-        //             ? getIt.get<AppGlobals>().user.displayName
-        //             : L10n.of(context).nameGuest,
-        //         // L10n.of(context).homeHeaderSubtitle,
-        //         style: Theme.of(context).textTheme.headline6,
-        //         // .copyWith(color: kWhite),
-        //         maxLines: 1,
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Container(
-            color: kPrimaryAccentColor,
+            // color: kPrimaryColor,
             child: BoldTitle(
-              title: 'At home?',
-            )),
+          title: 'At home?',
+        )),
         Container(
-          color: kPrimaryAccentColor,
-          height: 70 + kPaddingS,
-          padding: EdgeInsets.only(bottom: kPaddingS),
+          color: kPrimaryColor,
+          height: 70 + kPaddingS * 3,
+          padding: EdgeInsets.symmetric(vertical: kPaddingS),
           child: ListView.builder(
               itemCount: 4,
               padding: const EdgeInsets.only(left: kPaddingM),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 100,
+                  width: 110,
                   margin: const EdgeInsets.only(bottom: 1), // for card shadow
                   padding: const EdgeInsets.only(right: kPaddingS),
                   child: Column(
@@ -229,12 +243,15 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                                 ? AssetsImages.quickShopping
                                 : AssetsImages.setBudget)),
                       ),
+                      SizedBox(
+                        height: kPaddingS,
+                      ),
                       Text(
                         (index == 0) ? 'Quick Shopping' : 'Set Budget',
                         style: Theme.of(context)
                             .textTheme
                             .caption
-                            .copyWith(fontWeight: FontWeight.w400),
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -242,11 +259,12 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
               }),
         ),
         Container(
-            color: kPrimaryAccentColor.withOpacity(0.3),
+            // color: kPrimaryAccentColor,
             child: BoldTitle(title: 'At the Store?')),
         //Scan to get started
         Container(
-          color: kPrimaryAccentColor.withOpacity(0.3),
+          color: kPrimaryColor,
+          padding: EdgeInsets.symmetric(vertical: kPaddingS),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -254,16 +272,19 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                 'Scan to get Started',
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
-                    .copyWith(fontWeight: FontWeight.w300),
+                    .bodyText1
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
               FloatingActionButton(
-                  mini: true, onPressed: () {}, child: Icon(Icons.qr_code))
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  mini: true,
+                  onPressed: () {},
+                  child: Image(image: AssetImage(AssetsImages.scan)))
             ],
           ),
         ),
         Container(
-          color: kPrimaryAccentColor.withOpacity(0.3),
+          // color: kPrimaryAccentColor.withOpacity(0.3),
           height: kPaddingM,
         )
       ],
@@ -273,36 +294,51 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
   Widget _showCategories() {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: kPaddingS,
-        mainAxisSpacing: kPaddingM,
+        crossAxisCount: 5,
+        crossAxisSpacing: 0.0,
+        mainAxisSpacing: kPaddingL,
       ),
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          return Container(
-            height: 250,
-            padding: const EdgeInsets.symmetric(
-                vertical: kPaddingS, horizontal: kPaddingM),
-            child: Card(
-              margin: const EdgeInsets.all(0),
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.black, width: 0.5),
-                  borderRadius: BorderRadius.circular(25.0)),
-              child: Padding(
-                padding: const EdgeInsets.all(kPaddingS),
-                child: Column(
-                  children: [
-                    Text('Category - ${index + 1}'),
-                    Image(
-                      image: AssetImage(AssetsImages.cat + '${index + 1}.png'),
-                    ),
-                  ],
-                ),
+          return InkWell(
+            onTap: () => Navigator.pushNamed(context, Routes.listing),
+            child: Container(
+              height: 100,
+              // padding: const EdgeInsets.symmetric(
+              //     vertical: kPaddingS, horizontal: kPaddingM),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: CircleAvatar(
+                        backgroundImage:
+                            AssetImage(categories[index]['image'])),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    categories[index]['name'],
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
           );
         },
-        childCount: 4,
+        childCount: 10,
+      ),
+    );
+  }
+
+  Widget _endPadding() {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 200,
       ),
     );
   }

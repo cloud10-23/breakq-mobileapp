@@ -26,7 +26,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
   /// Creates the bottom bar items.
   List<BottomNavigationBarItem> _bottomBarItems(BuildContext context) {
     getIt.get<BottomBarItems>().clear();
-
     getIt
         .get<BottomBarItems>()
         .add(const BottomBarItemModel(id: 'home', icon: Icons.explore));

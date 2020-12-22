@@ -37,7 +37,7 @@ class BoldTitle extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headline6.w800,
+              style: Theme.of(context).textTheme.bodyText1.w800,
               maxLines: maxLines,
               overflow: TextOverflow.ellipsis,
               textAlign: textAlign ?? TextAlign.left,

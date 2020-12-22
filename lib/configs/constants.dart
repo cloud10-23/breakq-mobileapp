@@ -113,6 +113,20 @@ const String allServices = "All Services";
 const String cancelationPolicy = "Cancel for free anytime in advance, " +
     "otherwise you can be charged 10% of the service price for not showing up.";
 
+/// Categories
+const List<Map<String, String>> categories = [
+  {'name': 'Staples', 'image': 'assets/images/categories/cat1.png'},
+  {'name': 'Snacks', 'image': 'assets/images/categories/cat2.png'},
+  {'name': 'Packed', 'image': 'assets/images/categories/cat3.png'},
+  {'name': 'Dairy', 'image': 'assets/images/categories/cat4.png'},
+  {'name': 'Fruits', 'image': 'assets/images/categories/cat5.png'},
+  {'name': 'Vegetables', 'image': 'assets/images/categories/cat6.png'},
+  {'name': 'Staples', 'image': 'assets/images/categories/cat7.png'},
+  {'name': 'Beverages', 'image': 'assets/images/categories/cat8.png'},
+  {'name': 'Category', 'image': 'assets/images/categories/cat9.png'},
+  {'name': 'Example', 'image': 'assets/images/categories/cat10.png'},
+];
+
 /// Assets images
 class AssetsImages {
   static const String onboardingWelcome = 'assets/images/onboarding/shop-1.png';
@@ -134,6 +148,7 @@ class AssetsImages {
 
   static const String quickShopping = 'assets/images/quick_shopping.png';
   static const String setBudget = 'assets/images/orders.png';
+  static const String scan = 'assets/images/Scan.png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

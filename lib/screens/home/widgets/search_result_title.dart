@@ -41,29 +41,26 @@ class SearchResultTitle extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: kPaddingM),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-                left: kPaddingM, right: kPaddingM, top: kPaddingM),
-            child: Text(
-              L10n.of(context).homeTitleExplore,
-              // L10n.of(context).searchTitleResults(locations.length.toString()),
-              style: Theme.of(context).textTheme.headline5.bold,
-            ),
-          ),
-          const Spacer(),
-          IconButton(
-            color: kPrimaryColor,
-            padding: const EdgeInsets.only(top: kPaddingM, right: kPaddingM),
-            onPressed: () {
-              _switchListTypeSelection(context);
-            },
-            icon: Icon(currentListType.icon),
-            tooltip: L10n.of(context).searchTooltipView,
-          ),
-        ],
+      child: IconButton(
+        color: kPrimaryColor,
+        padding: const EdgeInsets.only(top: kPaddingM, right: kPaddingM),
+        onPressed: () {
+          _switchListTypeSelection(context);
+        },
+        icon: Icon(currentListType.icon),
+        tooltip: L10n.of(context).searchTooltipView,
       ),
     );
   }
 }
+
+// Padding(
+//   padding: const EdgeInsets.only(
+//       left: kPaddingM, right: kPaddingM, top: kPaddingM),
+//   child: Text(
+//     L10n.of(context).homeTitleExplore,
+//     // L10n.of(context).searchTitleResults(locations.length.toString()),
+//     style: Theme.of(context).textTheme.headline5.bold,
+//   ),
+// ),
+// const Spacer(),
