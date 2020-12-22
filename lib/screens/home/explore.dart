@@ -36,74 +36,34 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        drawer: Drawer(
-          child: SafeArea(
-            child: Column(
-              children: [
-                Container(
-                  color: kPrimaryAccentColor,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kPaddingM, vertical: kPaddingM),
-                  child: Row(
-                    children: [
-                      Text(
-                        L10n.of(context).homeTitleHi,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        getIt.get<AppGlobals>().user?.displayName != null
-                            ? getIt.get<AppGlobals>().user.displayName
-                            : L10n.of(context).nameGuest,
-                        // L10n.of(context).homeHeaderSubtitle,
-                        style: Theme.of(context).textTheme.headline6,
-                        // .copyWith(color: kWhite),
-                        maxLines: 1,
-                      ),
-                      Spacer(),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: kPaddingS),
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage(AssetsImages.profileDefault),
-                            fit: BoxFit.contain,
-                          ),
+          drawer: Drawer(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    color: kPrimaryAccentColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kPaddingM, vertical: kPaddingM),
+                    child: Row(
+                      children: [
+                        Text(
+                          L10n.of(context).homeTitleHi,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        body: SafeArea(
-          child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: LoadingOverlay(
-              isLoading: false,
-              child: CustomScrollView(
-                controller: _customScrollViewController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    // backgroundColor: Theme.of(context).,
-                    primary: true,
-                    centerTitle: true,
-                    title: Text("BreakQ"),
-                    floating: true,
-                    actions: [
-                      IconButton(
-                        icon: Icon(Icons.notifications),
-                        onPressed: () {},
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          getIt.get<AppGlobals>().user?.displayName != null
+                              ? getIt.get<AppGlobals>().user.displayName
+                              : L10n.of(context).nameGuest,
+                          // L10n.of(context).homeHeaderSubtitle,
+                          style: Theme.of(context).textTheme.headline6,
+                          // .copyWith(color: kWhite),
+                          maxLines: 1,
+                        ),
+                        Spacer(),
+                        Container(
                           margin: EdgeInsets.symmetric(horizontal: kPaddingS),
                           width: 40,
                           height: 40,
@@ -115,102 +75,166 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SliverAppBar(
-                    primary: false,
-                    pinned: true,
-                    toolbarHeight: kToolbarHeight + kPaddingS,
-                    automaticallyImplyLeading: false,
-                    titleSpacing: 0,
-                    title: Container(
-                      color: kPrimaryColor,
-                      // color: Theme.of(context).scaffoldBackgroundColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingS,
-                        vertical: kPaddingM,
-                      ),
-                      height: 90,
-                      child: Card(
-                        color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-                            ? Theme.of(context).accentColor
-                            : Theme.of(context).cardColor,
-                        margin: const EdgeInsets.all(0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(kBoxDecorationRadius)),
-                        elevation: 2,
-                        child: FlatButton(
-                          // color: kPrimaryAccentColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  kBoxDecorationRadius / 2)),
-                          onPressed: () {
-                            // Switch to Search Tab
-                            // if (onPressed != null) {
-                            //   onPressed();
-                            // }
-                          },
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.search,
-                                color: Theme.of(context).hintColor,
-                              ),
-                              Spacer(),
-                              Expanded(
-                                flex: 9,
-                                child: Text(
-                                  L10n.of(context).homePlaceholderSearch,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      .copyWith(
-                                          color: Theme.of(context).hintColor),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
                   ),
-                  SliverToBoxAdapter(
-                      child: SizedBox(
-                    height: 180,
-                    child: Swiper(
-                      pagination: SwiperPagination(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      containerHeight: 250,
-                      autoplay: true,
-                      duration: 500,
-                      autoplayDelay: 4000,
-                      viewportFraction: 0.9,
-                      itemBuilder: (context, index) => Image(
-                        image: AssetImage(AssetsImages.homeOffers),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  )),
-                  SliverList(
-                    delegate: SliverChildListDelegate(<Widget>[
-                      _showQuickStart(),
-                      BoldTitle(title: 'Categories'),
-                    ]),
-                  ),
-                  _showCategories(),
-                  _endPadding(),
                 ],
               ),
             ),
           ),
-        ),
-      ),
+          body: SafeArea(
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: LoadingOverlay(
+                isLoading: false,
+                child: CustomScrollView(
+                  controller: _customScrollViewController,
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      // backgroundColor: Theme.of(context).,
+                      primary: true,
+                      centerTitle: true,
+                      title: Text("BreakQ"),
+                      floating: true,
+                      actions: [
+                        IconButton(
+                          icon: Icon(Icons.notifications),
+                          onPressed: () {},
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: kPaddingS),
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(AssetsImages.profileDefault),
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SliverAppBar(
+                      primary: false,
+                      pinned: true,
+                      toolbarHeight: kToolbarHeight + kPaddingS,
+                      automaticallyImplyLeading: false,
+                      titleSpacing: 0,
+                      title: Container(
+                        color: kPrimaryColor,
+                        // color: Theme.of(context).scaffoldBackgroundColor,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kPaddingS,
+                          vertical: kPaddingM,
+                        ),
+                        height: 90,
+                        child: Card(
+                          color:
+                              getIt.get<AppGlobals>().isPlatformBrightnessDark
+                                  ? Theme.of(context).accentColor
+                                  : Theme.of(context).cardColor,
+                          margin: const EdgeInsets.all(0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(kBoxDecorationRadius)),
+                          elevation: 2,
+                          child: FlatButton(
+                            // color: kPrimaryAccentColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    kBoxDecorationRadius / 2)),
+                            onPressed: () {
+                              // Switch to Search Tab
+                              // if (onPressed != null) {
+                              //   onPressed();
+                              // }
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.search,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                                Spacer(),
+                                Expanded(
+                                  flex: 9,
+                                  child: Text(
+                                    L10n.of(context).homePlaceholderSearch,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1
+                                        .copyWith(
+                                            color: Theme.of(context).hintColor),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                        child: SizedBox(
+                      height: 180,
+                      child: Swiper(
+                        pagination: SwiperPagination(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        containerHeight: 250,
+                        autoplay: true,
+                        duration: 500,
+                        autoplayDelay: 4000,
+                        viewportFraction: 0.9,
+                        itemBuilder: (context, index) => Image(
+                          image: AssetImage(AssetsImages.homeOffers),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    )),
+                    SliverList(
+                      delegate: SliverChildListDelegate(<Widget>[
+                        _showQuickStart(),
+                        BoldTitle(title: 'Categories'),
+                      ]),
+                    ),
+                    _showCategories(),
+                    _endPadding(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: Container(
+            margin: EdgeInsets.only(bottom: 30),
+            child: FloatingActionButton.extended(
+                backgroundColor: Colors.black,
+                onPressed: () {},
+                label: Padding(
+                  padding: const EdgeInsets.all(kPaddingS),
+                  child: Row(
+                    children: [
+                      Text('Scan',
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                      SizedBox(width: kPaddingM),
+                      Image(
+                        image: AssetImage(AssetsImages.scan),
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                )),
+          )),
     );
   }
 
