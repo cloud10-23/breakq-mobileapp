@@ -129,6 +129,7 @@ const List<Map<String, String>> categories = [
 
 /// Assets images
 class AssetsImages {
+  static const String introScreen = 'assets/images/onboarding/IntroScreen.png';
   static const String onboardingWelcome = 'assets/images/onboarding/shop-1.png';
   static const String onboardingFind = 'assets/images/onboarding/barcode.png';
   static const String onboardingAppointment = 'assets/images/onboarding/qr.png';

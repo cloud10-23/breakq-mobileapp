@@ -858,10 +858,20 @@ class L10n {
     );
   }
 
-  /// `Sign up now`
+  /// `Sign In`
+  String get signInButton {
+    return Intl.message(
+      'Sign In',
+      name: 'signInButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
   String get signInButtonRegister {
     return Intl.message(
-      'Sign up now',
+      'Sign up',
       name: 'signInButtonRegister',
       desc: '',
       args: [],

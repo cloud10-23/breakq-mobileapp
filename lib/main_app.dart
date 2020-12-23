@@ -1,5 +1,7 @@
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/screens/home/explore.dart';
+import 'package:breakq/screens/onboarding.dart';
+import 'package:breakq/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -111,15 +113,15 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         builder: (BuildContext context, ApplicationState appState) {
           Widget homeWidget;
 
-          // if (appState is SetupSuccessApplicationState) {
-          homeWidget = HomeExploreScreen();
-          // homeWidget =
-          //     HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
-          // } else if (appState is OnboardingInProgressApplicationState) {
-          //   homeWidget = OnboardingScreen();
-          // } else {
-          //   homeWidget = const SplashScreen();
-          // }
+          if (appState is SetupSuccessApplicationState) {
+            homeWidget = HomeExploreScreen();
+            // homeWidget =
+            //     HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
+          } else if (appState is OnboardingInProgressApplicationState) {
+            homeWidget = OnboardingScreen();
+          } else {
+            homeWidget = const SplashScreen();
+          }
 
           return BlocBuilder<ThemeBloc, ThemeState>(
             builder: (BuildContext context, ThemeState theme) {

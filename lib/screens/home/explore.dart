@@ -216,6 +216,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
           floatingActionButton: Container(
             margin: EdgeInsets.only(bottom: 30),
             child: FloatingActionButton.extended(
+                heroTag: null,
                 backgroundColor: Colors.black,
                 onPressed: () {},
                 label: Padding(

@@ -119,121 +119,127 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingM),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios),
-                        onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: kPaddingL, bottom: kPaddingL),
-                        child: Text(
-                          L10n.of(context).signInOTPTitle,
-                          style: Theme.of(context).textTheme.headline5.bold,
-                          textAlign: TextAlign.center,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingM),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: kPaddingL),
-                    child: Text(
-                      L10n.of(context).signInOTPFormTitle,
-                      style: Theme.of(context).textTheme.headline6.w300,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: kPaddingL, bottom: kPaddingL),
+                          child: Text(
+                            L10n.of(context).signInOTPTitle,
+                            style: Theme.of(context).textTheme.headline5.bold,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        L10n.of(context).signInOTPAutoVerify,
-                        style: Theme.of(context).textTheme.bodyText1,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: kPaddingL),
+                      child: Text(
+                        L10n.of(context).signInOTPFormTitle,
+                        style: Theme.of(context).textTheme.headline6.w300,
                       ),
-                      Spacer(),
-                      SizedBox(
-                          height: kPaddingM,
-                          width: kPaddingM,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                          )),
-                      Spacer(
-                        flex: 5,
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      getPinField(key: "1", focusNode: focusNode1),
-                      getPinField(key: "2", focusNode: focusNode2),
-                      getPinField(key: "3", focusNode: focusNode3),
-                      getPinField(key: "4", focusNode: focusNode4),
-                      getPinField(key: "5", focusNode: focusNode5),
-                      getPinField(key: "6", focusNode: focusNode6),
-                    ],
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: kPaddingM)),
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (BuildContext context, AuthState login) {
-                      return BlocListener<AuthBloc, AuthState>(
-                        listener:
-                            (BuildContext context, AuthState loginListener) {
-                          if (loginListener is LoginFailureAuthState) {
-                            UI.showErrorDialog(
-                              context,
-                              message: loginListener.message,
-                            );
-                          }
-                        },
-                        child: ThemeButton(
-                          onPressed: () => _submitOTP(),
-                          text: L10n.of(context).signInOTPButtonLogin,
-                          showLoading: login is ProcessInProgressAuthState,
-                          disableTouchWhenLoading: true,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          L10n.of(context).signInOTPAutoVerify,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
-                      );
-                    },
-                  ),
-                ],
+                        Spacer(),
+                        SizedBox(
+                            height: kPaddingM,
+                            width: kPaddingM,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.0,
+                            )),
+                        Spacer(
+                          flex: 5,
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        getPinField(key: "1", focusNode: focusNode1),
+                        getPinField(key: "2", focusNode: focusNode2),
+                        getPinField(key: "3", focusNode: focusNode3),
+                        getPinField(key: "4", focusNode: focusNode4),
+                        getPinField(key: "5", focusNode: focusNode5),
+                        getPinField(key: "6", focusNode: focusNode6),
+                      ],
+                    ),
+                    const Padding(padding: EdgeInsets.only(top: kPaddingM)),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (BuildContext context, AuthState login) {
+                        return BlocListener<AuthBloc, AuthState>(
+                          listener:
+                              (BuildContext context, AuthState loginListener) {
+                            if (loginListener is LoginFailureAuthState) {
+                              UI.showErrorDialog(
+                                context,
+                                message: loginListener.message,
+                              );
+                            } else if (loginListener is LoginSuccessAuthState) {
+                              if (Navigator.of(context).canPop())
+                                Navigator.of(context).pop();
+                            }
+                          },
+                          child: ThemeButton(
+                            onPressed: () => _submitOTP(),
+                            text: L10n.of(context).signInOTPButtonLogin,
+                            showLoading: login is ProcessInProgressAuthState,
+                            disableTouchWhenLoading: true,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingL),
-          child: Column(
-            children: [
-              Text(
-                L10n.of(context).signInOTPResendTitle,
-                style: Theme.of(context).textTheme.caption.fs16.w300,
-                textAlign: TextAlign.center,
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: Text(
-                  L10n.of(context).signInOTPResend,
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      .fs14
-                      .copyWith(color: kPrimaryColor),
+          Padding(
+            padding: const EdgeInsets.all(kPaddingL),
+            child: Column(
+              children: [
+                Text(
+                  L10n.of(context).signInOTPResendTitle,
+                  style: Theme.of(context).textTheme.caption.fs16.w300,
                   textAlign: TextAlign.center,
                 ),
-              ),
-            ],
+                FlatButton(
+                  onPressed: () {},
+                  child: Text(
+                    L10n.of(context).signInOTPResend,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .fs14
+                        .copyWith(color: kPrimaryColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
