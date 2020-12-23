@@ -115,10 +115,10 @@ const String cancelationPolicy = "Cancel for free anytime in advance, " +
 
 /// Categories
 const List<Map<String, String>> categories = [
-  {'name': 'Staples', 'image': 'assets/images/categories/cat1.png'},
-  {'name': 'Snacks', 'image': 'assets/images/categories/cat2.png'},
-  {'name': 'Packed', 'image': 'assets/images/categories/cat3.png'},
-  {'name': 'Dairy', 'image': 'assets/images/categories/cat4.png'},
+  {'name': 'Staples', 'image': 'assets/images/categories/category1.png'},
+  {'name': 'Snacks', 'image': 'assets/images/categories/category2.png'},
+  {'name': 'Packed', 'image': 'assets/images/categories/category3.png'},
+  {'name': 'Dairy', 'image': 'assets/images/categories/category4.png'},
   {'name': 'Fruits', 'image': 'assets/images/categories/cat5.png'},
   {'name': 'Vegetables', 'image': 'assets/images/categories/cat6.png'},
   {'name': 'Staples', 'image': 'assets/images/categories/cat7.png'},
