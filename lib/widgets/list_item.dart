@@ -77,7 +77,7 @@ class ListItem extends StatelessWidget {
                     Text(
                       title,
                       style: titleTextStyle ??
-                          Theme.of(context).textTheme.subtitle1.fs18,
+                          Theme.of(context).textTheme.bodyText1,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -87,7 +87,7 @@ class ListItem extends StatelessWidget {
                         child: Text(
                           subtitle,
                           style: subtitleTextStyle ??
-                              Theme.of(context).textTheme.caption.fs14,
+                              Theme.of(context).textTheme.caption,
                           maxLines: 10,
                         ),
                       )

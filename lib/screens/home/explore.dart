@@ -3,6 +3,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,50 +38,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
           drawer: Drawer(
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Container(
-                    color: kPrimaryAccentColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingM, vertical: kPaddingM),
-                    child: Row(
-                      children: [
-                        Text(
-                          L10n.of(context).homeTitleHi,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          getIt.get<AppGlobals>().user?.displayName != null
-                              ? getIt.get<AppGlobals>().user.displayName
-                              : L10n.of(context).nameGuest,
-                          // L10n.of(context).homeHeaderSubtitle,
-                          style: Theme.of(context).textTheme.headline6,
-                          // .copyWith(color: kWhite),
-                          maxLines: 1,
-                        ),
-                        Spacer(),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: kPaddingS),
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage(AssetsImages.profileDefault),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: ProfileScreen(),
           ),
           body: SafeArea(
             child: Container(
@@ -92,6 +50,8 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                   slivers: <Widget>[
                     SliverAppBar(
                       // backgroundColor: Theme.of(context).,
+                      backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
                       primary: true,
                       centerTitle: true,
                       title: Text("BreakQ"),
@@ -125,8 +85,8 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                       automaticallyImplyLeading: false,
                       titleSpacing: 0,
                       title: Container(
-                        color: kPrimaryColor,
-                        // color: Theme.of(context).scaffoldBackgroundColor,
+                        // color: kPrimaryColor,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         padding: const EdgeInsets.symmetric(
                           horizontal: kPaddingS,
                           vertical: kPaddingM,
@@ -181,20 +141,27 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                       ),
                     ),
                     SliverToBoxAdapter(
-                        child: SizedBox(
+                        child: Container(
+                      margin: EdgeInsets.only(top: kPaddingS),
                       height: 180,
                       child: Swiper(
                         pagination: SwiperPagination(),
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
-                        containerHeight: 250,
+                        containerHeight: 180,
                         autoplay: true,
                         duration: 500,
                         autoplayDelay: 4000,
-                        viewportFraction: 0.9,
-                        itemBuilder: (context, index) => Image(
-                          image: AssetImage(AssetsImages.homeOffers),
-                          fit: BoxFit.fill,
+                        viewportFraction: 0.7,
+                        itemBuilder: (context, index) => Card(
+                          margin: EdgeInsets.all(kPaddingS),
+                          clipBehavior: Clip.antiAlias,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0)),
+                          child: Image(
+                            image: AssetImage(AssetsImages.homeOffers),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     )),
@@ -248,37 +215,49 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
           title: 'At home?',
         )),
         Container(
-          color: kPrimaryColor,
-          height: 70 + kPaddingS * 3,
+          // color: kPrimaryColor,
+          height: 50 + kPaddingS * 3,
           padding: EdgeInsets.symmetric(vertical: kPaddingS),
           child: ListView.builder(
               itemCount: 4,
-              padding: const EdgeInsets.only(left: kPaddingM),
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
-                  width: 110,
+                  width: 120 + kPaddingS,
                   margin: const EdgeInsets.only(bottom: 1), // for card shadow
                   padding: const EdgeInsets.only(right: kPaddingS),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Image(
-                            image: AssetImage((index == 0)
-                                ? AssetsImages.quickShopping
-                                : AssetsImages.setBudget)),
+                  child: Card(
+                    color: kPrimaryColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: kPaddingS),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Image(
+                                image: AssetImage((index == 0)
+                                    ? AssetsImages.quickShopping
+                                    : AssetsImages.setBudget)),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              (index == 0) ? 'Quick Shopping' : 'Set Budget',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10.0),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: kPaddingS,
-                      ),
-                      Text(
-                        (index == 0) ? 'Quick Shopping' : 'Set Budget',
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                    ),
                   ),
                 );
               }),
@@ -288,7 +267,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
             child: BoldTitle(title: 'At the Store?')),
         //Scan to get started
         Container(
-          color: kPrimaryColor,
+          // color: kPrimaryColor,
           padding: EdgeInsets.symmetric(vertical: kPaddingS),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -301,7 +280,8 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     .copyWith(fontWeight: FontWeight.w700),
               ),
               FloatingActionButton(
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  backgroundColor: kPrimaryColor,
+                  // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   mini: true,
                   onPressed: () {},
                   child: Image(image: AssetImage(AssetsImages.scan)))
@@ -319,7 +299,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
   Widget _showCategories() {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 5,
+        crossAxisCount: 2,
         crossAxisSpacing: 0.0,
         mainAxisSpacing: kPaddingL,
       ),
@@ -328,29 +308,37 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
           return InkWell(
             onTap: () => Navigator.pushNamed(context, Routes.listing),
             child: Container(
-              height: 100,
-              // padding: const EdgeInsets.symmetric(
-              //     vertical: kPaddingS, horizontal: kPaddingM),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage(categories[index]['image'])),
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    categories[index]['name'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              height: 300,
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+              child: Card(
+                // shape: RoundedRectangleBorder(),
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Image(
+                          image: AssetImage(categories[index]['image']),
+                          fit: BoxFit.fill),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text(
+                      categories[index]['name'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

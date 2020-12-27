@@ -20,7 +20,7 @@ class ListTitle extends StatelessWidget {
             title.toUpperCase(),
             style: Theme.of(context)
                 .textTheme
-                .subtitle2
+                .caption
                 .w400
                 .copyWith(color: Theme.of(context).hintColor),
           ),

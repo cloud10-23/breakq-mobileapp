@@ -8,7 +8,7 @@ import 'package:breakq/utils/text_style.dart';
 class ProfileInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _photoURL = getIt.get<AppGlobals>().user.photoURL;
+    String _photoURL = getIt.get<AppGlobals>().user?.photoURL ?? null;
     ImageProvider _image;
     if (_photoURL == null)
       _image = AssetImage(AssetsImages.profileDefault);
@@ -39,7 +39,7 @@ class ProfileInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    getIt.get<AppGlobals>().user.displayName ?? "Guest",
+                    getIt.get<AppGlobals>().user?.displayName ?? "Guest",
                     maxLines: 1,
                     style: Theme.of(context).textTheme.headline5.bold,
                     overflow: TextOverflow.ellipsis,

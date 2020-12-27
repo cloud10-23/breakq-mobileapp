@@ -57,7 +57,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ListTitle(
                               title: L10n.of(context).settingsListTitleMobile),
                           ListItem(
-                            title: getIt.get<AppGlobals>().user.phoneNumber,
+                            title: getIt.get<AppGlobals>().user?.phoneNumber ??
+                                'Not available',
                           ),
                           ListTitle(
                               title: L10n.of(context).profileListTitleSettings),
@@ -92,27 +93,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //     ],
                           //   ),
                           // ),
-                          ListItem(
-                            title: L10n.of(context).settingsListDarkMode,
-                            onPressed: () {
-                              _showDarkModePicker(context);
-                            },
-                            trailing: Row(
-                              children: <Widget>[
-                                Text(
-                                  L10n.of(context).commonDarkMode(getIt
-                                      .get<AppGlobals>()
-                                      .darkThemeOption
-                                      .toString()),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .bold,
-                                ),
-                                const ArrowRightIcon(),
-                              ],
-                            ),
-                          ),
+                          // ListItem(
+                          //   title: L10n.of(context).settingsListDarkMode,
+                          //   onPressed: () {
+                          //     _showDarkModePicker(context);
+                          //   },
+                          //   trailing: Row(
+                          //     children: <Widget>[
+                          //       Text(
+                          //         L10n.of(context).commonDarkMode(getIt
+                          //             .get<AppGlobals>()
+                          //             .darkThemeOption
+                          //             .toString()),
+                          //         style: Theme.of(context)
+                          //             .textTheme
+                          //             .bodyText1
+                          //             .bold,
+                          //       ),
+                          //       const ArrowRightIcon(),
+                          //     ],
+                          //   ),
+                          // ),
                           ListTitle(
                               title: L10n.of(context).settingsListTitleSupport),
                           ListItem(
