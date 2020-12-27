@@ -33,6 +33,8 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     //   yield* _mapOnRegisterAuthEventToState(event);
     if (event is LoginRequestedAuthEvent) {
       yield* _mapLoginAuthEventToState(event);
+    } else if (event is GoogleLoginRequestedAuthEvent) {
+      yield* _mapGoogleLoginAuthEventToState(event);
     } else if (event is OTPGoBackAuthEvent) {
       yield* _mapOTPGoBackEventToState(event);
     } else if (event is LoginFailureAuthEvent) {
@@ -121,6 +123,27 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       add(event);
     });
     yield VerifyOTPAuthState();
+  }
+
+  Stream<AuthState> _mapGoogleLoginAuthEventToState(
+      GoogleLoginRequestedAuthEvent event) async* {
+    yield ProcessInProgressAuthState();
+
+    final user = await _userRepository.signInWithGoogle();
+    if (user == null) {
+      yield LoginFailureAuthState('Invalid OTP!');
+    } else {
+      getIt.get<AppGlobals>().user = user;
+      AppCacheManager.instance.emptyCache();
+
+      try {
+        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
+
+        yield LoginSuccessAuthState();
+      } catch (error) {
+        yield LoginFailureAuthState(error.toString());
+      }
+    }
   }
 
   Stream<AuthState> _mapSaveUserAuthEventToState(

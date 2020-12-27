@@ -218,7 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "formValidatorEmail" : MessageLookupByLibrary.simpleMessage("Email format invalid"),
     "formValidatorInvalidPassword" : MessageLookupByLibrary.simpleMessage("Password format invalid"),
     "formValidatorMinLength" : m25,
-    "formValidatorRequired" : MessageLookupByLibrary.simpleMessage("Required field"),
+    "formValidatorRequired" : MessageLookupByLibrary.simpleMessage("Please enter your Phone Number"),
     "homeHeaderSubtitle" : MessageLookupByLibrary.simpleMessage("Start Adding to Cart!"),
     "homePlaceholderSearch" : MessageLookupByLibrary.simpleMessage("Search for a product"),
     "homeTitleExplore" : MessageLookupByLibrary.simpleMessage("Explore"),

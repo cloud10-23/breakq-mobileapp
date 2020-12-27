@@ -150,6 +150,8 @@ class AssetsImages {
   static const String quickShopping = 'assets/images/quick_shopping.png';
   static const String setBudget = 'assets/images/orders.png';
   static const String scan = 'assets/images/Scan.png';
+
+  static const String orDivider = 'assets/images/or.png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

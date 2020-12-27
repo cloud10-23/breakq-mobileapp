@@ -18,7 +18,7 @@ class ShowSelectedCountry extends StatelessWidget {
           padding: const EdgeInsets.all(kPaddingS),
           child: Text(
             ' ${country.flag}  ${country.dialCode}',
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           // Was in a Row : Icon(Icons.arrow_drop_down, size: 24.0)
         ),

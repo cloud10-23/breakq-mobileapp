@@ -72,6 +72,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
           // autofocus: key.contains("1") ? true : false,
           autofocus: false,
           focusNode: focusNode,
+          onSubmitted: (_) => _submitOTP(),
           onChanged: (String value) {
             if (value.length == 1) {
               _code += value;

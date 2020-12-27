@@ -1328,10 +1328,10 @@ class L10n {
     );
   }
 
-  /// `Required field`
+  /// `Please enter your Phone Number`
   String get formValidatorRequired {
     return Intl.message(
-      'Required field',
+      'Please enter your Phone Number',
       name: 'formValidatorRequired',
       desc: '',
       args: [],

@@ -24,6 +24,10 @@ class LoginRequestedAuthEvent extends AuthEvent {
   final String phone;
 }
 
+class GoogleLoginRequestedAuthEvent extends AuthEvent {
+  GoogleLoginRequestedAuthEvent();
+}
+
 class OTPGoBackAuthEvent extends AuthEvent {}
 
 class OTPVerificationAuthEvent extends AuthEvent {

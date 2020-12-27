@@ -79,7 +79,7 @@ class _SignInWidgetState extends State<SignInWidget>
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
-                        top: kPaddingL, bottom: kPaddingL),
+                        top: kPaddingL, bottom: kPaddingM),
                     child: Text(
                       L10n.of(context).signInFormTitle,
                       style: Theme.of(context).textTheme.headline5.bold,
@@ -87,10 +87,10 @@ class _SignInWidgetState extends State<SignInWidget>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: kPaddingL),
+                    padding: const EdgeInsets.only(bottom: kPaddingS),
                     child: Text(
                       L10n.of(context).signInFormMobileTitle,
-                      style: Theme.of(context).textTheme.headline6.w300,
+                      style: Theme.of(context).textTheme.bodyText1.w300,
                     ),
                   ),
                   ThemeTextInput(
@@ -133,6 +133,9 @@ class _SignInWidgetState extends State<SignInWidget>
                               context,
                               message: loginListener.message,
                             );
+                          } else if (loginListener is LoginSuccessAuthState) {
+                            if (Navigator.of(context).canPop())
+                              Navigator.of(context).pop();
                           }
                         },
                         child: ThemeButton(
@@ -144,6 +147,11 @@ class _SignInWidgetState extends State<SignInWidget>
                       );
                     },
                   ),
+                  SizedBox(
+                    height: kPaddingL,
+                  ),
+                  Image(image: AssetImage(AssetsImages.orDivider)),
+                  _signInButton(),
                 ],
               ),
             ),
@@ -158,6 +166,46 @@ class _SignInWidgetState extends State<SignInWidget>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _signInButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OutlineButton(
+        splashColor: Colors.grey,
+        onPressed: () {
+          BlocProvider.of<AuthBloc>(context)
+              .add(GoogleLoginRequestedAuthEvent());
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        highlightElevation: 0,
+        borderSide: BorderSide(color: Colors.grey),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Spacer(flex: 1),
+              Image(
+                  image: AssetImage("assets/images/google-icon.png"),
+                  height: 35.0),
+              Spacer(flex: 2),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  'Sign in with Google',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              Spacer(flex: 4),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

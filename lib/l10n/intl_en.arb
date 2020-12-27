@@ -121,7 +121,7 @@
     "onboardingPage3Body": "Just show the QR code at checkout. No more waiting in line.",
     "onboardingBtnSkip": "Skip",
     "onboardingBtnGetStarted": "Get Started",
-    "formValidatorRequired": "Required field",
+    "formValidatorRequired": "Please enter your Phone Number",
     "formValidatorEmail": "Email format invalid",
     "formValidatorMinLength": "Min. length is {length} characters",
     "formValidatorInvalidPassword": "Password format invalid",

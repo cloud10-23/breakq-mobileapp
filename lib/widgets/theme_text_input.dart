@@ -86,7 +86,6 @@ class ThemeTextInputState extends State<ThemeTextInput> {
         style: Theme.of(context)
             .textTheme
             .caption
-            .fs14
             .copyWith(color: Theme.of(context).errorColor),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -105,7 +104,7 @@ class ThemeTextInputState extends State<ThemeTextInput> {
         widget.helpText,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.caption.fs14,
+        style: Theme.of(context).textTheme.caption,
       ),
     );
   }
@@ -125,20 +124,21 @@ class ThemeTextInputState extends State<ThemeTextInput> {
             onSubmitted: widget.onSubmitted,
             controller: widget.controller,
             focusNode: widget.focusNode,
-            onChanged: (String value) {
-              validate();
-              if (widget.onChanged != null) {
-                widget.onChanged(value);
-              }
-            },
+            // onChanged: (String value) {
+            //   validate();
+            //   if (widget.onChanged != null) {
+            //     widget.onChanged(value);
+            //   }
+
+            // },
             obscureText: widget.obscureText,
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
             maxLines: widget.maxLines,
-            padding:
-                const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 14),
+            padding: const EdgeInsets.only(
+                left: 8.0, right: 8.0, top: 6.0, bottom: 6.0),
             cursorColor: Theme.of(context).hintColor,
-            style: Theme.of(context).textTheme.headline6.w600,
+            style: Theme.of(context).textTheme.bodyText1.w600,
             decoration: BoxDecoration(
               color: Theme.of(context).inputDecorationTheme.fillColor,
               borderRadius: BorderRadius.circular(kFormFieldsRadius),

@@ -34,6 +34,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
     //   );
     // }
 
+    final String imageUrl = getIt.get<AppGlobals>().user.photoURL;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -70,7 +71,9 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: AssetImage(AssetsImages.profileDefault),
+                                image: (imageUrl != null)
+                                    ? NetworkImage(imageUrl)
+                                    : AssetImage(AssetsImages.profileDefault),
                                 fit: BoxFit.contain,
                               ),
                             ),
