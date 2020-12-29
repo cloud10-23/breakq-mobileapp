@@ -36,9 +36,14 @@ const Color kGold = Color(0xFFF3C952);
 const Color kTransparent = Colors.transparent;
 
 // Padding
-const double kPaddingS = 10.0;
-const double kPaddingM = 20.0;
-const double kPaddingL = 40.0;
+const double kPaddingS = 4.0;
+const double kPaddingM = 8.0;
+const double kPaddingL = 20.0;
+
+//Heights `collection
+const double kTopDealsHeight = 80.0;
+const double kButtonHeight = 35.0;
+const double kSocialButtonHeight = kButtonHeight * 1.5;
 
 // Avatar sizes
 const double kCircleAvatarSizeRadiusAppBar = 20.0;

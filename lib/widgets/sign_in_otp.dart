@@ -127,7 +127,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingM),
+              padding: const EdgeInsets.only(left: kPaddingL, right: kPaddingL),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -143,19 +143,21 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                               top: kPaddingL, bottom: kPaddingL),
                           child: Text(
                             L10n.of(context).signInOTPTitle,
-                            style: Theme.of(context).textTheme.headline5.bold,
+                            style: Theme.of(context).textTheme.headline6.bold,
                             textAlign: TextAlign.center,
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(height: kPaddingL),
                     Padding(
                       padding: const EdgeInsets.only(bottom: kPaddingL),
                       child: Text(
                         L10n.of(context).signInOTPFormTitle,
-                        style: Theme.of(context).textTheme.headline6.w300,
+                        style: Theme.of(context).textTheme.bodyText1.w300,
                       ),
                     ),
+                    SizedBox(height: kPaddingL * 1.5),
                     Row(
                       children: [
                         Text(
@@ -164,8 +166,8 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                         ),
                         Spacer(),
                         SizedBox(
-                            height: kPaddingM,
-                            width: kPaddingM,
+                            height: kPaddingL,
+                            width: kPaddingL,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.0,
                             )),
@@ -185,7 +187,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                         getPinField(key: "6", focusNode: focusNode6),
                       ],
                     ),
-                    const Padding(padding: EdgeInsets.only(top: kPaddingM)),
+                    const Padding(padding: EdgeInsets.only(top: kPaddingL)),
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (BuildContext context, AuthState login) {
                         return BlocListener<AuthBloc, AuthState>(

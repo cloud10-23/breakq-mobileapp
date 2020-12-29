@@ -70,14 +70,14 @@ class _SignInWidgetState extends State<SignInWidget>
       children: <Widget>[
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingM),
+            padding: const EdgeInsets.only(left: kPaddingL, right: kPaddingL),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
-                        top: kPaddingL, bottom: kPaddingM),
+                        top: kPaddingL, bottom: kPaddingL),
                     child: Text(
                       L10n.of(context).signInFormTitle,
                       style: Theme.of(context).textTheme.headline5.bold,
@@ -85,7 +85,8 @@ class _SignInWidgetState extends State<SignInWidget>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: kPaddingS),
+                    padding: const EdgeInsets.only(
+                        top: kPaddingL, bottom: kPaddingL),
                     child: Text(
                       L10n.of(context).signInFormMobileTitle,
                       style: Theme.of(context).textTheme.bodyText1.w300,
@@ -120,7 +121,7 @@ class _SignInWidgetState extends State<SignInWidget>
                           errorMessage: "Please enter a 10 digit number"),
                     ]),
                   ),
-                  const Padding(padding: EdgeInsets.only(top: kPaddingM)),
+                  const SizedBox(height: kPaddingL * 1.5),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (BuildContext context, AuthState login) {
                       return BlocListener<AuthBloc, AuthState>(
@@ -145,10 +146,9 @@ class _SignInWidgetState extends State<SignInWidget>
                       );
                     },
                   ),
-                  SizedBox(
-                    height: kPaddingL,
-                  ),
+                  SizedBox(height: kPaddingL * 1.5),
                   Image(image: AssetImage(AssetsImages.orDivider)),
+                  SizedBox(height: kPaddingL),
                   SignInSocialButton(social: Social.google),
                   SignInSocialButton(social: Social.facebook),
                 ],
@@ -160,7 +160,7 @@ class _SignInWidgetState extends State<SignInWidget>
           padding: const EdgeInsets.all(kPaddingL),
           child: Text(
             L10n.of(context).signInRegisterLabel,
-            style: Theme.of(context).textTheme.caption.fs14,
+            style: Theme.of(context).textTheme.caption.copyWith(fontSize: 10.0),
             textAlign: TextAlign.center,
           ),
         ),

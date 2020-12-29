@@ -37,7 +37,8 @@ class SignInSocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: kSocialButtonHeight,
       padding: const EdgeInsets.all(8.0),
       child: OutlineButton(
         splashColor: Colors.grey,

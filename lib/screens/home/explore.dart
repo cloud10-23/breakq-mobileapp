@@ -3,6 +3,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +35,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
     //   );
     // }
 
-    final String imageUrl = getIt.get<AppGlobals>().user.photoURL;
+    final String imageUrl = getIt.get<AppGlobals>()?.user?.photoURL;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -146,12 +147,11 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     SliverToBoxAdapter(
                         child: Container(
                       margin: EdgeInsets.only(top: kPaddingS),
-                      height: 180,
+                      height: 150,
                       child: Swiper(
                         pagination: SwiperPagination(),
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
-                        containerHeight: 180,
                         autoplay: true,
                         duration: 500,
                         autoplayDelay: 4000,
@@ -160,7 +160,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                           margin: EdgeInsets.all(kPaddingS),
                           clipBehavior: Clip.antiAlias,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.0)),
+                              borderRadius: BorderRadius.circular(10.0)),
                           child: Image(
                             image: AssetImage(AssetsImages.homeOffers),
                             fit: BoxFit.fill,
@@ -171,6 +171,13 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     SliverList(
                       delegate: SliverChildListDelegate(<Widget>[
                         _showQuickStart(),
+                        Row(mainAxisSize: MainAxisSize.min, children: [
+                          BoldTitle(title: 'Top Deals'),
+                          Spacer(),
+                          Text('View All'),
+                          Icon(Icons.navigate_next),
+                        ]),
+                        Container(height: 150, child: _showTopDeals()),
                         BoldTitle(title: 'Categories'),
                       ]),
                     ),
@@ -211,6 +218,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
 
   Widget _showQuickStart() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
             // color: kPrimaryColor,
@@ -266,36 +274,19 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
               }),
         ),
         Container(
-            // color: kPrimaryAccentColor,
-            child: BoldTitle(title: 'At the Store?')),
-        //Scan to get started
-        Container(
-          // color: kPrimaryColor,
-          padding: EdgeInsets.symmetric(vertical: kPaddingS),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                'Scan to get Started',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .copyWith(fontWeight: FontWeight.w700),
-              ),
-              FloatingActionButton(
-                  backgroundColor: kPrimaryColor,
-                  // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  mini: true,
-                  onPressed: () {},
-                  child: Image(image: AssetImage(AssetsImages.scan)))
-            ],
-          ),
-        ),
-        Container(
           // color: kPrimaryAccentColor.withOpacity(0.3),
           height: kPaddingM,
         )
       ],
+    );
+  }
+
+  Widget _showTopDeals() {
+    return Swiper(
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      viewportFraction: 0.45,
+      itemBuilder: (_, index) => TopDealsCard(index: index),
     );
   }
 

@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen>
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.80,
+              height: MediaQuery.of(context).size.height * 0.70,
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: const BorderRadius.only(

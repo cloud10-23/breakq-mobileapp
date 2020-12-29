@@ -35,33 +35,39 @@ class ThemeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!alternate)
-      return RaisedButton(
-        onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              text.toUpperCase(),
-              style: Theme.of(context).textTheme.button.white.fs16.w500,
-            ),
-            _buildLoading()
-          ],
+      return SizedBox(
+        height: kButtonHeight,
+        child: RaisedButton(
+          onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                text.toUpperCase(),
+                style: Theme.of(context).textTheme.button.white.fs16.w500,
+              ),
+              _buildLoading()
+            ],
+          ),
         ),
       );
     else
-      return OutlineButton(
-        onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              text.toUpperCase(),
-              style: Theme.of(context).textTheme.button.fs16.w500,
-            ),
-            _buildLoading()
-          ],
+      return SizedBox(
+        height: kButtonHeight,
+        child: OutlineButton(
+          onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                text.toUpperCase(),
+                style: Theme.of(context).textTheme.button.fs16.w500,
+              ),
+              _buildLoading()
+            ],
+          ),
         ),
       );
   }

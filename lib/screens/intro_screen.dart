@@ -1,12 +1,8 @@
-import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/sign_in_otp.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/widgets/sign_in.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({Key key}) : super(key: key);
@@ -42,7 +38,7 @@ class _IntroScreenState extends State<IntroScreen> {
           ),
         ),
         Container(
-          height: MediaQuery.of(context).size.height * 0.20,
+          height: MediaQuery.of(context).size.height * 0.25,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: const BorderRadius.only(

@@ -33,15 +33,14 @@ class BoldTitle extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Expanded(
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText1.w800,
-              maxLines: maxLines,
-              overflow: TextOverflow.ellipsis,
-              textAlign: textAlign ?? TextAlign.left,
-            ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyText1.w800,
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
+            textAlign: textAlign ?? TextAlign.left,
           ),
           if (onNavigate != null)
             InkWell(
