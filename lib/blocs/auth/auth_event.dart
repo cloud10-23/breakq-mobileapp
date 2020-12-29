@@ -28,6 +28,10 @@ class GoogleLoginRequestedAuthEvent extends AuthEvent {
   GoogleLoginRequestedAuthEvent();
 }
 
+class FacebookLoginRequestedAuthEvent extends AuthEvent {
+  FacebookLoginRequestedAuthEvent();
+}
+
 class OTPGoBackAuthEvent extends AuthEvent {}
 
 class OTPVerificationAuthEvent extends AuthEvent {

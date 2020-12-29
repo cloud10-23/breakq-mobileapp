@@ -35,6 +35,8 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       yield* _mapLoginAuthEventToState(event);
     } else if (event is GoogleLoginRequestedAuthEvent) {
       yield* _mapGoogleLoginAuthEventToState(event);
+    } else if (event is FacebookLoginRequestedAuthEvent) {
+      yield* _mapFacebookLoginAuthEventToState(event);
     } else if (event is OTPGoBackAuthEvent) {
       yield* _mapOTPGoBackEventToState(event);
     } else if (event is LoginFailureAuthEvent) {
@@ -131,7 +133,29 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
     final user = await _userRepository.signInWithGoogle();
     if (user == null) {
-      yield LoginFailureAuthState('Invalid OTP!');
+      yield LoginFailureAuthState('Login with Google Failed! Please try again');
+    } else {
+      getIt.get<AppGlobals>().user = user;
+      AppCacheManager.instance.emptyCache();
+
+      try {
+        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
+
+        yield LoginSuccessAuthState();
+      } catch (error) {
+        yield LoginFailureAuthState(error.toString());
+      }
+    }
+  }
+
+  Stream<AuthState> _mapFacebookLoginAuthEventToState(
+      FacebookLoginRequestedAuthEvent event) async* {
+    yield ProcessInProgressAuthState();
+
+    final user = await _userRepository.signInWithFacebook();
+    if (user == null) {
+      yield LoginFailureAuthState(
+          'Login with Facebook Failed! Please try again');
     } else {
       getIt.get<AppGlobals>().user = user;
       AppCacheManager.instance.emptyCache();

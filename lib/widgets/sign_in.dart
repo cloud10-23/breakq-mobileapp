@@ -1,11 +1,9 @@
 import 'package:breakq/data/models/country.dart';
-import 'package:breakq/main.dart';
 import 'package:breakq/widgets/sigin_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/form_utils.dart';
 import 'package:breakq/utils/form_validator.dart';
@@ -151,7 +149,8 @@ class _SignInWidgetState extends State<SignInWidget>
                     height: kPaddingL,
                   ),
                   Image(image: AssetImage(AssetsImages.orDivider)),
-                  _signInButton(),
+                  SignInSocialButton(social: Social.google),
+                  SignInSocialButton(social: Social.facebook),
                 ],
               ),
             ),
@@ -166,46 +165,6 @@ class _SignInWidgetState extends State<SignInWidget>
           ),
         ),
       ],
-    );
-  }
-
-  Widget _signInButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: OutlineButton(
-        splashColor: Colors.grey,
-        onPressed: () {
-          BlocProvider.of<AuthBloc>(context)
-              .add(GoogleLoginRequestedAuthEvent());
-        },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        highlightElevation: 0,
-        borderSide: BorderSide(color: Colors.grey),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Spacer(flex: 1),
-              Image(
-                  image: AssetImage("assets/images/google-icon.png"),
-                  height: 35.0),
-              Spacer(flex: 2),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Sign in with Google',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              Spacer(flex: 4),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
