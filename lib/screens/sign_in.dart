@@ -39,38 +39,41 @@ class _SignInScreenState extends State<SignInScreen>
         return currentState is! LoginSuccessAuthState;
       },
       builder: (BuildContext context, AuthState state) {
-        return Stack(
-          alignment: Alignment.bottomCenter,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.5),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AssetsImages.loginBackground),
-                  fit: BoxFit.cover,
+        return Scaffold(
+          backgroundColor: kWhite,
+          body: Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.5),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AssetsImages.loginBackground),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.70,
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(kCardRadius),
-                  topRight: Radius.circular(kCardRadius),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.70,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(kCardRadius),
+                    topRight: Radius.circular(kCardRadius),
+                  ),
                 ),
-              ),
-              child: TabBarView(
-                controller: _controller,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  SignInWidget(),
-                  SignInOTPWidget(),
-                ],
-              ),
-            )
-          ],
+                child: TabBarView(
+                  controller: _controller,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    SignInWidget(),
+                    SignInOTPWidget(),
+                  ],
+                ),
+              )
+            ],
+          ),
         );
       },
       listenWhen: (previous, current) => (current is VerifyOTPAuthState ||

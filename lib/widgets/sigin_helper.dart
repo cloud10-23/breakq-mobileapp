@@ -85,3 +85,58 @@ class SignInSocialButton extends StatelessWidget {
     );
   }
 }
+
+class SignUpSocialButton extends StatelessWidget {
+  SignUpSocialButton({this.social = Social.google});
+  final Social social;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: kSocialButtonHeight,
+      padding: const EdgeInsets.all(8.0),
+      child: OutlineButton(
+        splashColor: Colors.grey,
+        onPressed: () {
+          // if (social == Social.google)
+          //   BlocProvider.of<AuthBloc>(context)
+          //       .add(GoogleSignUpRequestedAuthEvent());
+          // else
+          //   BlocProvider.of<AuthBloc>(context)
+          //       .add(FacebookSignUpRequestedAuthEvent());
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        highlightElevation: 0,
+        borderSide: BorderSide(color: Colors.grey),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Spacer(flex: 1),
+              Image(
+                  image: (social == Social.google)
+                      ? AssetImage("assets/images/google-icon.png")
+                      : AssetImage("assets/images/facebook-icon.png"),
+                  height: 35.0),
+              Spacer(flex: 2),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  (social == Social.google)
+                      ? 'Sign up with Google'
+                      : 'Sign up with Facebook',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              Spacer(flex: 4),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

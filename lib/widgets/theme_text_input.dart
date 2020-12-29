@@ -136,7 +136,7 @@ class ThemeTextInputState extends State<ThemeTextInput> {
             textInputAction: widget.textInputAction,
             maxLines: widget.maxLines,
             padding: const EdgeInsets.only(
-                left: 8.0, right: 8.0, top: 6.0, bottom: 6.0),
+                left: 8.0, right: kPaddingL, top: kPaddingM * 1.5, bottom: 6.0),
             cursorColor: Theme.of(context).hintColor,
             style: Theme.of(context).textTheme.bodyText1.w600,
             decoration: BoxDecoration(

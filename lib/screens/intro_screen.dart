@@ -52,7 +52,8 @@ class _IntroScreenState extends State<IntroScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
                 child: ThemeButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(Routes.signUp),
                     text: L10n.of(context).signInButtonRegister),
               ),
               Padding(

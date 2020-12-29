@@ -1,3 +1,4 @@
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/country.dart';
 import 'package:breakq/widgets/sigin_helper.dart';
 import 'package:flutter/material.dart';
@@ -156,12 +157,14 @@ class _SignInWidgetState extends State<SignInWidget>
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingL),
-          child: Text(
-            L10n.of(context).signInRegisterLabel,
-            style: Theme.of(context).textTheme.caption.copyWith(fontSize: 10.0),
-            textAlign: TextAlign.center,
+        ListTile(
+          // contentPadding: EdgeInsets.all(kPaddingL),
+          onTap: () => Navigator.popAndPushNamed(context, Routes.signUp),
+          title: Center(
+            child: Text(
+              L10n.of(context).signInDontHaveAccount,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
         ),
       ],

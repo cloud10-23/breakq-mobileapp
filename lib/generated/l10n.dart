@@ -1488,21 +1488,11 @@ class L10n {
     );
   }
 
-  /// `Email`
-  String get signupLabelEmail {
+  /// `Phone Number`
+  String get signUpLabelPhone {
     return Intl.message(
-      'Email',
-      name: 'signupLabelEmail',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Password`
-  String get signUpLabelPassword {
-    return Intl.message(
-      'Password',
-      name: 'signUpLabelPassword',
+      'Phone Number',
+      name: 'signUpLabelPhone',
       desc: '',
       args: [],
     );
@@ -1518,31 +1508,31 @@ class L10n {
     );
   }
 
-  /// `Your email address`
-  String get signupHintLabelEmail {
-    return Intl.message(
-      'Your email address',
-      name: 'signupHintLabelEmail',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Create a password`
-  String get signUpHintLabelPassword {
-    return Intl.message(
-      'Create a password',
-      name: 'signUpHintLabelPassword',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `You must accept the Terms and Conditions of Service to continue.`
   String get signUpErrorConsent {
     return Intl.message(
       'You must accept the Terms and Conditions of Service to continue.',
       name: 'signUpErrorConsent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account? Sign In`
+  String get signUpAlreadyHaveAccount {
+    return Intl.message(
+      'Already have an account? Sign In',
+      name: 'signUpAlreadyHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account? Sign Up`
+  String get signInDontHaveAccount {
+    return Intl.message(
+      'Don\'t have an account? Sign Up',
+      name: 'signInDontHaveAccount',
       desc: '',
       args: [],
     );
