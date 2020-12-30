@@ -50,7 +50,7 @@ class Routes {
       case location:
         return MaterialPageRoute<LocationScreen>(
           builder: (BuildContext context) {
-            return LocationScreen(locationId: routeSettings.arguments as int);
+            return LocationScreen(productId: routeSettings.arguments as int);
           },
           settings: const RouteSettings(name: location),
         );

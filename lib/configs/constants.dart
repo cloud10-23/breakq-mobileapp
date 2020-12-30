@@ -45,6 +45,9 @@ const double kTopDealsHeight = 80.0;
 const double kButtonHeight = 35.0;
 const double kSocialButtonHeight = kButtonHeight * 1.5;
 
+/// Height beiween home strips
+const double kPaddingBtwnStrips = 8.0;
+
 // Avatar sizes
 const double kCircleAvatarSizeRadiusAppBar = 20.0;
 const double kCircleAvatarSizeRadiusSmall = 24.0;

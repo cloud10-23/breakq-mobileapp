@@ -15,10 +15,10 @@ import 'package:breakq/utils/text_style.dart';
 class LocationScreen extends StatefulWidget {
   const LocationScreen({
     Key key,
-    this.locationId = 0,
+    this.productId = 0,
   }) : super(key: key);
 
-  final int locationId;
+  final int productId;
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
@@ -42,13 +42,13 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> _loadData() async {
     /// Load location data.
-    _location = await locationRepository.getProduct(id: widget.locationId);
+    _location = await locationRepository.getProduct(id: widget.productId);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.locationId > 0) {
+    if (widget.productId > 0) {
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Theme.of(context).cardColor,

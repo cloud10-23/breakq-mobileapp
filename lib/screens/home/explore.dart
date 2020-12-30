@@ -85,7 +85,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     SliverAppBar(
                       primary: false,
                       pinned: true,
-                      toolbarHeight: kToolbarHeight + kPaddingS,
+                      toolbarHeight: kToolbarHeight,
                       automaticallyImplyLeading: false,
                       titleSpacing: 0,
                       title: Container(
@@ -95,7 +95,7 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                           horizontal: kPaddingS,
                           vertical: kPaddingM,
                         ),
-                        height: 90,
+                        height: kToolbarHeight,
                         child: Card(
                           color:
                               getIt.get<AppGlobals>().isPlatformBrightnessDark
@@ -170,14 +170,17 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
                     )),
                     SliverList(
                       delegate: SliverChildListDelegate(<Widget>[
+                        SizedBox(height: kPaddingBtwnStrips),
                         _showQuickStart(),
+                        SizedBox(height: kPaddingBtwnStrips),
                         Row(mainAxisSize: MainAxisSize.min, children: [
                           BoldTitle(title: 'Top Deals'),
                           Spacer(),
                           Text('View All'),
                           Icon(Icons.navigate_next),
                         ]),
-                        Container(height: 150, child: _showTopDeals()),
+                        Container(height: 300, child: _showTopDeals()),
+                        SizedBox(height: kPaddingBtwnStrips),
                         BoldTitle(title: 'Categories'),
                       ]),
                     ),
@@ -282,10 +285,12 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
   }
 
   Widget _showTopDeals() {
-    return Swiper(
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, childAspectRatio: 0.8),
+      itemCount: 10,
+      padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
       scrollDirection: Axis.horizontal,
-      itemCount: 5,
-      viewportFraction: 0.45,
       itemBuilder: (_, index) => TopDealsCard(index: index),
     );
   }
@@ -307,8 +312,8 @@ class HomeExploreScreenState extends State<HomeExploreScreen> {
               child: Card(
                 // shape: RoundedRectangleBorder(),
                 clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0)),
+                // shape: RoundedRectangleBorder(
+                // borderRadius: BorderRadius.circular(25.0)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
