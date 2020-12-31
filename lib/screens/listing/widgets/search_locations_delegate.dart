@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/search_history_model.dart';
-import 'package:breakq/screens/home/widgets/search_locations_delegate_history.dart';
-import 'package:breakq/screens/home/widgets/search_locations_delegate_result_list.dart';
+import 'package:breakq/screens/listing/widgets/search_locations_delegate_history.dart';
+import 'package:breakq/screens/listing/widgets/search_locations_delegate_result_list.dart';
 
 class SearchLocationsDelegate extends SearchDelegate<String> {
   SearchLocationsDelegate({this.hintText}) : super(searchFieldLabel: hintText);

@@ -12,14 +12,14 @@ import 'package:flutter/services.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-class HomeExploreScreen extends StatefulWidget {
-  const HomeExploreScreen({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
-  HomeExploreScreenState createState() => HomeExploreScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class HomeExploreScreenState extends State<HomeExploreScreen> {
+class HomeScreenState extends State<HomeScreen> {
   final ScrollController _customScrollViewController = ScrollController();
   @override
   void initState() {

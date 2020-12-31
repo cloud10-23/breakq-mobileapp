@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:breakq/configs/app_globals.dart';
-import 'package:breakq/main.dart';
-import 'package:breakq/utils/bottom_bar_items.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:breakq/configs/constants.dart';
@@ -200,15 +197,6 @@ class _BookingSuccessDialogState extends State<SuccessDialog>
                       onPressed: () {
                         Navigator.of(context)
                             .popUntil((Route<dynamic> route) => route.isFirst);
-                        //TODO: Make it go to Booking Screen
-
-                        (getIt
-                                .get<AppGlobals>()
-                                .globalKeyBottomBar
-                                .currentWidget as BottomNavigationBar)
-                            .onTap(getIt
-                                .get<BottomBarItems>()
-                                .getBottomBarItem('appointments'));
                       }),
                 ),
               ),

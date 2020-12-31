@@ -5,7 +5,7 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/jumbotron.dart';
-import 'package:breakq/widgets/product_list_item.dart';
+import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 
 class SearchResultList extends StatelessWidget {
   const SearchResultList({

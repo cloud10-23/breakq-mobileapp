@@ -1,12 +1,11 @@
-import 'package:breakq/screens/home/listing.dart';
+import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
-import 'package:breakq/screens/sign_in.dart';
+import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
-import 'package:breakq/screens/favorites.dart';
-import 'package:breakq/screens/photo_gallery.dart';
-import 'package:breakq/screens/sign_up.dart';
+import 'package:breakq/widgets/photo_gallery.dart';
+import 'package:breakq/screens/onboarding/sign_up.dart';
 import 'package:breakq/widgets/picker.dart';
 
 /// Generate [MaterialPageRoute] for our screens.
@@ -90,12 +89,6 @@ class Routes {
       //       return const TakePictureScreen();
       //     },
       //   );
-      case favorites:
-        return MaterialPageRoute<String>(
-          builder: (BuildContext context) {
-            return const FavoritesScreen();
-          },
-        );
       default:
         return MaterialPageRoute<EmptyScreen>(
           builder: (BuildContext context) {

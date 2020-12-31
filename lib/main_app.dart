@@ -1,6 +1,6 @@
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/screens/home/explore.dart';
-import 'package:breakq/screens/onboarding.dart';
+import 'package:breakq/screens/onboarding/onboarding.dart';
 import 'package:breakq/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +13,6 @@ import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/utils/localization.dart';
-import 'package:breakq/widgets/bottom_navigation.dart';
 
 import 'blocs/application/application_bloc.dart';
 
@@ -115,8 +113,8 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
 
           // if (appState is SetupSuccessApplicationState) {
           //   // homeWidget = HomeExploreScreen();
-          homeWidget = HomeExploreScreen(
-              key: getIt.get<AppGlobals>().globalKeySearchScreen);
+          homeWidget =
+              HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
           // } else if (appState is OnboardingInProgressApplicationState) {
           //   homeWidget = OnboardingScreen();
           // } else {
@@ -138,8 +136,6 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
                     L10n.delegate,
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate, // Needed for iOS!
-                    FallbackCupertinoLocalisationsDelegate(),
                   ],
                   localeResolutionCallback:
                       (Locale locale, Iterable<Locale> supportedLocales) =>

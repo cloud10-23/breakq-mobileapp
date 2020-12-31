@@ -4,7 +4,6 @@ import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/button_group_model.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/star_rating.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_button_group.dart';
 import 'package:breakq/widgets/uppercase_title.dart';
@@ -62,28 +61,6 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                       title: L10n.of(context).searchTitleRating,
                       padding: const EdgeInsets.only(
                           top: kPaddingM, bottom: kPaddingS),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        StarRating(
-                          rating: _starRating,
-                          size: 32,
-                          allowHalfRating: false,
-                          onRatingChanged: (double value) {
-                            setState(() {
-                              _starRating = value;
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: kPaddingS),
-                          child: Text(
-                            L10n.of(context).searchLabelRatingFilter(
-                                _starRating.round().toString()),
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ),
-                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

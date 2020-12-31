@@ -9,7 +9,6 @@ import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main_app.dart';
 import 'package:breakq/utils/app_preferences.dart';
-import 'package:breakq/utils/bottom_bar_items.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -47,7 +46,6 @@ Future<void> initCameras() async {
 void initServiceLocator() {
   getIt.registerLazySingleton<AppPreferences>(() => AppPreferences());
   getIt.registerLazySingleton<AppTheme>(() => AppTheme());
-  getIt.registerLazySingleton<BottomBarItems>(() => BottomBarItems());
   getIt.registerLazySingleton<Location>(() => Location());
   getIt.registerLazySingleton<AppGlobals>(() => AppGlobals());
 }

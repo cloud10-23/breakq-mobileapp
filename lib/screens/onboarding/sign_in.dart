@@ -1,11 +1,11 @@
 import 'package:breakq/blocs/application/application_bloc.dart';
-import 'package:breakq/widgets/sign_in_otp.dart';
+import 'package:breakq/screens/onboarding/widgets/sign_in_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/sign_in.dart';
+import 'package:breakq/screens/onboarding/widgets/sign_in.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/country.dart';
-import 'package:breakq/widgets/sigin_helper.dart';
+import 'package:breakq/screens/onboarding/widgets/sigin_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';

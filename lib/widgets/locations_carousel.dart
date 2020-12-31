@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/product_list_item.dart';
+import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:breakq/widgets/shimmer_box.dart';
 
 /// Carousel style widget for vertical listing of locations.

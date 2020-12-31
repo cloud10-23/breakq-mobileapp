@@ -1,4 +1,4 @@
-import 'package:breakq/screens/photo_gallery_header.dart';
+import 'package:breakq/widgets/photo_gallery_header.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';

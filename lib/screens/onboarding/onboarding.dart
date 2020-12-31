@@ -1,5 +1,5 @@
-import 'package:breakq/screens/intro_screen.dart';
-import 'package:breakq/screens/sign_in.dart';
+import 'package:breakq/screens/onboarding/intro_screen.dart';
+import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
