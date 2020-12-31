@@ -10,16 +10,16 @@ import 'package:breakq/widgets/product_list_item.dart';
 class SearchResultList extends StatelessWidget {
   const SearchResultList({
     Key key,
-    this.locations,
+    this.products,
     this.currentListType,
   }) : super(key: key);
 
-  final List<ProductModel> locations;
+  final List<ProductModel> products;
   final ToolbarOptionModel currentListType;
 
   @override
   Widget build(BuildContext context) {
-    if (locations?.isEmpty ?? true) {
+    if (products?.isEmpty ?? true) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 3 * kPaddingM),
         child: Column(
@@ -51,16 +51,20 @@ class SearchResultList extends StatelessWidget {
       child: Wrap(
         runSpacing: kPaddingS,
         alignment: WrapAlignment.spaceBetween,
-        children: locations.map((ProductModel item) {
+        children: products.map((ProductModel item) {
           switch (_viewType) {
             case ProductListItemViewType.grid:
-              return FractionallySizedBox(
-                widthFactor: 0.5,
-                child: Container(
-                  padding: const EdgeInsets.only(right: kPaddingM),
-                  child: ProductListItem(
-                    product: item,
-                    viewType: _viewType,
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    kPaddingM, kPaddingL, kPaddingM, 0),
+                child: FractionallySizedBox(
+                  widthFactor: 0.30,
+                  child: Container(
+                    padding: const EdgeInsets.only(right: kPaddingS),
+                    child: ProductListItem(
+                      product: item,
+                      viewType: _viewType,
+                    ),
                   ),
                 ),
               );

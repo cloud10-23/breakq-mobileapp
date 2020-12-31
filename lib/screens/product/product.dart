@@ -25,7 +25,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  final ProductsRepository locationRepository = const ProductsRepository();
+  final ProductsRepository productRepository = const ProductsRepository();
 
   /// The GlobalKey needed to access Scaffold widget.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -42,7 +42,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> _loadData() async {
     /// Load location data.
-    _location = await locationRepository.getProduct(id: widget.productId);
+    _location = await productRepository.getProduct(id: widget.productId);
     setState(() {});
   }
 

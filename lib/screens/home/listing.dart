@@ -9,12 +9,10 @@ import 'package:breakq/data/models/search_tab_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/screens/home/widgets/home_header.dart';
 import 'package:breakq/screens/home/widgets/search_filter_drawer.dart';
 import 'package:breakq/screens/home/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/home/widgets/search_locations_delegate.dart';
 import 'package:breakq/screens/home/widgets/search_result_list.dart';
-import 'package:breakq/screens/home/widgets/search_result_title.dart';
 import 'package:breakq/screens/home/widgets/search_tabs.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
@@ -87,14 +85,14 @@ class ListingState extends State<Listing> {
 
     searchListTypes = <dynamic>[
       <String, dynamic>{
-        'code': describeEnum(ProductListItemViewType.list),
-        'label': '',
-        'icon': Icons.view_list,
-      },
-      <String, dynamic>{
         'code': describeEnum(ProductListItemViewType.grid),
         'label': '',
         'icon': Icons.view_quilt,
+      },
+      <String, dynamic>{
+        'code': describeEnum(ProductListItemViewType.list),
+        'label': '',
+        'icon': Icons.view_list,
       },
       <String, dynamic>{
         'code': describeEnum(ProductListItemViewType.block),
@@ -235,7 +233,7 @@ class ListingState extends State<Listing> {
                                       ListTypeChangedHomeEvent(newListType)),
                             ),
                           SearchResultList(
-                            locations: session.products,
+                            products: session.products,
                             currentListType: session.currentListType,
                           ),
                         ]),

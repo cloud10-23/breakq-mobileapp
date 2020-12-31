@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/utils/string.dart';
 import 'package:sprintf/sprintf.dart';
 
-enum ProductListItemViewType { search, list, grid, block, map }
+enum ProductListItemViewType { grid, search, list, block, map }
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
@@ -29,9 +27,9 @@ class ProductListItem extends StatelessWidget {
   final bool isFavorited;
   final VoidCallback onFavoriteButtonPressed;
 
-  void _showLocationScreen(BuildContext context) {
-    Navigator.pushNamed(context, Routes.location, arguments: product.id);
-  }
+  // void _showLocationScreen(BuildContext context) {
+  //   Navigator.pushNamed(context, Routes.location, arguments: product.id);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +111,7 @@ class ProductListItem extends StatelessWidget {
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1
+                          .caption
                           .copyWith(color: Theme.of(context).hintColor),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -137,28 +135,6 @@ class ProductListItem extends StatelessWidget {
                                 product.price.toString(),
                                 style:
                                     Theme.of(context).textTheme.subtitle1.bold,
-                              ),
-                              const Padding(
-                                  padding:
-                                      EdgeInsets.only(right: kPaddingS / 2)),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 2),
-                                child: Icon(
-                                  Icons.star,
-                                  size: 22,
-                                  color: kPrimaryColor,
-                                ),
-                              ),
-                              Text(
-                                sprintf('(%s)', <String>[
-                                  L10n.of(context).locationTotalReviews(
-                                      product.price.toString())
-                                ]),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    .copyWith(
-                                        color: Theme.of(context).disabledColor),
                               ),
                             ],
                           ),
@@ -189,140 +165,89 @@ class ProductListItem extends StatelessWidget {
               //   width: 1,
               // ),
             ),
-            child: InkWell(
-              onTap: () {
-                // _showLocationScreen(context);
-              },
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: 120,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(product.image),
-                          // image: NetworkImage(product.image),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(kBoxDecorationRadius),
-                          topRight: Radius.circular(kBoxDecorationRadius),
+            child: Column(
+              children: [
+                InkWell(
+                  splashColor: kPrimaryColor,
+                  onTap: () {
+                    // _showLocationScreen(context);
+                  },
+                  onLongPress: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(product.image),
+                            // image: NetworkImage(product.image),
+                            fit: BoxFit.fill,
+                          ),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(kBoxDecorationRadius),
+                            topRight: Radius.circular(kBoxDecorationRadius),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: kPaddingS, left: kPaddingS, right: kPaddingS),
-                      child: Text(
-                        product.title,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText2.bold,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: kPaddingS, left: kPaddingS, right: kPaddingS),
+                        child: Text(
+                          product.title,
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.bodyText2.bold,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: kPaddingS, right: kPaddingS, top: 2),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              product.description,
-                              maxLines: 1,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  .copyWith(color: Theme.of(context).hintColor),
-                              overflow: TextOverflow.ellipsis,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: kPaddingS, right: kPaddingS, top: 2),
+                        child: Text(
+                          product.quantity,
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .caption
+                              .copyWith(color: Theme.of(context).hintColor),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: kPaddingS,
+                            right: kPaddingS,
+                            bottom: kPaddingS,
+                            top: 2),
+                        child: Row(
+                          children: <Widget>[
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsets.only(right: 2),
+                              child: Text(
+                                "₹",
+                                style:
+                                    Theme.of(context).textTheme.bodyText2.bold,
+                              ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: kPaddingS,
-                          right: kPaddingS,
-                          bottom: kPaddingS,
-                          top: 2),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(right: 2),
-                            child: Text(
-                              "₹",
+                            Text(
+                              product.price.toString(),
                               style: Theme.of(context).textTheme.bodyText2.bold,
                             ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  product.price.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      .bold,
-                                ),
-                                const Padding(
-                                    padding:
-                                        EdgeInsets.only(right: kPaddingS / 2)),
-                                const Padding(
-                                  padding: EdgeInsets.only(right: 2),
-                                  child: Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Text(
-                                  sprintf('(%s)', <String>[
-                                    L10n.of(context).locationTotalReviews(
-                                        product.price.toString())
-                                  ]),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      .copyWith(
-                                          color:
-                                              Theme.of(context).disabledColor),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                            Spacer(),
+                          ],
+                        ),
                       ),
-                    ),
-                    // if (branch.distance > 0)
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
-                    //     child: Row(
-                    //       children: <Widget>[
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(right: 2),
-                    //           child: Icon(
-                    //             Icons.near_me,
-                    //             size: 14,
-                    //             color: Theme.of(context).hintColor,
-                    //           ),
-                    //         ),
-                    //         Expanded(
-                    //           child: Text(
-                    //             sprintf('%.1f km', <double>[branch.distance]),
-                    //             maxLines: 1,
-                    //             style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).hintColor),
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   )
-                    // else
-                    //   Container(
-                    //     padding: const EdgeInsets.only(bottom: 10),
-                    //   ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                IconButton(
+                  onPressed: () {
+                    print('+ icon pressed!');
+                  },
+                  color: kPrimaryColor,
+                  icon: Icon(Icons.add),
+                ),
+              ],
             ),
           ),
         );
@@ -384,11 +309,11 @@ class ProductListItem extends StatelessWidget {
                           ),
                           const Padding(padding: EdgeInsets.only(top: 2)),
                           Text(
-                            sprintf('%s', <String>[product.description]),
+                            sprintf('%s', <String>[product.quantity]),
                             maxLines: 1,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .caption
                                 .copyWith(color: Theme.of(context).hintColor),
                           ),
                           Padding(
@@ -418,31 +343,6 @@ class ProductListItem extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // if (branch.distance > 0)
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(top: 5),
-                          //     child: Row(
-                          //       children: <Widget>[
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(right: 2),
-                          //           child: Icon(
-                          //             Icons.near_me,
-                          //             size: 14,
-                          //             color: Theme.of(context).hintColor,
-                          //           ),
-                          //         ),
-                          //         Expanded(
-                          //           child: Text(
-                          //             sprintf('%.1f km', <double>[branch.distance]),
-                          //             maxLines: 1,
-                          //             style: Theme.of(context).textTheme.bodyText2.copyWith(color: Theme.of(context).hintColor),
-                          //           ),
-                          //         )
-                          //       ],
-                          //     ),
-                          //   )
-                          // else
-                          //   Container(),
                         ],
                       ),
                     ),
@@ -508,10 +408,10 @@ class ProductListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           Text(
-                            sprintf('%s', <String>[product.description]),
+                            sprintf('%s', <String>[product.quantity]),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .caption
                                 .copyWith(color: Theme.of(context).hintColor),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

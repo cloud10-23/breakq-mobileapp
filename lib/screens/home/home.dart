@@ -247,7 +247,7 @@ class HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                           SearchResultList(
-                            locations: session.products,
+                            products: session.products,
                             currentListType: session.currentListType,
                           ),
                         ]),
