@@ -223,11 +223,8 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                   onPressed: () {},
                   child: Text(
                     L10n.of(context).signInOTPResend,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .fs14
-                        .copyWith(color: kPrimaryColor),
+                    style:
+                        Theme.of(context).textTheme.caption.fs14.primaryColor,
                     textAlign: TextAlign.center,
                   ),
                 ),

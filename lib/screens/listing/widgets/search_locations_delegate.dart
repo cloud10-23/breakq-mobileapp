@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:breakq/data/models/search_history_model.dart';
 import 'package:breakq/screens/listing/widgets/search_locations_delegate_history.dart';
 import 'package:breakq/screens/listing/widgets/search_locations_delegate_result_list.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class SearchLocationsDelegate extends SearchDelegate<String> {
   SearchLocationsDelegate({this.hintText}) : super(searchFieldLabel: hintText);
@@ -81,12 +82,11 @@ class SearchLocationsDelegate extends SearchDelegate<String> {
       primaryColor: theme.appBarTheme.color,
       primaryIconTheme: theme.primaryIconTheme,
       primaryColorBrightness: Brightness.dark,
-      primaryTextTheme: theme.textTheme.copyWith(
-          headline6: theme.textTheme.headline6.copyWith(color: Colors.white)),
+      primaryTextTheme:
+          theme.textTheme.copyWith(headline6: theme.textTheme.headline6.white),
       cursorColor: Colors.white,
-      textTheme: theme.textTheme.copyWith(
-        headline6: theme.textTheme.headline6.copyWith(color: Colors.white),
-      ),
+      textTheme:
+          theme.textTheme.copyWith(headline6: theme.textTheme.headline6.white),
       inputDecorationTheme: theme.inputDecorationTheme.copyWith(
         hintStyle: const TextStyle(color: Colors.white54),
       ),

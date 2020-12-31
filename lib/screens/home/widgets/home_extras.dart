@@ -1,5 +1,6 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class TopDealsCard extends StatelessWidget {
   TopDealsCard({this.index});
@@ -22,14 +23,9 @@ class TopDealsCard extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              categories[index]['name'],
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
+            Text(categories[index]['name'],
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText2.bold),
             SizedBox(
               height: 5.0,
             ),

@@ -13,6 +13,8 @@ extension TextStyleExtension on TextStyle {
   TextStyle get w800 => copyWith(fontWeight: FontWeight.w800);
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
 
+  TextStyle get fs8 => copyWith(fontSize: 8);
+  TextStyle get fs10 => copyWith(fontSize: 10);
   TextStyle get fs14 => copyWith(fontSize: 14);
   TextStyle get fs16 => copyWith(fontSize: 16);
   TextStyle get fs18 => copyWith(fontSize: 18);

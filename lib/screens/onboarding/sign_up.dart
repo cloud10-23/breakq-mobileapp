@@ -12,6 +12,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/form_label.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key key}) : super(key: key);
@@ -92,10 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           top: kPaddingL, bottom: kPaddingL),
                       child: Text(
                         L10n.of(context).signUpTitle,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline5.bold,
                         textAlign: TextAlign.center,
                       ),
                     ),

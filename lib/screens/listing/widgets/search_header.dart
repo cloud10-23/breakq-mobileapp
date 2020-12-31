@@ -4,6 +4,7 @@ import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/string.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class SearchHeader extends SliverPersistentHeaderDelegate {
   SearchHeader({
@@ -57,8 +58,11 @@ class SearchHeader extends SliverPersistentHeaderDelegate {
                           label == null || label.isEmpty
                               ? L10n.of(context).searchLabelQuickSearch
                               : label,
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: Theme.of(context).hintColor, fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .fs18
+                              .copyWith(color: Theme.of(context).hintColor),
                         ),
                       ),
                       if (label.isNotNullOrEmpty)

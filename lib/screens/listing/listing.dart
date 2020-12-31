@@ -17,6 +17,7 @@ import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:breakq/utils/list.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class Listing extends StatefulWidget {
   const Listing({Key key, this.title}) : super(key: key);
@@ -185,10 +186,7 @@ class ListingState extends State<Listing> {
                     slivers: <Widget>[
                       SliverAppBar(
                         title: Text(widget.title ?? "Category Name",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(fontWeight: FontWeight.bold)),
+                            style: Theme.of(context).textTheme.bodyText1.bold),
                         actions: [
                           IconButton(
                               icon: Icon(Icons.search), onPressed: () {}),

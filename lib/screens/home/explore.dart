@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -204,9 +205,8 @@ class HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     children: [
                       Text('Scan',
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                          style:
+                              Theme.of(context).textTheme.bodyText1.bold.white),
                       SizedBox(width: kPaddingM),
                       Image(
                         image: AssetImage(AssetsImages.scan),
@@ -261,12 +261,8 @@ class HomeScreenState extends State<HomeScreen> {
                             flex: 3,
                             child: Text(
                               (index == 0) ? 'Quick Shopping' : 'Set Budget',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10.0),
+                              style:
+                                  Theme.of(context).textTheme.caption.bold.fs10,
                             ),
                           ),
                         ],
@@ -325,14 +321,9 @@ class HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 5.0,
                     ),
-                    Text(
-                      categories[index]['name'],
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text(categories[index]['name'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText2.bold),
                     SizedBox(
                       height: 5.0,
                     ),
