@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/utils/string.dart';
 
 /// A single item in the collection of options.

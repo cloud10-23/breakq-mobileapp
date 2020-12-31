@@ -1,10 +1,6 @@
 import 'package:breakq/widgets/photo_gallery_header.dart';
 import 'package:flutter/material.dart';
-import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/utils/text_style.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LocationHeader extends StatelessWidget {

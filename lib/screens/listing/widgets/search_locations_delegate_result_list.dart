@@ -22,13 +22,13 @@ class SearchLocationsDelegateResultList extends StatefulWidget {
 
 class _SearchLocationsDelegateResultListState
     extends State<SearchLocationsDelegateResultList> {
-  HomeBloc _HomeBloc;
+  HomeBloc _homeBloc;
 
   List<ProductModel> _locations;
 
   @override
   void initState() {
-    _HomeBloc = BlocProvider.of<HomeBloc>(context);
+    _homeBloc = BlocProvider.of<HomeBloc>(context);
 
     super.initState();
   }
@@ -37,7 +37,7 @@ class _SearchLocationsDelegateResultListState
   Widget build(BuildContext context) {
     final String q = widget.query.trim();
 
-    _HomeBloc.add(QuickSearchRequestedHomeEvent(q));
+    _homeBloc.add(QuickSearchRequestedHomeEvent(q));
 
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (BuildContext context, HomeState state) {

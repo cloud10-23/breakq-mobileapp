@@ -3,7 +3,6 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/utils/text_style.dart';
 
 class SearchResultTitle extends StatelessWidget {
   const SearchResultTitle({

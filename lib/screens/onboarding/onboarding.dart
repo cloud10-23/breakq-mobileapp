@@ -1,7 +1,5 @@
 import 'package:breakq/screens/onboarding/intro_screen.dart';
-import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -18,8 +16,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   AnimationController _rippleAnimationController;
   Animation<double> _rippleAnimation;
 
-  ApplicationBloc _applicationBloc;
-
   @override
   void initState() {
     super.initState();
@@ -28,8 +24,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       vsync: this,
       duration: kRippleAnimationDuration,
     );
-
-    _applicationBloc = BlocProvider.of<ApplicationBloc>(context);
   }
 
   @override

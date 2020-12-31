@@ -13,9 +13,6 @@ import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/list_title.dart';
-import 'package:breakq/blocs/theme/theme_bloc.dart';
-import 'package:breakq/configs/app_theme.dart';
-import 'package:breakq/widgets/picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key key}) : super(key: key);
@@ -253,38 +250,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //   }
   // }
 
-  Future<void> _showDarkModePicker(BuildContext context) async {
-    final List<PickerItem<DarkOption>> _pickerItems =
-        <PickerItem<DarkOption>>[];
-    final List<PickerItem<DarkOption>> _selectedItems =
-        <PickerItem<DarkOption>>[];
+  // Future<void> _showDarkModePicker(BuildContext context) async {
+  //   final List<PickerItem<DarkOption>> _pickerItems =
+  //       <PickerItem<DarkOption>>[];
+  //   final List<PickerItem<DarkOption>> _selectedItems =
+  //       <PickerItem<DarkOption>>[];
 
-    for (final DarkOption option in DarkOption.values) {
-      _pickerItems.add(PickerItem<DarkOption>(
-        text: L10n.of(context).commonDarkMode(option.toString()),
-        value: option,
-      ));
-    }
+  //   for (final DarkOption option in DarkOption.values) {
+  //     _pickerItems.add(PickerItem<DarkOption>(
+  //       text: L10n.of(context).commonDarkMode(option.toString()),
+  //       value: option,
+  //     ));
+  //   }
 
-    _selectedItems.add(PickerItem<DarkOption>(
-      text: L10n.of(context)
-          .commonDarkMode(getIt.get<AppGlobals>().darkThemeOption),
-      value: getIt.get<AppGlobals>().darkThemeOption,
-    ));
+  //   _selectedItems.add(PickerItem<DarkOption>(
+  //     text: L10n.of(context)
+  //         .commonDarkMode(getIt.get<AppGlobals>().darkThemeOption),
+  //     value: getIt.get<AppGlobals>().darkThemeOption,
+  //   ));
 
-    final dynamic selectedDarkMode = await Navigator.pushNamed(
-      context,
-      Routes.picker,
-      arguments: <String, dynamic>{
-        'title': L10n.of(context).settingsListDarkMode,
-        'items': _pickerItems,
-        'itemsSelected': _selectedItems,
-      },
-    );
+  //   final dynamic selectedDarkMode = await Navigator.pushNamed(
+  //     context,
+  //     Routes.picker,
+  //     arguments: <String, dynamic>{
+  //       'title': L10n.of(context).settingsListDarkMode,
+  //       'items': _pickerItems,
+  //       'itemsSelected': _selectedItems,
+  //     },
+  //   );
 
-    if (selectedDarkMode != null) {
-      BlocProvider.of<ThemeBloc>(context).add(ChangeRequestedThemeEvent(
-          darkOption: selectedDarkMode as DarkOption));
-    }
-  }
+  //   if (selectedDarkMode != null) {
+  //     BlocProvider.of<ThemeBloc>(context).add(ChangeRequestedThemeEvent(
+  //         darkOption: selectedDarkMode as DarkOption));
+  //   }
+  // }
 }

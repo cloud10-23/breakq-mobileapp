@@ -1,14 +1,9 @@
-import 'package:breakq/data/models/country.dart';
-import 'package:breakq/main.dart';
-import 'package:breakq/screens/onboarding/widgets/sigin_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/form_utils.dart';
-import 'package:breakq/utils/form_validator.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
@@ -31,8 +26,6 @@ class SignInOTPWidget extends StatefulWidget {
 
 class _SignInOTPWidgetState extends State<SignInOTPWidget>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _textOTPController = TextEditingController();
-
   final GlobalKey<ThemeTextInputState> keyOTPInput =
       GlobalKey<ThemeTextInputState>();
 

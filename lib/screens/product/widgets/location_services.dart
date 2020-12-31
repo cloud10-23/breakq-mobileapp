@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/data/models/service_model.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/link_text.dart';
-import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/uppercase_title.dart';
-import 'package:breakq/utils/text_style.dart';
-import 'package:sprintf/sprintf.dart';
 
 class LocationServices extends StatelessWidget {
   const LocationServices({

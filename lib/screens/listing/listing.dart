@@ -11,7 +11,6 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/search_filter_drawer.dart';
 import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
-import 'package:breakq/screens/listing/widgets/search_locations_delegate.dart';
 import 'package:breakq/screens/listing/widgets/search_result_list.dart';
 import 'package:breakq/screens/listing/widgets/search_tabs.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
@@ -265,20 +264,20 @@ class ListingState extends State<Listing> {
     );
   }
 
-  Future<String> _quickSearch(SearchSessionModel session) async {
-    final String queryString = await showSearch(
-      context: context,
-      delegate: SearchLocationsDelegate(
-          hintText: L10n.of(context).searchPlaceholderQuickSearchLocations),
-      query: session.q,
-    );
+  // Future<String> _quickSearch(SearchSessionModel session) async {
+  //   final String queryString = await showSearch(
+  //     context: context,
+  //     delegate: SearchLocationsDelegate(
+  //         hintText: L10n.of(context).searchPlaceholderQuickSearchLocations),
+  //     query: session.q,
+  //   );
 
-    if (queryString == null) {
-      _homeBloc.add(FilteredListRequestedHomeEvent());
-    } else {
-      _homeBloc.add(KeywordChangedHomeEvent(queryString));
-    }
+  //   if (queryString == null) {
+  //     _homeBloc.add(FilteredListRequestedHomeEvent());
+  //   } else {
+  //     _homeBloc.add(KeywordChangedHomeEvent(queryString));
+  //   }
 
-    return queryString;
-  }
+  //   return queryString;
+  // }
 }

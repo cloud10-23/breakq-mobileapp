@@ -145,7 +145,6 @@ class _LocationScreenState extends State<LocationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    // TODO
                     L10n.of(context)
                         .locationAvailableServies(_location.categoryId),
                     style: Theme.of(context).textTheme.subtitle1,

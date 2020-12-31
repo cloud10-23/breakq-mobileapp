@@ -1,17 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/blocs/language/language_bloc.dart';
 import 'package:breakq/blocs/theme/theme_bloc.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_preferences.dart';
-import 'package:breakq/utils/console.dart';
 import 'package:breakq/utils/string.dart';
 
 part 'application_event.dart';

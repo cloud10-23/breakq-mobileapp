@@ -238,7 +238,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   Stream<AuthEvent> sendOtp(String phoNo) async* {
     StreamController<AuthEvent> eventStream = StreamController();
-    final PhoneVerificationCompleted =
+    final phoneVerificationCompleted =
         (PhoneAuthCredential authCredential) async {
       var userCredential =
           await FirebaseAuth.instance.signInWithCredential(authCredential);
@@ -252,15 +252,15 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       }
     };
 
-    final PhoneVerificationFailed = (FirebaseAuthException authException) {
+    final phoneVerificationFailed = (FirebaseAuthException authException) {
       print(authException.message);
       eventStream.add(LoginFailureAuthEvent(authException.message));
       eventStream.close();
     };
-    final PhoneCodeSent = (String verId, [int forceResent]) {
+    final phoneCodeSent = (String verId, [int forceResent]) {
       this._verID = verId;
     };
-    final PhoneCodeAutoRetrievalTimeout = (String verid) {
+    final phoneCodeAutoRetrievalTimeout = (String verid) {
       this._verID = verid;
       eventStream.close();
     };
@@ -268,10 +268,10 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     await _userRepository.sendOtp(
         phoNo,
         Duration(seconds: 1),
-        PhoneVerificationFailed,
-        PhoneVerificationCompleted,
-        PhoneCodeSent,
-        PhoneCodeAutoRetrievalTimeout);
+        phoneVerificationFailed,
+        phoneVerificationCompleted,
+        phoneCodeSent,
+        phoneCodeAutoRetrievalTimeout);
 
     yield* eventStream.stream;
   }

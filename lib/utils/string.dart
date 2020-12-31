@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:breakq/generated/l10n.dart';
 
 /// [String] extensions.
 extension StringExtension on String {

@@ -14,7 +14,6 @@ class SearchFilterDrawer extends StatefulWidget {
 }
 
 class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
-  double _starRating = 5;
   RangeValues _rangeValues = const RangeValues(0, 1000);
 
   @override
