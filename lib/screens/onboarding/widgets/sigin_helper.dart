@@ -98,12 +98,12 @@ class SignUpSocialButton extends StatelessWidget {
       child: OutlineButton(
         splashColor: Colors.grey,
         onPressed: () {
-          // if (social == Social.google)
-          //   BlocProvider.of<AuthBloc>(context)
-          //       .add(GoogleSignUpRequestedAuthEvent());
-          // else
-          //   BlocProvider.of<AuthBloc>(context)
-          //       .add(FacebookSignUpRequestedAuthEvent());
+          if (social == Social.google)
+            BlocProvider.of<AuthBloc>(context)
+                .add(GoogleLoginRequestedAuthEvent());
+          else
+            BlocProvider.of<AuthBloc>(context)
+                .add(FacebookLoginRequestedAuthEvent());
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
         highlightElevation: 0,

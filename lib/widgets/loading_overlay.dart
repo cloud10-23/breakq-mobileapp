@@ -17,7 +17,7 @@ class LoadingOverlay extends StatefulWidget {
   const LoadingOverlay({
     @required this.isLoading,
     @required this.child,
-    this.opacity = 0.1,
+    this.opacity = 0.65,
     this.progressIndicator = const CircularProgressIndicator(),
     this.color,
   }) : assert(isLoading != null);
@@ -32,7 +32,8 @@ class LoadingOverlay extends StatefulWidget {
   _LoadingOverlayState createState() => _LoadingOverlayState();
 }
 
-class _LoadingOverlayState extends State<LoadingOverlay> with SingleTickerProviderStateMixin {
+class _LoadingOverlayState extends State<LoadingOverlay>
+    with SingleTickerProviderStateMixin {
   _LoadingOverlayState();
 
   AnimationController _controller;
@@ -43,13 +44,18 @@ class _LoadingOverlayState extends State<LoadingOverlay> with SingleTickerProvid
   void initState() {
     super.initState();
     _overlayVisible = false;
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((AnimationStatus status) {
       // ignore: unnecessary_statements
-      status == AnimationStatus.forward ? setState(() => <bool>{_overlayVisible = true}) : null;
+      status == AnimationStatus.forward
+          ? setState(() => <bool>{_overlayVisible = true})
+          : null;
       // ignore: unnecessary_statements
-      status == AnimationStatus.dismissed ? setState(() => <bool>{_overlayVisible = false}) : null;
+      status == AnimationStatus.dismissed
+          ? setState(() => <bool>{_overlayVisible = false})
+          : null;
     });
     if (widget.isLoading) {
       _controller.forward();
