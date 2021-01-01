@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/screens/home/explore.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ AuthBloc _authBloc;
 HomeBloc _searchBloc;
 LanguageBloc _languageBloc;
 ThemeBloc _themeBloc;
+CartBloc _cartBloc;
 
 class MainApp extends StatefulWidget {
   @override
@@ -56,7 +58,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _searchBloc = HomeBloc();
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
-
+    _cartBloc = CartBloc()..add(InitCartEvent());
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       languageBloc: _languageBloc,
@@ -72,6 +74,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _searchBloc.close();
     _languageBloc.close();
     _themeBloc.close();
+    _cartBloc.close();
     _applicationBloc.close();
     super.dispose();
   }
@@ -99,6 +102,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         // BlocProvider<LanguageBloc>(
         //     create: (BuildContext context) => _languageBloc),
         BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),
+        BlocProvider<CartBloc>(create: (BuildContext context) => _cartBloc),
       ],
       child: BlocBuilder<ApplicationBloc, ApplicationState>(
         buildWhen:

@@ -1,6 +1,6 @@
-enum LocationGenderSpecification { men, women, unisex }
+import 'package:equatable/equatable.dart';
 
-class ProductModel {
+class ProductModel extends Equatable {
   ProductModel({
     this.id,
     this.title,
@@ -33,4 +33,7 @@ class ProductModel {
   final String image;
   final int price;
   final int available;
+
+  @override
+  List<Object> get props => [id];
 }
