@@ -46,13 +46,9 @@ class Routes {
           },
         );
       case signIn:
-        return SlideRoute(widget: SignInScreen());
+        return SlideRoute(widget: const SignInScreen());
       case signUp:
-        return MaterialPageRoute<SignUpScreen>(
-          builder: (BuildContext context) {
-            return const SignUpScreen();
-          },
-        );
+        return SlideRoute(widget: const SignUpScreen());
       case editProfile:
         return MaterialPageRoute<EditProfileScreen>(
           builder: (BuildContext context) {

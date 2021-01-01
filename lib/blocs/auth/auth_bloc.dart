@@ -29,9 +29,9 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
-    // if (event is UserRegisteredAuthEvent) {
-    //   yield* _mapOnRegisterAuthEventToState(event);
-    if (event is LoginRequestedAuthEvent) {
+    if (event is UserRegisteredAuthEvent) {
+      yield* _mapOnRegisterAuthEventToState(event);
+    } else if (event is LoginRequestedAuthEvent) {
       yield* _mapLoginAuthEventToState(event);
     } else if (event is GoogleLoginRequestedAuthEvent) {
       yield* _mapGoogleLoginAuthEventToState(event);
@@ -73,21 +73,16 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     yield LoginFailureAuthState(event.error);
   }
 
-  // Stream<AuthState> _mapOnRegisterAuthEventToState(
-  //     UserRegisteredAuthEvent event) async* {
-  //   ///Notify loading to UI
-  //   yield ProcessInProgressAuthState();
+  Stream<AuthState> _mapOnRegisterAuthEventToState(
+      UserRegisteredAuthEvent event) async* {
+    ///Notify loading to UI
+    yield ProcessInProgressAuthState();
 
-  //   getIt.get<AppGlobals>().user = await const UserRepository().getProfile();
-
-  //   try {
-  //     add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-
-  //     yield LoginSuccessAuthState();
-  //   } catch (error) {
-  //     yield RegistrationFailureAuthState(error.toString());
-  //   }
-  // }
+    subscription = sendOtp(event.phone).listen((event) {
+      add(event);
+    });
+    yield VerifyOTPAuthState();
+  }
 
   Stream<AuthState> _mapOTPVerificationAuthEventToState(
       OTPVerificationAuthEvent event) async* {

@@ -197,7 +197,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     },
                     controller: _textNameController,
                     validator: FormValidator.isRequired(
-                        L10n.of(context).formValidatorRequired),
+                        L10n.of(context).formValidatorNameRequired),
                   ),
                   FormLabel(text: L10n.of(context).editProfileLabelPhone),
                   ThemeTextInput(

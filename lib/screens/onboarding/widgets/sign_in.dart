@@ -113,7 +113,7 @@ class _SignInWidgetState extends State<SignInWidget>
                     onSubmitted: (String text) => _validateForm(),
                     validator: FormValidator.validators([
                       FormValidator.isRequired(
-                          L10n.of(context).formValidatorRequired),
+                          L10n.of(context).formValidatorPhoneRequired),
                       FormValidator.isMinLength(
                           length: 10,
                           errorMessage: "Please enter a 10 digit number"),

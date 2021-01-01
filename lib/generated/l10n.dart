@@ -1328,16 +1328,6 @@ class L10n {
     );
   }
 
-  /// `Please enter your Phone Number`
-  String get formValidatorRequired {
-    return Intl.message(
-      'Please enter your Phone Number',
-      name: 'formValidatorRequired',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Email format invalid`
   String get formValidatorEmail {
     return Intl.message(
@@ -1355,6 +1345,26 @@ class L10n {
       name: 'formValidatorMinLength',
       desc: '',
       args: [length],
+    );
+  }
+
+  /// `Please enter your Name`
+  String get formValidatorNameRequired {
+    return Intl.message(
+      'Please enter your Name',
+      name: 'formValidatorNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your Phone Number`
+  String get formValidatorPhoneRequired {
+    return Intl.message(
+      'Please enter your Phone Number',
+      name: 'formValidatorPhoneRequired',
+      desc: '',
+      args: [],
     );
   }
 

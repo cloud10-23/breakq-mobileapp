@@ -7,6 +7,7 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen();
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
