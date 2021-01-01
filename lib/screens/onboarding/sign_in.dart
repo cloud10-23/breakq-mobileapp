@@ -48,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen>
                     bottom: MediaQuery.of(context).size.height * 0.5),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(AssetsImages.loginBackground),
+                    image: AssetImage(AssetImages.loginBackground),
                     fit: BoxFit.cover,
                   ),
                 ),

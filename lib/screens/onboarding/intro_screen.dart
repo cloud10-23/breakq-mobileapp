@@ -32,7 +32,7 @@ class _IntroScreenState extends State<IntroScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(AssetsImages.introScreen),
+              image: AssetImage(AssetImages.introScreen),
               fit: BoxFit.fitWidth,
             ),
           ),

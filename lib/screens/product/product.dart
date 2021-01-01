@@ -12,8 +12,8 @@ import 'package:breakq/widgets/app_button.dart';
 import 'package:breakq/widgets/sliver_app_title.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class LocationScreen extends StatefulWidget {
-  const LocationScreen({
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({
     Key key,
     this.productId = 0,
   }) : super(key: key);
@@ -21,10 +21,10 @@ class LocationScreen extends StatefulWidget {
   final int productId;
 
   @override
-  _LocationScreenState createState() => _LocationScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen> {
+class _ProductScreenState extends State<ProductScreen> {
   final ProductsRepository productRepository = const ProductsRepository();
 
   /// The GlobalKey needed to access Scaffold widget.
@@ -160,8 +160,8 @@ class _LocationScreenState extends State<LocationScreen> {
             AppButton(
               text: L10n.of(context).locationBtnBook,
               onPressed: () {
-                Navigator.pushNamed(context, Routes.booking,
-                    arguments: <String, dynamic>{'locationId': _location.id});
+                // Navigator.pushNamed(context, Routes.booking,
+                // arguments: <String, dynamic>{'locationId': _location.id});
               },
             ),
           ],

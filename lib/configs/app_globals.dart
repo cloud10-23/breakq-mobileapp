@@ -30,6 +30,9 @@ class AppGlobals {
   /// [GlobalKey] for tab bar in [SearchScreen].
   GlobalKey globalKeySearchTabs;
 
+  /// [GlobalKey] for tab bar in [CustomNavigator].
+  GlobalKey<NavigatorState> globalKeyNavigator;
+
   /// Dark Theme option
   DarkOption darkThemeOption = DarkOption.alwaysOff;
 

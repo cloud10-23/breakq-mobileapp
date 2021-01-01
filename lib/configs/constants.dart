@@ -136,7 +136,7 @@ const List<Map<String, String>> categories = [
 ];
 
 /// Assets images
-class AssetsImages {
+class AssetImages {
   static const String introScreen = 'assets/images/onboarding/IntroScreen.png';
   static const String onboardingWelcome = 'assets/images/onboarding/shop-1.png';
   static const String onboardingFind = 'assets/images/onboarding/barcode.png';
@@ -160,6 +160,7 @@ class AssetsImages {
   static const String scan = 'assets/images/Scan.png';
 
   static const String orDivider = 'assets/images/or.png';
+  static const String cart = 'assets/images/cart.png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

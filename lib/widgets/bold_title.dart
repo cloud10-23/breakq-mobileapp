@@ -55,3 +55,44 @@ class BoldTitle extends StatelessWidget {
     );
   }
 }
+
+class CartTitle extends StatelessWidget {
+  const CartTitle({
+    Key key,
+    @required this.title,
+    this.padding,
+    this.textAlign,
+    this.maxLines = 1,
+  }) : super(key: key);
+
+  final String title;
+  final EdgeInsetsGeometry padding;
+  final int maxLines;
+  final TextAlign textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding ??
+          const EdgeInsets.only(
+              left: kPaddingM,
+              right: kPaddingS,
+              top: kPaddingM,
+              bottom: kPaddingM),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline6.w800,
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
+            textAlign: textAlign ?? TextAlign.left,
+          ),
+        ],
+      ),
+    );
+  }
+}

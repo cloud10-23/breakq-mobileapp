@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
+import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/home/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,8 +116,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
 
           // if (appState is SetupSuccessApplicationState) {
           //   // homeWidget = HomeExploreScreen();
-          homeWidget =
-              HomeScreen(key: getIt.get<AppGlobals>().globalKeySearchScreen);
+          homeWidget = CartNavigation(
+              homeScreen: HomeScreen(
+                  key: getIt.get<AppGlobals>().globalKeySearchScreen),
+              navigatorKey: getIt.get<AppGlobals>().globalKeyNavigator);
           // } else if (appState is OnboardingInProgressApplicationState) {
           //   homeWidget = OnboardingScreen();
           // } else {

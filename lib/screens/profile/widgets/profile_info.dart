@@ -11,7 +11,7 @@ class ProfileInfo extends StatelessWidget {
     String _photoURL = getIt.get<AppGlobals>().user?.photoURL ?? null;
     ImageProvider _image;
     if (_photoURL == null)
-      _image = AssetImage(AssetsImages.profileDefault);
+      _image = AssetImage(AssetImages.profileDefault);
     else
       _image = NetworkImage(_photoURL);
 

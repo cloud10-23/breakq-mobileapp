@@ -119,7 +119,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _profilePicture() {
     ImageProvider _defaultImage;
     if (getIt.get<AppGlobals>().user?.photoURL == null)
-      _defaultImage = AssetImage(AssetsImages.profileDefault);
+      _defaultImage = AssetImage(AssetImages.profileDefault);
     else
       _defaultImage = NetworkImage(getIt.get<AppGlobals>().user.photoURL);
     return Row(

@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 bottom: MediaQuery.of(context).size.height * 0.5),
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(AssetsImages.loginBackground),
+                image: AssetImage(AssetImages.loginBackground),
                 fit: BoxFit.cover,
               ),
             ),
@@ -195,7 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                     ),
                     SizedBox(height: kPaddingL * 1.5),
-                    Image(image: AssetImage(AssetsImages.orDivider)),
+                    Image(image: AssetImage(AssetImages.orDivider)),
                     SizedBox(height: kPaddingM),
                     SignUpSocialButton(social: Social.google),
                     SignUpSocialButton(social: Social.facebook),

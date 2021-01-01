@@ -1,3 +1,4 @@
+import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
@@ -10,11 +11,8 @@ import 'package:breakq/widgets/picker.dart';
 
 /// Generate [MaterialPageRoute] for our screens.
 class Routes {
-  static const String location = '/location';
-  static const String locationReviews = '/location/reviews';
-  static const String locationGallery = '/location/gallery';
+  static const String product = '/product';
   static const String picker = '/picker';
-  static const String searchMap = '/search/map';
   static const String forgotPassword = '/forgotPassword';
   static const String signIn = '/signIn';
   static const String signInOtp = '/signIn/otp';
@@ -22,36 +20,16 @@ class Routes {
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String takePicture = '/takePicture';
-  static const String favorites = '/favorites';
-  static const String vouchers = '/vouchers';
-  static const String voucher = '/voucher';
-  static const String booking = '/booking';
-  static const String bookingNotes = '/booking/notes';
-  static const String appointment = '/appointment';
-  static const String appointmentRating = '/appointment/rating';
-  static const String appointmentRatingSuccess = '/appointment/rating/success';
-  static const String ratings = '/ratings';
-  static const String paymentCard = '/paymentCard';
-  static const String addPaymentCard = '/paymentCard/add';
-  static const String invite = '/invite';
-  static const String wallet = '/wallet';
-
-  static const String listing = '/home/listing';
+  static const String locationGallery = '/locationGallery';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case listing:
-        return MaterialPageRoute<Listing>(
+      case product:
+        return MaterialPageRoute<ProductScreen>(
           builder: (BuildContext context) {
-            return const Listing();
+            return ProductScreen(productId: routeSettings.arguments as int);
           },
-        );
-      case location:
-        return MaterialPageRoute<LocationScreen>(
-          builder: (BuildContext context) {
-            return LocationScreen(productId: routeSettings.arguments as int);
-          },
-          settings: const RouteSettings(name: location),
+          settings: const RouteSettings(name: product),
         );
       case picker:
         return MaterialPageRoute<dynamic>(
@@ -69,8 +47,6 @@ class Routes {
         );
       case signIn:
         return SlideRoute(widget: SignInScreen());
-      // case signInOtp:
-      //   return SlideRoute(widget: SignInScreenOTP());
       case signUp:
         return MaterialPageRoute<SignUpScreen>(
           builder: (BuildContext context) {
@@ -99,8 +75,46 @@ class Routes {
   }
 }
 
+///
+/// The Custom Navigation is required so that the Cart Overlay is persistant
+/// even though we use `Navigator.push()` inside of `HomeScreen`
+///
+/// Refer this medium article for more info:
+/// https://medium.com/coding-with-flutter/flutter-case-study-multiple-navigators-with-bottomnavigationbar-90eb6caa6dbf
+///
+
+class CustomNavigatorRoutes {
+  static const String home = '/';
+  static const String listing = '/listing';
+}
+
+class CustomNavigator extends StatelessWidget {
+  CustomNavigator({this.navigatorKey, this.homeScreen});
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Widget homeScreen;
+
+  Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
+    return {
+      CustomNavigatorRoutes.home: (context) => homeScreen,
+      CustomNavigatorRoutes.listing: (context) => Listing(),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var routeBuilders = _routeBuilders(context);
+
+    return Navigator(
+        key: navigatorKey,
+        initialRoute: CustomNavigatorRoutes.home,
+        onGenerateRoute: (routeSettings) {
+          return SlideRoute(widget: routeBuilders[routeSettings.name](context));
+        });
+  }
+}
+
 class SlideRoute extends PageRouteBuilder {
-  Widget widget;
+  final Widget widget;
   SlideRoute({this.widget})
       : super(
             pageBuilder: (context, animation, secondaryAnimation) => widget,

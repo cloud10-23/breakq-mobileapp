@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Container(
                                     height: 80,
                                     child: const Image(
-                                        image: AssetImage(AssetsImages.icon)),
+                                        image: AssetImage(AssetImages.icon)),
                                   ),
                                 ),
                                 Padding(

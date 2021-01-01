@@ -105,19 +105,19 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               PageViewModel(
                 title: L10n.of(context).onboardingPage1Title,
                 body: L10n.of(context).onboardingPage1Body,
-                image: introImage(AssetsImages.onboardingWelcome),
+                image: introImage(AssetImages.onboardingWelcome),
                 decoration: pageDecoration,
               ),
               PageViewModel(
                 title: L10n.of(context).onboardingPage2Title,
                 body: L10n.of(context).onboardingPage2Body,
-                image: introImage(AssetsImages.onboardingFind),
+                image: introImage(AssetImages.onboardingFind),
                 decoration: pageDecoration,
               ),
               PageViewModel(
                 title: L10n.of(context).onboardingPage3Title,
                 body: L10n.of(context).onboardingPage3Body,
-                image: introImage(AssetsImages.onboardingAppointment),
+                image: introImage(AssetImages.onboardingAppointment),
                 decoration: pageDecoration,
               ),
             ],

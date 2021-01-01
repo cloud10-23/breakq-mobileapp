@@ -148,7 +148,7 @@ class _SignInWidgetState extends State<SignInWidget>
                     },
                   ),
                   SizedBox(height: kPaddingL * 1.5),
-                  Image(image: AssetImage(AssetsImages.orDivider)),
+                  Image(image: AssetImage(AssetImages.orDivider)),
                   SizedBox(height: kPaddingL),
                   SignInSocialButton(social: Social.google),
                   SignInSocialButton(social: Social.facebook),
