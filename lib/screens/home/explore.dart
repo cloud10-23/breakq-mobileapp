@@ -3,7 +3,9 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
+import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
@@ -180,6 +182,14 @@ class HomeScreenState extends State<HomeScreen> {
                       ]),
                       Container(height: 300, child: _showTopDeals()),
                       SizedBox(height: kPaddingBtwnStrips),
+                      Row(mainAxisSize: MainAxisSize.min, children: [
+                        BoldTitle(title: "Exclusive Products"),
+                        Spacer(),
+                        Text('View All'),
+                        Icon(Icons.navigate_next),
+                      ]),
+                      Container(height: 225, child: _showExclusiveProducts()),
+                      SizedBox(height: kPaddingBtwnStrips),
                       BoldTitle(title: 'Categories'),
                     ]),
                   ),
@@ -211,41 +221,7 @@ class HomeScreenState extends State<HomeScreen> {
               itemCount: 4,
               padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 120 + kPaddingS,
-                  margin: const EdgeInsets.only(bottom: 1), // for card shadow
-                  padding: const EdgeInsets.only(right: kPaddingS),
-                  child: Card(
-                    color: kPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: kPaddingS),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 2,
-                            child: Image(
-                                image: AssetImage((index == 0)
-                                    ? AssetImages.quickShopping
-                                    : AssetImages.setBudget)),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              (index == 0) ? 'Quick Shopping' : 'Set Budget',
-                              style:
-                                  Theme.of(context).textTheme.caption.bold.fs10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }),
+              itemBuilder: (context, index) => QuickLinkButton(index: index)),
         ),
         Container(
           // color: kPrimaryAccentColor.withOpacity(0.3),
@@ -266,6 +242,18 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _showExclusiveProducts() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1, childAspectRatio: 1.6),
+      itemCount: 5,
+      padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (_, index) =>
+          ExclProductsCard(index: index), //TopDealsCard(index: index),
+    );
+  }
+
   Widget _showCategories() {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -274,41 +262,7 @@ class HomeScreenState extends State<HomeScreen> {
         mainAxisSpacing: kPaddingL,
       ),
       delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return InkWell(
-            onTap: () =>
-                Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
-            child: Container(
-              height: 300,
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-              child: Card(
-                // shape: RoundedRectangleBorder(),
-                clipBehavior: Clip.antiAlias,
-                // shape: RoundedRectangleBorder(
-                // borderRadius: BorderRadius.circular(25.0)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Image(
-                          image: AssetImage(categories[index]['image']),
-                          fit: BoxFit.fill),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Text(categories[index]['name'],
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2.bold),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+        (context, index) => CategoryCard(index: index),
         childCount: 10,
       ),
     );

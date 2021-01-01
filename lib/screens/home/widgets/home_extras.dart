@@ -1,4 +1,6 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -31,6 +33,26 @@ class TopDealsCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ExclProductsCard extends StatelessWidget {
+  ExclProductsCard({this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      padding: EdgeInsets.all(kPaddingM),
+      child: ProductListItem(
+        viewType: ProductListItemViewType.grid,
+        product: ProductModel(
+            image: AssetImages.maggi,
+            price: 40,
+            quantity: '500 gm',
+            title: 'Maggi'),
       ),
     );
   }

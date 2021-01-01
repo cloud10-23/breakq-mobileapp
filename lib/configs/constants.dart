@@ -161,6 +161,9 @@ class AssetImages {
 
   static const String orDivider = 'assets/images/or.png';
   static const String cart = 'assets/images/cart.png';
+
+  //Product Images
+  static const String maggi = 'assets/images/products/maggi.jpeg';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].
