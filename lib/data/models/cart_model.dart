@@ -6,24 +6,22 @@ class CartModel {
 
   void addProduct({@required ProductModel product, int quantity = 1}) {
     bool _found = false;
-    cartItems.map((cartItem) {
-      if (cartItem.product == product) {
+    this.cartItems.forEach((cartItem) {
+      if (cartItem.product.id == product.id) {
         cartItem.quantity += quantity;
         _found = true;
-        return;
       }
     });
     if (!_found) cartItems.add(CartItem(product: product, quantity: quantity));
   }
 
   void removeProduct({@required ProductModel product, int quantity = 1}) {
-    cartItems.map((cartItem) {
-      if (cartItem.product == product) {
+    cartItems.forEach((cartItem) {
+      if (cartItem.product.id == product.id) {
         if (quantity == null || cartItem.quantity <= 1)
           cartItems.remove(cartItem);
         else
           cartItem.quantity -= quantity;
-        return;
       }
     });
   }

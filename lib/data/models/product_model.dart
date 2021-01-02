@@ -35,5 +35,5 @@ class ProductModel extends Equatable {
   final int available;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [this.id];
 }

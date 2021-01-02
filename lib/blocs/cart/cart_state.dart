@@ -12,6 +12,7 @@ class CartInitial extends CartState {}
 class CartLoading extends CartState {}
 
 class CartLoaded extends CartState {
-  CartLoaded({this.cartItems});
+  CartLoaded({this.cartItems, this.totalItems});
   final CartModel cartItems;
+  final int totalItems;
 }

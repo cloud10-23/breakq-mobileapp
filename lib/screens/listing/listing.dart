@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,12 +52,11 @@ class ListingState extends State<Listing> {
   void initState() {
     super.initState();
     _homeBloc = BlocProvider.of<HomeBloc>(context);
-
     getIt.get<AppGlobals>().globalKeySearchTabs = GlobalKey<SearchTabsState>();
   }
 
   /// Init globals that require access to BuildContext for translation.
-  void _initGlobals(BuildContext context) {
+  void _initGlobals(context) {
     searchSortTypes = <dynamic>[
       <String, dynamic>{
         'code': 'rating',
@@ -134,6 +134,7 @@ class ListingState extends State<Listing> {
     }));
   }
 
+  bool _initglobal = true;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -147,10 +148,11 @@ class ListingState extends State<Listing> {
       builder: (BuildContext context, HomeState state) {
         // While the screen state is initializing we shall show a full screen
         // progress indicator and init the search session.
-        _initGlobals(context);
-        if (state is InitialHomeState) {
+        if (_initglobal) {
           _initGlobals(context);
-
+          _initglobal = false;
+        }
+        if (state is InitialHomeState) {
           /// Initialize the search session.
           _homeBloc.add(SessionInitedHomeEvent(
             activeSearchTab: categoryTabs.first.id,
@@ -221,7 +223,7 @@ class ListingState extends State<Listing> {
                                 _homeBloc
                                     .add(SortOrderChangedHomeEvent(newSort));
                               },
-                              locations: session.products,
+                              products: session.products,
                               currentListType: session.currentListType,
                               searchListTypes: searchListTypes,
                               onListTypeChange: (ToolbarOptionModel
@@ -230,10 +232,18 @@ class ListingState extends State<Listing> {
                                       ListTypeChangedHomeEvent(newListType)),
                             ),
                           SearchResultList(
-                            products: session.products,
-                            currentListType: session.currentListType,
-                          ),
+                              products: session.products,
+                              currentListType: session.currentListType,
+                              onProductAdd: (product) =>
+                                  BlocProvider.of<CartBloc>(context)
+                                      .add(AddPToCartEvent(product: product)),
+                              onProductPressed:
+                                  (product) {} //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
+                              ),
                         ]),
+                      ),
+                      SliverToBoxAdapter(
+                        child: SizedBox(height: 120.0),
                       ),
                     ],
                   ),

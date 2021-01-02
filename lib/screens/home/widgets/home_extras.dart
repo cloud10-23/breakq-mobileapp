@@ -1,8 +1,10 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TopDealsCard extends StatelessWidget {
   TopDealsCard({this.index});
@@ -41,6 +43,17 @@ class TopDealsCard extends StatelessWidget {
 class ExclProductsCard extends StatelessWidget {
   ExclProductsCard({this.index});
   final int index;
+
+  ProductModel getProduct(int index) {
+    return ProductModel(
+      id: index + 10,
+      image: AssetImages.maggi,
+      price: 40,
+      quantity: '500 gm',
+      title: 'Product ${index + 1}',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,10 +62,18 @@ class ExclProductsCard extends StatelessWidget {
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
         product: ProductModel(
-            image: AssetImages.maggi,
-            price: 40,
-            quantity: '500 gm',
-            title: 'Maggi'),
+          id: index + 10,
+          image: AssetImages.maggi,
+          price: 40,
+          quantity: '500 gm',
+          title: 'Product ${index + 1}',
+        ),
+        onProductAdd: () {
+          BlocProvider.of<CartBloc>(context)
+              .add(AddPToCartEvent(product: getProduct(index)));
+        },
+        onProductPressed:
+            () {}, //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
       ),
     );
   }

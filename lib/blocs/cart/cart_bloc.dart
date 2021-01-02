@@ -32,8 +32,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     // Add the product to cart here
+    cartItems.addProduct(product: event.product);
 
-    yield CartLoaded(cartItems: /*Somehow get the cart items here */ cartItems);
+    //Total items:
+    int _total = 0;
+    cartItems.cartItems.forEach((item) {
+      _total += item.quantity;
+    });
+
+    yield CartLoaded(cartItems: cartItems, totalItems: _total);
   }
 
   Stream<CartState> _mapRemoveEventToState(RemovePFromCartEvent event) async* {
@@ -41,8 +48,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (state is CartLoaded) cartItems = (state as CartLoaded).cartItems;
     yield CartLoading();
 
-    // Add the product to cart here
+    // Remove the product from cart here
+    cartItems.removeProduct(product: event.product);
 
-    yield CartLoaded(cartItems: /*Somehow get the cart items here */ cartItems);
+    //Total items:
+    int _total = 0;
+    cartItems.cartItems.forEach((item) {
+      _total += item.quantity;
+    });
+
+    yield CartLoaded(cartItems: cartItems, totalItems: _total);
   }
 }

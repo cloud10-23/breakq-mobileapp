@@ -188,7 +188,7 @@ class HomeScreenState extends State<HomeScreen> {
                         Text('View All'),
                         Icon(Icons.navigate_next),
                       ]),
-                      Container(height: 225, child: _showExclusiveProducts()),
+                      Container(height: 230, child: _showExclusiveProducts()),
                       SizedBox(height: kPaddingBtwnStrips),
                       BoldTitle(title: 'Categories'),
                     ]),

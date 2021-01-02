@@ -1,8 +1,10 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/utils/string.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sprintf/sprintf.dart';
 
 enum ProductListItemViewType { grid, search, list, block, map }
@@ -17,6 +19,8 @@ class ProductListItem extends StatelessWidget {
     this.showFavoriteButton = false,
     this.isFavorited = false,
     this.onFavoriteButtonPressed,
+    this.onProductPressed,
+    this.onProductAdd,
   }) : super(key: key);
 
   final ProductModel product;
@@ -26,6 +30,8 @@ class ProductListItem extends StatelessWidget {
   final bool showFavoriteButton;
   final bool isFavorited;
   final VoidCallback onFavoriteButtonPressed;
+  final VoidCallback onProductPressed;
+  final VoidCallback onProductAdd;
 
   // void _showLocationScreen(BuildContext context) {
   //   Navigator.pushNamed(context, Routes.location, arguments: product.id);
@@ -166,12 +172,11 @@ class ProductListItem extends StatelessWidget {
               // ),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InkWell(
                   splashColor: kPrimaryColor,
-                  onTap: () {
-                    // _showLocationScreen(context);
-                  },
+                  onTap: onProductPressed ?? () {},
                   onLongPress: () {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -240,13 +245,32 @@ class ProductListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    print('+ icon pressed!');
-                  },
-                  color: kPrimaryColor,
-                  icon: Icon(Icons.add),
-                ),
+                SizedBox(height: 5.0),
+                BlocBuilder<CartBloc, CartState>(
+                    buildWhen: (previous, current) => current is CartLoaded,
+                    builder: (context, state) {
+                      int qty = 0;
+                      if (state is CartLoaded) {
+                        state.cartItems.cartItems.forEach((item) {
+                          if (product.id == item.product.id) {
+                            qty = item.quantity;
+                          }
+                        });
+                      }
+                      if (qty <= 0)
+                        return FlatButton(
+                            onPressed: onProductAdd,
+                            child: Icon(Icons.add, color: kBlack));
+                      else
+                        return FlatButton(
+                            onPressed: onProductAdd,
+                            color: kPrimaryColor,
+                            child: Text(qty.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .copyWith(color: kBlack)));
+                    }),
               ],
             ),
           ),

@@ -12,10 +12,14 @@ class SearchResultList extends StatelessWidget {
     Key key,
     this.products,
     this.currentListType,
+    this.onProductPressed,
+    this.onProductAdd,
   }) : super(key: key);
 
   final List<ProductModel> products;
   final ToolbarOptionModel currentListType;
+  final Function onProductPressed;
+  final Function onProductAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +68,8 @@ class SearchResultList extends StatelessWidget {
                     child: ProductListItem(
                       product: item,
                       viewType: _viewType,
+                      onProductPressed: () => onProductPressed(item),
+                      onProductAdd: () => onProductAdd(item),
                     ),
                   ),
                 ),

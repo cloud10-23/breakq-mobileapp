@@ -1,9 +1,11 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/list_title.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart';
 
 class CartNavigation extends StatelessWidget {
   CartNavigation({this.homeScreen, this.navigatorKey});
@@ -26,31 +28,40 @@ class CartNavigation extends StatelessWidget {
 class CartBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BottomSheet(
-      builder: (context) => Container(
-        height: 60.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Spacer(flex: 3),
-            Image(height: 25, image: AssetImage(AssetImages.cart)),
-            Spacer(),
-            Expanded(flex: 20, child: CartTitle(title: 'Cart')),
-            BoldTitle(title: '₹ 150.00'),
-            Spacer(),
-            CircleButton(),
-            Spacer(flex: 3),
-          ],
-        ),
-      ),
-      onClosing: () {},
-      backgroundColor: kPrimaryColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(kRoundedButtonRadius),
-            topRight: Radius.circular(kRoundedButtonRadius)),
-      ),
-    );
+    return BlocBuilder<CartBloc, CartState>(
+        buildWhen: (previous, current) => current is CartLoaded,
+        builder: (context, state) {
+          if (state is CartLoaded) if (state.cartItems.cartItems?.isNotEmpty ??
+              false)
+            return BottomSheet(
+              builder: (context) => Container(
+                height: 60.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Spacer(flex: 3),
+                    Image(height: 25, image: AssetImage(AssetImages.cart)),
+                    Spacer(),
+                    CartTitle(title: 'Cart'),
+                    CartTitle(title: '( ${state.totalItems} )'),
+                    Spacer(flex: 5),
+                    BoldTitle(title: '₹ 150.00'),
+                    Spacer(),
+                    CircleButton(),
+                    Spacer(flex: 3),
+                  ],
+                ),
+              ),
+              onClosing: () {},
+              backgroundColor: kPrimaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(kRoundedButtonRadius),
+                    topRight: Radius.circular(kRoundedButtonRadius)),
+              ),
+            );
+          return Container(height: 0);
+        });
   }
 }
 
