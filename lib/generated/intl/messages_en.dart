@@ -328,7 +328,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchTooltipFilters" : MessageLookupByLibrary.simpleMessage("Filters"),
     "searchTooltipMap" : MessageLookupByLibrary.simpleMessage("Map"),
     "searchTooltipView" : MessageLookupByLibrary.simpleMessage("View"),
-    "settingsCopyright" : MessageLookupByLibrary.simpleMessage("© 2020 Shrivathsa Prakash"),
+    "settingsCopyright" : MessageLookupByLibrary.simpleMessage("© 2020 MTS BreakQ"),
     "settingsHomepageConfirmation" : MessageLookupByLibrary.simpleMessage("Want to visit the template homepage?"),
     "settingsListDarkMode" : MessageLookupByLibrary.simpleMessage("Dark mode"),
     "settingsListLanguage" : MessageLookupByLibrary.simpleMessage("Language"),

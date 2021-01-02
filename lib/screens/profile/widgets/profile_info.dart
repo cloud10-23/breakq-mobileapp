@@ -34,15 +34,15 @@ class ProfileInfo extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     getIt.get<AppGlobals>().user?.displayName ?? "Guest",
-                    maxLines: 1,
+                    maxLines: 2,
                     style: Theme.of(context).textTheme.headline5.bold,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.fade,
                   ),
                   // const Padding(padding: EdgeInsets.only(top: 4)),
                   // Text(

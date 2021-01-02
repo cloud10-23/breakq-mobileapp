@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:breakq/utils/text_style.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);

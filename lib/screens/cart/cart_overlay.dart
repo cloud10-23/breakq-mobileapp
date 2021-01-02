@@ -1,11 +1,11 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path/path.dart';
 
 class CartNavigation extends StatelessWidget {
   CartNavigation({this.homeScreen, this.navigatorKey});
@@ -17,6 +17,9 @@ class CartNavigation extends StatelessWidget {
       body: CustomNavigator(
         homeScreen: homeScreen,
         navigatorKey: navigatorKey,
+      ),
+      drawer: Drawer(
+        child: ProfileScreen(),
       ),
       bottomSheet: CartBottomSheet(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

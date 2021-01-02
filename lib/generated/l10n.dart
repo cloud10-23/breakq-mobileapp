@@ -1698,10 +1698,10 @@ class L10n {
     );
   }
 
-  /// `© 2020 Shrivathsa Prakash`
+  /// `© 2020 MTS BreakQ`
   String get settingsCopyright {
     return Intl.message(
-      '© 2020 Shrivathsa Prakash',
+      '© 2020 MTS BreakQ',
       name: 'settingsCopyright',
       desc: '',
       args: [],

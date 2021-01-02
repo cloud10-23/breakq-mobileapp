@@ -34,11 +34,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark,
           child: Scaffold(
+            backgroundColor: kWhite,
             body: SafeArea(
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(kPaddingM),
+                    padding: const EdgeInsets.all(kPaddingL),
                     child: Column(
                       children: <Widget>[
                         ProfileInfo(),
@@ -48,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Expanded(
                     child: Container(
                       padding:
-                          const EdgeInsets.symmetric(horizontal: kPaddingM),
+                          const EdgeInsets.symmetric(horizontal: kPaddingL),
                       child: ListView(
                         children: <Widget>[
                           ListTitle(
@@ -57,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: getIt.get<AppGlobals>().user?.phoneNumber ??
                                 'Not available',
                           ),
+                          SizedBox(height: kPaddingL),
                           ListTitle(
                               title: L10n.of(context).profileListTitleSettings),
                           ListItem(
@@ -66,6 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onPressed: () => Navigator.pushNamed(
                                 context, Routes.editProfile),
                           ),
+                          SizedBox(height: kPaddingL),
                           // ListTitle(
                           //     title:
                           //         L10n.of(context).settingsListTitleInterface),
@@ -111,6 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           //     ],
                           //   ),
                           // ),
+                          // SizedBox(height: kPaddingL),
                           ListTitle(
                               title: L10n.of(context).settingsListTitleSupport),
                           ListItem(
@@ -127,6 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               // Async.launchUrl(kPrivacyPolicyURL);
                             },
                           ),
+                          SizedBox(height: kPaddingL),
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(vertical: kPaddingL),
@@ -204,6 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             }),
                           ),
+                          SizedBox(height: kPaddingL),
                         ],
                       ),
                     ),

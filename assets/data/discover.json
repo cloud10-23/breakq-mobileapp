@@ -52,13 +52,43 @@
       "available": 100
     },
     {
-      "id": 5,
-      "title": "Aashirvad Atta",
-      "category_id": 5,
-      "description": "Premium Wheat Flour packed and sealed in safe environment.",
+      "id": 6,
+      "title": "Maggi",
+      "category_id": 1,
+      "description": "An instant noodles which will be ready in 2 minutes",
       "quantity": "500 gm",
-      "image": "assets/images/products/wheat.jpeg",
-      "price": 200,
+      "image": "assets/images/products/maggi.jpeg",
+      "price": 40,
+      "available": 100
+    },
+    {
+      "id": 7,
+      "title": "Dove Sampoo",
+      "category_id": 1,
+      "description": "Dove Shampoo (200 gm) pack",
+      "quantity": "500 gm",
+      "image": "assets/images/products/dove.jpeg",
+      "price": 70,
+      "available": 100
+    },
+    {
+      "id": 8,
+      "title": "Madhur Sugar",
+      "category_id": 1,
+      "description": "Madhur Sugar (500 gm)",
+      "quantity": "500 gm",
+      "image": "assets/images/products/madhur.jpeg",
+      "price": 100,
+      "available": 100
+    },
+    {
+      "id": 9,
+      "title": "Fortune Oil",
+      "category_id": 4,
+      "description": "Fortune Refined Sunflower Oil",
+      "quantity": "5 lts",
+      "image": "assets/images/products/fortune.jpeg",
+      "price": 5000,
       "available": 100
     }
   ]
