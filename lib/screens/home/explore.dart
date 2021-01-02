@@ -1,6 +1,5 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';

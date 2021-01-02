@@ -1,4 +1,3 @@
-import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
