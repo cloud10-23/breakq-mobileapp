@@ -72,6 +72,10 @@ class ExclProductsCard extends StatelessWidget {
           BlocProvider.of<CartBloc>(context)
               .add(AddPToCartEvent(product: getProduct(index)));
         },
+        onProductRem: () {
+          BlocProvider.of<CartBloc>(context)
+              .add(RemovePFromCartEvent(product: getProduct(index)));
+        },
         onProductPressed:
             () {}, //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
       ),

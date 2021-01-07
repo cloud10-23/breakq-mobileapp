@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -21,6 +22,7 @@ class ProductListItem extends StatelessWidget {
     this.onFavoriteButtonPressed,
     this.onProductPressed,
     this.onProductAdd,
+    this.onProductRem,
   }) : super(key: key);
 
   final ProductModel product;
@@ -32,6 +34,7 @@ class ProductListItem extends StatelessWidget {
   final VoidCallback onFavoriteButtonPressed;
   final VoidCallback onProductPressed;
   final VoidCallback onProductAdd;
+  final VoidCallback onProductRem;
 
   // void _showLocationScreen(BuildContext context) {
   //   Navigator.pushNamed(context, Routes.location, arguments: product.id);
@@ -40,6 +43,126 @@ class ProductListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (viewType) {
+      case ProductListItemViewType.grid:
+        return Card(
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+          ),
+          margin: EdgeInsets.zero,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
+              // border: Border.all(
+              //   color: Theme.of(context).dividerColor,
+              //   width: 1,
+              // ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                InkWell(
+                  splashColor: kPrimaryColor,
+                  onTap: onProductPressed ?? () {},
+                  onLongPress: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(product.image),
+                            // image: NetworkImage(product.image),
+                            fit: BoxFit.fill,
+                          ),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(kBoxDecorationRadius),
+                            topRight: Radius.circular(kBoxDecorationRadius),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: kPaddingS, left: kPaddingS, right: kPaddingS),
+                        child: Text(
+                          product.title,
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.bodyText2.bold,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: kPaddingS, right: kPaddingS, top: 2),
+                        child: Text(
+                          product.quantity,
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .caption
+                              .copyWith(color: Theme.of(context).hintColor),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: kPaddingS,
+                            right: kPaddingS,
+                            bottom: kPaddingS,
+                            top: 2),
+                        child: Row(
+                          children: <Widget>[
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsets.only(right: 2),
+                              child: Text(
+                                "₹",
+                                style:
+                                    Theme.of(context).textTheme.bodyText2.bold,
+                              ),
+                            ),
+                            Text(
+                              product.price.toString(),
+                              style: Theme.of(context).textTheme.bodyText2.bold,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5.0),
+                BlocBuilder<CartBloc, CartState>(
+                    buildWhen: (previous, current) => current is CartLoaded,
+                    builder: (context, state) {
+                      int qty = 0;
+                      if (state is CartLoaded) {
+                        state.cartItems.cartItems.forEach((item) {
+                          if (product.id == item.product.id) {
+                            qty = item.quantity;
+                          }
+                        });
+                      }
+                      if (qty <= 0)
+                        return FlatButton(
+                            onPressed: onProductAdd,
+                            child: Icon(Icons.add, color: kBlack));
+                      else
+                        return ProductAddRemButtons(
+                          onAdd: onProductAdd,
+                          onRem: onProductRem,
+                          qty: qty,
+                        );
+                    }),
+              ],
+            ),
+          ),
+        );
+        break;
+
       case ProductListItemViewType.block:
       case ProductListItemViewType.map:
         return Card(
@@ -153,129 +276,6 @@ class ProductListItem extends StatelessWidget {
             ),
           ),
         );
-
-      case ProductListItemViewType.grid:
-        return Card(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBoxDecorationRadius),
-          ),
-          margin: EdgeInsets.zero,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius:
-                  const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
-              // border: Border.all(
-              //   color: Theme.of(context).dividerColor,
-              //   width: 1,
-              // ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InkWell(
-                  splashColor: kPrimaryColor,
-                  onTap: onProductPressed ?? () {},
-                  onLongPress: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(product.image),
-                            // image: NetworkImage(product.image),
-                            fit: BoxFit.fill,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(kBoxDecorationRadius),
-                            topRight: Radius.circular(kBoxDecorationRadius),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: kPaddingS, left: kPaddingS, right: kPaddingS),
-                        child: Text(
-                          product.title,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText2.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: kPaddingS, right: kPaddingS, top: 2),
-                        child: Text(
-                          product.quantity,
-                          maxLines: 1,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .copyWith(color: Theme.of(context).hintColor),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: kPaddingS,
-                            right: kPaddingS,
-                            bottom: kPaddingS,
-                            top: 2),
-                        child: Row(
-                          children: <Widget>[
-                            Spacer(),
-                            Padding(
-                              padding: EdgeInsets.only(right: 2),
-                              child: Text(
-                                "₹",
-                                style:
-                                    Theme.of(context).textTheme.bodyText2.bold,
-                              ),
-                            ),
-                            Text(
-                              product.price.toString(),
-                              style: Theme.of(context).textTheme.bodyText2.bold,
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5.0),
-                BlocBuilder<CartBloc, CartState>(
-                    buildWhen: (previous, current) => current is CartLoaded,
-                    builder: (context, state) {
-                      int qty = 0;
-                      if (state is CartLoaded) {
-                        state.cartItems.cartItems.forEach((item) {
-                          if (product.id == item.product.id) {
-                            qty = item.quantity;
-                          }
-                        });
-                      }
-                      if (qty <= 0)
-                        return FlatButton(
-                            onPressed: onProductAdd,
-                            child: Icon(Icons.add, color: kBlack));
-                      else
-                        return FlatButton(
-                            onPressed: onProductAdd,
-                            color: kPrimaryColor,
-                            child: Text(qty.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(color: kBlack)));
-                    }),
-              ],
-            ),
-          ),
-        );
-        break;
 
       case ProductListItemViewType.list:
         return Card(

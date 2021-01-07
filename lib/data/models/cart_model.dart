@@ -16,14 +16,15 @@ class CartModel {
   }
 
   void removeProduct({@required ProductModel product, int quantity = 1}) {
+    List<CartItem> newCartItems = List();
     cartItems.forEach((cartItem) {
       if (cartItem.product.id == product.id) {
-        if (quantity == null || cartItem.quantity <= 1)
-          cartItems.remove(cartItem);
-        else
-          cartItem.quantity -= quantity;
-      }
+        if (cartItem.quantity > 1)
+          newCartItems.add(cartItem..quantity -= quantity);
+      } else
+        newCartItems.add(cartItem);
     });
+    this.cartItems = newCartItems;
   }
   // factory CartModel.fromJson(Map<String, dynamic> json) {
   //   return CartModel(
