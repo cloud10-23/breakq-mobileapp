@@ -13,6 +13,7 @@ class BoldTitle extends StatelessWidget {
     this.padding,
     this.textAlign,
     this.maxLines = 1,
+    this.color,
   }) : super(key: key);
 
   final String title;
@@ -20,6 +21,7 @@ class BoldTitle extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final int maxLines;
   final TextAlign textAlign;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,11 @@ class BoldTitle extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1.w800,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1
+                .w800
+                .copyWith(color: color ?? Colors.black),
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
             textAlign: textAlign ?? TextAlign.left,

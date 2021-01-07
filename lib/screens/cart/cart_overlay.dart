@@ -21,9 +21,7 @@ class CartNavigation extends StatelessWidget {
       drawer: Drawer(
         child: ProfileScreen(),
       ),
-      bottomSheet: CartBottomSheet(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: ScanFloatingButton(),
+      floatingActionButton: CartBottomSheet(),
     );
   }
 }
@@ -36,35 +34,44 @@ class CartBottomSheet extends StatelessWidget {
         builder: (context, state) {
           if (state is CartLoaded) if (state.cartItems.cartItems?.isNotEmpty ??
               false)
-            return BottomSheet(
-              builder: (context) => Container(
-                height: 60.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Spacer(flex: 3),
-                    Image(height: 25, image: AssetImage(AssetImages.cart)),
-                    Spacer(),
-                    CartTitle(title: 'Cart'),
-                    CartTitle(title: '( ${state.totalItems} )'),
-                    Spacer(flex: 5),
-                    BoldTitle(title: '₹ 150.00'),
-                    Spacer(),
-                    CircleButton(),
-                    Spacer(flex: 3),
-                  ],
-                ),
-              ),
-              onClosing: () {},
-              backgroundColor: kPrimaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(kRoundedButtonRadius),
-                    topRight: Radius.circular(kRoundedButtonRadius)),
-              ),
+            return Row(
+              children: [
+                Spacer(),
+                ScanFloatingButton(),
+                Spacer(),
+                CartButton(totalItems: state.totalItems),
+              ],
             );
           return Container(height: 0);
         });
+  }
+}
+
+class CartButton extends StatelessWidget {
+  CartButton({this.totalItems});
+  final int totalItems;
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () {},
+      heroTag: null,
+      label: Container(
+        width: 160.0,
+        child: Row(
+          children: [
+            Spacer(flex: 3),
+            Image(height: 25, image: AssetImage(AssetImages.cart)),
+            Spacer(),
+            BoldTitle(title: '( $totalItems )'),
+            Spacer(),
+            BoldTitle(title: '₹ 150.00'),
+            // Spacer(),
+            // CircleButton(),
+            Spacer(flex: 3),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -72,24 +79,13 @@ class ScanFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 30),
-      child: FloatingActionButton.extended(
+      child: FloatingActionButton(
           heroTag: null,
           backgroundColor: Colors.black,
           onPressed: () {},
-          label: Padding(
-            padding: const EdgeInsets.all(kPaddingS),
-            child: Row(
-              children: [
-                Text('Scan',
-                    style: Theme.of(context).textTheme.bodyText1.bold.white),
-                SizedBox(width: kPaddingM),
-                Image(
-                  image: AssetImage(AssetImages.scan),
-                  color: Colors.white,
-                ),
-              ],
-            ),
+          child: Image(
+            image: AssetImage(AssetImages.scan),
+            color: Colors.white,
           )),
     );
   }
@@ -100,7 +96,7 @@ class CircleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: kWhite,
-      radius: 15,
+      radius: 12,
       child: Icon(Icons.arrow_drop_up_outlined),
     );
   }
