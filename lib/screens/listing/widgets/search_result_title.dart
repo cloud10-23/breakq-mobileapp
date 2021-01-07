@@ -13,7 +13,7 @@ class SearchResultTitle extends StatelessWidget {
     @required this.onListTypeChange,
   }) : super(key: key);
 
-  final List<ProductModel> locations;
+  final List<Product> locations;
   final List<ToolbarOptionModel> searchListTypes;
   final ToolbarOptionModel currentListType;
   final ToolbarOptionModelCallback onListTypeChange;

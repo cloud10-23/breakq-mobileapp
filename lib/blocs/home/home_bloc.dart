@@ -63,7 +63,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       const ProductsRepository productRepository = ProductsRepository();
 
-      List<ProductModel> _products;
+      List<Product> _products;
 
       if (session.activeSearchTab == 0) {
         _products = await productRepository.search();
@@ -74,7 +74,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       if (_products.isNotEmpty && session.q.isNotEmpty) {
         _products = _products
-            .where((ProductModel product) =>
+            .where((Product product) =>
                 product.title.toLowerCase().contains(session.q.toLowerCase()))
             .toList();
       }
@@ -195,13 +195,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         const ProductsRepository productRepository = ProductsRepository();
 
-        List<ProductModel> _products;
+        List<Product> _products;
 
         _products = await productRepository.search();
 
         if (_products.isNotEmpty) {
           _products = _products
-              .where((ProductModel product) =>
+              .where((Product product) =>
                   product.title.toLowerCase().contains(event.q.toLowerCase()))
               .toList();
         }

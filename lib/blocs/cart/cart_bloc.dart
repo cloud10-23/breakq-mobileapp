@@ -17,6 +17,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _mapInitCartEventToState(event);
     } else if (event is AddPToCartEvent) {
       yield* _mapAddEventToState(event);
+    } else if (event is ReduceQOfPCartEvent) {
+      yield* _mapReduceQEventToState(event);
     } else if (event is RemovePFromCartEvent) {
       yield* _mapRemoveEventToState(event);
     }
@@ -33,6 +35,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     // Add the product to cart here
     cartItems.addProduct(product: event.product);
+
+    //Total items:
+    int _total = 0;
+    cartItems.cartItems.forEach((item) {
+      _total += item.quantity;
+    });
+
+    yield CartLoaded(cartItems: cartItems, totalItems: _total);
+  }
+
+  Stream<CartState> _mapReduceQEventToState(ReduceQOfPCartEvent event) async* {
+    CartModel cartItems;
+    if (state is CartLoaded) cartItems = (state as CartLoaded).cartItems;
+    yield CartLoading();
+
+    // Remove the product from cart here
+    cartItems.reduceQOfProduct(product: event.product);
 
     //Total items:
     int _total = 0;

@@ -6,7 +6,7 @@ import 'package:shimmer/shimmer.dart';
 class LocationHeader extends StatelessWidget {
   const LocationHeader({Key key, this.product}) : super(key: key);
 
-  final ProductModel product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {

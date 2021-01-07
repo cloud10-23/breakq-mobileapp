@@ -23,10 +23,10 @@ class ProductsRepository {
         .toList();
   }
 
-  Future<ProductModel> getProduct({int id}) async {
+  Future<Product> getProduct({int id}) async {
     final DataResponseModel rawData = await dataProvider.get('location_new');
     // return null;
-    return ProductModel.fromJson(rawData.data['data'] as Map<String, dynamic>);
+    return Product.fromJson(rawData.data['data'] as Map<String, dynamic>);
   }
 
   Future<List<SearchHistoryModel>> getSearchHistory() async {
@@ -41,7 +41,7 @@ class ProductsRepository {
         .toList();
   }
 
-  Future<List<ProductModel>> search() async {
+  Future<List<Product>> search() async {
     final DataResponseModel rawData = await dataProvider.get('discover');
 
     final List<dynamic> _products =
@@ -49,12 +49,12 @@ class ProductsRepository {
 
     // return null;
     return _products
-        .map<ProductModel>((dynamic json) =>
-            ProductModel.fromJson(json as Map<String, dynamic>))
+        .map<Product>(
+            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
         .toList();
   }
 
-  Future<List<ProductModel>> searchCategory({int id}) async {
+  Future<List<Product>> searchCategory({int id}) async {
     /// Just make the call with the given ID and server takes care
     final DataResponseModel rawData = await dataProvider.get('discover');
 
@@ -65,8 +65,8 @@ class ProductsRepository {
     /// Because anyway it will be handled by the API server!
     _products.shuffle();
     return _products
-        .map<ProductModel>((dynamic json) =>
-            ProductModel.fromJson(json as Map<String, dynamic>))
+        .map<Product>(
+            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
         .toList();
   }
 }

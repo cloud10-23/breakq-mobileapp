@@ -24,7 +24,7 @@ class _SearchLocationsDelegateResultListState
     extends State<SearchLocationsDelegateResultList> {
   HomeBloc _homeBloc;
 
-  List<ProductModel> _locations;
+  List<Product> _locations;
 
   @override
   void initState() {

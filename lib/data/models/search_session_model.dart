@@ -25,7 +25,7 @@ class SearchSessionModel {
     ToolbarOptionModel currentGenderFilter,
     int activeSearchTab,
     bool isLoading,
-    List<ProductModel> products,
+    List<Product> products,
     SearchType searchType,
   }) {
     return SearchSessionModel(
@@ -50,5 +50,5 @@ class SearchSessionModel {
   final bool isLoading;
   final SearchType searchType;
 
-  final List<ProductModel> products;
+  final List<Product> products;
 }

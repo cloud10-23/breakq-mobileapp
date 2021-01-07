@@ -29,7 +29,7 @@ class _ProductScreenState extends State<ProductScreen> {
   /// The GlobalKey needed to access Scaffold widget.
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ProductModel _location;
+  Product _location;
 
   bool _isFavorited = false;
 

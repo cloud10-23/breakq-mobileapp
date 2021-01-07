@@ -15,7 +15,7 @@ class LocationsCarousel extends StatefulWidget {
   }) : super(key: key);
 
   final String title;
-  final List<ProductModel> locations;
+  final List<Product> locations;
   final VoidCallback onNavigate;
 
   @override
@@ -41,7 +41,7 @@ class _LocationsCarouselState extends State<LocationsCarousel> {
                 ? ListView(
                     padding: const EdgeInsets.only(left: kPaddingM),
                     scrollDirection: Axis.horizontal,
-                    children: widget.locations.map((ProductModel location) {
+                    children: widget.locations.map((Product location) {
                       return Container(
                         width: 340,
                         padding: const EdgeInsets.only(right: kPaddingS),

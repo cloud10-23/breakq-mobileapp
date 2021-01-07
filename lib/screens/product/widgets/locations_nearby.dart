@@ -7,7 +7,7 @@ import 'package:breakq/widgets/locations_carousel.dart';
 class LocationsNearby extends StatelessWidget {
   const LocationsNearby({Key key, this.nearbyLocations}) : super(key: key);
 
-  final List<ProductModel> nearbyLocations;
+  final List<Product> nearbyLocations;
 
   @override
   Widget build(BuildContext context) {

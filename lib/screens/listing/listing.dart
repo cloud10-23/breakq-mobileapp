@@ -237,7 +237,10 @@ class ListingState extends State<Listing> {
                               onProductAdd: (product) =>
                                   BlocProvider.of<CartBloc>(context)
                                       .add(AddPToCartEvent(product: product)),
-                              onProductRem: (product) =>
+                              onProductRed: (product) =>
+                                  BlocProvider.of<CartBloc>(context).add(
+                                      ReduceQOfPCartEvent(product: product)),
+                              onProductDel: (product) =>
                                   BlocProvider.of<CartBloc>(context).add(
                                       RemovePFromCartEvent(product: product)),
                               onProductPressed:

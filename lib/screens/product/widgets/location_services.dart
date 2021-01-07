@@ -11,7 +11,7 @@ class LocationServices extends StatelessWidget {
     this.limit = 3,
   }) : super(key: key);
 
-  final ProductModel location;
+  final Product location;
   final int limit;
 
   @override

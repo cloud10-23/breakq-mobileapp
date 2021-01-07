@@ -23,9 +23,10 @@ class ProductListItem extends StatelessWidget {
     this.onProductPressed,
     this.onProductAdd,
     this.onProductRem,
+    this.onProductDel,
   }) : super(key: key);
 
-  final ProductModel product;
+  final Product product;
   final ProductListItemViewType viewType;
   final String wordToStyle;
   final bool showDistance;
@@ -35,6 +36,7 @@ class ProductListItem extends StatelessWidget {
   final VoidCallback onProductPressed;
   final VoidCallback onProductAdd;
   final VoidCallback onProductRem;
+  final VoidCallback onProductDel;
 
   // void _showLocationScreen(BuildContext context) {
   //   Navigator.pushNamed(context, Routes.location, arguments: product.id);
@@ -154,6 +156,7 @@ class ProductListItem extends StatelessWidget {
                         return ProductAddRemButtons(
                           onAdd: onProductAdd,
                           onRem: onProductRem,
+                          onDel: onProductDel,
                           qty: qty,
                         );
                     }),

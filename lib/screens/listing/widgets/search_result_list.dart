@@ -14,14 +14,16 @@ class SearchResultList extends StatelessWidget {
     this.currentListType,
     this.onProductPressed,
     this.onProductAdd,
-    this.onProductRem,
+    this.onProductRed,
+    this.onProductDel,
   }) : super(key: key);
 
-  final List<ProductModel> products;
+  final List<Product> products;
   final ToolbarOptionModel currentListType;
   final Function onProductPressed;
   final Function onProductAdd;
-  final Function onProductRem;
+  final Function onProductRed;
+  final Function onProductDel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class SearchResultList extends StatelessWidget {
       child: Wrap(
         runSpacing: kPaddingS,
         alignment: WrapAlignment.spaceBetween,
-        children: products.map((ProductModel item) {
+        children: products.map((Product item) {
           switch (_viewType) {
             case ProductListItemViewType.grid:
               return Padding(
@@ -72,7 +74,8 @@ class SearchResultList extends StatelessWidget {
                       viewType: _viewType,
                       onProductPressed: () => onProductPressed(item),
                       onProductAdd: () => onProductAdd(item),
-                      onProductRem: () => onProductRem(item),
+                      onProductRem: () => onProductRed(item),
+                      onProductDel: () => onProductDel(item),
                     ),
                   ),
                 ),

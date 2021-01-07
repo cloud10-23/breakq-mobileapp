@@ -13,10 +13,11 @@ class ProductAddRemButtons extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 40.0,
-          child: FlatButton(
+          width: 35,
+          child: IconButton(
             onPressed: onRem,
-            child: Icon(Icons.remove, color: kBlack),
+            iconSize: 15,
+            icon: Icon(Icons.remove, color: kBlack),
           ),
         ),
         Expanded(
@@ -28,6 +29,14 @@ class ProductAddRemButtons extends StatelessWidget {
                       .textTheme
                       .headline6
                       .copyWith(color: kBlack))),
+        ),
+        Container(
+          width: 35,
+          child: IconButton(
+            onPressed: onDel,
+            iconSize: 15,
+            icon: Icon(Icons.delete, color: kBlack),
+          ),
         ),
       ],
     );

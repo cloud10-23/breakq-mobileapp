@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class CartModel {
   CartModel({this.cartItems});
 
-  void addProduct({@required ProductModel product, int quantity = 1}) {
+  void addProduct({@required Product product, int quantity = 1}) {
     bool _found = false;
     this.cartItems.forEach((cartItem) {
       if (cartItem.product.id == product.id) {
@@ -15,7 +15,7 @@ class CartModel {
     if (!_found) cartItems.add(CartItem(product: product, quantity: quantity));
   }
 
-  void removeProduct({@required ProductModel product, int quantity = 1}) {
+  void reduceQOfProduct({@required Product product, int quantity = 1}) {
     List<CartItem> newCartItems = List();
     cartItems.forEach((cartItem) {
       if (cartItem.product.id == product.id) {
@@ -26,16 +26,20 @@ class CartModel {
     });
     this.cartItems = newCartItems;
   }
-  // factory CartModel.fromJson(Map<String, dynamic> json) {
-  //   return CartModel(
-  //   );
-  // }
+
+  void removeProduct({@required Product product}) {
+    List<CartItem> newCartItems = List();
+    cartItems.forEach((cartItem) {
+      if (cartItem.product.id != product.id) newCartItems.add(cartItem);
+    });
+    this.cartItems = newCartItems;
+  }
 
   List<CartItem> cartItems;
 }
 
 class CartItem {
   CartItem({this.product, this.quantity});
-  final ProductModel product;
+  final Product product;
   int quantity;
 }

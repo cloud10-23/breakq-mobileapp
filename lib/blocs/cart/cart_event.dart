@@ -11,12 +11,17 @@ class InitCartEvent extends CartEvent {}
 
 class AddPToCartEvent extends CartEvent {
   AddPToCartEvent({this.product});
-  final ProductModel product;
+  final Product product;
+}
+
+class ReduceQOfPCartEvent extends CartEvent {
+  ReduceQOfPCartEvent({this.product});
+  final Product product;
 }
 
 class RemovePFromCartEvent extends CartEvent {
   RemovePFromCartEvent({this.product});
-  final ProductModel product;
+  final Product product;
 }
 
 class ResetCartEvent extends CartEvent {}
