@@ -22,6 +22,7 @@ class CartNavigation extends StatelessWidget {
         child: ProfileScreen(),
       ),
       floatingActionButton: CartBottomSheet(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -35,14 +36,13 @@ class CartBottomSheet extends StatelessWidget {
           if (state is CartLoaded) if (state.cartItems.cartItems?.isNotEmpty ??
               false)
             return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Spacer(),
                 ScanFloatingButton(),
-                Spacer(),
                 CartButton(totalItems: state.totalItems),
               ],
             );
-          return Container(height: 0);
+          return ScanFloatingButtonExtended();
         });
   }
 }
@@ -72,6 +72,30 @@ class CartButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ScanFloatingButtonExtended extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+        heroTag: null,
+        backgroundColor: Colors.black,
+        onPressed: () {},
+        label: Padding(
+          padding: const EdgeInsets.all(kPaddingS),
+          child: Row(
+            children: [
+              Text('Scan',
+                  style: Theme.of(context).textTheme.bodyText1.bold.white),
+              SizedBox(width: kPaddingM),
+              Image(
+                image: AssetImage(AssetImages.scan),
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ));
   }
 }
 
