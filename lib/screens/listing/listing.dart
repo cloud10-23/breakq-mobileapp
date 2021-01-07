@@ -187,6 +187,8 @@ class ListingState extends State<Listing> {
                     controller: _customScrollViewController,
                     slivers: <Widget>[
                       SliverAppBar(
+                        floating: true,
+                        // pinned: true,
                         title: Text(widget.title ?? "Category Name",
                             style: Theme.of(context).textTheme.bodyText1.bold),
                         actions: [
@@ -196,14 +198,27 @@ class ListingState extends State<Listing> {
                       ),
                       SliverAppBar(
                         primary: false,
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
                         // floating: true,
                         pinned: true,
                         collapsedHeight: 60,
                         expandedHeight: 60,
-                        flexibleSpace: SearchTabs(
-                          key: getIt.get<AppGlobals>().globalKeySearchTabs,
-                          searchTabs: categoryTabs,
-                          activeSearchTab: session.activeSearchTab,
+                        flexibleSpace: SearchListToolbar(
+                          searchSortTypes: searchSortTypes,
+                          currentSort: session.currentSort,
+                          onFilterTap: () {
+                            _scaffoldKey.currentState.openEndDrawer();
+                          },
+                          onSortChange: (ToolbarOptionModel newSort) {
+                            _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                          },
+                          products: session.products,
+                          currentListType: session.currentListType,
+                          searchListTypes: searchListTypes,
+                          onListTypeChange: (ToolbarOptionModel newListType) =>
+                              _homeBloc
+                                  .add(ListTypeChangedHomeEvent(newListType)),
                         ),
                         actions: <Widget>[
                           Container()
@@ -213,39 +228,21 @@ class ListingState extends State<Listing> {
                       SliverList(
                         delegate: SliverChildListDelegate(<Widget>[
                           if (session.products.isNotNullOrEmpty)
-                            SearchListToolbar(
-                              searchSortTypes: searchSortTypes,
-                              currentSort: session.currentSort,
-                              onFilterTap: () {
-                                _scaffoldKey.currentState.openEndDrawer();
-                              },
-                              onSortChange: (ToolbarOptionModel newSort) {
-                                _homeBloc
-                                    .add(SortOrderChangedHomeEvent(newSort));
-                              },
-                              products: session.products,
-                              currentListType: session.currentListType,
-                              searchListTypes: searchListTypes,
-                              onListTypeChange: (ToolbarOptionModel
-                                      newListType) =>
-                                  _homeBloc.add(
-                                      ListTypeChangedHomeEvent(newListType)),
-                            ),
-                          SearchResultList(
-                              products: session.products,
-                              currentListType: session.currentListType,
-                              onProductAdd: (product) =>
-                                  BlocProvider.of<CartBloc>(context)
-                                      .add(AddPToCartEvent(product: product)),
-                              onProductRed: (product) =>
-                                  BlocProvider.of<CartBloc>(context).add(
-                                      ReduceQOfPCartEvent(product: product)),
-                              onProductDel: (product) =>
-                                  BlocProvider.of<CartBloc>(context).add(
-                                      RemovePFromCartEvent(product: product)),
-                              onProductPressed:
-                                  (product) {} //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
-                              ),
+                            SearchResultList(
+                                products: session.products,
+                                currentListType: session.currentListType,
+                                onProductAdd: (product) =>
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(AddPToCartEvent(product: product)),
+                                onProductRed: (product) =>
+                                    BlocProvider.of<CartBloc>(context).add(
+                                        ReduceQOfPCartEvent(product: product)),
+                                onProductDel: (product) =>
+                                    BlocProvider.of<CartBloc>(context).add(
+                                        RemovePFromCartEvent(product: product)),
+                                onProductPressed:
+                                    (product) {} //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
+                                ),
                         ]),
                       ),
                       SliverToBoxAdapter(

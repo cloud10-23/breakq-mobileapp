@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/button_group_model.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class ThemeButtonGroup extends StatefulWidget {
   const ThemeButtonGroup({
@@ -51,18 +52,16 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 34,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: _buildButtonsRow()
-            .map((Widget c) => Container(
-                  child: c,
-                  padding: widget.buttonPadding ??
-                      const EdgeInsets.only(right: kPaddingS),
-                ))
-            .toList(),
-      ),
+    return Wrap(
+      spacing: 5.0,
+      runSpacing: 10.0,
+      children: _buildButtonsRow()
+          .map((Widget c) => Container(
+                child: c,
+                padding: widget.buttonPadding ??
+                    const EdgeInsets.only(right: kPaddingS),
+              ))
+          .toList(),
     );
   }
 
@@ -86,6 +85,7 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
               const BorderRadius.all(Radius.circular(kRoundedButtonRadius)),
         ),
         child: MaterialButton(
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
             onPressed: () {
               if (widget.onChange != null) {
                 widget.onChange(button);
@@ -99,24 +99,125 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
                 }
               });
             },
-            child: Center(
-              child: Text(
-                widget.buttonValues[index].label,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: const TextStyle().copyWith(
-                  color: _currentSelectedButton == widget.buttonValues[index]
-                      ? kWhite
-                      : Theme.of(context).textTheme.button.color,
-                  fontWeight:
-                      _currentSelectedButton == widget.buttonValues[index]
-                          ? FontWeight.bold
-                          : FontWeight.w400,
-                ),
+            child: Text(
+              widget.buttonValues[index].label,
+              // textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: const TextStyle().copyWith(
+                fontSize: 12,
+                color: _currentSelectedButton == widget.buttonValues[index]
+                    ? kBlack
+                    : Theme.of(context).textTheme.button.color,
+                fontWeight: _currentSelectedButton == widget.buttonValues[index]
+                    ? FontWeight.w500
+                    : FontWeight.w400,
               ),
             )),
       );
     }).toList();
+  }
+}
+
+class CategoriesButtonGroup extends StatefulWidget {
+  const CategoriesButtonGroup({
+    Key key,
+    this.onChange,
+    this.preselectedValue,
+  }) : super(key: key);
+
+  /// On value change.
+  final Function(int) onChange;
+
+  /// Preselected button value.
+  final ButtonGroupModel preselectedValue;
+
+  @override
+  _CategoriesButtonGroupState createState() => _CategoriesButtonGroupState();
+}
+
+class _CategoriesButtonGroupState extends State<CategoriesButtonGroup> {
+  int _currentSelectedButton;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // if (widget.preselectedValue != null) {
+    //   final int index = widget.buttonValues.indexOf(widget.preselectedValue);
+    //   if (index != -1) {
+    //     _currentSelectedButton = widget.buttonValues[index];
+    //   }
+    // }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 10.0,
+      runSpacing: 10.0,
+      children: List.generate(
+        9,
+        (index) => _buildCategoryButton(index),
+      ),
+    );
+  }
+
+  Widget _buildCategoryButton(int index) {
+    return Container(
+      height: 100,
+      width: 100,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.zero,
+        color: _currentSelectedButton == index ? kPrimaryColor : kWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              const BorderRadius.all(Radius.circular(kRoundedButtonRadius)),
+        ),
+        child: InkWell(
+            onTap: () {
+              if (widget.onChange != null) {
+                widget.onChange(index);
+              }
+              setState(() {
+                if (_currentSelectedButton == index) {
+                  _currentSelectedButton = null;
+                } else {
+                  _currentSelectedButton = index;
+                }
+              });
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Image(
+                      image: AssetImage(categories[index]['image']),
+                      fit: BoxFit.fill),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Text(
+                  categories[index]['name'],
+                  textAlign: TextAlign.center,
+                  style: const TextStyle().copyWith(
+                    fontSize: 12,
+                    color: _currentSelectedButton == index
+                        ? kBlack
+                        : Theme.of(context).textTheme.button.color,
+                    fontWeight: _currentSelectedButton == index
+                        ? FontWeight.bold
+                        : FontWeight.w400,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+              ],
+            )),
+      ),
+    );
   }
 }

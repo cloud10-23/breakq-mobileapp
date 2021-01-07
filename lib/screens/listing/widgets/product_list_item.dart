@@ -117,17 +117,19 @@ class ProductListItem extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Spacer(),
-                            Padding(
-                              padding: EdgeInsets.only(right: 2),
-                              child: Text(
-                                "₹",
-                                style:
-                                    Theme.of(context).textTheme.bodyText2.bold,
-                              ),
-                            ),
                             Text(
-                              product.price.toString(),
+                              "₹ " + product.offerPrice.toString(),
                               style: Theme.of(context).textTheme.bodyText2.bold,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              "₹ " + product.price.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .w300
+                                  .copyWith(
+                                      decoration: TextDecoration.lineThrough),
                             ),
                             Spacer(),
                           ],

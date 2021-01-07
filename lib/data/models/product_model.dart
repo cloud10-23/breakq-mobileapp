@@ -8,6 +8,7 @@ class Product extends Equatable {
     this.image,
     this.categoryId,
     this.price,
+    this.offerPrice,
     this.quantity,
     this.available,
   });
@@ -20,6 +21,7 @@ class Product extends Equatable {
       image: json['image'] as String ?? '',
       categoryId: json['category_id'] as int ?? 0,
       price: json['price'] as int ?? 0,
+      offerPrice: json['offer_price'] as int ?? null,
       quantity: json['quantity'] as String ?? '',
       available: json['available'] as int ?? 0,
     );
@@ -32,6 +34,7 @@ class Product extends Equatable {
   final String description;
   final String image;
   final int price;
+  final int offerPrice;
   final int available;
 
   @override

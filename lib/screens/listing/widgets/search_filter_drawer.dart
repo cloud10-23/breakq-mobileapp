@@ -15,6 +15,28 @@ class SearchFilterDrawer extends StatefulWidget {
 
 class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
   RangeValues _rangeValues = const RangeValues(0, 1000);
+  final List<ButtonGroupModel> priceRanges = [
+    ButtonGroupModel(
+      id: '1',
+      label: '₹0 - ₹100',
+    ),
+    ButtonGroupModel(
+      id: '2',
+      label: '₹100 - ₹500',
+    ),
+    ButtonGroupModel(
+      id: '3',
+      label: '₹500 - ₹1,000',
+    ),
+    ButtonGroupModel(
+      id: '4',
+      label: '₹1,000 - ₹5,000',
+    ),
+    ButtonGroupModel(
+      id: '5',
+      label: 'Above ₹5,000',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +49,18 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
           child: Column(
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: kPaddingS),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingS, vertical: kPaddingM),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    InkWell(
-                      child: Container(
-                        child: Icon(
-                          Icons.close,
-                          size: 32,
-                          color: Theme.of(context).textTheme.subtitle1.color,
-                        ),
+                    IconButton(
+                      iconSize: 24,
+                      icon: Icon(
+                        Icons.close,
+                        color: Theme.of(context).textTheme.subtitle1.color,
                       ),
-                      onTap: () => Navigator.pop(context),
+                      onPressed: () => Navigator.pop(context),
                     ),
                     const Padding(padding: EdgeInsets.only(right: kPaddingS)),
                     Text(
@@ -56,11 +77,6 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
                   children: <Widget>[
-                    UppercaseTitle(
-                      title: L10n.of(context).searchTitleRating,
-                      padding: const EdgeInsets.only(
-                          top: kPaddingM, bottom: kPaddingS),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -116,48 +132,22 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                     UppercaseTitle(
                       title: L10n.of(context).searchTitlePrice,
                       padding: const EdgeInsets.only(
-                          top: kPaddingL, bottom: kPaddingS),
+                          top: kPaddingL, bottom: kPaddingL),
                     ),
                     ThemeButtonGroup(
-                      buttonValues: const <ButtonGroupModel>[
-                        ButtonGroupModel(
-                          id: '\$',
-                          label: '\$',
-                        ),
-                        ButtonGroupModel(
-                          id: '\$\$',
-                          label: '\$\$',
-                        ),
-                        ButtonGroupModel(
-                          id: '\$\$\$',
-                          label: '\$\$\$',
-                        )
-                      ],
+                      buttonValues: priceRanges,
                       isUnselectable: true,
                       onChange: (ButtonGroupModel selectedButton) {},
                     ),
                     UppercaseTitle(
                       title: L10n.of(context).searchTitleCategories,
                       padding: const EdgeInsets.only(
-                          top: kPaddingL, bottom: kPaddingS),
+                          top: kPaddingL, bottom: kPaddingL),
                     ),
-                    ThemeButtonGroup(
-                      buttonValues: <ButtonGroupModel>[
-                        ButtonGroupModel(
-                          id: 'all',
-                          label: L10n.of(context).searchBtnGroupAll,
-                        ),
-                        ButtonGroupModel(
-                          id: 'grocery',
-                          label: L10n.of(context).searchBtnGroupGrocery,
-                        ),
-                      ],
-                      preselectedValue: ButtonGroupModel(
-                        id: 'all',
-                        label: L10n.of(context).searchBtnGroupAll,
-                      ),
-                      onChange: (ButtonGroupModel selectedButton) {},
+                    CategoriesButtonGroup(
+                      onChange: (selectedButton) {},
                     ),
+                    SizedBox(height: 50.0),
                   ],
                 ),
               ),
