@@ -1638,6 +1638,16 @@ class L10n {
     );
   }
 
+  /// `Categories`
+  String get categoriesTitle {
+    return Intl.message(
+      'Categories',
+      name: 'categoriesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get profileListTitleSettings {
     return Intl.message(

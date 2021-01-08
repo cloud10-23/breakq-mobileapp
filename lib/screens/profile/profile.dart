@@ -14,14 +14,14 @@ import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/list_title.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+class DrawerScreen extends StatefulWidget {
+  const DrawerScreen({Key key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _DrawerScreenState createState() => _DrawerScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
@@ -58,6 +58,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: getIt.get<AppGlobals>().user?.phoneNumber ??
                                 'Not available',
                           ),
+                          SizedBox(height: kPaddingL),
+                          ListTitle(title: L10n.of(context).categoriesTitle),
+                          AllCategoriesListItems(),
                           SizedBox(height: kPaddingL),
                           ListTitle(
                               title: L10n.of(context).profileListTitleSettings),
@@ -290,4 +293,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //         darkOption: selectedDarkMode as DarkOption));
   //   }
   // }
+}
+
+class AllCategoriesListItems extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: categories
+            .map((category) => ListItem(
+                  title: category['name'],
+                  trailing: const ArrowRightIcon(),
+                  onPressed: () {},
+                ))
+            .toList());
+  }
 }

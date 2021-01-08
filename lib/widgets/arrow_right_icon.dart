@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ArrowRightIcon extends StatelessWidget {
   const ArrowRightIcon({
     Key key,
-    this.size = 30,
+    this.size = 15,
   }) : super(key: key);
 
   final double size;

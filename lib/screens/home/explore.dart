@@ -41,7 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         drawer: Drawer(
-          child: ProfileScreen(),
+          child: DrawerScreen(),
         ),
         body: SafeArea(
           child: Container(

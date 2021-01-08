@@ -154,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "bookingWarningServices" : MessageLookupByLibrary.simpleMessage("Please select at least one service to continue."),
     "bookingWarningStaffUnavailable" : m8,
     "bookingWithStaff" : m9,
+    "categoriesTitle" : MessageLookupByLibrary.simpleMessage("Categories"),
     "chatOnlineLabel" : MessageLookupByLibrary.simpleMessage("Online"),
     "chatPlaceholder" : MessageLookupByLibrary.simpleMessage("Type a message..."),
     "commonAppointmentStatus" : m10,

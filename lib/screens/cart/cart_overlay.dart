@@ -21,7 +21,7 @@ class CartNavigation extends StatelessWidget {
         navigatorKey: navigatorKey,
       ),
       drawer: Drawer(
-        child: ProfileScreen(),
+        child: DrawerScreen(),
       ),
       floatingActionButton: HybridFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
