@@ -94,11 +94,11 @@ class ListingState extends State<Listing> {
         'label': '',
         'icon': Icons.view_list,
       },
-      <String, dynamic>{
-        'code': describeEnum(ProductListItemViewType.block),
-        'label': '',
-        'icon': Icons.view_array,
-      },
+      // <String, dynamic>{
+      //   'code': describeEnum(ProductListItemViewType.block),
+      //   'label': '',
+      //   'icon': Icons.view_array,
+      // },
     ]
         .map((dynamic item) =>
             ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
@@ -229,20 +229,9 @@ class ListingState extends State<Listing> {
                         delegate: SliverChildListDelegate(<Widget>[
                           if (session.products.isNotNullOrEmpty)
                             SearchResultList(
-                                products: session.products,
-                                currentListType: session.currentListType,
-                                onProductAdd: (product) =>
-                                    BlocProvider.of<CartBloc>(context)
-                                        .add(AddPToCartEvent(product: product)),
-                                onProductRed: (product) =>
-                                    BlocProvider.of<CartBloc>(context).add(
-                                        ReduceQOfPCartEvent(product: product)),
-                                onProductDel: (product) =>
-                                    BlocProvider.of<CartBloc>(context).add(
-                                        RemovePFromCartEvent(product: product)),
-                                onProductPressed:
-                                    (product) {} //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
-                                ),
+                              products: session.products,
+                              currentListType: session.currentListType,
+                            ),
                         ]),
                       ),
                       SliverToBoxAdapter(

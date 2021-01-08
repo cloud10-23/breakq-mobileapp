@@ -19,17 +19,16 @@ class QuickLinkButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: kPaddingS),
           child: Row(
             children: [
+              Spacer(),
               Flexible(
-                flex: 2,
-                child: Image(
-                    image: AssetImage((index == 0)
-                        ? AssetImages.quickShopping
-                        : AssetImages.setBudget)),
+                flex: 4,
+                child: Image(image: AssetImage(quickLinks[index]['image'])),
               ),
+              Spacer(),
               Expanded(
-                flex: 3,
+                flex: 6,
                 child: Text(
-                  (index == 0) ? 'Quick Shopping' : 'Set Budget',
+                  quickLinks[index]['name'],
                   style: Theme.of(context).textTheme.caption.bold.fs10,
                 ),
               ),

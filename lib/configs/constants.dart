@@ -135,6 +135,14 @@ const List<Map<String, String>> categories = [
   {'name': 'Example', 'image': 'assets/images/categories/cat10.png'},
 ];
 
+/// Quick Links
+const List<Map<String, String>> quickLinks = [
+  {'name': 'Quick Shopping', 'image': AssetImages.quickShopping},
+  {'name': 'Set Budget', 'image': AssetImages.setBudget},
+  {'name': 'Cart', 'image': AssetImages.cart},
+  {'name': 'My Orders', 'image': AssetImages.setBudget},
+];
+
 /// Assets images
 class AssetImages {
   static const String introScreen = 'assets/images/onboarding/IntroScreen.png';

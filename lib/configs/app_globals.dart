@@ -1,6 +1,9 @@
 // import 'package:camera/camera.dart';
+import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
@@ -71,4 +74,16 @@ class AppGlobals {
         return Brightness.dark == getPlatformBrightness;
     }
   }
+
+  // Functions to call for Cart operations
+  final Function(Product, BuildContext) onProductPressed = (product,
+      context) {}; //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product))
+  final Function(Product, BuildContext) onProductAdd = (product, context) =>
+      BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product));
+  final Function(Product, BuildContext) onProductRed = (product, context) =>
+      BlocProvider.of<CartBloc>(context)
+          .add(ReduceQOfPCartEvent(product: product));
+  final Function(Product, BuildContext) onProductDel = (product, context) =>
+      BlocProvider.of<CartBloc>(context)
+          .add(RemovePFromCartEvent(product: product));
 }

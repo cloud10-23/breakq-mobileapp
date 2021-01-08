@@ -138,7 +138,7 @@ class ProductListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 5.0),
+                SizedBox(height: kPaddingM),
                 BlocBuilder<CartBloc, CartState>(
                     buildWhen: (previous, current) => current is CartLoaded,
                     builder: (context, state) {
@@ -252,27 +252,25 @@ class ProductListItem extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: kPaddingS, right: kPaddingS),
+                        left: kPaddingS,
+                        right: kPaddingS,
+                        bottom: kPaddingS,
+                        top: 2),
                     child: Row(
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 2),
-                          child: Text(
-                            "₹",
-                            style: Theme.of(context).textTheme.bodyText2.bold,
-                          ),
+                        Text(
+                          "₹ " + product.offerPrice.toString(),
+                          style: Theme.of(context).textTheme.bodyText2.bold,
                         ),
-                        Expanded(
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                product.price.toString(),
-                                style:
-                                    Theme.of(context).textTheme.subtitle1.bold,
-                              ),
-                            ],
-                          ),
-                        )
+                        SizedBox(width: 5),
+                        Text(
+                          "₹ " + product.price.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .caption
+                              .w300
+                              .copyWith(decoration: TextDecoration.lineThrough),
+                        ),
                       ],
                     ),
                   ),
@@ -299,30 +297,28 @@ class ProductListItem extends StatelessWidget {
               //   width: 1,
               // ),
             ),
-            child: InkWell(
-              onTap: () {
-                // _showLocationScreen(context);
-              },
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: 96,
-                    height: 96,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(product.image),
-                        // image: NetworkImage(product.image),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(kBoxDecorationRadius),
-                        bottomLeft: Radius.circular(kBoxDecorationRadius),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Container(
+                      width: 96,
+                      height: 96,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(product.image),
+                          // image: NetworkImage(product.image),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(kBoxDecorationRadius),
+                          bottomLeft: Radius.circular(kBoxDecorationRadius),
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
+                    Padding(
                       padding: const EdgeInsets.only(
                           top: kPaddingS,
                           bottom: kPaddingS,
@@ -346,38 +342,66 @@ class ProductListItem extends StatelessWidget {
                                 .copyWith(color: Theme.of(context).hintColor),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 2, right: kPaddingS),
+                            padding: const EdgeInsets.only(
+                                left: kPaddingS,
+                                right: kPaddingS,
+                                bottom: kPaddingS,
+                                top: 2),
                             child: Row(
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(right: 2),
-                                  child: Text(
-                                    "₹",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .bold,
-                                  ),
+                                Text(
+                                  "₹ " + product.offerPrice.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .bold,
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    product.price.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .bold,
-                                  ),
-                                )
+                                SizedBox(width: 5),
+                                Text(
+                                  "₹ " + product.price.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .w300
+                                      .copyWith(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+                BlocBuilder<CartBloc, CartState>(
+                    buildWhen: (previous, current) => current is CartLoaded,
+                    builder: (context, state) {
+                      int qty = 0;
+                      if (state is CartLoaded) {
+                        state.cartItems.cartItems.forEach((item) {
+                          if (product.id == item.product.id) {
+                            qty = item.quantity;
+                          }
+                        });
+                      }
+                      if (qty <= 0)
+                        return FlatButton(
+                            onPressed: onProductAdd,
+                            child: Icon(Icons.add, color: kBlack));
+                      else
+                        return Container(
+                          width: 100,
+                          child: ProductAddRemButtons(
+                            onAdd: onProductAdd,
+                            onRem: onProductRem,
+                            onDel: onProductDel,
+                            qty: qty,
+                          ),
+                        );
+                    }),
+              ],
             ),
           ),
         );

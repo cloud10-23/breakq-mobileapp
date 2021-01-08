@@ -1,3 +1,4 @@
+import 'package:breakq/configs/app_globals.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
@@ -8,22 +9,27 @@ import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 
 class SearchResultList extends StatelessWidget {
-  const SearchResultList({
+  SearchResultList({
     Key key,
     this.products,
     this.currentListType,
-    this.onProductPressed,
-    this.onProductAdd,
-    this.onProductRed,
-    this.onProductDel,
+    // onProductPressed,
+    // onProductAdd,
+    // onProductRed,
+    // onProductDel,
+    // })  : this.onProductPressed =
+    //           onProductPressed ?? AppGlobals.instance.onProductPressed,
+    //       this.onProductAdd = onProductAdd ?? AppGlobals.instance.onProductAdd,
+    //       this.onProductRed = onProductRed ?? AppGlobals.instance.onProductRed,
+    //       this.onProductDel = onProductDel ?? AppGlobals.instance.onProductDel,
   }) : super(key: key);
 
   final List<Product> products;
   final ToolbarOptionModel currentListType;
-  final Function onProductPressed;
-  final Function onProductAdd;
-  final Function onProductRed;
-  final Function onProductDel;
+  // final Function(Product, BuildContext) onProductPressed;
+  // final Function(Product, BuildContext) onProductAdd;
+  // final Function(Product, BuildContext) onProductRed;
+  // final Function(Product, BuildContext) onProductDel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +63,7 @@ class SearchResultList extends StatelessWidget {
       padding: const EdgeInsets.only(
           left: kPaddingM, top: kPaddingM, bottom: kPaddingM),
       child: Wrap(
-        runSpacing: kPaddingS,
+        runSpacing: kPaddingM,
         alignment: WrapAlignment.spaceBetween,
         children: products.map((Product item) {
           switch (_viewType) {
@@ -72,10 +78,14 @@ class SearchResultList extends StatelessWidget {
                     child: ProductListItem(
                       product: item,
                       viewType: _viewType,
-                      onProductPressed: () => onProductPressed(item),
-                      onProductAdd: () => onProductAdd(item),
-                      onProductRem: () => onProductRed(item),
-                      onProductDel: () => onProductDel(item),
+                      onProductPressed: () =>
+                          AppGlobals.instance.onProductPressed(item, context),
+                      onProductAdd: () =>
+                          AppGlobals.instance.onProductAdd(item, context),
+                      onProductRem: () =>
+                          AppGlobals.instance.onProductRed(item, context),
+                      onProductDel: () =>
+                          AppGlobals.instance.onProductDel(item, context),
                     ),
                   ),
                 ),
@@ -87,6 +97,14 @@ class SearchResultList extends StatelessWidget {
                 child: ProductListItem(
                   product: item,
                   viewType: _viewType,
+                  onProductPressed: () =>
+                      AppGlobals.instance.onProductPressed(item, context),
+                  onProductAdd: () =>
+                      AppGlobals.instance.onProductAdd(item, context),
+                  onProductRem: () =>
+                      AppGlobals.instance.onProductRed(item, context),
+                  onProductDel: () =>
+                      AppGlobals.instance.onProductDel(item, context),
                 ),
               );
           }

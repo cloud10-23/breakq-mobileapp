@@ -1,8 +1,10 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,13 +23,13 @@ class CartNavigation extends StatelessWidget {
       drawer: Drawer(
         child: ProfileScreen(),
       ),
-      floatingActionButton: CartBottomSheet(),
+      floatingActionButton: HybridFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
 
-class CartBottomSheet extends StatelessWidget {
+class HybridFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
@@ -53,7 +55,22 @@ class CartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {},
+      onPressed: () {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => Container(
+              height: MediaQuery.of(context).size.height * 0.9,
+              child: CartBottomSheet()),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)),
+          ),
+          clipBehavior: Clip.antiAlias,
+          isDismissible: true,
+        );
+      },
       heroTag: null,
       label: Container(
         width: 160.0,
