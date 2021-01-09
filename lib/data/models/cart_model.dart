@@ -1,8 +1,14 @@
 import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/foundation.dart';
 
-class CartModel {
-  CartModel({this.cartItems});
+class Cart {
+  Cart({this.cartItems});
+  List<CartItem> cartItems;
+  int noOfProducts;
+  double cartValue;
+
+  set setNoOfProducts(_noOfP) => noOfProducts = _noOfP;
+  set setCartValue(_value) => cartValue = _value;
 
   void addProduct({@required Product product, int quantity = 1}) {
     bool _found = false;
@@ -34,8 +40,6 @@ class CartModel {
     });
     this.cartItems = newCartItems;
   }
-
-  List<CartItem> cartItems;
 }
 
 class CartItem {

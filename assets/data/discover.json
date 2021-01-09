@@ -8,8 +8,8 @@
       "description": "An instant noodles which will be ready in 2 minutes",
       "quantity": "500 gm",
       "image": "assets/images/products/maggi.jpeg",
-      "price": 50,
-      "offer_price": 40,
+      "old_price": 50,
+      "price": 40,
       "available": 100
     },
     {
@@ -19,8 +19,8 @@
       "description": "Dove Shampoo (200 gm) pack",
       "quantity": "500 gm",
       "image": "assets/images/products/dove.jpeg",
-      "price": 80,
-      "offer_price": 70,
+      "old_price": 80,
+      "price": 70,
       "available": 100
     },
     {
@@ -30,8 +30,8 @@
       "description": "Madhur Sugar (500 gm)",
       "quantity": "500 gm",
       "image": "assets/images/products/madhur.jpeg",
-      "price": 110,
-      "offer_price": 100,
+      "old_price": 110,
+      "price": 100,
       "available": 100
     },
     {
@@ -41,8 +41,8 @@
       "description": "Fortune Refined Sunflower Oil",
       "quantity": "5 lts",
       "image": "assets/images/products/fortune.jpeg",
-      "price": 5100,
-      "offer_price": 5000,
+      "old_price": 5100,
+      "price": 5000,
       "available": 100
     },
     {
@@ -52,8 +52,8 @@
       "description": "Premium Wheat Flour packed and sealed in safe environment.",
       "quantity": "500 gm",
       "image": "assets/images/products/wheat.jpeg",
-      "price": 220,
-      "offer_price": 200,
+      "old_price": 220,
+      "price": 200,
       "available": 100
     },
     {
@@ -63,8 +63,8 @@
       "description": "An instant noodles which will be ready in 2 minutes",
       "quantity": "500 gm",
       "image": "assets/images/products/maggi.jpeg",
-      "price": 60,
-      "offer_price": 40,
+      "old_price": 60,
+      "price": 40,
       "available": 100
     },
     {
@@ -74,8 +74,8 @@
       "description": "Dove Shampoo (200 gm) pack",
       "quantity": "500 gm",
       "image": "assets/images/products/dove.jpeg",
-      "price": 80,
-      "offer_price": 70,
+      "old_price": 80,
+      "price": 70,
       "available": 100
     },
     {
@@ -85,8 +85,8 @@
       "description": "Madhur Sugar (500 gm)",
       "quantity": "500 gm",
       "image": "assets/images/products/madhur.jpeg",
-      "price": 110,
-      "offer_price": 100,
+      "old_price": 110,
+      "price": 100,
       "available": 100
     },
     {
@@ -96,8 +96,8 @@
       "description": "Fortune Refined Sunflower Oil",
       "quantity": "5 lts",
       "image": "assets/images/products/fortune.jpeg",
-      "price": 5200,
-      "offer_price": 5000,
+      "old_price": 5200,
+      "price": 5000,
       "available": 100
     }
   ]

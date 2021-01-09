@@ -4,7 +4,6 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,13 +34,16 @@ class HybridFAB extends StatelessWidget {
     return BlocBuilder<CartBloc, CartState>(
         buildWhen: (previous, current) => current is CartLoaded,
         builder: (context, state) {
-          if (state is CartLoaded) if (state.cartItems.cartItems?.isNotEmpty ??
+          if (state is CartLoaded) if (state.cart.cartItems?.isNotEmpty ??
               false)
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ScanFloatingButton(),
-                CartButton(totalItems: state.totalItems),
+                CartButton(
+                  totalItems: state.cart.noOfProducts,
+                  cartValue: state.cart.cartValue,
+                ),
               ],
             );
           return ScanFloatingButtonExtended();
@@ -50,8 +52,9 @@ class HybridFAB extends StatelessWidget {
 }
 
 class CartButton extends StatelessWidget {
-  CartButton({this.totalItems});
+  CartButton({this.totalItems, this.cartValue});
   final int totalItems;
+  final double cartValue;
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
@@ -81,7 +84,7 @@ class CartButton extends StatelessWidget {
             Spacer(),
             BoldTitle(title: '( $totalItems )'),
             Spacer(),
-            BoldTitle(title: '₹ 150.00'),
+            BoldTitle(title: '₹ $cartValue'),
             // Spacer(),
             // CircleButton(),
             Spacer(flex: 3),

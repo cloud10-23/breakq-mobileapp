@@ -67,7 +67,7 @@ class ProductListItem extends StatelessWidget {
                 builder: (context, state) {
                   int qty = 0;
                   if (state is CartLoaded) {
-                    state.cartItems.cartItems.forEach((item) {
+                    state.cart.cartItems.forEach((item) {
                       if (product.id == item.product.id) {
                         qty = item.quantity;
                       }
@@ -150,7 +150,7 @@ class ProductListItem extends StatelessWidget {
                                 children: <Widget>[
                                   Spacer(),
                                   Text(
-                                    "₹ " + product.offerPrice.toString(),
+                                    "₹ " + product.price.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText2
@@ -158,7 +158,7 @@ class ProductListItem extends StatelessWidget {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    "₹ " + product.price.toString(),
+                                    "₹ " + product.oldPrice.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .caption
@@ -281,12 +281,12 @@ class ProductListItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          "₹ " + product.offerPrice.toString(),
+                          "₹ " + product.price.toString(),
                           style: Theme.of(context).textTheme.bodyText2.bold,
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "₹ " + product.price.toString(),
+                          "₹ " + product.oldPrice.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .caption
@@ -324,7 +324,7 @@ class ProductListItem extends StatelessWidget {
                 builder: (context, state) {
                   int qty = 0;
                   if (state is CartLoaded) {
-                    state.cartItems.cartItems.forEach((item) {
+                    state.cart.cartItems.forEach((item) {
                       if (product.id == item.product.id) {
                         qty = item.quantity;
                       }
@@ -400,7 +400,7 @@ class ProductListItem extends StatelessWidget {
                                   child: Row(
                                     children: <Widget>[
                                       Text(
-                                        "₹ " + product.offerPrice.toString(),
+                                        "₹ " + product.price.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2
@@ -408,7 +408,7 @@ class ProductListItem extends StatelessWidget {
                                       ),
                                       SizedBox(width: 5),
                                       Text(
-                                        "₹ " + product.price.toString(),
+                                        "₹ " + product.oldPrice.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .caption

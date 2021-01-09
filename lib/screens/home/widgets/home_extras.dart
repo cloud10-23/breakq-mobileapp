@@ -49,8 +49,8 @@ class ExclProductsCard extends StatelessWidget {
     return Product(
       id: index + 10,
       image: AssetImages.maggi,
-      price: 60,
-      offerPrice: 40,
+      oldPrice: 60,
+      price: 40,
       quantity: '500 gm',
       title: 'Product ${index + 1}',
     );
@@ -66,8 +66,8 @@ class ExclProductsCard extends StatelessWidget {
         product: Product(
           id: index + 10,
           image: AssetImages.maggi,
-          price: 60,
-          offerPrice: 40,
+          oldPrice: 60,
+          price: 40,
           quantity: '500 gm',
           title: 'Product ${index + 1}',
         ),
