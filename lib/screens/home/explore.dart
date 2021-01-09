@@ -186,7 +186,13 @@ class HomeScreenState extends State<HomeScreen> {
                         Text('View All'),
                         Icon(Icons.navigate_next),
                       ]),
-                      Container(height: 230, child: _showExclusiveProducts()),
+                    ]),
+                  ),
+                  SliverToBoxAdapter(
+                    child: _showExclusiveProducts(),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(<Widget>[
                       SizedBox(height: kPaddingBtwnStrips),
                       BoldTitle(title: 'Categories'),
                     ]),
@@ -241,14 +247,16 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showExclusiveProducts() {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1, childAspectRatio: 1.6),
-      itemCount: 5,
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
       scrollDirection: Axis.horizontal,
-      itemBuilder: (_, index) =>
-          ExclProductsCard(index: index), //TopDealsCard(index: index),
+      child: Row(
+        children: List.generate(
+          5,
+          (index) =>
+              ExclProductsCard(index: index), //TopDealsCard(index: index),
+        ),
+      ),
     );
   }
 

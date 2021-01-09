@@ -83,36 +83,33 @@ class ProductListItem extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              height: 100,
-                              child: Stack(
-                                alignment: Alignment.topRight,
-                                children: [
-                                  Container(
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(product.image),
-                                        // image: NetworkImage(product.image),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(
-                                            kBoxDecorationRadius),
-                                        topRight: Radius.circular(
-                                            kBoxDecorationRadius),
-                                      ),
+                            Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Container(
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(product.image),
+                                      // image: NetworkImage(product.image),
+                                      fit: BoxFit.fill,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft:
+                                          Radius.circular(kBoxDecorationRadius),
+                                      topRight:
+                                          Radius.circular(kBoxDecorationRadius),
                                     ),
                                   ),
-                                  if (qty > 0)
-                                    Positioned(
-                                      top: 5.0,
-                                      right: 5.0,
-                                      child: ResetCartButton(
-                                          onProductDel: onProductDel),
-                                    ),
-                                ],
-                              ),
+                                ),
+                                if (qty > 0)
+                                  Positioned(
+                                    top: 5.0,
+                                    right: 5.0,
+                                    child: ResetCartButton(
+                                        onProductDel: onProductDel),
+                                  ),
+                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
@@ -123,7 +120,7 @@ class ProductListItem extends StatelessWidget {
                                 product.title,
                                 maxLines: 1,
                                 style:
-                                    Theme.of(context).textTheme.bodyText2.bold,
+                                    Theme.of(context).textTheme.subtitle2.bold,
                               ),
                             ),
                             Padding(
@@ -304,7 +301,6 @@ class ProductListItem extends StatelessWidget {
 
       case ProductListItemViewType.list:
         return Card(
-          elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kBoxDecorationRadius),
           ),
@@ -314,10 +310,6 @@ class ProductListItem extends StatelessWidget {
               color: Theme.of(context).cardColor,
               borderRadius:
                   const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
-              // border: Border.all(
-              //   color: Theme.of(context).dividerColor,
-              //   width: 1,
-              // ),
             ),
             child: BlocBuilder<CartBloc, CartState>(
                 buildWhen: (previous, current) => current is CartLoaded,
@@ -339,8 +331,8 @@ class ProductListItem extends StatelessWidget {
                           Stack(
                             children: [
                               Container(
-                                width: 96,
-                                height: 96,
+                                width: 75,
+                                height: 75,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(product.image),
@@ -378,7 +370,7 @@ class ProductListItem extends StatelessWidget {
                                   maxLines: 1,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle1
+                                      .subtitle2
                                       .w600,
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 2)),
