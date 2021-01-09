@@ -98,7 +98,6 @@ class CustomNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routeBuilders = _routeBuilders(context);
-
     return Navigator(
         key: navigatorKey,
         initialRoute: CustomNavigatorRoutes.home,

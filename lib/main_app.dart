@@ -1,9 +1,8 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
+import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/explore.dart';
-import 'package:breakq/screens/onboarding/onboarding.dart';
-import 'package:breakq/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,7 +48,8 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         GlobalKey(debugLabel: 'home_screen');
     getIt.get<AppGlobals>().globalKeySearchScreen =
         GlobalKey(debugLabel: 'search_screen');
-
+    getIt.get<AppGlobals>().globalKeyNavigator =
+        GlobalKey(debugLabel: 'home_navigator');
     _initBlocs();
 
     super.initState();
@@ -117,9 +117,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           // if (appState is SetupSuccessApplicationState) {
-          homeWidget = CartNavigation(
+          homeWidget = Base(
               homeScreen: HomeScreen(
-                  key: getIt.get<AppGlobals>().globalKeySearchScreen),
+                key: getIt.get<AppGlobals>().globalKeySearchScreen,
+              ),
               navigatorKey: getIt.get<AppGlobals>().globalKeyNavigator);
           // } else if (appState is OnboardingInProgressApplicationState) {
           //   homeWidget = const OnboardingScreen();

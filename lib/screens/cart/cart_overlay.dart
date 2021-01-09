@@ -1,32 +1,10 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
-import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class CartNavigation extends StatelessWidget {
-  CartNavigation({this.homeScreen, this.navigatorKey});
-  final Widget homeScreen;
-  final GlobalKey<NavigatorState> navigatorKey;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomNavigator(
-        homeScreen: homeScreen,
-        navigatorKey: navigatorKey,
-      ),
-      drawer: Drawer(
-        child: DrawerScreen(),
-      ),
-      floatingActionButton: HybridFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-}
 
 class HybridFAB extends StatelessWidget {
   @override
