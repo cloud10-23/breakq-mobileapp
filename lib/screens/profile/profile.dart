@@ -314,12 +314,19 @@ class AllCategoriesListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+        children: List.generate(
+      5,
+      (index) => ExpansionTile(
+        title: Text('Category - ${index + 1}'),
+        tilePadding: EdgeInsets.zero,
         children: categories
             .map((category) => ListItem(
                   title: category['name'],
                   trailing: const ArrowRightIcon(),
                   onPressed: () {},
                 ))
-            .toList());
+            .toList(),
+      ),
+    ));
   }
 }
