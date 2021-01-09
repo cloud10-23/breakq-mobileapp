@@ -23,6 +23,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _mapReduceQEventToState(event);
     } else if (event is RemovePFromCartEvent) {
       yield* _mapRemoveEventToState(event);
+    } else if (event is SetFABEvent) {
+      yield* _mapSetFABEventToState(event);
     }
   }
 
@@ -76,5 +78,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     cartItems.removeProduct(product: event.product);
 
     add(LoadCartEvent(cartItems: cartItems));
+  }
+
+  Stream<CartState> _mapSetFABEventToState(SetFABEvent event) async* {
+    if (state is CartLoaded)
+      yield CartLoaded(cart: (state as CartLoaded).cart, hide: event.hide);
   }
 }

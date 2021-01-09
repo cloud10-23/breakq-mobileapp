@@ -135,142 +135,133 @@ class ListingState extends State<Listing> {
     }));
   }
 
-  Future<bool> _onBackPressed(BuildContext context) async {
-    return true;
-  }
-
   bool _initglobal = true;
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _onBackPressed(context),
-      child: BlocBuilder<HomeBloc, HomeState>(
-        buildWhen: (HomeState previousState, HomeState currentState) {
-          /// Return true/false to determine whether or not to rebuild the widget
-          /// with state.
-          return currentState is InitialHomeState ||
-              (currentState is RefreshSuccessHomeState &&
-                  currentState.session.searchType == SearchType.full);
-        },
-        builder: (BuildContext context, HomeState state) {
-          // While the screen state is initializing we shall show a full screen
-          // progress indicator and init the search session.
-          if (_initglobal) {
-            _initGlobals(context);
-            _initglobal = false;
-          }
-          if (state is InitialHomeState) {
-            /// Initialize the search session.
-            _homeBloc.add(SessionInitedHomeEvent(
-              activeSearchTab: categoryTabs.first.id,
-              currentSort: searchSortTypes.first, // default is the first one
-              currentListType:
-                  searchListTypes.first, // default is the first one
-            ));
+    return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (HomeState previousState, HomeState currentState) {
+        /// Return true/false to determine whether or not to rebuild the widget
+        /// with state.
+        return currentState is InitialHomeState ||
+            (currentState is RefreshSuccessHomeState &&
+                currentState.session.searchType == SearchType.full);
+      },
+      builder: (BuildContext context, HomeState state) {
+        // While the screen state is initializing we shall show a full screen
+        // progress indicator and init the search session.
+        if (_initglobal) {
+          _initGlobals(context);
+          _initglobal = false;
+        }
+        if (state is InitialHomeState) {
+          /// Initialize the search session.
+          _homeBloc.add(SessionInitedHomeEvent(
+            activeSearchTab: categoryTabs.first.id,
+            currentSort: searchSortTypes.first, // default is the first one
+            currentListType: searchListTypes.first, // default is the first one
+          ));
 
-            // Show the full screen indicator until we return here.
-            return FullScreenIndicator(
-              color: Theme.of(context).cardColor,
-              backgroundColor: Theme.of(context).cardColor,
-            );
-          }
+          // Show the full screen indicator until we return here.
+          return FullScreenIndicator(
+            color: Theme.of(context).cardColor,
+            backgroundColor: Theme.of(context).cardColor,
+          );
+        }
 
-          /// Session is initialized and/or refreshed.
-          final SearchSessionModel session =
-              (state as RefreshSuccessHomeState).session;
+        /// Session is initialized and/or refreshed.
+        final SearchSessionModel session =
+            (state as RefreshSuccessHomeState).session;
 
-          /// Lets see what's in it and show the results on the screen.
-          return AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle.light,
-            child: Scaffold(
-              key: _scaffoldKey,
-              endDrawerEnableOpenDragGesture: false,
-              endDrawer: SearchFilterDrawer(),
-              body: SafeArea(
-                child: Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  child: LoadingOverlay(
-                    isLoading: session.isLoading,
-                    child: CustomScrollView(
-                      controller: _customScrollViewController,
-                      slivers: <Widget>[
-                        SliverAppBar(
-                          floating: true,
-                          // pinned: true,
-                          title: Text(widget.title ?? "Category Name",
-                              style:
-                                  Theme.of(context).textTheme.bodyText1.bold),
-                          actions: [
-                            IconButton(
-                                icon: Icon(Icons.search), onPressed: () {}),
-                          ],
+        /// Lets see what's in it and show the results on the screen.
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: Scaffold(
+            key: _scaffoldKey,
+            endDrawerEnableOpenDragGesture: false,
+            endDrawer: SearchFilterDrawer(),
+            body: SafeArea(
+              child: Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: LoadingOverlay(
+                  isLoading: session.isLoading,
+                  child: CustomScrollView(
+                    controller: _customScrollViewController,
+                    slivers: <Widget>[
+                      SliverAppBar(
+                        floating: true,
+                        // pinned: true,
+                        title: Text(widget.title ?? "Category Name",
+                            style: Theme.of(context).textTheme.bodyText1.bold),
+                        actions: [
+                          IconButton(
+                              icon: Icon(Icons.search), onPressed: () {}),
+                        ],
+                      ),
+                      SliverAppBar(
+                        primary: false,
+                        backgroundColor:
+                            Theme.of(context).scaffoldBackgroundColor,
+                        // floating: true,
+                        pinned: true,
+                        collapsedHeight: 60,
+                        expandedHeight: 60,
+                        flexibleSpace: SearchListToolbar(
+                          searchSortTypes: searchSortTypes,
+                          currentSort: session.currentSort,
+                          onFilterTap: () {
+                            _scaffoldKey.currentState.openEndDrawer();
+                          },
+                          onSortChange: (ToolbarOptionModel newSort) {
+                            _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                          },
+                          products: session.products,
+                          currentListType: session.currentListType,
+                          searchListTypes: searchListTypes,
+                          onListTypeChange: (ToolbarOptionModel newListType) =>
+                              _homeBloc
+                                  .add(ListTypeChangedHomeEvent(newListType)),
                         ),
-                        SliverAppBar(
-                          primary: false,
-                          backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          // floating: true,
-                          pinned: true,
-                          collapsedHeight: 60,
-                          expandedHeight: 60,
-                          flexibleSpace: SearchListToolbar(
-                            searchSortTypes: searchSortTypes,
-                            currentSort: session.currentSort,
-                            onFilterTap: () {
-                              _scaffoldKey.currentState.openEndDrawer();
-                            },
-                            onSortChange: (ToolbarOptionModel newSort) {
-                              _homeBloc.add(SortOrderChangedHomeEvent(newSort));
-                            },
-                            products: session.products,
-                            currentListType: session.currentListType,
-                            searchListTypes: searchListTypes,
-                            onListTypeChange:
-                                (ToolbarOptionModel newListType) => _homeBloc
-                                    .add(ListTypeChangedHomeEvent(newListType)),
-                          ),
-                          actions: <Widget>[
-                            Container()
-                          ], // remove the hamburger menu
-                          leading: Container(), // remove back button
-                        ),
-                        SliverList(
-                          delegate: SliverChildListDelegate(<Widget>[
-                            if (session.products.isNotNullOrEmpty)
-                              SearchResultList(
-                                products: session.products,
-                                currentListType: session.currentListType,
-                              ),
-                          ]),
-                        ),
-                        SliverToBoxAdapter(
-                          child: SizedBox(height: 120.0),
-                        ),
-                      ],
-                    ),
+                        actions: <Widget>[
+                          Container()
+                        ], // remove the hamburger menu
+                        leading: Container(), // remove back button
+                      ),
+                      SliverList(
+                        delegate: SliverChildListDelegate(<Widget>[
+                          if (session.products.isNotNullOrEmpty)
+                            SearchResultList(
+                              products: session.products,
+                              currentListType: session.currentListType,
+                            ),
+                        ]),
+                      ),
+                      SliverToBoxAdapter(
+                        child: SizedBox(height: 120.0),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              // floatingActionButton: Visibility(
-              //   visible: !session.isLoading && session.products.isNotNullOrEmpty,
-              //   child: FloatingActionButton(
-              //     tooltip: L10n.of(context).searchTooltipMap,
-              //     elevation: 3,
-              //     onPressed: () {
-              //       Navigator.pushNamed(
-              //         context,
-              //         Routes.searchMap,
-              //         arguments: <String, dynamic>{'locations': session.products},
-              //       );
-              //     },
-              //     child: const Icon(Icons.near_me, color: kWhite),
-              //     backgroundColor: kPrimaryColor,
-              //   ),
-              // ),
             ),
-          );
-        },
-      ),
+            // floatingActionButton: Visibility(
+            //   visible: !session.isLoading && session.products.isNotNullOrEmpty,
+            //   child: FloatingActionButton(
+            //     tooltip: L10n.of(context).searchTooltipMap,
+            //     elevation: 3,
+            //     onPressed: () {
+            //       Navigator.pushNamed(
+            //         context,
+            //         Routes.searchMap,
+            //         arguments: <String, dynamic>{'locations': session.products},
+            //       );
+            //     },
+            //     child: const Icon(Icons.near_me, color: kWhite),
+            //     backgroundColor: kPrimaryColor,
+            //   ),
+            // ),
+          ),
+        );
+      },
     );
   }
 

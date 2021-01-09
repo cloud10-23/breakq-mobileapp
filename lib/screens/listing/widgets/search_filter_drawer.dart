@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
@@ -14,6 +15,20 @@ class SearchFilterDrawer extends StatefulWidget {
 }
 
 class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
+  CartBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BlocProvider.of<CartBloc>(context)..add(SetFABEvent(hide: true));
+  }
+
+  @override
+  void dispose() {
+    _bloc.add(SetFABEvent(hide: false));
+    super.dispose();
+  }
+
   RangeValues _rangeValues = const RangeValues(0, 1000);
   final List<ButtonGroupModel> priceRanges = [
     ButtonGroupModel(

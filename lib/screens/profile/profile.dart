@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,20 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  CartBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BlocProvider.of<CartBloc>(context)..add(SetFABEvent(hide: true));
+  }
+
+  @override
+  void dispose() {
+    _bloc.add(SetFABEvent(hide: false));
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(

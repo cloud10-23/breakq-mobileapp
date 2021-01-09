@@ -12,18 +12,20 @@ class HybridFAB extends StatelessWidget {
     return BlocBuilder<CartBloc, CartState>(
         buildWhen: (previous, current) => current is CartLoaded,
         builder: (context, state) {
-          if (state is CartLoaded) if (state.cart.cartItems?.isNotEmpty ??
-              false)
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ScanFloatingButton(),
-                CartButton(
-                  totalItems: state.cart.noOfProducts,
-                  cartValue: state.cart.cartValue,
-                ),
-              ],
-            );
+          if (state is CartLoaded) {
+            if (state.hide) return Container();
+            if (state.cart.cartItems?.isNotEmpty ?? false)
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ScanFloatingButton(),
+                  CartButton(
+                    totalItems: state.cart.noOfProducts,
+                    cartValue: state.cart.cartValue,
+                  ),
+                ],
+              );
+          }
           return ScanFloatingButtonExtended();
         });
   }
