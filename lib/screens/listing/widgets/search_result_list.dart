@@ -60,40 +60,16 @@ class SearchResultList extends StatelessWidget {
             describeEnum(e) == currentListType.code);
 
     return Container(
-      padding: const EdgeInsets.only(
-          left: kPaddingM, top: kPaddingM, bottom: kPaddingM),
+      padding: const EdgeInsets.symmetric(
+          horizontal: kPaddingS, vertical: kPaddingM),
       child: Wrap(
         runSpacing: kPaddingM,
         alignment: WrapAlignment.spaceBetween,
         children: products.map((Product item) {
           switch (_viewType) {
             case ProductListItemViewType.grid:
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(
-                    kPaddingM, kPaddingL, kPaddingM, 0),
-                child: FractionallySizedBox(
-                  widthFactor: 0.30,
-                  child: Container(
-                    padding: const EdgeInsets.only(right: kPaddingS),
-                    child: ProductListItem(
-                      product: item,
-                      viewType: _viewType,
-                      onProductPressed: () =>
-                          AppGlobals.instance.onProductPressed(item, context),
-                      onProductAdd: () =>
-                          AppGlobals.instance.onProductAdd(item, context),
-                      onProductRem: () =>
-                          AppGlobals.instance.onProductRed(item, context),
-                      onProductDel: () =>
-                          AppGlobals.instance.onProductDel(item, context),
-                    ),
-                  ),
-                ),
-              );
-              break;
-            default:
-              return Container(
-                padding: const EdgeInsets.only(right: kPaddingM),
+              return FractionallySizedBox(
+                widthFactor: 0.30,
                 child: ProductListItem(
                   product: item,
                   viewType: _viewType,
@@ -106,6 +82,20 @@ class SearchResultList extends StatelessWidget {
                   onProductDel: () =>
                       AppGlobals.instance.onProductDel(item, context),
                 ),
+              );
+              break;
+            default:
+              return ProductListItem(
+                product: item,
+                viewType: _viewType,
+                onProductPressed: () =>
+                    AppGlobals.instance.onProductPressed(item, context),
+                onProductAdd: () =>
+                    AppGlobals.instance.onProductAdd(item, context),
+                onProductRem: () =>
+                    AppGlobals.instance.onProductRed(item, context),
+                onProductDel: () =>
+                    AppGlobals.instance.onProductDel(item, context),
               );
           }
         }).toList(),

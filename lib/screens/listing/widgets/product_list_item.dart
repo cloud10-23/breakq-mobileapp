@@ -62,108 +62,130 @@ class ProductListItem extends StatelessWidget {
               //   width: 1,
               // ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InkWell(
-                  splashColor: kPrimaryColor,
-                  onTap: onProductPressed ?? () {},
-                  onLongPress: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(product.image),
-                            // image: NetworkImage(product.image),
-                            fit: BoxFit.fill,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(kBoxDecorationRadius),
-                            topRight: Radius.circular(kBoxDecorationRadius),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: kPaddingS, left: kPaddingS, right: kPaddingS),
-                        child: Text(
-                          product.title,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyText2.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: kPaddingS, right: kPaddingS, top: 2),
-                        child: Text(
-                          product.quantity,
-                          maxLines: 1,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .copyWith(color: Theme.of(context).hintColor),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: kPaddingS,
-                            right: kPaddingS,
-                            bottom: kPaddingS,
-                            top: 2),
-                        child: Row(
+            child: BlocBuilder<CartBloc, CartState>(
+                buildWhen: (previous, current) => current is CartLoaded,
+                builder: (context, state) {
+                  int qty = 0;
+                  if (state is CartLoaded) {
+                    state.cartItems.cartItems.forEach((item) {
+                      if (product.id == item.product.id) {
+                        qty = item.quantity;
+                      }
+                    });
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InkWell(
+                        splashColor: kPrimaryColor,
+                        onTap: onProductPressed ?? () {},
+                        onLongPress: () {},
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Spacer(),
-                            Text(
-                              "₹ " + product.offerPrice.toString(),
-                              style: Theme.of(context).textTheme.bodyText2.bold,
+                            Container(
+                              height: 100,
+                              child: Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(product.image),
+                                        // image: NetworkImage(product.image),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            kBoxDecorationRadius),
+                                        topRight: Radius.circular(
+                                            kBoxDecorationRadius),
+                                      ),
+                                    ),
+                                  ),
+                                  if (qty > 0)
+                                    Positioned(
+                                      top: 5.0,
+                                      right: 5.0,
+                                      child: ResetCartButton(
+                                          onProductDel: onProductDel),
+                                    ),
+                                ],
+                              ),
                             ),
-                            SizedBox(width: 5),
-                            Text(
-                              "₹ " + product.price.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .w300
-                                  .copyWith(
-                                      decoration: TextDecoration.lineThrough),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: kPaddingS,
+                                  left: kPaddingS,
+                                  right: kPaddingS),
+                              child: Text(
+                                product.title,
+                                maxLines: 1,
+                                style:
+                                    Theme.of(context).textTheme.bodyText2.bold,
+                              ),
                             ),
-                            Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: kPaddingS, right: kPaddingS, top: 2),
+                              child: Text(
+                                product.quantity,
+                                maxLines: 1,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .copyWith(
+                                        color: Theme.of(context).hintColor),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: kPaddingS,
+                                  right: kPaddingS,
+                                  bottom: kPaddingS,
+                                  top: 2),
+                              child: Row(
+                                children: <Widget>[
+                                  Spacer(),
+                                  Text(
+                                    "₹ " + product.offerPrice.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .bold,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "₹ " + product.price.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .w300
+                                        .copyWith(
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: kPaddingM),
-                BlocBuilder<CartBloc, CartState>(
-                    buildWhen: (previous, current) => current is CartLoaded,
-                    builder: (context, state) {
-                      int qty = 0;
-                      if (state is CartLoaded) {
-                        state.cartItems.cartItems.forEach((item) {
-                          if (product.id == item.product.id) {
-                            qty = item.quantity;
-                          }
-                        });
-                      }
+                      SizedBox(height: kPaddingM),
                       if (qty <= 0)
-                        return FlatButton(
-                            onPressed: onProductAdd,
-                            child: Icon(Icons.add, color: kBlack));
+                        GridAddButton(onProductAdd: onProductAdd)
                       else
-                        return ProductAddRemButtons(
+                        GridAddRemButtons(
                           onAdd: onProductAdd,
                           onRem: onProductRem,
-                          onDel: onProductDel,
                           qty: qty,
-                        );
-                    }),
-              ],
-            ),
+                        )
+                    ],
+                  );
+                }),
           ),
         );
         break;
@@ -297,112 +319,123 @@ class ProductListItem extends StatelessWidget {
               //   width: 1,
               // ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  children: [
-                    Container(
-                      width: 96,
-                      height: 96,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(product.image),
-                          // image: NetworkImage(product.image),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(kBoxDecorationRadius),
-                          bottomLeft: Radius.circular(kBoxDecorationRadius),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: kPaddingS,
-                          bottom: kPaddingS,
-                          left: kPaddingS,
-                          right: kPaddingS),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            product.title,
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.subtitle1.w600,
-                          ),
-                          const Padding(padding: EdgeInsets.only(top: 2)),
-                          Text(
-                            sprintf('%s', <String>[product.quantity]),
-                            maxLines: 1,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption
-                                .copyWith(color: Theme.of(context).hintColor),
+            child: BlocBuilder<CartBloc, CartState>(
+                buildWhen: (previous, current) => current is CartLoaded,
+                builder: (context, state) {
+                  int qty = 0;
+                  if (state is CartLoaded) {
+                    state.cartItems.cartItems.forEach((item) {
+                      if (product.id == item.product.id) {
+                        qty = item.quantity;
+                      }
+                    });
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                width: 96,
+                                height: 96,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(product.image),
+                                    // image: NetworkImage(product.image),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft:
+                                        Radius.circular(kBoxDecorationRadius),
+                                    bottomLeft:
+                                        Radius.circular(kBoxDecorationRadius),
+                                  ),
+                                ),
+                              ),
+                              if (qty > 0)
+                                Positioned(
+                                  top: 5.0,
+                                  left: 5.0,
+                                  child: ResetCartButton(
+                                      onProductDel: onProductDel),
+                                ),
+                            ],
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: kPaddingS,
-                                right: kPaddingS,
+                                top: kPaddingS,
                                 bottom: kPaddingS,
-                                top: 2),
-                            child: Row(
+                                left: kPaddingS,
+                                right: kPaddingS),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  "₹ " + product.offerPrice.toString(),
+                                  product.title,
+                                  maxLines: 1,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2
-                                      .bold,
+                                      .subtitle1
+                                      .w600,
                                 ),
-                                SizedBox(width: 5),
+                                const Padding(padding: EdgeInsets.only(top: 2)),
                                 Text(
-                                  "₹ " + product.price.toString(),
+                                  sprintf('%s', <String>[product.quantity]),
+                                  maxLines: 1,
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption
-                                      .w300
                                       .copyWith(
-                                          decoration:
-                                              TextDecoration.lineThrough),
+                                          color: Theme.of(context).hintColor),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: kPaddingS,
+                                      right: kPaddingS,
+                                      bottom: kPaddingS,
+                                      top: 2),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "₹ " + product.offerPrice.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .bold,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        "₹ " + product.price.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .w300
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.lineThrough),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                BlocBuilder<CartBloc, CartState>(
-                    buildWhen: (previous, current) => current is CartLoaded,
-                    builder: (context, state) {
-                      int qty = 0;
-                      if (state is CartLoaded) {
-                        state.cartItems.cartItems.forEach((item) {
-                          if (product.id == item.product.id) {
-                            qty = item.quantity;
-                          }
-                        });
-                      }
                       if (qty <= 0)
-                        return FlatButton(
-                            onPressed: onProductAdd,
-                            child: Icon(Icons.add, color: kBlack));
+                        ListAddItemButton(onProductAdd: onProductAdd)
                       else
-                        return Container(
-                          width: 100,
-                          child: ProductAddRemButtons(
-                            onAdd: onProductAdd,
-                            onRem: onProductRem,
-                            onDel: onProductDel,
-                            qty: qty,
-                          ),
-                        );
-                    }),
-              ],
-            ),
+                        ListAddRemButtons(
+                          onAdd: onProductAdd,
+                          onRem: onProductRem,
+                          qty: qty,
+                        ),
+                    ],
+                  );
+                }),
           ),
         );
         break;

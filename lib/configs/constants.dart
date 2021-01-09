@@ -12,6 +12,7 @@ const String kAppVersion = '1.0.0';
 /// Use null for system font or font name declared in pubspec.yaml like Roboto
 /// or Raleway.
 const String kFontFamily = 'Raleway';
+const String kNumberFontFamily = 'Roboto';
 
 // Date/time formats
 const String kDateFormat = 'MMM d, y';
@@ -34,6 +35,7 @@ const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF333333);
 const Color kGold = Color(0xFFF3C952);
 const Color kTransparent = Colors.transparent;
+const Color kBlackAccent = Colors.black45;
 
 // Padding
 const double kPaddingS = 4.0;

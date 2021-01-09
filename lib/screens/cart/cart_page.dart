@@ -58,7 +58,7 @@ class CartBottomSheet extends StatelessWidget {
                 );
               }
               return Container(
-                margin: EdgeInsets.all(kPaddingL),
+                margin: EdgeInsets.all(kPaddingM),
                 child: Column(
                   children: [
                     BoldTitle(
@@ -66,7 +66,7 @@ class CartBottomSheet extends StatelessWidget {
                     Expanded(
                       child: Container(
                         color: kWhite,
-                        padding: EdgeInsets.all(kPaddingM),
+                        padding: EdgeInsets.all(kPaddingS),
                         child: SingleChildScrollView(
                           child: SearchResultList(
                             currentListType:
