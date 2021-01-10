@@ -5,8 +5,8 @@ import 'package:breakq/screens/listing/widgets/search_locations_delegate_history
 import 'package:breakq/screens/listing/widgets/search_locations_delegate_result_list.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class SearchLocationsDelegate extends SearchDelegate<String> {
-  SearchLocationsDelegate({this.hintText}) : super(searchFieldLabel: hintText);
+class SearchProductsDelegate extends SearchDelegate<String> {
+  SearchProductsDelegate({this.hintText}) : super(searchFieldLabel: hintText);
 
   final String hintText;
 

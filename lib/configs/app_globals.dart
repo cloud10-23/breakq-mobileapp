@@ -75,6 +75,10 @@ class AppGlobals {
     }
   }
 
+  hideFAB(CartBloc bloc, bool hide) {
+    bloc.add(SetFABEvent(hide: hide));
+  }
+
   // Functions to call for Cart operations
   final Function(Product, BuildContext) onProductPressed = (product,
       context) {}; //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product))

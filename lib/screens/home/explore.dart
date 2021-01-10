@@ -6,6 +6,7 @@ import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
+import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,29 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> _quickSearch(BuildContext context) async {
+    // String queryString;
+    // if (BlocProvider.of<HomeBloc>(context).state is RefreshSuccessHomeState)
+    //   queryString = await showSearch(
+    //     context: context,
+    //     delegate: SearchProductsDelegate(hintText: 'Search for a product'),
+    //     query: (BlocProvider.of<HomeBloc>(context).state
+    //             as RefreshSuccessHomeState)
+    //         .session
+    //         .q,
+    //   );
+
+    // if (queryString == null) {
+    //   BlocProvider.of<HomeBloc>(context).add(FilteredListRequestedHomeEvent());
+    // } else {
+    //   BlocProvider.of<HomeBloc>(context)
+    //       .add(KeywordChangedHomeEvent(queryString));
+    // }
+    // return queryString;
+    // Navigator.pushNamed(context, Routes.search);
+    showDialog(context: context, child: SearchBar());
   }
 
   @override
@@ -112,9 +136,7 @@ class HomeScreenState extends State<HomeScreen> {
                                   kBoxDecorationRadius / 2)),
                           onPressed: () {
                             // Switch to Search Tab
-                            // if (onPressed != null) {
-                            //   onPressed();
-                            // }
+                            _quickSearch(context);
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,

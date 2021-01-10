@@ -8,8 +8,8 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 
-class SearchResultList extends StatelessWidget {
-  SearchResultList({
+class ProductListing extends StatelessWidget {
+  ProductListing({
     Key key,
     this.products,
     this.currentListType,

@@ -1,7 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
-import 'package:breakq/screens/listing/widgets/search_result_list.dart';
+import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class CartBottomSheet extends StatelessWidget {
                                 color: kWhite,
                                 padding: EdgeInsets.all(kPaddingS),
                                 child: SingleChildScrollView(
-                                  child: SearchResultList(
+                                  child: ProductListing(
                                     currentListType: ToolbarOptionModel(
                                         'list', 'List', Icons.list),
                                     products: state.cart.cartItems

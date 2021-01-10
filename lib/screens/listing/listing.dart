@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/screens/search/search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,7 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/search_filter_drawer.dart';
 import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
-import 'package:breakq/screens/listing/widgets/search_result_list.dart';
+import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/screens/listing/widgets/search_tabs.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
@@ -194,7 +195,9 @@ class ListingState extends State<Listing> {
                             style: Theme.of(context).textTheme.bodyText1.bold),
                         actions: [
                           IconButton(
-                              icon: Icon(Icons.search), onPressed: () {}),
+                              icon: Icon(Icons.search),
+                              onPressed: () => showDialog(
+                                  context: context, child: SearchBar())),
                         ],
                       ),
                       SliverAppBar(
@@ -229,7 +232,7 @@ class ListingState extends State<Listing> {
                       SliverList(
                         delegate: SliverChildListDelegate(<Widget>[
                           if (session.products.isNotNullOrEmpty)
-                            SearchResultList(
+                            ProductListing(
                               products: session.products,
                               currentListType: session.currentListType,
                             ),

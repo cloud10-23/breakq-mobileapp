@@ -1,6 +1,7 @@
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
+import 'package:breakq/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
@@ -20,6 +21,7 @@ class Routes {
   static const String editProfile = '/editProfile';
   static const String takePicture = '/takePicture';
   static const String locationGallery = '/locationGallery';
+  static const String search = '/search';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -52,6 +54,12 @@ class Routes {
         return MaterialPageRoute<EditProfileScreen>(
           builder: (BuildContext context) {
             return const EditProfileScreen();
+          },
+        );
+      case search:
+        return MaterialPageRoute<PhotoGalleryScreen>(
+          builder: (BuildContext context) {
+            return SearchBar();
           },
         );
       // case takePicture:
