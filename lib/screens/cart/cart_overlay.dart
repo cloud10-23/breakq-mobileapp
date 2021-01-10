@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/widgets/bold_title.dart';
@@ -38,22 +39,7 @@ class CartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {
-        showModalBottomSheet(
-          isScrollControlled: true,
-          context: context,
-          builder: (context) => Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              child: CartBottomSheet()),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0)),
-          ),
-          clipBehavior: Clip.antiAlias,
-          isDismissible: true,
-        );
-      },
+      onPressed: () => AppGlobals.instance.showCartPage(context),
       heroTag: null,
       label: Container(
         width: 160.0,

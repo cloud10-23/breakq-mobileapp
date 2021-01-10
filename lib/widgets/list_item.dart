@@ -10,6 +10,7 @@ class ListItem extends StatelessWidget {
     Key key,
     @required this.title,
     this.subtitle,
+    this.subtitleWidget,
     this.leading,
     this.trailing,
     this.onPressed,
@@ -23,6 +24,9 @@ class ListItem extends StatelessWidget {
 
   /// An optional item subtitle.
   final String subtitle;
+
+  /// An optional item subtitle.
+  final Widget subtitleWidget;
 
   /// Item's optional leading [Widget].
   final Widget leading;
@@ -80,7 +84,9 @@ class ListItem extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (subtitle.isNotNullOrEmpty)
+                    if (subtitleWidget != null)
+                      subtitleWidget
+                    else if (subtitle.isNotNullOrEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 3),
                         child: Text(

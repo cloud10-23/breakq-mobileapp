@@ -185,11 +185,11 @@ class L10n {
     );
   }
 
-  /// `Book`
-  String get locationBtnBook {
+  /// `Add to cart`
+  String get productButtonAddToCart {
     return Intl.message(
-      'Book',
-      name: 'locationBtnBook',
+      'Add to cart',
+      name: 'productButtonAddToCart',
       desc: '',
       args: [],
     );

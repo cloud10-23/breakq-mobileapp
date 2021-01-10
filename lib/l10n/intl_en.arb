@@ -14,7 +14,7 @@
     "locationCurrentlyClosed": "Currently closed",
     "locationCallConfirmation": "Call number {number}?",
     "locationInstantConfirmation": "Instant confirmation!",
-    "locationBtnBook": "Book",
+    "productButtonAddToCart": "Add to cart",
     "locationTotalReviews": "{num} reviews",
     "locationLinkAllReviews": "See all reviews",
     "locationLinkAllServices": "See all services",

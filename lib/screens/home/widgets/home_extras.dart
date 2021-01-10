@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -69,8 +70,8 @@ class ExclProductsCard extends StatelessWidget {
         },
         onProductDel: () => BlocProvider.of<CartBloc>(context)
             .add(RemovePFromCartEvent(product: getProduct(index))),
-        onProductPressed:
-            () {}, //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product)),
+        onProductPressed: () =>
+            AppGlobals.instance.onProductPressed(getProduct(index), context),
       ),
     );
   }

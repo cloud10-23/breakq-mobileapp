@@ -28,7 +28,7 @@ class Routes {
       case product:
         return MaterialPageRoute<ProductScreen>(
           builder: (BuildContext context) {
-            return ProductScreen(productId: routeSettings.arguments as int);
+            return ProductScreen(product: routeSettings.arguments);
           },
           settings: const RouteSettings(name: product),
         );

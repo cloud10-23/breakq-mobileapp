@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LocationHeader extends StatelessWidget {
-  const LocationHeader({Key key, this.product}) : super(key: key);
+class ProductHeader extends StatelessWidget {
+  const ProductHeader({Key key, this.product}) : super(key: key);
 
   final Product product;
 

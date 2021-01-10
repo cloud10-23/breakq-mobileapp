@@ -145,6 +145,15 @@ const List<Map<String, String>> quickLinks = [
   {'name': 'My Orders', 'image': AssetImages.setBudget},
 ];
 
+/// Cart Bulk Buttons
+const List<String> bulkAddToCart = [
+  "+ 5",
+  "+ 10",
+  "+ 20",
+  "+ 50",
+  "+ 100",
+];
+
 /// Assets images
 class AssetImages {
   static const String introScreen = 'assets/images/onboarding/IntroScreen.png';

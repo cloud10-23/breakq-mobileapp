@@ -1,6 +1,8 @@
 // import 'package:camera/camera.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/screens/cart/cart_page.dart';
+import 'package:breakq/screens/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,9 +81,36 @@ class AppGlobals {
     bloc.add(SetFABEvent(hide: hide));
   }
 
+  Future<void> showCartPage(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      builder: (context) => Container(
+          height: MediaQuery.of(context).size.height * 0.9,
+          child: CartBottomSheet()),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      isDismissible: true,
+    );
+  }
+
   // Functions to call for Cart operations
-  final Function(Product, BuildContext) onProductPressed = (product,
-      context) {}; //BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product))
+  final Function(Product, BuildContext) onProductPressed =
+      (product, context) => showModalBottomSheet(
+            context: context,
+            useRootNavigator: true,
+            isScrollControlled: true,
+            builder: (context) => Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: ProductScreen(
+                product: product,
+              ),
+            ),
+          );
   final Function(Product, BuildContext) onProductAdd = (product, context) =>
       BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product));
   final Function(Product, BuildContext) onProductRed = (product, context) =>
