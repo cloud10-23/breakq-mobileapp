@@ -11,7 +11,7 @@ class GridAddButton extends StatelessWidget {
       height: 30,
       margin: EdgeInsets.all(kPaddingM),
       child: FlatButton(
-          color: kPrimaryAccentColor,
+          color: kWhite,
           onPressed: onProductAdd,
           child: Icon(Icons.add, color: kBlackAccent)),
     );
@@ -68,10 +68,11 @@ class ListAddItemButton extends StatelessWidget {
       width: 120,
       padding: const EdgeInsets.only(right: kPaddingM),
       child: FlatButton(
-          color: kPrimaryAccentColor,
+          color: kWhite,
           onPressed: onProductAdd,
           height: 30,
-          shape: RoundedRectangleBorder(
+          shape: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black12),
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           child: Row(
             children: [

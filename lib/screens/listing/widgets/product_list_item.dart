@@ -87,7 +87,7 @@ class ProductListItem extends StatelessWidget {
                               alignment: Alignment.topRight,
                               children: [
                                 Container(
-                                  height: 80,
+                                  height: 120,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(product.image),
