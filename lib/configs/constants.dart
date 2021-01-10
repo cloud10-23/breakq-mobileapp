@@ -174,6 +174,12 @@ class AssetImages {
 
   //Product Images
   static const String maggi = 'assets/images/products/maggi.jpeg';
+
+  /// TopOffer Stock Images
+  static String topOffers(int colIndex, int rowIndex) =>
+      'assets/images/offers/Offer($colIndex,$rowIndex).png';
+
+  static String topDeals(int index) => 'assets/images/offers/Offer($index).png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

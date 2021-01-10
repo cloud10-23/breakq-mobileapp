@@ -172,13 +172,15 @@ class HomeScreenState extends State<HomeScreen> {
                       SizedBox(height: kPaddingBtwnStrips),
                       _showQuickStart(),
                       SizedBox(height: kPaddingBtwnStrips),
+                      BoldTitle(title: 'Top Offers'),
+                      _showGridOfImages(2, 3),
                       Row(mainAxisSize: MainAxisSize.min, children: [
                         BoldTitle(title: 'Top Deals'),
                         Spacer(),
                         Text('View All'),
                         Icon(Icons.navigate_next),
                       ]),
-                      Container(height: 300, child: _showTopDeals()),
+                      _showHorizontalScrollImages(),
                       SizedBox(height: kPaddingBtwnStrips),
                       Row(mainAxisSize: MainAxisSize.min, children: [
                         BoldTitle(title: "Exclusive Products"),
@@ -235,14 +237,42 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _showTopDeals() {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, childAspectRatio: 0.8),
-      itemCount: 10,
+  Widget _showGridOfImages(int columns, int rows) {
+    return Column(
+      children: List.generate(
+        columns,
+        (colIndex) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+          child: Row(
+            children: List.generate(
+              rows,
+              (rowIndex) => Expanded(
+                child: GridImage(
+                  colIndex: colIndex,
+                  rowIndex: rowIndex,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _showHorizontalScrollImages() {
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
       scrollDirection: Axis.horizontal,
-      itemBuilder: (_, index) => TopDealsCard(index: index),
+      child: Row(
+        children: List.generate(
+          6,
+          (index) => GridImage(
+            rowIndex: index,
+            height: 130,
+            width: 150,
+          ),
+        ),
+      ),
     );
   }
 

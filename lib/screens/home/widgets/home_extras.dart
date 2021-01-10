@@ -1,41 +1,29 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/cart_model.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TopDealsCard extends StatelessWidget {
-  TopDealsCard({this.index});
-  final int index;
+class GridImage extends StatelessWidget {
+  GridImage({this.colIndex, this.rowIndex, this.height, this.width});
+  final int colIndex;
+  final int rowIndex;
+  final double height;
+  final double width;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
+    return InkWell(
+      onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
       child: Card(
-        // shape: RoundedRectangleBorder(),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Image(
-                  image: AssetImage(categories[index]['image']),
-                  fit: BoxFit.fill),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(categories[index]['name'],
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText2.bold),
-            SizedBox(
-              height: 5.0,
-            ),
-          ],
-        ),
+        child: Image(
+            height: height,
+            width: width,
+            image: AssetImage((colIndex == null)
+                ? AssetImages.topDeals(rowIndex)
+                : AssetImages.topOffers(colIndex, rowIndex)),
+            fit: BoxFit.fill),
       ),
     );
   }
