@@ -94,6 +94,7 @@ class CartBottomSheet extends StatelessWidget {
                     children: [
                       VeryBoldTitle(
                         title: 'Cart Total:',
+                        fw: FontWeight.w600,
                       ),
                       VeryBoldTitle(
                         title: (state is CartLoaded)
