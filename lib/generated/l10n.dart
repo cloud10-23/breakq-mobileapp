@@ -1658,6 +1658,36 @@ class L10n {
     );
   }
 
+  /// `Orders`
+  String get orderTitle {
+    return Intl.message(
+      'Orders',
+      name: 'orderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Orders`
+  String get orderListMyOrders {
+    return Intl.message(
+      'My Orders',
+      name: 'orderListMyOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Cart`
+  String get orderListMyCart {
+    return Intl.message(
+      'My Cart',
+      name: 'orderListMyCart',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settingsTitle {
     return Intl.message(

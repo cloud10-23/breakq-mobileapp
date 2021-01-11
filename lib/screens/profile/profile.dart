@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,6 +77,24 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           SizedBox(height: kPaddingL),
                           ListTitle(title: L10n.of(context).categoriesTitle),
                           AllCategoriesListItems(),
+                          SizedBox(height: kPaddingL),
+                          ListTitle(title: L10n.of(context).orderTitle),
+                          SizedBox(height: kPaddingM),
+                          ListItem(
+                            title: L10n.of(context).orderListMyCart,
+                            leading: const Icon(Icons.shopping_cart, size: 15),
+                            trailing: const ArrowRightIcon(),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              AppGlobals.instance.showCartPage(context);
+                            },
+                          ),
+                          ListItem(
+                            title: L10n.of(context).orderListMyOrders,
+                            leading: Icon(Icons.my_library_books, size: 15),
+                            trailing: const ArrowRightIcon(),
+                            onPressed: () {},
+                          ),
                           SizedBox(height: kPaddingL),
                           ListTitle(
                               title: L10n.of(context).profileListTitleSettings),
@@ -156,14 +175,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             child: Column(
                               children: <Widget>[
                                 GestureDetector(
-                                  onTap: () {
-                                    UI.confirmationDialogBox(context,
-                                        message: L10n.of(context)
-                                            .settingsHomepageConfirmation,
-                                        onConfirmation: () {}
-                                        // Async.launchUrl(kHomepageURL),
-                                        );
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                     height: 80,
                                     child: const Image(
@@ -208,20 +220,18 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   }
                                 },
                                 child: Center(
-                                  child: InkWell(
-                                    onTap: () =>
+                                  child: ThemeButton(
+                                    onPressed: () =>
                                         BlocProvider.of<AuthBloc>(context)
                                             .add(UserLoggedOutAuthEvent()),
-                                    child: Text(
-                                      L10n.of(context).profileListLogout,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1
-                                          .w400
-                                          .copyWith(
-                                              color:
-                                                  Theme.of(context).hintColor),
-                                    ),
+                                    text: L10n.of(context).profileListLogout,
+                                    // style: Theme.of(context)
+                                    //     .textTheme
+                                    //     .subtitle1
+                                    //     .w400
+                                    //     .copyWith(
+                                    //         color:
+                                    //             Theme.of(context).hintColor),
                                   ),
                                 ),
                               );
