@@ -11,6 +11,7 @@ class ListItem extends StatelessWidget {
     @required this.title,
     this.subtitle,
     this.subtitleWidget,
+    this.thirdRow,
     this.leading,
     this.trailing,
     this.onPressed,
@@ -27,6 +28,9 @@ class ListItem extends StatelessWidget {
 
   /// An optional item subtitle.
   final Widget subtitleWidget;
+
+  /// An optional third row.
+  final Widget thirdRow;
 
   /// Item's optional leading [Widget].
   final Widget leading;
@@ -98,6 +102,7 @@ class ListItem extends StatelessWidget {
                       )
                     else
                       Container(),
+                    thirdRow ?? Container()
                   ],
                 ),
               ),

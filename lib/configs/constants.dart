@@ -146,12 +146,12 @@ const List<Map<String, String>> quickLinks = [
 ];
 
 /// Cart Bulk Buttons
-const List<String> bulkAddToCart = [
-  "+ 5",
-  "+ 10",
-  "+ 20",
-  "+ 50",
-  "+ 100",
+const List<Map<String, int>> bulkAddToCart = [
+  {"+ 5": 5},
+  {"+ 10": 10},
+  {"+ 20": 20},
+  {"+ 50": 50},
+  {"+ 100": 100},
 ];
 
 /// Assets images

@@ -144,8 +144,8 @@ class ListAddRemButtons extends StatelessWidget {
   }
 }
 
-class ResetCartButton extends StatelessWidget {
-  ResetCartButton({this.onProductDel});
+class ResetCartButtonCircleIcon extends StatelessWidget {
+  ResetCartButtonCircleIcon({this.onProductDel});
   final Function onProductDel;
 
   @override
@@ -159,6 +159,36 @@ class ResetCartButton extends StatelessWidget {
         iconSize: 18,
         onPressed: onProductDel ?? () {},
       ),
+    );
+  }
+}
+
+class ResetCartButtonText extends StatelessWidget {
+  ResetCartButtonText({this.onProductDel});
+  final Function onProductDel;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      padding: const EdgeInsets.only(right: kPaddingM),
+      child: FlatButton(
+          color: kWhite,
+          onPressed: onProductDel,
+          height: 30,
+          shape: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black12),
+              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          child: Row(
+            children: [
+              Icon(Icons.delete, color: kBlackAccent),
+              SizedBox(width: 10.0),
+              Text('Delete',
+                  style: Theme.of(context)
+                      .textTheme
+                      .caption
+                      .copyWith(color: kBlack)),
+            ],
+          )),
     );
   }
 }

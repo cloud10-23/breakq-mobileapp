@@ -52,136 +52,141 @@ class _ProductScreenState extends State<ProductScreen> {
             return Scaffold(
               key: _scaffoldKey,
               backgroundColor: Theme.of(context).cardColor,
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(kPaddingL),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Spacer(flex: 3),
-                          Flexible(
-                            child: Container(
-                              height: 2,
-                              decoration: BoxDecoration(
-                                color: getIt
-                                        .get<AppGlobals>()
-                                        .isPlatformBrightnessDark
-                                    ? Theme.of(context).scaffoldBackgroundColor
-                                    : Theme.of(context).cardColor,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(width: 1),
-                              ),
+              body: Padding(
+                padding: const EdgeInsets.all(kPaddingL),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Spacer(flex: 3),
+                        Flexible(
+                          child: Container(
+                            height: 2,
+                            decoration: BoxDecoration(
+                              color: getIt
+                                      .get<AppGlobals>()
+                                      .isPlatformBrightnessDark
+                                  ? Theme.of(context).scaffoldBackgroundColor
+                                  : Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(width: 1),
                             ),
                           ),
-                          Spacer(flex: 3),
-                        ],
-                      ),
-                      SizedBox(height: 20.0),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image(
-                              image: AssetImage(widget.product.image),
-                              height: 150),
-                          if (qty > 0)
-                            Positioned(
-                              top: 5.0,
-                              right: 10.0,
-                              child: ResetCartButton(
-                                onProductDel: () => AppGlobals.instance
-                                    .onProductDel(widget.product, context),
-                              ),
-                            ),
-                        ],
-                      ),
-                      CartTitle(title: widget.product.title),
-                      ListItem(
-                        title: "Quantity: ",
-                        trailing: Text(
-                          sprintf('%s', <String>[widget.product.quantity]),
-                          maxLines: 1,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              .copyWith(color: Theme.of(context).hintColor),
                         ),
+                        Spacer(flex: 3),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Flexible(
+                      child: Image(
+                          image: AssetImage(widget.product.image), height: 150),
+                    ),
+                    VeryBoldTitle(title: widget.product.title),
+                    ListItem(
+                      title: "Quantity: ",
+                      trailing: Text(
+                        sprintf('%s', <String>[widget.product.quantity]),
+                        maxLines: 1,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            .copyWith(color: Theme.of(context).hintColor),
                       ),
-                      SizedBox(height: kPaddingL),
+                    ),
+                    SizedBox(height: kPaddingL),
+                    ListItem(
+                      title: "Price / Unit: ",
+                      trailing: Row(
+                        children: <Widget>[
+                          Text(
+                            "₹ " + widget.product.price.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .bold
+                                .copyWith(color: Theme.of(context).hintColor),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "₹ " + widget.product.oldPrice.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2
+                                .w300
+                                .copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: kPaddingL),
+                    if (qty <= 0)
                       ListItem(
-                        title: "Price: ",
-                        trailing: Row(
-                          children: <Widget>[
-                            Text(
-                              "₹ " + widget.product.price.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .bold
-                                  .copyWith(color: Theme.of(context).hintColor),
+                        showBorder: false,
+                        title: "Item Count: \n",
+                        trailing: ListAddItemButton(
+                          onProductAdd: () => AppGlobals.instance
+                              .onProductAdd(widget.product, context),
+                        ),
+                        // subtitleWidget: ResetCartButtonText(
+                        //   onProductDel: () => AppGlobals.instance
+                        //       .onProductDel(widget.product, context),
+                        // ),
+                        thirdRow: BulkAddButtons(product: widget.product),
+                      )
+                    else
+                      ListItem(
+                        showBorder: false,
+                        title: "Item Count: \n",
+                        subtitleWidget: Row(
+                          children: [
+                            ResetCartButtonText(
+                              onProductDel: () => AppGlobals.instance
+                                  .onProductDel(widget.product, context),
                             ),
-                            SizedBox(width: 5),
-                            Text(
-                              "₹ " + widget.product.oldPrice.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .w300
-                                  .copyWith(
-                                    decoration: TextDecoration.lineThrough,
-                                    color: Theme.of(context).hintColor,
-                                  ),
+                            Spacer(),
+                            ListAddRemButtons(
+                              onAdd: () => AppGlobals.instance
+                                  .onProductAdd(widget.product, context),
+                              onRem: () => AppGlobals.instance
+                                  .onProductRed(widget.product, context),
+                              qty: qty,
                             ),
                           ],
                         ),
+                        thirdRow: BulkAddButtons(product: widget.product),
                       ),
-                      SizedBox(height: kPaddingL),
-                      if (qty <= 0)
-                        ListItem(
-                          title: "Item Count: ",
-                          trailing: ListAddItemButton(
-                            onProductAdd: () => AppGlobals.instance
-                                .onProductAdd(widget.product, context),
-                          ),
-                          subtitleWidget: BulkAddButtons(),
-                        )
-                      else
-                        ListItem(
-                          title: "Item Count: ",
-                          trailing: ListAddRemButtons(
-                            onAdd: () => AppGlobals.instance
-                                .onProductAdd(widget.product, context),
-                            onRem: () => AppGlobals.instance
-                                .onProductRed(widget.product, context),
-                            qty: qty,
-                          ),
-                          subtitleWidget: BulkAddButtons(),
-                        ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
-              bottomNavigationBar: _bottomBar(),
+              bottomNavigationBar: _bottomBar(qty),
             );
           });
     } else
       return Container();
   }
 
-  Widget _bottomBar() {
+  Widget _bottomBar(int qty) {
     if (widget.product == null) {
       return Container();
     }
 
     return Container(
-      padding: const EdgeInsets.all(kPaddingM),
-      child: ThemeButton(
-        text: L10n.of(context).productButtonAddToCart,
-        onPressed: () {
-          // Navigator.pushNamed(context, Routes.booking,
-          // arguments: <String, dynamic>{'locationId': _location.id});
-        },
+      padding: const EdgeInsets.symmetric(
+          horizontal: kPaddingL, vertical: kPaddingM),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          VeryBoldTitle(
+            title: "Sub Total: ",
+            fw: FontWeight.w500,
+          ),
+          VeryBoldTitle(
+              title: "₹ ${(widget.product.price * qty).toStringAsFixed(2)}"),
+        ],
       ),
     );
   }

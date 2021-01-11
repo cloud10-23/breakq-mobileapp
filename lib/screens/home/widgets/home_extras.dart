@@ -60,16 +60,12 @@ class ExclProductsCard extends StatelessWidget {
           quantity: '500 gm',
           title: 'Product ${index + 1}',
         ),
-        onProductAdd: () {
-          BlocProvider.of<CartBloc>(context)
-              .add(AddPToCartEvent(product: getProduct(index)));
-        },
-        onProductRem: () {
-          BlocProvider.of<CartBloc>(context)
-              .add(ReduceQOfPCartEvent(product: getProduct(index)));
-        },
-        onProductDel: () => BlocProvider.of<CartBloc>(context)
-            .add(RemovePFromCartEvent(product: getProduct(index))),
+        onProductAdd: () =>
+            AppGlobals.instance.onProductAdd(getProduct(index), context),
+        onProductRem: () =>
+            AppGlobals.instance.onProductRed(getProduct(index), context),
+        onProductDel: () =>
+            AppGlobals.instance.onProductDel(getProduct(index), context),
         onProductPressed: () =>
             AppGlobals.instance.onProductPressed(getProduct(index), context),
       ),

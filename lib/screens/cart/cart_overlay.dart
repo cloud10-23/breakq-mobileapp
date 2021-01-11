@@ -50,7 +50,7 @@ class CartButton extends StatelessWidget {
             Spacer(),
             BoldTitle(title: '( $totalItems )'),
             Spacer(),
-            BoldTitle(title: '₹ $cartValue'),
+            BoldTitle(title: '₹ ${(cartValue).toStringAsFixed(2)}'),
             // Spacer(),
             // CircleButton(),
             Spacer(flex: 3),

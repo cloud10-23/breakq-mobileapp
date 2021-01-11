@@ -62,18 +62,20 @@ class BoldTitle extends StatelessWidget {
   }
 }
 
-class CartTitle extends StatelessWidget {
-  const CartTitle({
+class VeryBoldTitle extends StatelessWidget {
+  const VeryBoldTitle({
     Key key,
     @required this.title,
     this.padding,
     this.textAlign,
+    this.fw,
     this.maxLines = 1,
   }) : super(key: key);
 
   final String title;
   final EdgeInsetsGeometry padding;
   final int maxLines;
+  final FontWeight fw;
   final TextAlign textAlign;
 
   @override
@@ -92,7 +94,9 @@ class CartTitle extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.headline6.w800,
+            style: (fw != null)
+                ? Theme.of(context).textTheme.headline6.copyWith(fontWeight: fw)
+                : Theme.of(context).textTheme.headline6.w800,
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
             textAlign: textAlign ?? TextAlign.left,

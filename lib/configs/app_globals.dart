@@ -110,9 +110,16 @@ class AppGlobals {
                 product: product,
               ),
             ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0)),
+            ),
+            clipBehavior: Clip.antiAlias,
           );
-  final Function(Product, BuildContext) onProductAdd = (product, context) =>
-      BlocProvider.of<CartBloc>(context).add(AddPToCartEvent(product: product));
+  final Function(Product, BuildContext, {int qty}) onProductAdd =
+      (product, context, {int qty = 1}) => BlocProvider.of<CartBloc>(context)
+          .add(AddPToCartEvent(product: product, qty: qty));
   final Function(Product, BuildContext) onProductRed = (product, context) =>
       BlocProvider.of<CartBloc>(context)
           .add(ReduceQOfPCartEvent(product: product));

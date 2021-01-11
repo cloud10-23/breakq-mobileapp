@@ -1,4 +1,6 @@
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 class CartAddBulkButton extends StatelessWidget {
@@ -25,13 +27,21 @@ class CartAddBulkButton extends StatelessWidget {
 }
 
 class BulkAddButtons extends StatelessWidget {
+  BulkAddButtons({@required this.product});
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: kPaddingM),
       child: Wrap(
-        children:
-            bulkAddToCart.map((text) => CartAddBulkButton(text: text)).toList(),
+        children: bulkAddToCart
+            .map((map) => CartAddBulkButton(
+                  text: map.keys.first,
+                  onTap: () => AppGlobals.instance
+                      .onProductAdd(product, context, qty: map.values.first),
+                ))
+            .toList(),
       ),
     );
   }

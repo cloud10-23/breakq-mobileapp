@@ -93,13 +93,13 @@ class CartBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CartTitle(
+                      VeryBoldTitle(
                         title: 'Cart Total:',
                       ),
-                      CartTitle(
+                      VeryBoldTitle(
                         title: (state is CartLoaded)
-                            ? state.cart.cartValue.toString()
-                            : '0.00',
+                            ? '₹ ' + state.cart.cartValue.toStringAsFixed(2)
+                            : '₹ 0.00',
                       ),
                     ],
                   ),

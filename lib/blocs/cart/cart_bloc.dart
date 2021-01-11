@@ -53,7 +53,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     // Add the product to cart here
-    cartItems.addProduct(product: event.product);
+    cartItems.addProduct(product: event.product, quantity: event.qty);
 
     add(LoadCartEvent(cartItems: cartItems));
   }

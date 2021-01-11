@@ -15,8 +15,9 @@ class LoadCartEvent extends CartEvent {
 }
 
 class AddPToCartEvent extends CartEvent {
-  AddPToCartEvent({this.product});
+  AddPToCartEvent({this.product, this.qty = 1});
   final Product product;
+  final int qty;
 }
 
 class ReduceQOfPCartEvent extends CartEvent {
