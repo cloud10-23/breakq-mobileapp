@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
+import 'package:breakq/screens/cart/widgets/cart_listing.dart';
 import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/jumbotron.dart';
@@ -69,9 +70,7 @@ class CartBottomSheet extends StatelessWidget {
                                 color: kWhite,
                                 padding: EdgeInsets.all(kPaddingS),
                                 child: SingleChildScrollView(
-                                  child: ProductListing(
-                                    currentListType: ToolbarOptionModel(
-                                        'list', 'List', Icons.list),
+                                  child: CartListing(
                                     products: state.cart.cartItems
                                         .map((cartItem) => cartItem.product)
                                         .toList(),
