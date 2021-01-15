@@ -2,7 +2,6 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/widgets/success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -87,10 +86,7 @@ class BarcodeScanner {
   Future<void> scan(BuildContext context) async {
     try {
       scanText = await FlutterBarcodeScanner.scanBarcode(
-          "#ff6666",
-          "Cancel",
-          true,
-          ScanMode.BARCODE); //"0xffffffff", "Cancel", true, ScanMode.BARCODE);
+          "#ff6666", "Cancel", true, ScanMode.BARCODE);
     } on PlatformException {
       scanText = "Something went wrong!";
     }

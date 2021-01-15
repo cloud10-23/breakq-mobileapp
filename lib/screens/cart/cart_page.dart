@@ -62,9 +62,20 @@ class CartBottomSheet extends StatelessWidget {
                         margin: EdgeInsets.all(kPaddingM),
                         child: Column(
                           children: [
-                            BoldTitle(
-                                title:
-                                    "Items in your Cart ( ${state.cart.noOfProducts} )"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                BoldTitle(
+                                  title:
+                                      "Products in Cart ( ${state.cart.cartItems.length} )",
+                                ),
+                                BoldTitle(
+                                  title:
+                                      "Items in Cart ( ${state.cart.noOfProducts} )",
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
                             Expanded(
                               child: Container(
                                 color: kWhite,
