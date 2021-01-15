@@ -3,6 +3,7 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,13 +62,14 @@ class ExclProductsCard extends StatelessWidget {
           title: 'Product ${index + 1}',
         ),
         onProductAdd: () =>
-            AppGlobals.instance.onProductAdd(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductAdd(getProduct(index), context),
         onProductRem: () =>
-            AppGlobals.instance.onProductRed(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductRed(getProduct(index), context),
         onProductDel: () =>
-            AppGlobals.instance.onProductDel(getProduct(index), context),
-        onProductPressed: () =>
-            AppGlobals.instance.onProductPressed(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductDel(getProduct(index), context),
+        onProductPressed: () => getIt
+            .get<AppGlobals>()
+            .onProductPressed(getProduct(index), context),
       ),
     );
   }

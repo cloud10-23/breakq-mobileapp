@@ -1,6 +1,7 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 
 class CartAddBulkButton extends StatelessWidget {
@@ -38,7 +39,8 @@ class BulkAddButtons extends StatelessWidget {
         children: bulkAddToCart
             .map((map) => CartAddBulkButton(
                   text: map.keys.first,
-                  onTap: () => AppGlobals.instance
+                  onTap: () => getIt
+                      .get<AppGlobals>()
                       .onProductAdd(product, context, qty: map.values.first),
                 ))
             .toList(),

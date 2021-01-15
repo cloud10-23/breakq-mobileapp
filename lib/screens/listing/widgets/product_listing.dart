@@ -1,4 +1,5 @@
 import 'package:breakq/configs/app_globals.dart';
+import 'package:breakq/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
@@ -18,10 +19,10 @@ class ProductListing extends StatelessWidget {
     // onProductRed,
     // onProductDel,
     // })  : this.onProductPressed =
-    //           onProductPressed ?? AppGlobals.instance.onProductPressed,
-    //       this.onProductAdd = onProductAdd ?? AppGlobals.instance.onProductAdd,
-    //       this.onProductRed = onProductRed ?? AppGlobals.instance.onProductRed,
-    //       this.onProductDel = onProductDel ?? AppGlobals.instance.onProductDel,
+    //           onProductPressed ?? getIt.get<AppGlobals>().onProductPressed,
+    //       this.onProductAdd = onProductAdd ?? getIt.get<AppGlobals>().onProductAdd,
+    //       this.onProductRed = onProductRed ?? getIt.get<AppGlobals>().onProductRed,
+    //       this.onProductDel = onProductDel ?? getIt.get<AppGlobals>().onProductDel,
   }) : super(key: key);
 
   final List<Product> products;
@@ -74,13 +75,13 @@ class ProductListing extends StatelessWidget {
                   product: item,
                   viewType: _viewType,
                   onProductPressed: () =>
-                      AppGlobals.instance.onProductPressed(item, context),
+                      getIt.get<AppGlobals>().onProductPressed(item, context),
                   onProductAdd: () =>
-                      AppGlobals.instance.onProductAdd(item, context),
+                      getIt.get<AppGlobals>().onProductAdd(item, context),
                   onProductRem: () =>
-                      AppGlobals.instance.onProductRed(item, context),
+                      getIt.get<AppGlobals>().onProductRed(item, context),
                   onProductDel: () =>
-                      AppGlobals.instance.onProductDel(item, context),
+                      getIt.get<AppGlobals>().onProductDel(item, context),
                 ),
               );
               break;
@@ -89,13 +90,13 @@ class ProductListing extends StatelessWidget {
                 product: item,
                 viewType: _viewType,
                 onProductPressed: () =>
-                    AppGlobals.instance.onProductPressed(item, context),
+                    getIt.get<AppGlobals>().onProductPressed(item, context),
                 onProductAdd: () =>
-                    AppGlobals.instance.onProductAdd(item, context),
+                    getIt.get<AppGlobals>().onProductAdd(item, context),
                 onProductRem: () =>
-                    AppGlobals.instance.onProductRed(item, context),
+                    getIt.get<AppGlobals>().onProductRed(item, context),
                 onProductDel: () =>
-                    AppGlobals.instance.onProductDel(item, context),
+                    getIt.get<AppGlobals>().onProductDel(item, context),
               );
           }
         }).toList(),

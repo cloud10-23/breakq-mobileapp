@@ -86,7 +86,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             trailing: const ArrowRightIcon(),
                             onPressed: () {
                               Navigator.pop(context);
-                              AppGlobals.instance.showCartPage(context);
+                              getIt.get<AppGlobals>().showCartPage(context);
                             },
                           ),
                           ListItem(

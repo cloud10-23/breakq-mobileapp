@@ -1,6 +1,7 @@
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
+import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
@@ -22,6 +23,7 @@ class Routes {
   static const String takePicture = '/takePicture';
   static const String locationGallery = '/locationGallery';
   static const String search = '/search';
+  static const String scan = '/scan';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -62,6 +64,12 @@ class Routes {
             return SearchBar();
           },
         );
+      // case scan:
+      //   return MaterialPageRoute<PhotoGalleryScreen>(
+      //     builder: (BuildContext context) {
+      //       return BarcodeScanner();
+      //     },
+      //   );
       // case takePicture:
       //   return MaterialPageRoute<String>(
       //     builder: (BuildContext context) {

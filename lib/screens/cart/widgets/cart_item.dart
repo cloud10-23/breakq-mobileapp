@@ -2,6 +2,7 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sprintf/sprintf.dart';
@@ -20,7 +21,7 @@ class CartListItem extends StatelessWidget {
       ),
       margin: EdgeInsets.zero,
       child: InkWell(
-        onTap: () => AppGlobals.instance.onProductPressed(product, context),
+        onTap: () => getIt.get<AppGlobals>().onProductPressed(product, context),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
@@ -156,13 +157,16 @@ class CartListItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ResetCartButtonText(
-                              onProductDel: () => AppGlobals.instance
+                              onProductDel: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductDel(product, context),
                             ),
                             ListAddRemButtons(
-                              onAdd: () => AppGlobals.instance
+                              onAdd: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductAdd(product, context),
-                              onRem: () => AppGlobals.instance
+                              onRem: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductRed(product, context),
                               qty: qty,
                             ),

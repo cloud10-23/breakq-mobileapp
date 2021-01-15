@@ -128,11 +128,12 @@ class _ProductScreenState extends State<ProductScreen> {
                         showBorder: false,
                         title: "Item Count: \n",
                         trailing: ListAddItemButton(
-                          onProductAdd: () => AppGlobals.instance
+                          onProductAdd: () => getIt
+                              .get<AppGlobals>()
                               .onProductAdd(widget.product, context),
                         ),
                         // subtitleWidget: ResetCartButtonText(
-                        //   onProductDel: () => AppGlobals.instance
+                        //   onProductDel: () => getIt.get<AppGlobals>()
                         //       .onProductDel(widget.product, context),
                         // ),
                         thirdRow: BulkAddButtons(product: widget.product),
@@ -144,14 +145,17 @@ class _ProductScreenState extends State<ProductScreen> {
                         subtitleWidget: Row(
                           children: [
                             ResetCartButtonText(
-                              onProductDel: () => AppGlobals.instance
+                              onProductDel: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductDel(widget.product, context),
                             ),
                             Spacer(),
                             ListAddRemButtons(
-                              onAdd: () => AppGlobals.instance
+                              onAdd: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductAdd(widget.product, context),
-                              onRem: () => AppGlobals.instance
+                              onRem: () => getIt
+                                  .get<AppGlobals>()
                                   .onProductRed(widget.product, context),
                               qty: qty,
                             ),
