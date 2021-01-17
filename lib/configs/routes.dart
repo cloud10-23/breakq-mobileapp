@@ -104,10 +104,13 @@ class CustomNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final Widget homeScreen;
 
-  Map<String, WidgetBuilder> _routeBuilders(BuildContext context) {
+  Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
+      BuildContext context) {
     return {
-      CustomNavigatorRoutes.home: (context) => homeScreen,
-      CustomNavigatorRoutes.listing: (context) => Listing(),
+      CustomNavigatorRoutes.home: (context, settings) => homeScreen,
+      CustomNavigatorRoutes.listing: (context, settings) => Listing(
+            title: settings?.arguments ?? null,
+          ),
     };
   }
 
@@ -118,7 +121,9 @@ class CustomNavigator extends StatelessWidget {
         key: navigatorKey,
         initialRoute: CustomNavigatorRoutes.home,
         onGenerateRoute: (routeSettings) {
-          return SlideRoute(widget: routeBuilders[routeSettings.name](context));
+          return SlideRoute(
+              widget:
+                  routeBuilders[routeSettings.name](context, routeSettings));
         });
   }
 }

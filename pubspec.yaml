@@ -86,6 +86,9 @@ dependencies:
   flutter_barcode_scanner: ^1.0.2
   # qr_code_scanner: ^0.3.0
 
+  # Speech To Text
+  speech_to_text: ^3.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

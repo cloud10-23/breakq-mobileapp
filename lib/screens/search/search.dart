@@ -3,6 +3,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/screens/search/voice_search.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +41,15 @@ class _SearchBarState extends State<SearchBar> {
                           .pushNamed(CustomNavigatorRoutes.listing);
                     }),
               ),
+              IconButton(
+                  icon: Icon(Icons.mic),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        child: Dialog(child: VoiceSearch()),
+                        useRootNavigator: true);
+                  }),
             ],
           ),
         ),

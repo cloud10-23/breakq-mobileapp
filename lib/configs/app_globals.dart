@@ -56,6 +56,9 @@ class AppGlobals {
   /// Is user onbaorded or this is their first run?
   bool isUserOnboarded;
 
+  /// Is speech recognition available on the device?
+  bool hasSpeech = false;
+
   /// App is running on emulator (or real device)?
   // bool isAnEmulator;
 

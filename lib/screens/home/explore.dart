@@ -7,6 +7,7 @@ import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/screens/search/search.dart';
+import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -26,29 +27,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<void> _quickSearch(BuildContext context) async {
-    // String queryString;
-    // if (BlocProvider.of<HomeBloc>(context).state is RefreshSuccessHomeState)
-    //   queryString = await showSearch(
-    //     context: context,
-    //     delegate: SearchProductsDelegate(hintText: 'Search for a product'),
-    //     query: (BlocProvider.of<HomeBloc>(context).state
-    //             as RefreshSuccessHomeState)
-    //         .session
-    //         .q,
-    //   );
-
-    // if (queryString == null) {
-    //   BlocProvider.of<HomeBloc>(context).add(FilteredListRequestedHomeEvent());
-    // } else {
-    //   BlocProvider.of<HomeBloc>(context)
-    //       .add(KeywordChangedHomeEvent(queryString));
-    // }
-    // return queryString;
-    // Navigator.pushNamed(context, Routes.search);
-    showDialog(context: context, child: SearchBar());
   }
 
   @override
@@ -112,58 +90,7 @@ class HomeScreenState extends State<HomeScreen> {
                     toolbarHeight: kToolbarHeight,
                     automaticallyImplyLeading: false,
                     titleSpacing: 0,
-                    title: Container(
-                      // color: kPrimaryColor,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingS,
-                        vertical: kPaddingM,
-                      ),
-                      height: kToolbarHeight,
-                      child: Card(
-                        color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-                            ? Theme.of(context).accentColor
-                            : Theme.of(context).cardColor,
-                        margin: const EdgeInsets.all(0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(kBoxDecorationRadius)),
-                        elevation: 2,
-                        child: FlatButton(
-                          // color: kPrimaryAccentColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  kBoxDecorationRadius / 2)),
-                          onPressed: () {
-                            // Switch to Search Tab
-                            _quickSearch(context);
-                          },
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.search,
-                                color: Theme.of(context).hintColor,
-                              ),
-                              Spacer(),
-                              Expanded(
-                                flex: 9,
-                                child: Text(
-                                  L10n.of(context).homePlaceholderSearch,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      .copyWith(
-                                          color: Theme.of(context).hintColor),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    title: SearchAppBar(),
                   ),
                   SliverToBoxAdapter(
                       child: Container(
