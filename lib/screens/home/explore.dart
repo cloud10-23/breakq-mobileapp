@@ -1,12 +1,10 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
-import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/foundation.dart';
@@ -54,6 +52,7 @@ class HomeScreenState extends State<HomeScreen> {
                 controller: _customScrollViewController,
                 slivers: <Widget>[
                   SliverAppBar(
+                    elevation: 0.0,
                     // backgroundColor: Theme.of(context).,
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     primary: true,

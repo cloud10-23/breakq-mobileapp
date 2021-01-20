@@ -3,6 +3,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/voice_search.dart';
+import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
 
@@ -76,15 +77,7 @@ class SearchAppBar extends StatelessWidget {
                   maxLines: 1,
                 ),
               ),
-              IconButton(
-                  color: kBlack,
-                  icon: Icon(Icons.mic),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        child: Dialog(child: VoiceSearch()),
-                        useRootNavigator: true);
-                  }),
+              VoiceIconButton(),
             ],
           ),
         ),

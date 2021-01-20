@@ -3,6 +3,8 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/product/product.dart';
+import 'package:breakq/screens/search/search.dart';
+import 'package:breakq/screens/search/voice_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -129,4 +131,14 @@ class AppGlobals {
   final Function(Product, BuildContext) onProductDel = (product, context) =>
       BlocProvider.of<CartBloc>(context)
           .add(RemovePFromCartEvent(product: product));
+
+  /// Show search screen
+  final Function(BuildContext) showSearchScreen =
+      (context) => showDialog(context: context, child: SearchBar());
+
+  /// Show Voice search
+  final Function(BuildContext) showVoiceScreen = (context) => showDialog(
+      context: context,
+      child: Dialog(child: VoiceSearch()),
+      useRootNavigator: true);
 }
