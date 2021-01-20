@@ -40,60 +40,54 @@ class SearchAppBar extends StatelessWidget {
         vertical: kPaddingM,
       ),
       height: kToolbarHeight,
-      child: Row(
-        children: [
-          Expanded(
-            child: Card(
-              color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-                  ? Theme.of(context).accentColor
-                  : Theme.of(context).cardColor,
-              margin: const EdgeInsets.all(0),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kBoxDecorationRadius)),
-              elevation: 2,
-              child: FlatButton(
-                // color: kPrimaryAccentColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(kBoxDecorationRadius / 2)),
-                onPressed: () {
-                  // Switch to Search Tab
-                  _quickSearch(context);
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.search,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    Spacer(),
-                    Expanded(
-                      flex: 9,
-                      child: Text(
-                        L10n.of(context).homePlaceholderSearch,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(color: Theme.of(context).hintColor),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
+      child: Card(
+        color: getIt.get<AppGlobals>().isPlatformBrightnessDark
+            ? Theme.of(context).accentColor
+            : Theme.of(context).cardColor,
+        margin: const EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kBoxDecorationRadius)),
+        elevation: 2,
+        child: FlatButton(
+          // color: kPrimaryAccentColor,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(kBoxDecorationRadius / 2)),
+          onPressed: () {
+            // Switch to Search Tab
+            _quickSearch(context);
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.search,
+                color: Theme.of(context).hintColor,
+              ),
+              Spacer(),
+              Expanded(
+                flex: 9,
+                child: Text(
+                  L10n.of(context).homePlaceholderSearch,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(color: Theme.of(context).hintColor),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
-            ),
+              IconButton(
+                  color: kBlack,
+                  icon: Icon(Icons.mic),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        child: Dialog(child: VoiceSearch()),
+                        useRootNavigator: true);
+                  }),
+            ],
           ),
-          IconButton(
-              icon: Icon(Icons.mic),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    child: Dialog(child: VoiceSearch()),
-                    useRootNavigator: true);
-              }),
-        ],
+        ),
       ),
     );
   }
