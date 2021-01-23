@@ -172,7 +172,16 @@ class _QSStep2State extends State<QSStep2> {
           ),
         ),
         onTap: () {
-          getIt.get<AppGlobals>().onProductPressed(product, context);
+          setState(() {
+            if (session.selectedProductIds.contains(product.id)) {
+              BlocProvider.of<QSBloc>(context)
+                  .add(ProductUnselectedQSEvent(product: product));
+            } else {
+              BlocProvider.of<QSBloc>(context)
+                  .add(ProductSelectedQSEvent(product: product));
+            }
+          });
+          // getIt.get<AppGlobals>().onProductPressed(product, context);
         },
       ),
     );

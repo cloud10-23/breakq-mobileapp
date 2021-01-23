@@ -1,11 +1,10 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
-// import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/explore.dart';
-// import 'package:breakq/screens/onboarding/onboarding.dart';
-// import 'package:breakq/screens/splash.dart';
+import 'package:breakq/screens/onboarding/onboarding.dart';
+import 'package:breakq/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
