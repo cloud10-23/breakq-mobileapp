@@ -1,7 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
-import 'package:breakq/configs/constants.dart';
-import 'package:breakq/screens/search/search.dart';
-import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

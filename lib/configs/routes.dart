@@ -1,6 +1,7 @@
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
+import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,7 @@ class Routes {
 class CustomNavigatorRoutes {
   static const String home = '/';
   static const String listing = '/listing';
+  static const String qs = '/quick_shopping';
 }
 
 class CustomNavigator extends StatelessWidget {

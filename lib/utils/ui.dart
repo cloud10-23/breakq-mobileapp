@@ -14,6 +14,7 @@ class UI {
     @required List<Widget> actions,
   }) async {
     return showGeneralDialog(
+      useRootNavigator: true,
       barrierDismissible: false,
       context: context,
       barrierColor: Colors.black54, // space around dialog
@@ -115,7 +116,6 @@ class UI {
           color: Theme.of(context).buttonColor,
           child: Text(L10n.of(context).commonBtnClose.toUpperCase()),
           onPressed: () {
-            Navigator.of(context).pop();
             if (onPressed != null) {
               onPressed();
             }

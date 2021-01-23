@@ -20,6 +20,11 @@ class AddPToCartEvent extends CartEvent {
   final int qty;
 }
 
+class BulkAddPToCartEvent extends CartEvent {
+  BulkAddPToCartEvent({this.products});
+  final List<Product> products;
+}
+
 class ReduceQOfPCartEvent extends CartEvent {
   ReduceQOfPCartEvent({this.product});
   final Product product;

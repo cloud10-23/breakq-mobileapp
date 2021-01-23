@@ -187,7 +187,7 @@ class _BookingSuccessDialogState extends State<SuccessDialog>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(kPaddingM),
+                padding: const EdgeInsets.all(kPaddingL),
                 child: Opacity(
                   opacity: _showButton ? 1 : 0,
                   child: ThemeButton(

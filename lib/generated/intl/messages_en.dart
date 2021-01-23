@@ -19,98 +19,92 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(day, month, year, time) => "${day} ${month} ${year}, at ${time}";
+  static m0(sort) => "${Intl.select(sort, {'date_asc': 'Oldest first', 'date_desc': 'Newest first', 'other': 'Other', })}";
 
-  static m1(dow) => "${dow} ,";
+  static m1(status) => "${Intl.select(status, {'active': 'Active', 'completed': 'Completed', 'other': 'Other', })}";
 
-  static m2(sort) => "${Intl.select(sort, {'date_asc': 'Oldest first', 'date_desc': 'Newest first', 'other': 'Other', })}";
+  static m2(number) => "Call number ${number}?";
 
-  static m3(status) => "${Intl.select(status, {'active': 'Active', 'completed': 'Completed', 'other': 'Other', })}";
+  static m3(current, total) => "Step ${current} of ${total}";
 
-  static m4(number) => "Call number ${number}?";
+  static m4(page) => "${Intl.select(page, {'page1': 'Select Bills', 'page2': 'Select Products', })}";
 
-  static m5(current, total) => "Step ${current} of ${total}";
+  static m5(status) => "${Intl.select(status, {'active': 'active', 'canceled': 'canceled', 'completed': 'completed', 'declined': 'declined', 'failed': 'failed', 'other': 'unknown', })}";
 
-  static m6(page) => "${Intl.select(page, {'page1': 'Select services', 'page2': 'Appointment', 'page3': 'Confirmation', })}";
+  static m6(value) => "₹ ${value}";
 
-  static m7(from, to, total) => "From ${from} to ${to} (${total})";
+  static m7(mode) => "${Intl.select(mode, {'dynamic': 'Dynamic', 'alwaysOn': 'Always on', 'alwaysOff': 'Always off', 'other': 'Unknown', })}";
 
-  static m8(name) => "${name} is not available on this day";
+  static m8(value) => "${value} min";
 
-  static m9(name) => "With ${name}";
+  static m9(mins) => "in 1 hour, ${mins} mins";
 
-  static m10(status) => "${Intl.select(status, {'active': 'active', 'canceled': 'canceled', 'completed': 'completed', 'declined': 'declined', 'failed': 'failed', 'other': 'unknown', })}";
+  static m10(hours) => "in 1 day, ${hours} hours";
 
-  static m11(value) => "\$${value}";
+  static m11(days) => "in ${days} days";
 
-  static m12(mode) => "${Intl.select(mode, {'dynamic': 'Dynamic', 'alwaysOn': 'Always on', 'alwaysOff': 'Always off', 'other': 'Unknown', })}";
+  static m12(hours) => "in ${hours} hours";
 
-  static m13(value) => "${value} min";
+  static m13(mins) => "in ${mins} mins";
 
-  static m14(mins) => "in 1 hour, ${mins} mins";
+  static m14(locale) => "${Intl.select(locale, {'en': 'English', 'de': 'Deutch', 'other': 'Unknown', })}";
 
-  static m15(hours) => "in 1 day, ${hours} hours";
+  static m15(day) => "${Intl.select(day, {'january': 'January', 'february': 'February', 'march': 'March', 'april': 'April', 'may': 'May', 'june': 'June', 'july': 'July', 'august': 'August', 'september': 'September', 'october': 'October', 'november': 'November', 'december': 'December', 'other': 'Unknown', })}";
 
-  static m16(days) => "in ${days} days";
+  static m16(day) => "${Intl.select(day, {'january': 'Jan', 'february': 'Feb', 'march': 'Mar', 'april': 'Apr', 'may': 'May', 'june': 'Jun', 'july': 'Jul', 'august': 'Aug', 'september': 'Sep', 'october': 'Oct', 'november': 'Nov', 'december': 'Dec', 'other': 'Unknown', })}";
 
-  static m17(hours) => "in ${hours} hours";
+  static m17(source) => "${Intl.select(source, {'gallery': 'Photo gallery', 'camera': 'Phone camera', })}";
 
-  static m18(mins) => "in ${mins} mins";
+  static m18(day) => "${Intl.select(day, {'monday': 'Monday', 'tuesday': 'Tuesday', 'wednesday': 'Wednesday', 'thursday': 'Thursday', 'friday': 'Friday', 'saturday': 'Saturday', 'sunday': 'Sunday', 'other': 'Unknown', })}";
 
-  static m19(locale) => "${Intl.select(locale, {'en': 'English', 'de': 'Deutch', 'other': 'Unknown', })}";
+  static m19(day) => "${Intl.select(day, {'monday': 'Mon', 'tuesday': 'Tue', 'wednesday': 'Wed', 'thursday': 'Thu', 'friday': 'Fri', 'saturday': 'Sat', 'sunday': 'Sun', 'other': 'Unknown', })}";
 
-  static m20(day) => "${Intl.select(day, {'january': 'January', 'february': 'February', 'march': 'March', 'april': 'April', 'may': 'May', 'june': 'June', 'july': 'July', 'august': 'August', 'september': 'September', 'october': 'October', 'november': 'November', 'december': 'December', 'other': 'Unknown', })}";
+  static m20(length) => "Min. length is ${length} characters";
 
-  static m21(day) => "${Intl.select(day, {'january': 'Jan', 'february': 'Feb', 'march': 'Mar', 'april': 'Apr', 'may': 'May', 'june': 'Jun', 'july': 'Jul', 'august': 'Aug', 'september': 'Sep', 'october': 'Oct', 'november': 'Nov', 'december': 'Dec', 'other': 'Unknown', })}";
+  static m21(name) => "Hi, ${name}";
 
-  static m22(source) => "${Intl.select(source, {'gallery': 'Photo gallery', 'camera': 'Phone camera', })}";
+  static m22(code) => "Get Salon and use code ${code} to get US\$5 off your first booking expenses.";
 
-  static m23(day) => "${Intl.select(day, {'monday': 'Monday', 'tuesday': 'Tuesday', 'wednesday': 'Wednesday', 'thursday': 'Thursday', 'friday': 'Friday', 'saturday': 'Saturday', 'sunday': 'Sunday', 'other': 'Unknown', })}";
+  static m23(num) => "${num} services available";
 
-  static m24(day) => "${Intl.select(day, {'monday': 'Mon', 'tuesday': 'Tue', 'wednesday': 'Wed', 'thursday': 'Thu', 'friday': 'Fri', 'saturday': 'Sat', 'sunday': 'Sun', 'other': 'Unknown', })}";
+  static m24(number) => "Call number ${number}?";
 
-  static m25(length) => "Min. length is ${length} characters";
+  static m25(date) => "Replied on ${date}";
 
-  static m26(name) => "Hi, ${name}";
+  static m26(num) => "${num} reviews";
 
-  static m27(code) => "Get Salon and use code ${code} to get US\$5 off your first booking expenses.";
+  static m27(num) => "${num} characters remaining";
 
-  static m28(num) => "${num} services available";
+  static m28(from, to) => "₹ ${from} - ₹ ${to}";
 
-  static m29(number) => "Call number ${number}?";
+  static m29(num) => "${num}+ Stars";
 
-  static m30(date) => "Replied on ${date}";
+  static m30(num) => "Locations (${num})";
 
-  static m31(num) => "${num} reviews";
+  static m31(length) => "Password must be at least ${length} characters long and contain at least one number and one uppercase letter.";
 
-  static m32(num) => "${num} characters remaining";
+  static m32(date) => "Valid until: ${date}";
 
-  static m33(from, to) => "₹ ${from} - ₹ ${to}";
+  static m33(date) => "Expired on: ${date}";
 
-  static m34(num) => "${num}+ Stars";
-
-  static m35(num) => "Locations (${num})";
-
-  static m36(length) => "Password must be at least ${length} characters long and contain at least one number and one uppercase letter.";
-
-  static m37(date) => "Valid until: ${date}";
-
-  static m38(date) => "Expired on: ${date}";
-
-  static m39(date) => "Redeemed on: ${date}";
+  static m34(date) => "Redeemed on: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "QSBtnCancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
+    "QSBtnClose" : MessageLookupByLibrary.simpleMessage("Ok"),
+    "QSBtnFinish" : MessageLookupByLibrary.simpleMessage("Add to Cart"),
+    "QSBtnNext" : MessageLookupByLibrary.simpleMessage("Next"),
+    "QSSuccessSubtitle" : MessageLookupByLibrary.simpleMessage("The products were added to the Cart"),
+    "QSSuccessTitle" : MessageLookupByLibrary.simpleMessage("Added!"),
+    "QSWarningBills" : MessageLookupByLibrary.simpleMessage("Please select at least one bill"),
+    "QSWarningNoBills" : MessageLookupByLibrary.simpleMessage("No bills to show"),
+    "QSWarningProducts" : MessageLookupByLibrary.simpleMessage("Please select at least one product"),
     "addPaymentCardButton" : MessageLookupByLibrary.simpleMessage("Save Card"),
     "addPaymentCardTitle" : MessageLookupByLibrary.simpleMessage("Add card"),
-    "appointmentAt" : m0,
-    "appointmentAtDay" : m1,
-    "appointmentCancelationConfirmation" : MessageLookupByLibrary.simpleMessage("Are you sure you want to cancel this appointment?"),
-    "appointmentSubtitleNotes" : MessageLookupByLibrary.simpleMessage("Notes"),
-    "appointmentSubtitleTotal" : MessageLookupByLibrary.simpleMessage("TOTAL"),
     "appointmentsBtnExplore" : MessageLookupByLibrary.simpleMessage("Explore salons nearby"),
-    "appointmentsSort" : m2,
-    "appointmentsStatusGroup" : m3,
+    "appointmentsSort" : m0,
+    "appointmentsStatusGroup" : m1,
     "appointmentsTitle" : MessageLookupByLibrary.simpleMessage("Appointments"),
     "appointmentsWarningCompletedList" : MessageLookupByLibrary.simpleMessage("No previous appointments found."),
     "appointmentsWarningOtherList" : MessageLookupByLibrary.simpleMessage("No appointment found that matches your search criteria."),
@@ -120,64 +114,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "appointmentsWelcomeSubtitle" : MessageLookupByLibrary.simpleMessage("Explore and book your first appointment"),
     "appointmentsWelcomeTitle" : MessageLookupByLibrary.simpleMessage("My Appointments"),
     "bookingAddNotes" : MessageLookupByLibrary.simpleMessage("Add booking notes"),
-    "bookingBtnCalendar" : MessageLookupByLibrary.simpleMessage("Calendar"),
-    "bookingBtnCall" : MessageLookupByLibrary.simpleMessage("Call"),
-    "bookingBtnCancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
-    "bookingBtnClose" : MessageLookupByLibrary.simpleMessage("Ok, got it"),
-    "bookingBtnConfirm" : MessageLookupByLibrary.simpleMessage("Confirm and Pay"),
-    "bookingBtnNext" : MessageLookupByLibrary.simpleMessage("Next"),
-    "bookingBtnNotes" : MessageLookupByLibrary.simpleMessage("Notes"),
-    "bookingCallConfirmation" : m4,
-    "bookingLabelSteps" : m5,
-    "bookingMinutes" : MessageLookupByLibrary.simpleMessage("min"),
-    "bookingNoteslabel" : MessageLookupByLibrary.simpleMessage("Special requests about your booking"),
-    "bookingPayInStore" : MessageLookupByLibrary.simpleMessage("Pay in store"),
-    "bookingPayWithCard" : MessageLookupByLibrary.simpleMessage("Pay with card"),
-    "bookingSigninTitle" : MessageLookupByLibrary.simpleMessage("Login to continue"),
-    "bookingStaffNoPreferenceDescription" : MessageLookupByLibrary.simpleMessage("No preference"),
-    "bookingStaffNoPreferenceName" : MessageLookupByLibrary.simpleMessage("No preference"),
+    "bookingCallConfirmation" : m2,
+    "bookingLabelSteps" : m3,
     "bookingSubtitleAppointment" : MessageLookupByLibrary.simpleMessage("Appointment"),
-    "bookingSubtitleCancelationPolicy" : MessageLookupByLibrary.simpleMessage("Cancelation Policy"),
     "bookingSubtitleCheckout" : MessageLookupByLibrary.simpleMessage("Checkout"),
-    "bookingSubtitleDate" : MessageLookupByLibrary.simpleMessage("Date"),
     "bookingSubtitleLocation" : MessageLookupByLibrary.simpleMessage("Verify Details and Place Order"),
     "bookingSubtitleServices" : MessageLookupByLibrary.simpleMessage("Services"),
-    "bookingSubtitleSignin" : MessageLookupByLibrary.simpleMessage("Login to continue"),
-    "bookingSubtitleTime" : MessageLookupByLibrary.simpleMessage("Time"),
-    "bookingSuccessSubtitle" : MessageLookupByLibrary.simpleMessage("You don\'t need to do anything else. We will send you a reminder before the appointment."),
-    "bookingSuccessTitle" : MessageLookupByLibrary.simpleMessage("Appointment Confirmed"),
-    "bookingTitleWizardPage" : m6,
-    "bookingTotalTime" : m7,
-    "bookingWarningAppointment" : MessageLookupByLibrary.simpleMessage("Choose the date and time from the list that suits you best."),
-    "bookingWarningNoServices" : MessageLookupByLibrary.simpleMessage("No services available"),
-    "bookingWarningNoSlots" : MessageLookupByLibrary.simpleMessage("There are no available free slots"),
-    "bookingWarningServices" : MessageLookupByLibrary.simpleMessage("Please select at least one service to continue."),
-    "bookingWarningStaffUnavailable" : m8,
-    "bookingWithStaff" : m9,
+    "bookingTitleWizardPage" : m4,
     "categoriesTitle" : MessageLookupByLibrary.simpleMessage("Categories"),
     "chatOnlineLabel" : MessageLookupByLibrary.simpleMessage("Online"),
     "chatPlaceholder" : MessageLookupByLibrary.simpleMessage("Type a message..."),
-    "commonAppointmentStatus" : m10,
+    "commonAppointmentStatus" : m5,
     "commonBtnApply" : MessageLookupByLibrary.simpleMessage("Apply"),
     "commonBtnCancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "commonBtnClose" : MessageLookupByLibrary.simpleMessage("Close"),
     "commonBtnOk" : MessageLookupByLibrary.simpleMessage("Ok"),
-    "commonCurrencyFormat" : m11,
-    "commonDarkMode" : m12,
+    "commonCurrencyFormat" : m6,
+    "commonDarkMode" : m7,
     "commonDialogsErrorTitle" : MessageLookupByLibrary.simpleMessage("Oops!"),
-    "commonDurationFormat" : m13,
-    "commonElapseHhourMins" : m14,
-    "commonElapsedDayHours" : m15,
-    "commonElapsedDays" : m16,
-    "commonElapsedHours" : m17,
-    "commonElapsedMins" : m18,
+    "commonDurationFormat" : m8,
+    "commonElapseHhourMins" : m9,
+    "commonElapsedDayHours" : m10,
+    "commonElapsedDays" : m11,
+    "commonElapsedHours" : m12,
+    "commonElapsedMins" : m13,
     "commonElapsedNow" : MessageLookupByLibrary.simpleMessage("in process"),
-    "commonLocales" : m19,
+    "commonLocales" : m14,
     "commonLocationFavorited" : MessageLookupByLibrary.simpleMessage("Location added to your favorites list."),
     "commonLocationUnfavorited" : MessageLookupByLibrary.simpleMessage("Location removed from your favorites list."),
-    "commonMonthLong" : m20,
-    "commonMonthShort" : m21,
-    "commonPhotoSources" : m22,
+    "commonMonthLong" : m15,
+    "commonMonthShort" : m16,
+    "commonPhotoSources" : m17,
     "commonReadMore" : MessageLookupByLibrary.simpleMessage("read more"),
     "commonSearchSortTypePopularity" : MessageLookupByLibrary.simpleMessage("Most popular"),
     "commonSearchSortTypeRating" : MessageLookupByLibrary.simpleMessage("Top rated"),
@@ -192,8 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonSortLTL" : MessageLookupByLibrary.simpleMessage("Price Low-High"),
     "commonTooltipInfo" : MessageLookupByLibrary.simpleMessage("Info"),
     "commonTooltipRefresh" : MessageLookupByLibrary.simpleMessage("Refresh"),
-    "commonWeekdayLong" : m23,
-    "commonWeekdayShort" : m24,
+    "commonWeekdayLong" : m18,
+    "commonWeekdayShort" : m19,
     "commonWeekdayToday" : MessageLookupByLibrary.simpleMessage("Today"),
     "commonWeekdayTomorrow" : MessageLookupByLibrary.simpleMessage("Tomorrow"),
     "editProfileBtnUpdate" : MessageLookupByLibrary.simpleMessage("Update profile"),
@@ -206,7 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "editProfileListTitleContact" : MessageLookupByLibrary.simpleMessage("Contact"),
     "editProfileSuccess" : MessageLookupByLibrary.simpleMessage("Profile updated successfully."),
     "editProfileTitle" : MessageLookupByLibrary.simpleMessage("Edit Profile"),
-    "emptyTitle" : MessageLookupByLibrary.simpleMessage("(not implemented)"),
+    "emptyTitle" : MessageLookupByLibrary.simpleMessage("Yet to be Implemented"),
     "favoritesNoResults" : MessageLookupByLibrary.simpleMessage("Your favorites list is empty."),
     "favoritesTitle" : MessageLookupByLibrary.simpleMessage("My favorites"),
     "favoritesTitleNoResults" : MessageLookupByLibrary.simpleMessage("No favorites yet"),
@@ -218,7 +185,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "forgotPasswordTitle" : MessageLookupByLibrary.simpleMessage("Forgot password?"),
     "formValidatorEmail" : MessageLookupByLibrary.simpleMessage("Email format invalid"),
     "formValidatorInvalidPassword" : MessageLookupByLibrary.simpleMessage("Password format invalid"),
-    "formValidatorMinLength" : m25,
+    "formValidatorMinLength" : m20,
     "formValidatorNameRequired" : MessageLookupByLibrary.simpleMessage("Please enter your Name"),
     "formValidatorPhoneRequired" : MessageLookupByLibrary.simpleMessage("Please enter your Phone Number"),
     "homeHeaderSubtitle" : MessageLookupByLibrary.simpleMessage("Start Adding to Cart!"),
@@ -229,18 +196,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "homeTitlePopularCategories" : MessageLookupByLibrary.simpleMessage("Popular Categories"),
     "homeTitleRecentlyViewed" : MessageLookupByLibrary.simpleMessage("Recently Viewed"),
     "homeTitleTopRated" : MessageLookupByLibrary.simpleMessage("Top Rated Locations"),
-    "homeTitleUser" : m26,
+    "homeTitleUser" : m21,
     "inboxSlideButtonArchive" : MessageLookupByLibrary.simpleMessage("Archive"),
     "inboxSlideButtonDelete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "inboxTitle" : MessageLookupByLibrary.simpleMessage("Messages"),
     "inviteButton" : MessageLookupByLibrary.simpleMessage("Share your code"),
     "inviteDescription" : MessageLookupByLibrary.simpleMessage("Invite your friends and give them each US\$5 in coupons. And for every friend who completes their first booking process, we will give you a US\$5 coupon!"),
     "inviteEarningsLabel" : MessageLookupByLibrary.simpleMessage("Total Earnings"),
-    "inviteShareText" : m27,
+    "inviteShareText" : m22,
     "inviteSubtitle" : MessageLookupByLibrary.simpleMessage("Get discounts by inviting friends"),
     "inviteTitle" : MessageLookupByLibrary.simpleMessage("Invite friends"),
-    "locationAvailableServies" : m28,
-    "locationCallConfirmation" : m29,
+    "locationAvailableServies" : m23,
+    "locationCallConfirmation" : m24,
     "locationClosed" : MessageLookupByLibrary.simpleMessage("Closed"),
     "locationCurrentlyClosed" : MessageLookupByLibrary.simpleMessage("Currently closed"),
     "locationInstantConfirmation" : MessageLookupByLibrary.simpleMessage("Instant confirmation!"),
@@ -251,14 +218,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationLinkAllReviews" : MessageLookupByLibrary.simpleMessage("See all reviews"),
     "locationLinkAllServices" : MessageLookupByLibrary.simpleMessage("See all services"),
     "locationNoResults" : MessageLookupByLibrary.simpleMessage("No Products found! Check back later!"),
-    "locationRepliedOn" : m30,
+    "locationRepliedOn" : m25,
     "locationTitleAboutUs" : MessageLookupByLibrary.simpleMessage("About Us"),
     "locationTitleNearby" : MessageLookupByLibrary.simpleMessage("Nearby Locations"),
     "locationTitleRatings" : MessageLookupByLibrary.simpleMessage("Ratings"),
     "locationTitleReviews" : MessageLookupByLibrary.simpleMessage("Reviews"),
     "locationTitleStaff" : MessageLookupByLibrary.simpleMessage("Our Staff"),
     "locationTitleTopServices" : MessageLookupByLibrary.simpleMessage("Top Services"),
-    "locationTotalReviews" : m31,
+    "locationTotalReviews" : m26,
     "locationWebConfirmation" : MessageLookupByLibrary.simpleMessage("Open web page?"),
     "nameGuest" : MessageLookupByLibrary.simpleMessage("Guest"),
     "onboardingBtnGetStarted" : MessageLookupByLibrary.simpleMessage("Get Started"),
@@ -302,7 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewCommentPlaceholder" : MessageLookupByLibrary.simpleMessage("Write your review here..."),
     "reviewLabelComment" : MessageLookupByLibrary.simpleMessage("Your Comment (optional)"),
     "reviewLabelRate" : MessageLookupByLibrary.simpleMessage("What\'s Your Rate?"),
-    "reviewLengthLimit" : m32,
+    "reviewLengthLimit" : m27,
     "reviewSubmitBtn" : MessageLookupByLibrary.simpleMessage("Submit Review"),
     "reviewSuccessSubtitle" : MessageLookupByLibrary.simpleMessage("Your feedback has been received and will appear immediately."),
     "reviewSuccessTitle" : MessageLookupByLibrary.simpleMessage("Thank you"),
@@ -311,11 +278,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "reviewsTitle" : MessageLookupByLibrary.simpleMessage("My Reviews"),
     "searchBtnGroupAll" : MessageLookupByLibrary.simpleMessage("All"),
     "searchBtnGroupGrocery" : MessageLookupByLibrary.simpleMessage("Grocery"),
-    "searchDrawerDistanceRange" : m33,
+    "searchDrawerDistanceRange" : m28,
     "searchLabelAll" : MessageLookupByLibrary.simpleMessage("All"),
     "searchLabelNearby" : MessageLookupByLibrary.simpleMessage("Nearby"),
     "searchLabelQuickSearch" : MessageLookupByLibrary.simpleMessage("What are you looking for?"),
-    "searchLabelRatingFilter" : m34,
+    "searchLabelRatingFilter" : m29,
     "searchPlaceholderQuickSearchCities" : MessageLookupByLibrary.simpleMessage("City name..."),
     "searchPlaceholderQuickSearchLocations" : MessageLookupByLibrary.simpleMessage("Venue name..."),
     "searchTitleCategories" : MessageLookupByLibrary.simpleMessage("Categories"),
@@ -326,7 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchTitlePriceRange" : MessageLookupByLibrary.simpleMessage("Price Range"),
     "searchTitleRating" : MessageLookupByLibrary.simpleMessage("Rating"),
     "searchTitleRecentSearches" : MessageLookupByLibrary.simpleMessage("Recent searches"),
-    "searchTitleResults" : m35,
+    "searchTitleResults" : m30,
     "searchTitleSortOrder" : MessageLookupByLibrary.simpleMessage("Sort order"),
     "searchTooltipBack" : MessageLookupByLibrary.simpleMessage("Back"),
     "searchTooltipFilters" : MessageLookupByLibrary.simpleMessage("Filters"),
@@ -359,7 +326,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUpAlreadyHaveAccount" : MessageLookupByLibrary.simpleMessage("Already have an account? Sign In"),
     "signUpBtnSend" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "signUpErrorConsent" : MessageLookupByLibrary.simpleMessage("You must accept the Terms and Conditions of Service to continue."),
-    "signUpHelptextPassword" : m36,
+    "signUpHelptextPassword" : m31,
     "signUpHintFullName" : MessageLookupByLibrary.simpleMessage("Your full name"),
     "signUpLabelConsent" : MessageLookupByLibrary.simpleMessage("I have read and agree with the User Terms of Service and I understand that my personal data will be processed in accordance with Privacy Statement."),
     "signUpLabelFullName" : MessageLookupByLibrary.simpleMessage("Full name"),
@@ -369,9 +336,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "takePictureTitle" : MessageLookupByLibrary.simpleMessage("Take a picture"),
     "voucherLabelCouponCode" : MessageLookupByLibrary.simpleMessage("Coupon Code"),
     "voucherLabelSpecialTerms" : MessageLookupByLibrary.simpleMessage("Special Terms And Conditions"),
-    "vouchersDueDateActive" : m37,
-    "vouchersDueDateExpired" : m38,
-    "vouchersDueDateRedeemed" : m39,
+    "vouchersDueDateActive" : m32,
+    "vouchersDueDateExpired" : m33,
+    "vouchersDueDateRedeemed" : m34,
     "vouchersHeroNoteActive" : MessageLookupByLibrary.simpleMessage("No available coupon found."),
     "vouchersHeroNoteExpired" : MessageLookupByLibrary.simpleMessage("No coupon expired so far."),
     "vouchersHeroNoteRedeemed" : MessageLookupByLibrary.simpleMessage("You have not used any of your coupons so far."),

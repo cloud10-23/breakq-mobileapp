@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 // import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/home/base.dart';
@@ -32,6 +33,7 @@ HomeBloc _searchBloc;
 LanguageBloc _languageBloc;
 ThemeBloc _themeBloc;
 CartBloc _cartBloc;
+QSBloc _qsBloc;
 
 class MainApp extends StatefulWidget {
   @override
@@ -64,6 +66,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
     _cartBloc = CartBloc()..add(InitCartEvent());
+    _qsBloc = QSBloc(cartBloc: _cartBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       languageBloc: _languageBloc,
@@ -80,6 +83,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _languageBloc.close();
     _themeBloc.close();
     _cartBloc.close();
+    _qsBloc.close();
     _applicationBloc.close();
     super.dispose();
   }
@@ -108,6 +112,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         //     create: (BuildContext context) => _languageBloc),
         BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),
         BlocProvider<CartBloc>(create: (BuildContext context) => _cartBloc),
+        BlocProvider<QSBloc>(create: (BuildContext context) => _qsBloc),
       ],
       child: BlocBuilder<ApplicationBloc, ApplicationState>(
         buildWhen:

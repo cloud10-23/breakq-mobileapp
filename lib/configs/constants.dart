@@ -1,3 +1,5 @@
+import 'package:breakq/configs/routes.dart';
+import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 
@@ -45,7 +47,7 @@ const double kPaddingL = 20.0;
 
 //Heights `collection
 const double kTopDealsHeight = 80.0;
-const double kButtonHeight = 35.0;
+const double kButtonHeight = 45.0;
 const double kSocialButtonHeight = kButtonHeight * 1.5;
 
 /// Height beiween home strips
@@ -140,11 +142,20 @@ const List<Map<String, String>> categories = [
 
 /// Quick Links
 const List<Map<String, String>> quickLinks = [
-  {'name': 'Quick Shopping', 'image': AssetImages.quickShopping},
-  {'name': 'Set Budget', 'image': AssetImages.setBudget},
-  {'name': 'Cart', 'image': AssetImages.cart},
-  {'name': 'My Orders', 'image': AssetImages.setBudget},
+  {
+    'name': 'Quick Shopping',
+    'image': AssetImages.quickShopping,
+    'link': QShoppingScreen.id,
+  },
+  {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
+  {'name': 'Cart', 'image': AssetImages.cart, 'link': 'cart'},
+  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'my_order'},
 ];
+
+// Quick Link Widgets
+const Map<String, Widget> quickLinkWidgets = {
+  QShoppingScreen.id: QShoppingScreen(),
+};
 
 /// Cart Bulk Buttons
 const List<Map<String, int>> bulkAddToCart = [

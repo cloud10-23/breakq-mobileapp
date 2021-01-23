@@ -670,10 +670,10 @@ class L10n {
     );
   }
 
-  /// `${value}`
+  /// `₹ {value}`
   String commonCurrencyFormat(Object value) {
     return Intl.message(
-      '\$$value',
+      '₹ $value',
       name: 'commonCurrencyFormat',
       desc: '',
       args: [value],
@@ -958,10 +958,10 @@ class L10n {
     );
   }
 
-  /// `(not implemented)`
+  /// `Yet to be Implemented`
   String get emptyTitle {
     return Intl.message(
-      '(not implemented)',
+      'Yet to be Implemented',
       name: 'emptyTitle',
       desc: '',
       args: [],
@@ -2168,71 +2168,71 @@ class L10n {
     );
   }
 
-  /// `Confirm and Pay`
-  String get bookingBtnConfirm {
+  /// `Add to Cart`
+  String get QSBtnFinish {
     return Intl.message(
-      'Confirm and Pay',
-      name: 'bookingBtnConfirm',
+      'Add to Cart',
+      name: 'QSBtnFinish',
       desc: '',
       args: [],
     );
   }
 
   /// `Next`
-  String get bookingBtnNext {
+  String get QSBtnNext {
     return Intl.message(
       'Next',
-      name: 'bookingBtnNext',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Call`
-  String get bookingBtnCall {
-    return Intl.message(
-      'Call',
-      name: 'bookingBtnCall',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Calendar`
-  String get bookingBtnCalendar {
-    return Intl.message(
-      'Calendar',
-      name: 'bookingBtnCalendar',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Notes`
-  String get bookingBtnNotes {
-    return Intl.message(
-      'Notes',
-      name: 'bookingBtnNotes',
+      name: 'QSBtnNext',
       desc: '',
       args: [],
     );
   }
 
   /// `Cancel`
-  String get bookingBtnCancel {
+  String get QSBtnCancel {
     return Intl.message(
       'Cancel',
-      name: 'bookingBtnCancel',
+      name: 'QSBtnCancel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Ok, got it`
-  String get bookingBtnClose {
+  /// `Please select at least one bill`
+  String get QSWarningBills {
     return Intl.message(
-      'Ok, got it',
-      name: 'bookingBtnClose',
+      'Please select at least one bill',
+      name: 'QSWarningBills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select at least one product`
+  String get QSWarningProducts {
+    return Intl.message(
+      'Please select at least one product',
+      name: 'QSWarningProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No bills to show`
+  String get QSWarningNoBills {
+    return Intl.message(
+      'No bills to show',
+      name: 'QSWarningNoBills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ok`
+  String get QSBtnClose {
+    return Intl.message(
+      'Ok',
+      name: 'QSBtnClose',
       desc: '',
       args: [],
     );
@@ -2248,48 +2248,17 @@ class L10n {
     );
   }
 
-  /// `Login to continue`
-  String get bookingSigninTitle {
-    return Intl.message(
-      'Login to continue',
-      name: 'bookingSigninTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{page, select, page1 {Select services} page2 {Appointment} page3 {Confirmation}}`
+  /// `{page, select, page1 {Select Bills} page2 {Select Products}}`
   String bookingTitleWizardPage(Object page) {
     return Intl.select(
       page,
       {
-        'page1': 'Select services',
-        'page2': 'Appointment',
-        'page3': 'Confirmation',
+        'page1': 'Select Bills',
+        'page2': 'Select Products',
       },
       name: 'bookingTitleWizardPage',
       desc: '',
       args: [page],
-    );
-  }
-
-  /// `Date`
-  String get bookingSubtitleDate {
-    return Intl.message(
-      'Date',
-      name: 'bookingSubtitleDate',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Time`
-  String get bookingSubtitleTime {
-    return Intl.message(
-      'Time',
-      name: 'bookingSubtitleTime',
-      desc: '',
-      args: [],
     );
   }
 
@@ -2323,16 +2292,6 @@ class L10n {
     );
   }
 
-  /// `Login to continue`
-  String get bookingSubtitleSignin {
-    return Intl.message(
-      'Login to continue',
-      name: 'bookingSubtitleSignin',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Checkout`
   String get bookingSubtitleCheckout {
     return Intl.message(
@@ -2343,111 +2302,21 @@ class L10n {
     );
   }
 
-  /// `Cancelation Policy`
-  String get bookingSubtitleCancelationPolicy {
+  /// `Added!`
+  String get QSSuccessTitle {
     return Intl.message(
-      'Cancelation Policy',
-      name: 'bookingSubtitleCancelationPolicy',
+      'Added!',
+      name: 'QSSuccessTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please select at least one service to continue.`
-  String get bookingWarningServices {
+  /// `The products were added to the Cart`
+  String get QSSuccessSubtitle {
     return Intl.message(
-      'Please select at least one service to continue.',
-      name: 'bookingWarningServices',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Choose the date and time from the list that suits you best.`
-  String get bookingWarningAppointment {
-    return Intl.message(
-      'Choose the date and time from the list that suits you best.',
-      name: 'bookingWarningAppointment',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `min`
-  String get bookingMinutes {
-    return Intl.message(
-      'min',
-      name: 'bookingMinutes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No services available`
-  String get bookingWarningNoServices {
-    return Intl.message(
-      'No services available',
-      name: 'bookingWarningNoServices',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `There are no available free slots`
-  String get bookingWarningNoSlots {
-    return Intl.message(
-      'There are no available free slots',
-      name: 'bookingWarningNoSlots',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{name} is not available on this day`
-  String bookingWarningStaffUnavailable(Object name) {
-    return Intl.message(
-      '$name is not available on this day',
-      name: 'bookingWarningStaffUnavailable',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `From {from} to {to} ({total})`
-  String bookingTotalTime(Object from, Object to, Object total) {
-    return Intl.message(
-      'From $from to $to ($total)',
-      name: 'bookingTotalTime',
-      desc: '',
-      args: [from, to, total],
-    );
-  }
-
-  /// `With {name}`
-  String bookingWithStaff(Object name) {
-    return Intl.message(
-      'With $name',
-      name: 'bookingWithStaff',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `Appointment Confirmed`
-  String get bookingSuccessTitle {
-    return Intl.message(
-      'Appointment Confirmed',
-      name: 'bookingSuccessTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't need to do anything else. We will send you a reminder before the appointment.`
-  String get bookingSuccessSubtitle {
-    return Intl.message(
-      'You don\'t need to do anything else. We will send you a reminder before the appointment.',
-      name: 'bookingSuccessSubtitle',
+      'The products were added to the Cart',
+      name: 'QSSuccessSubtitle',
       desc: '',
       args: [],
     );
@@ -2470,106 +2339,6 @@ class L10n {
       name: 'bookingAddNotes',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `Pay with card`
-  String get bookingPayWithCard {
-    return Intl.message(
-      'Pay with card',
-      name: 'bookingPayWithCard',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Pay in store`
-  String get bookingPayInStore {
-    return Intl.message(
-      'Pay in store',
-      name: 'bookingPayInStore',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Special requests about your booking`
-  String get bookingNoteslabel {
-    return Intl.message(
-      'Special requests about your booking',
-      name: 'bookingNoteslabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No preference`
-  String get bookingStaffNoPreferenceName {
-    return Intl.message(
-      'No preference',
-      name: 'bookingStaffNoPreferenceName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No preference`
-  String get bookingStaffNoPreferenceDescription {
-    return Intl.message(
-      'No preference',
-      name: 'bookingStaffNoPreferenceDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Are you sure you want to cancel this appointment?`
-  String get appointmentCancelationConfirmation {
-    return Intl.message(
-      'Are you sure you want to cancel this appointment?',
-      name: 'appointmentCancelationConfirmation',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Notes`
-  String get appointmentSubtitleNotes {
-    return Intl.message(
-      'Notes',
-      name: 'appointmentSubtitleNotes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `TOTAL`
-  String get appointmentSubtitleTotal {
-    return Intl.message(
-      'TOTAL',
-      name: 'appointmentSubtitleTotal',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `{day} {month} {year}, at {time}`
-  String appointmentAt(Object day, Object month, Object year, Object time) {
-    return Intl.message(
-      '$day $month $year, at $time',
-      name: 'appointmentAt',
-      desc: '',
-      args: [day, month, year, time],
-    );
-  }
-
-  /// `{dow} ,`
-  String appointmentAtDay(Object dow) {
-    return Intl.message(
-      '$dow ,',
-      name: 'appointmentAtDay',
-      desc: '',
-      args: [dow],
     );
   }
 

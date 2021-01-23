@@ -29,7 +29,7 @@ class CustomDialog extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(top: kPaddingL),
+            margin: const EdgeInsets.only(top: kPaddingL * 2.5),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(kCardRadius),
