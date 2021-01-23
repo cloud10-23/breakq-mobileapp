@@ -109,8 +109,10 @@ class CartBottomSheet extends StatelessWidget {
                       ),
                       VeryBoldTitle(
                         title: (state is CartLoaded)
-                            ? '₹ ' + state.cart.cartValue.toStringAsFixed(2)
-                            : '₹ 0.00',
+                            ? '₹ ' +
+                                (state.cart?.cartValue?.toStringAsFixed(2) ??
+                                    "00.00")
+                            : '₹ 00.00',
                       ),
                     ],
                   ),

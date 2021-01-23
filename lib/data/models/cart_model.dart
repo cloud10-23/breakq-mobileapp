@@ -5,7 +5,7 @@ class Cart {
   Cart({this.cartItems, this.cartValue, this.noOfProducts});
   List<CartItem> cartItems;
   int noOfProducts;
-  double cartValue;
+  double cartValue = 0.0;
 
   factory Cart.fromJson(List<dynamic> json) {
     return Cart(
