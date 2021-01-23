@@ -105,6 +105,15 @@ class _QShoppingScreenState extends State<QShoppingScreen>
     }
   }
 
+  Future<bool> _onBackPressed(BuildContext context) async {
+    if (_currentStep <= 1) {
+      Navigator.pop(context);
+      return true;
+    }
+    _previousStep();
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -125,99 +134,102 @@ class _QShoppingScreenState extends State<QShoppingScreen>
           return QSSuccessDialog();
         }
 
-        return Scaffold(
-          body: LoadingOverlay(
-            isLoading: session.isLoading,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: CustomScrollView(
-                    controller: _scrollController,
-                    slivers: <Widget>[
-                      SliverAppBar(
-                        automaticallyImplyLeading: false, //no back button
-                        pinned: true,
-                        leading: Visibility(
-                          visible: _currentStep > 1,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            tooltip: L10n.of(context).commonTooltipInfo,
-                            onPressed: _previousStep,
+        return WillPopScope(
+          onWillPop: () => _onBackPressed(context),
+          child: Scaffold(
+            body: LoadingOverlay(
+              isLoading: session.isLoading,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: <Widget>[
+                        SliverAppBar(
+                          automaticallyImplyLeading: false, //no back button
+                          pinned: true,
+                          leading: Visibility(
+                            visible: _currentStep > 1,
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              tooltip: L10n.of(context).commonTooltipInfo,
+                              onPressed: _previousStep,
+                            ),
                           ),
-                        ),
-                        actions: <Widget>[
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            tooltip: L10n.of(context).commonTooltipInfo,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                          actions: <Widget>[
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              tooltip: L10n.of(context).commonTooltipInfo,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                          expandedHeight: 150.0,
+                          title: SliverAppTitle(
+                            child: Text(
+                              sprintf('%d/%d: %s', <dynamic>[
+                                _currentStep,
+                                totalSteps,
+                                L10n.of(context).bookingTitleWizardPage(
+                                    'page' + _currentStep.toString())
+                              ]),
+                              style: Theme.of(context).textTheme.caption.black,
+                            ),
                           ),
-                        ],
-                        expandedHeight: 150.0,
-                        title: SliverAppTitle(
-                          child: Text(
-                            sprintf('%d/%d: %s', <dynamic>[
-                              _currentStep,
-                              totalSteps,
-                              L10n.of(context).bookingTitleWizardPage(
-                                  'page' + _currentStep.toString())
-                            ]),
-                            style: Theme.of(context).textTheme.caption.black,
-                          ),
-                        ),
-                        centerTitle: true,
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Container(
-                            padding: const EdgeInsets.only(
-                                top: kPaddingS,
-                                left: kPaddingL,
-                                bottom: kPaddingL,
-                                right: kPaddingM),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  L10n.of(context).bookingLabelSteps(
-                                      _currentStep, totalSteps),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      .black,
-                                  maxLines: 1,
-                                ),
-                                SizedBox(height: kPaddingL),
-                                Text(
-                                  L10n.of(context).bookingTitleWizardPage(
-                                      'page' + _currentStep.toString()),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .black
-                                      .w400,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                          centerTitle: true,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Container(
+                              padding: const EdgeInsets.only(
+                                  top: kPaddingS,
+                                  left: kPaddingL,
+                                  bottom: kPaddingL,
+                                  right: kPaddingM),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    L10n.of(context).bookingLabelSteps(
+                                        _currentStep, totalSteps),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1
+                                        .black,
+                                    maxLines: 1,
+                                  ),
+                                  SizedBox(height: kPaddingL),
+                                  Text(
+                                    L10n.of(context).bookingTitleWizardPage(
+                                        'page' + _currentStep.toString()),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .black
+                                        .w400,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SliverFillRemaining(
-                        hasScrollBody: true,
-                        child: IndexedStack(
-                          index: _currentStep - 1,
-                          children: List<Widget>.generate(wizardPages.length,
-                              (int index) => wizardPages[index].body),
+                        SliverFillRemaining(
+                          hasScrollBody: true,
+                          child: IndexedStack(
+                            index: _currentStep - 1,
+                            children: List<Widget>.generate(wizardPages.length,
+                                (int index) => wizardPages[index].body),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                _bottomBar(),
-              ],
+                  _bottomBar(),
+                ],
+              ),
             ),
           ),
         );
