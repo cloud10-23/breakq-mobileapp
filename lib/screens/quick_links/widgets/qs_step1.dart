@@ -75,7 +75,35 @@ class _QSStep1State extends State<QSStep1> {
 
         _slivers.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
         _slivers.add(makeHeader("Select one or more bills"));
-        _slivers.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
+        _slivers.add(SliverToBoxAdapter(
+            child: Container(
+                child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FlatButton(
+                textColor: kBlack,
+                onPressed: () {
+                  setState(() {
+                    BlocProvider.of<QSBloc>(context)
+                        .add(SelectAllBillsQSEvent());
+                  });
+                },
+                child: Text("Select All")),
+            Visibility(
+              visible: (session.selectedBillIds?.isNotEmpty ?? false),
+              child: FlatButton(
+                  textColor: kBlack,
+                  onPressed: () {
+                    setState(() {
+                      BlocProvider.of<QSBloc>(context)
+                          .add(DeSelectAllBillsQSEvent());
+                    });
+                  },
+                  child: Text("Cancel")),
+            ),
+          ],
+        ))));
+        _slivers.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingM)));
         _slivers.add(SliverList(
           delegate: SliverChildListDelegate(
             <Widget>[

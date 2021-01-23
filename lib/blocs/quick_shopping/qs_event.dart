@@ -7,7 +7,9 @@ abstract class QSEvent {
 
 class LoadBillsQSEvent extends QSEvent {}
 
-class BillsLoadedQSEvent extends QSEvent {}
+class SelectAllBillsQSEvent extends QSEvent {}
+
+class DeSelectAllBillsQSEvent extends QSEvent {}
 
 class BillSelectedQSEvent extends QSEvent {
   BillSelectedQSEvent({this.bill});
@@ -32,6 +34,10 @@ class ProductUnselectedQSEvent extends QSEvent {
 
   final Product product;
 }
+
+class SelectAllProductsQSEvent extends QSEvent {}
+
+class DeSelectAllProductsQSEvent extends QSEvent {}
 
 class LoadProductsQSEvent extends QSEvent {}
 

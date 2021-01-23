@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/repositories/bill_repository.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,10 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       yield* _mapSelectBillQSEventToState(event);
     } else if (event is BillUnselectedQSEvent) {
       yield* _mapUnselectBillQSEventToState(event);
+    } else if (event is SelectAllBillsQSEvent) {
+      yield* _mapSelectAllBillsQSEventToState(event);
+    } else if (event is DeSelectAllBillsQSEvent) {
+      yield* _mapDeSelectAllBillsQSEventToState(event);
     } else if (event is ProductSelectedQSEvent) {
       yield* _mapSelectProductQSEventToState(event);
     } else if (event is ProductUnselectedQSEvent) {
@@ -73,6 +76,41 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       final QSSessionModel session =
           (state as SessionRefreshSuccessQSState).session;
       session.selectedBillIds.remove(event.bill.billNo);
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedBillIds: session.selectedBillIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapSelectAllBillsQSEventToState(
+      SelectAllBillsQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      session.selectedBillIds.clear();
+      session.bills.forEach((bill) {
+        session.selectedBillIds.add(bill.billNo);
+      });
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedBillIds: session.selectedBillIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapDeSelectAllBillsQSEventToState(
+      DeSelectAllBillsQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      session.selectedBillIds.clear();
 
       final QSSessionModel newSession = session.rebuild(
         selectedBillIds: session.selectedBillIds,
