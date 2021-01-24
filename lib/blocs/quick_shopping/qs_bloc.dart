@@ -27,10 +27,16 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       yield* _mapSelectAllBillsQSEventToState(event);
     } else if (event is DeSelectAllBillsQSEvent) {
       yield* _mapDeSelectAllBillsQSEventToState(event);
-    } else if (event is ProductSelectedQSEvent) {
+    } else if (event is ProductAddedQSEvent) {
       yield* _mapSelectProductQSEventToState(event);
-    } else if (event is ProductUnselectedQSEvent) {
+    } else if (event is ProductMinusQSEvent) {
       yield* _mapUnselectProductQSEventToState(event);
+    } else if (event is DeleteProductQSEvent) {
+      yield* _mapDeleteProductQSEventToState(event);
+    } else if (event is SelectAllProductsQSEvent) {
+      yield* _mapSelectAllProductQSEventToState(event);
+    } else if (event is DeleteAllProductsQSEvent) {
+      yield* _mapDeleteAllProductQSEventToState(event);
     } else if (event is LoadProductsQSEvent) {
       yield* _mapLoadProductsQSEventToState();
     } else if (event is AddToCartQSEvent) {
@@ -110,66 +116,11 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       final QSSessionModel session =
           (state as SessionRefreshSuccessQSState).session;
 
-      session.selectedBillIds.clear();
-
       final QSSessionModel newSession = session.rebuild(
-        selectedBillIds: session.selectedBillIds,
+        selectedBillIds: [],
       );
 
       yield SessionRefreshSuccessQSState(newSession);
-    }
-  }
-
-  Stream<QSState> _mapSelectProductQSEventToState(
-      ProductSelectedQSEvent event) async* {
-    if (state is SessionRefreshSuccessQSState) {
-      final QSSessionModel session =
-          (state as SessionRefreshSuccessQSState).session;
-
-      session.selectedProductIds.add(event.product.id);
-
-      final QSSessionModel newSession = session.rebuild(
-        selectedProductIds: session.selectedProductIds,
-      );
-
-      yield SessionRefreshSuccessQSState(newSession);
-    }
-  }
-
-  Stream<QSState> _mapUnselectProductQSEventToState(
-      ProductUnselectedQSEvent event) async* {
-    if (state is SessionRefreshSuccessQSState) {
-      final QSSessionModel session =
-          (state as SessionRefreshSuccessQSState).session;
-
-      session.selectedProductIds.remove(event.product.id);
-
-      final QSSessionModel newSession = session.rebuild(
-        selectedBillIds: session.selectedBillIds,
-      );
-
-      yield SessionRefreshSuccessQSState(newSession);
-    }
-  }
-
-  Stream<QSState> _mapAddToCartQSEventToState() async* {
-    if (state is SessionRefreshSuccessQSState) {
-      final QSSessionModel session =
-          (state as SessionRefreshSuccessQSState).session;
-
-      if (session.selectedProductIds?.isEmpty ?? true) {
-        yield SessionRefreshSuccessQSState(session);
-      } else {
-        cartBloc.add(BulkAddPToCartEvent(
-            products: session.products
-                .where((product) =>
-                    session.selectedProductIds.contains(product.id))
-                .toList()));
-
-        yield SessionRefreshSuccessQSState(session.rebuild(
-          isSubmitted: true,
-        ));
-      }
     }
   }
 
@@ -184,8 +135,7 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
           .toList();
       List<Product> _products = List();
       for (final Bill bill in _bills) {
-        _products.addAll(
-            bill.products.cartItems.map((cartItem) => cartItem.product));
+        _products.addAll(bill.products.cartItems.keys);
       }
 
       // Any other way to eliminate duplicate products if this does not work
@@ -194,11 +144,117 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       if (_products?.isEmpty ?? true) {
         yield LoadFailureQSState();
       } else {
-        final QSSessionModel newSession = session.rebuild(
-          products: _products,
-          selectedProductIds: <int>[],
-        );
+        final QSSessionModel newSession =
+            session.rebuild(products: _products, selectedProductIds: {});
         yield SessionRefreshSuccessQSState(newSession);
+      }
+    }
+  }
+
+  Stream<QSState> _mapSelectProductQSEventToState(
+      ProductAddedQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      if (session.selectedProductIds.containsKey(event.product.id))
+        session.selectedProductIds[event.product.id] += event.quantity;
+      else
+        session.selectedProductIds.addAll({event.product.id: event.quantity});
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedProductIds: session.selectedProductIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapUnselectProductQSEventToState(
+      ProductMinusQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      final int oldQty = session.selectedProductIds[event.product.id];
+
+      if (oldQty <= 1 || oldQty < event.quantity)
+        session.selectedProductIds.remove(event.product.id);
+      else
+        session.selectedProductIds[event.product.id] -= event.quantity;
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedProductIds: session.selectedProductIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapDeleteProductQSEventToState(
+      DeleteProductQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      session.selectedProductIds.remove(event.product.id);
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedProductIds: session.selectedProductIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapSelectAllProductQSEventToState(
+      SelectAllProductsQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      session.products.forEach((product) {
+        if (!session.selectedProductIds.containsKey(product.id))
+          session.selectedProductIds.addAll({product.id: 1});
+      });
+      final QSSessionModel newSession = session.rebuild(
+        selectedProductIds: session.selectedProductIds,
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapDeleteAllProductQSEventToState(
+      DeleteAllProductsQSEvent event) async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      final QSSessionModel newSession = session.rebuild(
+        selectedProductIds: {},
+      );
+
+      yield SessionRefreshSuccessQSState(newSession);
+    }
+  }
+
+  Stream<QSState> _mapAddToCartQSEventToState() async* {
+    if (state is SessionRefreshSuccessQSState) {
+      final QSSessionModel session =
+          (state as SessionRefreshSuccessQSState).session;
+
+      if (session.selectedProductIds?.isNotEmpty ?? false) {
+        Map<Product, int> cartItems = {};
+        session.selectedProductIds.forEach((productId, qty) {
+          cartItems[session.products
+              .firstWhere((product) => product.id == productId)] = qty;
+        });
+        cartBloc.add(BulkAddPToCartEvent(cartItems: cartItems));
+
+        yield SessionRefreshSuccessQSState(session.rebuild(
+          isSubmitted: true,
+        ));
       }
     }
   }

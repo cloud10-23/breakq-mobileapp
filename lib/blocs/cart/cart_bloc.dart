@@ -31,16 +31,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapInitCartEventToState(InitCartEvent event) async* {
-    yield CartLoaded(cart: Cart(cartItems: List<CartItem>()));
+    yield CartLoaded(cart: Cart(cartItems: Map<Product, int>()));
   }
 
   Stream<CartState> _mapLoadCartEventToState(LoadCartEvent event) async* {
     //Total items:
     int _noOfProducts = 0;
     double _cartValue = 0.0;
-    event.cartItems.cartItems.forEach((item) {
-      _noOfProducts += item.quantity;
-      _cartValue += item.quantity * item.product.price;
+    event.cartItems.cartItems.keys.forEach((item) {
+      _noOfProducts += event.cartItems.cartItems[item];
+      _cartValue += event.cartItems.cartItems[item] * item.price;
     });
 
     event.cartItems.setNoOfProducts = _noOfProducts;
@@ -66,7 +66,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     // Add all the products to cart here
-    cartItems.bulkAddProducts(products: event.products);
+    cartItems.bulkAddProducts(newCartItems: event.cartItems);
 
     add(LoadCartEvent(cartItems: cartItems));
   }

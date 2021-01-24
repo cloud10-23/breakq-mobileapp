@@ -82,10 +82,8 @@ class CartBottomSheet extends StatelessWidget {
                                 padding: EdgeInsets.all(kPaddingS),
                                 child: SingleChildScrollView(
                                   child: CartListing(
-                                    products: state.cart.cartItems
-                                        .map((cartItem) => cartItem.product)
-                                        .toList(),
-                                  ),
+                                      products:
+                                          state.cart.cartItems.keys.toList()),
                                 ),
                               ),
                             ),

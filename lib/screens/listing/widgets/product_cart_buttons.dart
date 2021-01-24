@@ -164,8 +164,9 @@ class ResetCartButtonCircleIcon extends StatelessWidget {
 }
 
 class ResetCartButtonText extends StatelessWidget {
-  ResetCartButtonText({this.onProductDel});
+  ResetCartButtonText({this.onProductDel, this.title});
   final Function onProductDel;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -182,7 +183,7 @@ class ResetCartButtonText extends StatelessWidget {
             children: [
               Icon(Icons.delete, color: kBlackAccent),
               SizedBox(width: 10.0),
-              Text('Delete',
+              Text(title ?? 'Delete',
                   style: Theme.of(context)
                       .textTheme
                       .caption

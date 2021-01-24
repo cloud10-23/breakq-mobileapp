@@ -21,8 +21,8 @@ class AddPToCartEvent extends CartEvent {
 }
 
 class BulkAddPToCartEvent extends CartEvent {
-  BulkAddPToCartEvent({this.products});
-  final List<Product> products;
+  BulkAddPToCartEvent({this.cartItems});
+  final Map<Product, int> cartItems;
 }
 
 class ReduceQOfPCartEvent extends CartEvent {

@@ -67,11 +67,7 @@ class ProductListItem extends StatelessWidget {
                 builder: (context, state) {
                   int qty = 0;
                   if (state is CartLoaded) {
-                    state.cart.cartItems.forEach((item) {
-                      if (product.id == item.product.id) {
-                        qty = item.quantity;
-                      }
-                    });
+                    qty = state.cart.cartItems[product] ?? 0;
                   }
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -318,11 +314,7 @@ class ProductListItem extends StatelessWidget {
                   builder: (context, state) {
                     int qty = 0;
                     if (state is CartLoaded) {
-                      state.cart.cartItems.forEach((item) {
-                        if (product.id == item.product.id) {
-                          qty = item.quantity;
-                        }
-                      });
+                      qty = state.cart.cartItems[product] ?? 0;
                     }
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

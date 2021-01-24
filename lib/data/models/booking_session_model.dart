@@ -16,7 +16,7 @@ class QSSessionModel {
     List<Bill> bills,
     List<Product> products,
     List<String> selectedBillIds,
-    List<int> selectedProductIds,
+    Map<int, int> selectedProductIds,
     bool isSubmitted,
     bool isLoading,
     String apiError,
@@ -35,7 +35,7 @@ class QSSessionModel {
   final List<Bill> bills;
   final List<Product> products;
   final List<String> selectedBillIds;
-  final List<int> selectedProductIds;
+  final Map<int, int> selectedProductIds;
   final bool isSubmitted, isLoading;
   final String apiError;
 

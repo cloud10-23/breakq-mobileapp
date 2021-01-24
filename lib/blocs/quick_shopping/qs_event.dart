@@ -23,22 +23,30 @@ class BillUnselectedQSEvent extends QSEvent {
   final Bill bill;
 }
 
-class ProductSelectedQSEvent extends QSEvent {
-  ProductSelectedQSEvent({this.product});
+class LoadProductsQSEvent extends QSEvent {}
+
+class ProductAddedQSEvent extends QSEvent {
+  ProductAddedQSEvent({this.product, this.quantity = 1});
 
   final Product product;
+  final int quantity;
 }
 
-class ProductUnselectedQSEvent extends QSEvent {
-  ProductUnselectedQSEvent({this.product});
+class ProductMinusQSEvent extends QSEvent {
+  ProductMinusQSEvent({this.product, this.quantity = 1});
+
+  final Product product;
+  final int quantity;
+}
+
+class DeleteProductQSEvent extends QSEvent {
+  DeleteProductQSEvent({this.product});
 
   final Product product;
 }
 
 class SelectAllProductsQSEvent extends QSEvent {}
 
-class DeSelectAllProductsQSEvent extends QSEvent {}
-
-class LoadProductsQSEvent extends QSEvent {}
+class DeleteAllProductsQSEvent extends QSEvent {}
 
 class AddToCartQSEvent extends QSEvent {}

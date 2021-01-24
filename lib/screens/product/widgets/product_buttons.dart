@@ -28,8 +28,9 @@ class CartAddBulkButton extends StatelessWidget {
 }
 
 class BulkAddButtons extends StatelessWidget {
-  BulkAddButtons({@required this.product});
+  BulkAddButtons({@required this.product, @required this.onPressed});
   final Product product;
+  final Function(int) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,7 @@ class BulkAddButtons extends StatelessWidget {
         children: bulkAddToCart
             .map((map) => CartAddBulkButton(
                   text: map.keys.first,
-                  onTap: () => getIt
-                      .get<AppGlobals>()
-                      .onProductAdd(product, context, qty: map.values.first),
+                  onTap: () => onPressed(map.values.first),
                 ))
             .toList(),
       ),

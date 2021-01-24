@@ -43,11 +43,7 @@ class _ProductScreenState extends State<ProductScreen> {
           builder: (context, state) {
             int qty = 0;
             if (state is CartLoaded) {
-              state.cart.cartItems.forEach((item) {
-                if (widget.product.id == item.product.id) {
-                  qty = item.quantity;
-                }
-              });
+              qty = state?.cart?.cartItems[widget.product] ?? 0;
             }
             return Scaffold(
               key: _scaffoldKey,
@@ -136,7 +132,12 @@ class _ProductScreenState extends State<ProductScreen> {
                         //   onProductDel: () => getIt.get<AppGlobals>()
                         //       .onProductDel(widget.product, context),
                         // ),
-                        thirdRow: BulkAddButtons(product: widget.product),
+                        thirdRow: BulkAddButtons(
+                          product: widget.product,
+                          onPressed: (qty) => getIt
+                              .get<AppGlobals>()
+                              .onProductAdd(widget.product, context, qty: qty),
+                        ),
                       )
                     else
                       ListItem(
@@ -161,7 +162,12 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                           ],
                         ),
-                        thirdRow: BulkAddButtons(product: widget.product),
+                        thirdRow: BulkAddButtons(
+                          product: widget.product,
+                          onPressed: (qty) => getIt
+                              .get<AppGlobals>()
+                              .onProductAdd(widget.product, context, qty: qty),
+                        ),
                       ),
                   ],
                 ),
