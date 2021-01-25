@@ -1,8 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
-import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +70,18 @@ class CartBottomSheet extends StatelessWidget {
                                 BoldTitle(
                                   title:
                                       "Items in Cart ( ${state.cart.noOfProducts} )",
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<CartBloc>(context)
+                                        .add(ResetCartEvent());
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.delete),
+                                      Text("Reset Cart"),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
