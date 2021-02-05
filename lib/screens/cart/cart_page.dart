@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/jumbotron.dart';
@@ -126,7 +127,10 @@ class CartBottomSheet extends StatelessWidget {
                   ),
                   SizedBox(height: kPaddingM),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true)
+                          .popAndPushNamed(Routes.checkout);
+                    },
                     color: kBlack,
                     child: Text('Proceed to Checkout',
                         style: Theme.of(context).textTheme.bodyText2.white),

@@ -2,7 +2,7 @@ import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/booking_session_model.dart';
+import 'package:breakq/data/models/qs_session_model.dart';
 import 'package:breakq/data/models/bill_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/quick_links/widgets/service_header_delegate.dart';

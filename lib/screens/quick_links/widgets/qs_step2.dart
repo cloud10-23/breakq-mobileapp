@@ -7,7 +7,7 @@ import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/booking_session_model.dart';
+import 'package:breakq/data/models/qs_session_model.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:sprintf/sprintf.dart';
 

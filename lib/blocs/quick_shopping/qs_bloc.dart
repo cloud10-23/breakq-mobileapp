@@ -3,7 +3,7 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/repositories/bill_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
-import 'package:breakq/data/models/booking_session_model.dart';
+import 'package:breakq/data/models/qs_session_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/bill_model.dart';
 

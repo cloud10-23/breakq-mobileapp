@@ -1,3 +1,6 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
@@ -10,6 +13,7 @@ import 'package:breakq/screens/empty.dart';
 import 'package:breakq/widgets/photo_gallery.dart';
 import 'package:breakq/screens/onboarding/sign_up.dart';
 import 'package:breakq/widgets/picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Generate [MaterialPageRoute] for our screens.
 class Routes {
@@ -25,6 +29,7 @@ class Routes {
   static const String locationGallery = '/locationGallery';
   static const String search = '/search';
   static const String scan = '/scan';
+  static const String checkout = '/checkout';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -60,9 +65,19 @@ class Routes {
           },
         );
       case search:
-        return MaterialPageRoute<PhotoGalleryScreen>(
+        return MaterialPageRoute<SearchBar>(
           builder: (BuildContext context) {
             return SearchBar();
+          },
+        );
+      case checkout:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) {
+            return BlocProvider<CheckoutBloc>(
+              create: (context) =>
+                  CheckoutBloc(cartBloc: BlocProvider.of<CartBloc>(context)),
+              child: CheckoutScreen(),
+            );
           },
         );
       // case scan:

@@ -200,7 +200,14 @@ class AssetImages {
   static String topOffers(int colIndex, int rowIndex) =>
       'assets/images/offers/Offer($colIndex,$rowIndex).png';
 
+  static String checkoutImages(int index) =>
+      'assets/images/checkout/checkout-$index.png';
+
   static String topDeals(int index) => 'assets/images/offers/Offer($index).png';
+
+  static const String success_plane =
+      'assets/images/checkout/success_plane.png';
+  static const String success = 'assets/images/checkout/success.png';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].
@@ -211,4 +218,46 @@ class PreferenceKey {
   static const String language = 'language';
   static const String notification = 'notification';
   static const String darkOption = 'darkOption';
+}
+
+enum CheckoutType { walkIn, pickUp, delivery }
+
+const Map<CheckoutType, int> totalSteps = {
+  CheckoutType.walkIn: 1,
+  CheckoutType.pickUp: 2,
+  CheckoutType.delivery: 3,
+};
+
+class CheckoutTypes {
+  static String typeToString(CheckoutType type) {
+    switch (type) {
+      case CheckoutType.walkIn:
+        return "Walk - In";
+        break;
+      case CheckoutType.pickUp:
+        return "Self - Pickup";
+        break;
+      case CheckoutType.delivery:
+        return "Deliver To Home";
+        break;
+      default:
+        return "Unknown";
+    }
+  }
+
+  static String typeDescription(CheckoutType type) {
+    switch (type) {
+      case CheckoutType.walkIn:
+        return "Walk up to the counter and pay";
+        break;
+      case CheckoutType.pickUp:
+        return "Your order will be packed, just visit the store, pay and collect";
+        break;
+      case CheckoutType.delivery:
+        return "Your order will be delivered to your home directly";
+        break;
+      default:
+        return "Unknown";
+    }
+  }
 }
