@@ -16,18 +16,33 @@ class CartBottomSheet extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              toolbarHeight: 50.0,
               elevation: 0.0,
               leading: IconButton(
-                  icon: Icon(Icons.arrow_drop_down_circle),
+                  icon: Icon(Icons.arrow_drop_down_circle, size: 30),
                   onPressed: () => Navigator.pop(context)),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: kPaddingL),
+                  child: InkWell(
+                    onTap: () {
+                      BlocProvider.of<CartBloc>(context).add(ResetCartEvent());
+                    },
+                    child: Icon(Icons.delete),
+                  ),
+                ),
+              ],
               centerTitle: true,
               title: Row(
                 children: [
-                  Spacer(flex: 3),
-                  Image(image: AssetImage(AssetImages.cart)),
+                  Spacer(flex: 6),
+                  Image(
+                    image: AssetImage(AssetImages.cart),
+                    height: 25,
+                  ),
                   Spacer(),
                   Text('Cart'),
-                  Spacer(flex: 5),
+                  Spacer(flex: 6),
                 ],
               ),
             ),
@@ -58,7 +73,7 @@ class CartBottomSheet extends StatelessWidget {
                         ),
                       )
                     : Container(
-                        margin: EdgeInsets.all(kPaddingM),
+                        margin: EdgeInsets.symmetric(horizontal: kPaddingM),
                         child: Column(
                           children: [
                             Row(
@@ -72,16 +87,8 @@ class CartBottomSheet extends StatelessWidget {
                                   title:
                                       "No of Items:  ${state.cart.noOfProducts}",
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<CartBloc>(context)
-                                        .add(ResetCartEvent());
-                                  },
-                                  child: Icon(Icons.delete),
-                                ),
                               ],
                             ),
-                            SizedBox(height: 10.0),
                             Expanded(
                               child: Container(
                                 color: kWhite,
@@ -104,14 +111,60 @@ class CartBottomSheet extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(height: 5.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      VeryBoldTitle(
+                      BoldTitle(
+                        title: 'Price: ',
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
+                        color: Colors.grey[700],
+                      ),
+                      BoldTitle(
+                        title: (state is CartLoaded)
+                            ? '₹ ' +
+                                (state.cart?.orgCartValue?.toStringAsFixed(2) ??
+                                    "00.00")
+                            : '₹ 00.00',
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
+                        color: Colors.grey[700],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BoldTitle(
+                        title: 'Discount: ',
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
+                        color: Colors.green[800],
+                      ),
+                      BoldTitle(
+                        title: (state is CartLoaded)
+                            ? '- ₹ ' +
+                                (((state.cart?.orgCartValue ?? 0) -
+                                            (state.cart?.cartValue ?? 0))
+                                        ?.toStringAsFixed(2) ??
+                                    "00.00")
+                            : '- ₹ 00.00',
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
+                        color: Colors.green[800],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: kPaddingM),
+                  Container(
+                    height: 1.0,
+                    color: Colors.black12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomTitle(
                         title: 'Cart Total:',
                         fw: FontWeight.w600,
                       ),
-                      VeryBoldTitle(
+                      CustomTitle(
                         title: (state is CartLoaded)
                             ? '₹ ' +
                                 (state.cart?.cartValue?.toStringAsFixed(2) ??

@@ -62,14 +62,15 @@ class BoldTitle extends StatelessWidget {
   }
 }
 
-class VeryBoldTitle extends StatelessWidget {
-  const VeryBoldTitle({
+class CustomTitle extends StatelessWidget {
+  const CustomTitle({
     Key key,
     @required this.title,
     this.padding,
     this.textAlign,
     this.fw,
     this.maxLines = 1,
+    this.color,
   }) : super(key: key);
 
   final String title;
@@ -77,6 +78,7 @@ class VeryBoldTitle extends StatelessWidget {
   final int maxLines;
   final FontWeight fw;
   final TextAlign textAlign;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +96,10 @@ class VeryBoldTitle extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: (fw != null)
-                ? Theme.of(context).textTheme.headline6.copyWith(fontWeight: fw)
-                : Theme.of(context).textTheme.headline6.w800,
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  fontWeight: (fw != null) ? fw : FontWeight.w800,
+                  color: (color != null) ? color : Colors.black,
+                ),
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
             textAlign: textAlign ?? TextAlign.left,

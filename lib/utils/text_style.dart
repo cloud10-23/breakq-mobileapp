@@ -22,5 +22,6 @@ extension TextStyleExtension on TextStyle {
 
   TextStyle get white => copyWith(color: kWhite);
   TextStyle get black => copyWith(color: kBlack);
+  TextStyle get green => copyWith(color: Colors.green);
   TextStyle get primaryColor => copyWith(color: kPrimaryColor);
 }

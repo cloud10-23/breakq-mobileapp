@@ -3,6 +3,7 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sprintf/sprintf.dart';
@@ -124,23 +125,32 @@ class CartListItem extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: kPaddingM),
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                "₹ ${product.price * qty}",
-                                style:
-                                    Theme.of(context).textTheme.subtitle1.bold,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    "₹ ${product.price * qty}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1
+                                        .bold,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "₹ ${product.oldPrice * qty}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .w300
+                                        .copyWith(
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 5),
-                              Text(
-                                "₹ ${product.oldPrice * qty}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .w300
-                                    .copyWith(
-                                        decoration: TextDecoration.lineThrough),
-                              ),
+                              SizedBox(height: 10),
+                              OfferTextGreen(),
                             ],
                           ),
                         ),

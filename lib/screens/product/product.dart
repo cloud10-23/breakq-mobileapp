@@ -78,7 +78,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       child: Image(
                           image: AssetImage(widget.product.image), height: 150),
                     ),
-                    VeryBoldTitle(title: widget.product.title),
+                    CustomTitle(title: widget.product.title),
                     ListItem(
                       title: "Quantity: ",
                       trailing: Text(
@@ -190,11 +190,11 @@ class _ProductScreenState extends State<ProductScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          VeryBoldTitle(
+          CustomTitle(
             title: "Sub Total: ",
             fw: FontWeight.w500,
           ),
-          VeryBoldTitle(
+          CustomTitle(
               title: "₹ ${(widget.product.price * qty).toStringAsFixed(2)}"),
         ],
       ),

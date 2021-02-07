@@ -6,6 +6,7 @@ class Cart {
   Map<Product, int> cartItems;
   int noOfProducts;
   double cartValue = 0.0;
+  double orgCartValue = 0.0;
 
   factory Cart.fromJson(List<dynamic> json) {
     return Cart(
@@ -21,6 +22,7 @@ class Cart {
 
   set setNoOfProducts(_noOfP) => noOfProducts = _noOfP;
   set setCartValue(_value) => cartValue = _value;
+  set setorgCartValue(_value) => orgCartValue = _value;
 
   void addProduct({@required Product product, int quantity = 1}) {
     if (cartItems.containsKey(product)) {
