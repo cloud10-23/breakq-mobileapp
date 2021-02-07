@@ -66,23 +66,18 @@ class CartBottomSheet extends StatelessWidget {
                               children: [
                                 BoldTitle(
                                   title:
-                                      "Products in Cart ( ${state.cart.cartItems.length} )",
+                                      "No of Products:  ${state.cart.cartItems.length}",
                                 ),
                                 BoldTitle(
                                   title:
-                                      "Items in Cart ( ${state.cart.noOfProducts} )",
+                                      "No of Items:  ${state.cart.noOfProducts}",
                                 ),
                                 InkWell(
                                   onTap: () {
                                     BlocProvider.of<CartBloc>(context)
                                         .add(ResetCartEvent());
                                   },
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.delete),
-                                      Text("Reset Cart"),
-                                    ],
-                                  ),
+                                  child: Icon(Icons.delete),
                                 ),
                               ],
                             ),

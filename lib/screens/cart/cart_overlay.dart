@@ -74,19 +74,7 @@ class ScanFloatingButtonExtended extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0),
-              gradient: LinearGradient(
-                begin: AlignmentDirectional.topCenter,
-                end: AlignmentDirectional.bottomCenter,
-                colors: [
-                  Colors.blue[900],
-                  Colors.blue[900],
-                  // Color(0xFFFF4E50),
-                  // Color(0xFFc31432),
-                  // Color(0xFF8360c3),
-                  // Color(0xFF1e130c),
-                  // Colors.pink, Color(0xFFF9D423), Color(0xFF240b36), Color(0xFF2ebf91), Color(0xFF9a8478),
-                ],
-              ),
+              color: Colors.blue[900],
               boxShadow: [
                 BoxShadow(
                     blurRadius: 15.0,
@@ -110,6 +98,53 @@ class ScanFloatingButtonExtended extends StatelessWidget {
         ));
   }
 }
+
+// class ScanFloatingButtonExtended extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return FlatButton(
+//         padding: EdgeInsets.zero,
+//         onPressed: () => BarcodeScanner().scan(context),
+//         // onPressed: () => Navigator.pushNamed(context, Routes.scan),
+//         child: Container(
+//           decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(25.0),
+//               gradient: LinearGradient(
+//                 begin: AlignmentDirectional.topCenter,
+//                 end: AlignmentDirectional.bottomCenter,
+//                 colors: [
+//                   Colors.blue[900],
+//                   Colors.blue[900],
+//                   // Color(0xFFFF4E50),
+//                   // Color(0xFFc31432),
+//                   // Color(0xFF8360c3),
+//                   // Color(0xFF1e130c),
+//                   // Colors.pink, Color(0xFFF9D423), Color(0xFF240b36), Color(0xFF2ebf91), Color(0xFF9a8478),
+//                 ],
+//               ),
+//               boxShadow: [
+//                 BoxShadow(
+//                     blurRadius: 15.0,
+//                     color: Colors.blue[700],
+//                     spreadRadius: 0.0),
+//               ]),
+//           padding: const EdgeInsets.symmetric(
+//               horizontal: kPaddingL * 1.5, vertical: kPaddingM * 2),
+//           child: Row(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Image(
+//                 image: AssetImage(AssetImages.scan),
+//                 color: Colors.white,
+//               ),
+//               SizedBox(width: kPaddingM),
+//               Text('Scan',
+//                   style: Theme.of(context).textTheme.bodyText1.bold.white),
+//             ],
+//           ),
+//         ));
+//   }
+// }
 
 class ScanFloatingButton extends StatelessWidget {
   @override
