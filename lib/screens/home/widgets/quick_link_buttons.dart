@@ -14,13 +14,14 @@ class QuickLinkButton extends StatelessWidget {
           builder: (context) =>
               quickLinkWidgets[quickLinks[index]['link']] ?? EmptyScreen()),
       child: Container(
-        width: 120 + kPaddingS,
-        margin: const EdgeInsets.only(bottom: 1), // for card shadow
+        width: 110,
+        margin: const EdgeInsets.all(1.0), // for card shadow
         padding: const EdgeInsets.only(right: kPaddingS),
         child: Card(
           color: kPrimaryColor,
+          margin: EdgeInsets.zero,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingS),
             child: Row(

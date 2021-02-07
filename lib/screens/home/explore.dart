@@ -94,7 +94,7 @@ class HomeScreenState extends State<HomeScreen> {
                   SliverToBoxAdapter(
                       child: Container(
                     margin: EdgeInsets.only(top: kPaddingS),
-                    height: 150,
+                    height: 120,
                     child: Swiper(
                       pagination: SwiperPagination(),
                       scrollDirection: Axis.horizontal,
@@ -102,12 +102,11 @@ class HomeScreenState extends State<HomeScreen> {
                       autoplay: true,
                       duration: 500,
                       autoplayDelay: 4000,
-                      viewportFraction: 0.7,
+                      viewportFraction: 1.0,
                       itemBuilder: (context, index) => Card(
-                        margin: EdgeInsets.all(kPaddingS),
-                        clipBehavior: Clip.antiAlias,
+                        margin: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                            borderRadius: BorderRadius.circular(0.0)),
                         child: Image(
                           image: AssetImage(AssetImages.homeOffers),
                           fit: BoxFit.fill,
@@ -121,7 +120,7 @@ class HomeScreenState extends State<HomeScreen> {
                       _showQuickStart(),
                       SizedBox(height: kPaddingBtwnStrips),
                       BoldTitle(title: 'Top Offers'),
-                      _showGridOfImages(2, 3),
+                      _showGridOfImages(2, 4),
                       Row(mainAxisSize: MainAxisSize.min, children: [
                         BoldTitle(title: 'Top Deals'),
                         Spacer(),
@@ -186,18 +185,22 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showGridOfImages(int columns, int rows) {
-    return Column(
-      children: List.generate(
-        columns,
-        (colIndex) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-          child: Row(
-            children: List.generate(
-              rows,
-              (rowIndex) => Expanded(
-                child: GridImage(
-                  colIndex: colIndex,
-                  rowIndex: rowIndex,
+    return Padding(
+      padding: const EdgeInsets.all(kPaddingM),
+      child: Column(
+        children: List.generate(
+          columns,
+          (colIndex) => Padding(
+            padding: EdgeInsets.zero, //.symmetric(horizontal: kPaddingM),
+            child: Row(
+              children: List.generate(
+                rows,
+                (rowIndex) => Expanded(
+                  child: GridImage(
+                    colIndex: colIndex,
+                    rowIndex: rowIndex,
+                    height: 100,
+                  ),
                 ),
               ),
             ),
@@ -216,8 +219,8 @@ class HomeScreenState extends State<HomeScreen> {
           6,
           (index) => GridImage(
             rowIndex: index,
-            height: 130,
-            width: 150,
+            height: 100,
+            width: 100,
           ),
         ),
       ),
@@ -239,15 +242,18 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showCategories() {
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 0.0,
-        mainAxisSpacing: kPaddingL,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => CategoryCard(index: index),
-        childCount: 10,
+    return SliverPadding(
+      padding: EdgeInsets.all(kPaddingM),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 0.0,
+          mainAxisSpacing: 0.0,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) => CategoryCard(index: index),
+          childCount: 10,
+        ),
       ),
     );
   }

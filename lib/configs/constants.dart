@@ -182,7 +182,7 @@ class AssetImages {
   static const String cardDiscover = 'assets/images/cc/discover.png';
   static const String cardMastercard = 'assets/images/cc/mastercard.png';
   static const String profileDefault = 'assets/images/profile.png';
-  static const String homeOffers = 'assets/images/offers.jpeg';
+  static const String homeOffers = 'assets/images/offers/main_offer.png';
 
   static const String cat = 'assets/images/categories/cat';
 

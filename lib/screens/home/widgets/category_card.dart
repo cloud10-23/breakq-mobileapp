@@ -11,13 +11,10 @@ class CategoryCard extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
       child: Container(
-        height: 300,
-        padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
         child: Card(
-          // shape: RoundedRectangleBorder(),
-          clipBehavior: Clip.antiAlias,
-          // shape: RoundedRectangleBorder(
-          // borderRadius: BorderRadius.circular(25.0)),
+          margin: EdgeInsets.all(1.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

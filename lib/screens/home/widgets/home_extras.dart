@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
@@ -6,7 +5,6 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GridImage extends StatelessWidget {
   GridImage({this.colIndex, this.rowIndex, this.height, this.width});
@@ -19,6 +17,7 @@ class GridImage extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
       child: Card(
+        margin: EdgeInsets.all(1.0),
         child: Image(
             height: height,
             width: width,
@@ -49,8 +48,8 @@ class ExclProductsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 130,
-      padding: EdgeInsets.all(kPaddingM),
+      width: 100,
+      padding: EdgeInsets.all(1.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
         product: Product(

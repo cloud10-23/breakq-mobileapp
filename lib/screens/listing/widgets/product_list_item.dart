@@ -47,11 +47,10 @@ class ProductListItem extends StatelessWidget {
     switch (viewType) {
       case ProductListItemViewType.grid:
         return Card(
-          elevation: 1,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+            borderRadius: BorderRadius.circular(0.0),
           ),
-          margin: EdgeInsets.zero,
+          margin: EdgeInsets.all(1.0),
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
@@ -83,7 +82,7 @@ class ProductListItem extends StatelessWidget {
                               alignment: Alignment.topRight,
                               children: [
                                 Container(
-                                  height: 120,
+                                  height: 80,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(product.image),

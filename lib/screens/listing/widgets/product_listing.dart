@@ -62,15 +62,15 @@ class ProductListing extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: kPaddingS, vertical: kPaddingM),
+          horizontal: kPaddingM, vertical: kPaddingM),
       child: Wrap(
-        runSpacing: kPaddingM,
+        runSpacing: 1.0,
         alignment: WrapAlignment.spaceBetween,
         children: products.map((Product item) {
           switch (_viewType) {
             case ProductListItemViewType.grid:
               return FractionallySizedBox(
-                widthFactor: 0.30,
+                widthFactor: 0.25,
                 child: ProductListItem(
                   product: item,
                   viewType: _viewType,
