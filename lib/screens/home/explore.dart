@@ -252,7 +252,7 @@ class HomeScreenState extends State<HomeScreen> {
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) => CategoryCard(index: index),
-          childCount: 10,
+          childCount: 9,
         ),
       ),
     );
