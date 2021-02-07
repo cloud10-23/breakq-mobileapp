@@ -176,6 +176,8 @@ class AssetImages {
   static const String loginBackground = 'assets/images/illustration.jpg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
+  static const String bq_logo = 'assets/images/bq_logo.png';
+  static const String mts_logo = 'assets/images/mts_logo_compact.png';
   static const String chip = 'assets/images/cc/chip.png';
   static const String cardVisa = 'assets/images/cc/visa.png';
   static const String cardAmex = 'assets/images/cc/amex.png';

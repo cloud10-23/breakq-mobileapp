@@ -57,7 +57,13 @@ class HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     primary: true,
                     centerTitle: true,
-                    title: Text("BreakQ"),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: kPaddingS),
+                      child: Image(
+                        image: AssetImage(AssetImages.bq_logo),
+                        height: 30,
+                      ),
+                    ),
                     floating: true,
                     actions: [
                       IconButton(

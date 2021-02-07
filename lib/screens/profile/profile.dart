@@ -179,20 +179,30 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   child: Container(
                                     height: 80,
                                     child: const Image(
-                                        image: AssetImage(AssetImages.icon)),
+                                        image:
+                                            AssetImage(AssetImages.mts_logo)),
                                   ),
                                 ),
+                                SizedBox(height: kPaddingM),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(top: kPaddingS),
-                                  child: Text(
-                                    kAppName,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        .w600,
+                                  child: Image(
+                                    image: AssetImage(AssetImages.bq_logo),
+                                    height: 30,
                                   ),
                                 ),
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.only(top: kPaddingS),
+                                //   child: Text(
+                                //     kAppName,
+                                //     style: Theme.of(context)
+                                //         .textTheme
+                                //         .headline6
+                                //         .w600,
+                                //   ),
+                                // ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: kPaddingS, bottom: kPaddingS),
