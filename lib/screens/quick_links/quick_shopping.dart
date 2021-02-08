@@ -1,4 +1,6 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
+import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step2.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step1.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_success_dialog.dart';
@@ -242,6 +244,21 @@ class _QShoppingScreenState extends State<QShoppingScreen>
         top: false,
         child: Row(
           children: <Widget>[
+            BlocBuilder<CartBloc, CartState>(
+                buildWhen: (previous, current) => current is CartLoaded,
+                builder: (context, state) {
+                  if (state is CartLoaded) {
+                    if (state.cart.cartItems?.isNotEmpty ?? false)
+                      return CartButton(
+                        cartValue: state.cart.cartValue,
+                        totalItems: state.cart.noOfProducts,
+                      );
+                  }
+                  return Container(
+                    height: 0,
+                    width: 0,
+                  );
+                }),
             Spacer(),
             ThemeButton(
               text: _currentStep == totalSteps

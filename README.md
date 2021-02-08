@@ -12,8 +12,8 @@ The changes that are requested by the client.
 - [x] --) Caption of Bill Generated : Change to QR Code generated.
 - [x] --) Reduce the size of Cart page more and optimise UI
 - [x] 14) Differenciate the the colour for 3 of them (reference sent)
+- [x] 15) Add the required item into the cart, need to display the cart item, show the cart page
 - [ ] 24) Product to be cleared only after payment / Nil payment
-- [ ] 15) Add the required item into the cart, need to display the cart item, show the cart page
 - [ ] 33) Delivery charges to be brought
 - [ ] 19) Bill no generation (Invoice generation)
 - [ ] 21) Add address option function is not working

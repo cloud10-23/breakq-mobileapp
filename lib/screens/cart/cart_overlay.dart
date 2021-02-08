@@ -1,9 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
