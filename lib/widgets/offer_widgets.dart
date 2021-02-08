@@ -8,11 +8,11 @@ class OfferTextGreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(kPaddingS),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          border: Border.all(color: Colors.green, width: 1.0)),
+          borderRadius: BorderRadius.circular(25.0),
+          border: Border.all(color: Colors.green.withOpacity(0.5), width: 1.0)),
       child: Text(
         "35% OFF",
-        style: Theme.of(context).textTheme.caption.green.w800,
+        style: Theme.of(context).textTheme.caption.fs8.green.w800,
       ),
     );
   }

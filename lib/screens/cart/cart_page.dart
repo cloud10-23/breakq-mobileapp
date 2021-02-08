@@ -51,7 +51,7 @@ class CartBottomSheet extends StatelessWidget {
                 ? (state.cart.cartItems?.isEmpty ?? true)
                     ? Container(
                         color: kWhite,
-                        margin: EdgeInsets.all(kPaddingL),
+                        margin: EdgeInsets.symmetric(horizontal: 12.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,7 +73,7 @@ class CartBottomSheet extends StatelessWidget {
                         ),
                       )
                     : Container(
-                        margin: EdgeInsets.symmetric(horizontal: kPaddingM),
+                        margin: EdgeInsets.symmetric(horizontal: 12.0),
                         child: Column(
                           children: [
                             Row(
@@ -82,10 +82,12 @@ class CartBottomSheet extends StatelessWidget {
                                 BoldTitle(
                                   title:
                                       "No of Qty:  ${state.cart.cartItems.length}",
+                                  fw: FontWeight.w600,
                                 ),
                                 BoldTitle(
                                   title:
                                       "No of Items:  ${state.cart.noOfProducts}",
+                                  fw: FontWeight.w600,
                                 ),
                               ],
                             ),
@@ -118,7 +120,8 @@ class CartBottomSheet extends StatelessWidget {
                       BoldTitle(
                         title: 'Price: ',
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.grey[700],
+                        color: Colors.black,
+                        fw: FontWeight.w500,
                       ),
                       BoldTitle(
                         title: (state is CartLoaded)
@@ -127,10 +130,13 @@ class CartBottomSheet extends StatelessWidget {
                                     "00.00")
                             : '₹ 00.00',
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.grey[700],
+                        color: Colors.black87,
+                        fw: FontWeight.w500,
+                        isNum: true,
                       ),
                     ],
                   ),
+                  SizedBox(height: kPaddingS),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -149,6 +155,7 @@ class CartBottomSheet extends StatelessWidget {
                             : '- ₹ 00.00',
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                         color: Colors.green[800],
+                        isNum: true,
                       ),
                     ],
                   ),
@@ -160,9 +167,9 @@ class CartBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomTitle(
+                      BoldTitle(
                         title: 'Cart Total:',
-                        fw: FontWeight.w600,
+                        fw: FontWeight.w800,
                       ),
                       CustomTitle(
                         title: (state is CartLoaded)
@@ -170,6 +177,7 @@ class CartBottomSheet extends StatelessWidget {
                                 (state.cart?.cartValue?.toStringAsFixed(2) ??
                                     "00.00")
                             : '₹ 00.00',
+                        fw: FontWeight.w700,
                       ),
                     ],
                   ),

@@ -6,7 +6,6 @@ import 'package:breakq/main.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sprintf/sprintf.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 
@@ -45,8 +44,8 @@ class CartListItem extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              width: 75,
-                              height: 75,
+                              width: 65,
+                              height: 65,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage(product.image),
@@ -65,58 +64,67 @@ class CartListItem extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   top: kPaddingS,
                                   bottom: kPaddingS,
-                                  left: kPaddingS,
+                                  left: kPaddingM,
                                   right: kPaddingS),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    product.title,
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2
-                                        .w600,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        product.title,
+                                        maxLines: 1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .w600,
+                                      ),
+                                      SizedBox(width: kPaddingL),
+                                      OfferTextGreen(),
+                                    ],
                                   ),
-                                  const Padding(
-                                      padding: EdgeInsets.only(top: 2)),
-                                  Text(
-                                    sprintf('%s', <String>[product.quantity]),
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption
-                                        .copyWith(
-                                            color: Theme.of(context).hintColor),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        product.quantity,
+                                        maxLines: 1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .fs10
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .hintColor),
+                                      ),
+                                      SizedBox(width: kPaddingM),
+                                      Text(
+                                        "₹ " + product.price.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .fs10
+                                            .bold,
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        "₹ " + product.oldPrice.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .fs10
+                                            .w300
+                                            .copyWith(
+                                                decoration:
+                                                    TextDecoration.lineThrough),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: kPaddingS,
-                                        right: kPaddingS,
-                                        bottom: kPaddingS,
-                                        top: 2),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "₹ " + product.price.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2
-                                              .bold,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          "₹ " + product.oldPrice.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption
-                                              .w300
-                                              .copyWith(
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                        ),
-                                      ],
-                                    ),
+                                  const SizedBox(height: 5),
+                                  ResetCartButtonText(
+                                    onProductDel: () => getIt
+                                        .get<AppGlobals>()
+                                        .onProductDel(product, context),
                                   ),
                                 ],
                               ),
@@ -133,7 +141,7 @@ class CartListItem extends StatelessWidget {
                                     "₹ ${product.price * qty}",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle1
+                                        .bodyText1
                                         .bold,
                                   ),
                                   SizedBox(width: 5),
@@ -150,35 +158,20 @@ class CartListItem extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(height: 10),
-                              OfferTextGreen(),
+                              ListAddRemButtonSmall(
+                                onAdd: () => getIt
+                                    .get<AppGlobals>()
+                                    .onProductAdd(product, context),
+                                onRem: () => getIt
+                                    .get<AppGlobals>()
+                                    .onProductRed(product, context),
+                                qty: qty,
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    if (qty > 0)
-                      Padding(
-                        padding: const EdgeInsets.all(kPaddingM),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ResetCartButtonText(
-                              onProductDel: () => getIt
-                                  .get<AppGlobals>()
-                                  .onProductDel(product, context),
-                            ),
-                            ListAddRemButtons(
-                              onAdd: () => getIt
-                                  .get<AppGlobals>()
-                                  .onProductAdd(product, context),
-                              onRem: () => getIt
-                                  .get<AppGlobals>()
-                                  .onProductRed(product, context),
-                              qty: qty,
-                            ),
-                          ],
-                        ),
-                      )
                   ],
                 );
               }),

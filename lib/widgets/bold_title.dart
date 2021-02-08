@@ -14,6 +14,8 @@ class BoldTitle extends StatelessWidget {
     this.textAlign,
     this.maxLines = 1,
     this.color,
+    this.fw,
+    this.isNum = false,
   }) : super(key: key);
 
   final String title;
@@ -22,6 +24,8 @@ class BoldTitle extends StatelessWidget {
   final int maxLines;
   final TextAlign textAlign;
   final Color color;
+  final FontWeight fw;
+  final bool isNum;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +43,10 @@ class BoldTitle extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                .w800
-                .copyWith(color: color ?? Colors.black),
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                color: color ?? Colors.black,
+                fontWeight: (fw != null) ? fw : FontWeight.w800,
+                fontFamily: (isNum) ? kNumberFontFamily : kFontFamily),
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
             textAlign: textAlign ?? TextAlign.left,

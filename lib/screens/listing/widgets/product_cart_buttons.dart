@@ -144,6 +144,60 @@ class ListAddRemButtons extends StatelessWidget {
   }
 }
 
+class ListAddRemButtonSmall extends StatelessWidget {
+  ListAddRemButtonSmall({this.onAdd, this.onRem, this.qty});
+  final Function onAdd;
+  final Function onRem;
+  final int qty;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 20,
+      width: 80,
+      child: Row(
+        children: [
+          Container(
+            width: 25,
+            // clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black12),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                bottomLeft: Radius.circular(25.0),
+              ),
+            ),
+            child: FlatButton(
+              onPressed: onRem,
+              child: Icon(Icons.remove, color: kBlack, size: 12.0),
+            ),
+          ),
+          Expanded(
+            child: Container(
+                child: Text(qty.toString(),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption.fs14.copyWith(
+                        color: kBlack, fontFamily: kNumberFontFamily))),
+          ),
+          Container(
+            width: 25,
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25.0),
+                bottomRight: Radius.circular(25.0),
+              )),
+              color: kPrimaryColor,
+              onPressed: onAdd,
+              child: Icon(Icons.add, color: kBlack, size: 12),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class ResetCartButtonCircleIcon extends StatelessWidget {
   ResetCartButtonCircleIcon({this.onProductDel});
   final Function onProductDel;
@@ -170,23 +224,27 @@ class ResetCartButtonText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      padding: const EdgeInsets.only(right: kPaddingM),
+      width: 70,
+      margin: EdgeInsets.all(kPaddingS),
       child: FlatButton(
+          padding: EdgeInsets.all(kPaddingS),
           color: kWhite,
           onPressed: onProductDel,
-          height: 30,
+          height: 15,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black12),
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           child: Row(
             children: [
-              Icon(Icons.delete, color: kBlackAccent),
+              Icon(Icons.delete, color: kBlackAccent, size: 15),
               SizedBox(width: 10.0),
               Text(title ?? 'Delete',
                   style: Theme.of(context)
                       .textTheme
                       .caption
+                      .w600
+                      .fs10
                       .copyWith(color: kBlack)),
             ],
           )),

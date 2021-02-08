@@ -1,4 +1,3 @@
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/screens/cart/widgets/cart_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
