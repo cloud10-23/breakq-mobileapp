@@ -39,6 +39,7 @@ const Color kBlack = Color(0xFF333333);
 const Color kGold = Color(0xFFF3C952);
 const Color kTransparent = Colors.transparent;
 const Color kBlackAccent = Colors.black45;
+const Color kHyperLinkColor = Color(0xFF0645AD);
 
 const List<Map<String, Color>> checkoutRadioColors = [
   {
@@ -241,8 +242,8 @@ enum CheckoutType { walkIn, pickUp, delivery }
 
 const Map<CheckoutType, int> totalSteps = {
   CheckoutType.walkIn: 1,
-  CheckoutType.pickUp: 2,
-  CheckoutType.delivery: 3,
+  CheckoutType.pickUp: 0,
+  CheckoutType.delivery: 1,
 };
 
 class CheckoutTypes {

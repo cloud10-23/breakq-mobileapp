@@ -1,4 +1,6 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/data/models/wizard_page_model.dart';
 import 'package:breakq/screens/checkout/ch_base_step.dart';
@@ -6,6 +8,7 @@ import 'package:breakq/screens/checkout/ch_choice_step.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
+import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -208,20 +211,96 @@ class _CheckoutScreenState extends State<CheckoutScreen>
       padding: const EdgeInsets.all(kPaddingM * 2),
       child: SafeArea(
         top: false,
-        child: Row(
-          children: <Widget>[
-            Spacer(),
-            ThemeButton(
-              text: ((session?.currentStep?.step ?? 0) >=
-                      totalSteps[session?.currentStep?.checkoutType ?? 0])
-                  ? "Pay"
-                  : "Next",
-              onPressed: _nextStep,
-              disableTouchWhenLoading: true,
-              showLoading: session.isLoading,
-            ),
-          ],
-        ),
+        child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+          if (state is! CartLoaded) {
+            return Container();
+          }
+          return Row(
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomTitle(
+                        title: 'Pay:',
+                        fw: FontWeight.w800,
+                      ),
+                      CustomTitle(
+                        title: (state is CartLoaded)
+                            ? '₹ ' +
+                                (state.cart?.cartValue?.toStringAsFixed(2) ??
+                                    "00.00")
+                            : '₹ 00.00',
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                        fw: FontWeight.w700,
+                      ),
+                    ],
+                  ),
+                  BoldTitle(
+                    title: 'View price details',
+                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                    color: kHyperLinkColor,
+                    isNum: true,
+                  ),
+                  //     Row
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         BoldTitle(
+                  //           title: 'Discount: ',
+                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                  //           color: Colors.green[800],
+                  //           isNum: true,
+                  //         ),
+                  //         BoldTitle(
+                  //           title: (state is CartLoaded)
+                  //               ? '- ₹ ' +
+                  //                   (((state.cart?.orgCartValue ?? 0) -
+                  //                               (state.cart?.cartValue ?? 0))
+                  //                           ?.toStringAsFixed(2) ??
+                  //                       "00.00")
+                  //               : '- ₹ 00.00',
+                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                  //           color: Colors.green[800],
+                  //           isNum: true,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         BoldTitle(
+                  //           title: 'Tax (GST): ',
+                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                  //           color: Colors.black,
+                  //           fw: FontWeight.w500,
+                  //           isNum: true,
+                  //         ),
+                  //         BoldTitle(
+                  //           title: '₹ 50.00',
+                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                  //           color: Colors.black87,
+                  //           fw: FontWeight.w500,
+                  //           isNum: true,
+                  //         ),
+                  //       ],
+                  //     ),
+                ],
+              ),
+              Spacer(),
+              ThemeButton(
+                text: ((session?.currentStep?.step ?? 0) >=
+                        totalSteps[session?.currentStep?.checkoutType ?? 0])
+                    ? "Pay"
+                    : "Next",
+                onPressed: _nextStep,
+                disableTouchWhenLoading: true,
+                showLoading: session.isLoading,
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
