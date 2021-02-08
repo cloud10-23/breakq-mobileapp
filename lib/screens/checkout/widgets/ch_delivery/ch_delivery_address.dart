@@ -16,30 +16,34 @@ class ChDeliverySelectAddress extends StatefulWidget {
 class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CheckoutBloc, CheckoutState>(
-      builder: (BuildContext context, CheckoutState state) {
-        final CheckoutSession session =
-            (state as SessionRefreshSuccessChState).session;
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (BuildContext context, CheckoutState state) {
+          final CheckoutSession session =
+              (state as SessionRefreshSuccessChState).session;
 
-        final List<Widget> _listItems = <Widget>[];
+          final List<Widget> _listItems = <Widget>[];
 
-        _listItems.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
-        _listItems.add(makeHeader(context, "Select a delivery address"));
+          _listItems
+              .add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
+          _listItems.add(makeHeader(context, "Select a delivery address"));
 
-        final List<DeliveryAddress> _address = session.address;
+          final List<DeliveryAddress> _address = session.address;
 
-        _listItems.add(SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (context, index) => _addressItem(index, session),
-          childCount: _address.length,
-        )));
+          _listItems.add(SliverList(
+              delegate: SliverChildBuilderDelegate(
+            (context, index) => _addressItem(index, session),
+            childCount: _address.length,
+          )));
 
-        _listItems.add(_addAddress());
+          _listItems.add(_addAddress());
 
-        return CustomScrollView(
-          slivers: _listItems,
-        );
-      },
+          return CustomScrollView(
+            slivers: _listItems,
+          );
+        },
+      ),
     );
   }
 

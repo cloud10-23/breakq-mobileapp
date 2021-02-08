@@ -176,7 +176,7 @@ class _VoiceSearchState extends State<VoiceSearch> {
       _status = result.recognizedWords;
     });
     Navigator.pop(context);
-    getIt.get<AppGlobals>().globalKeyNavigator.currentState.pushNamed(
+    getIt.get<AppGlobals>().globalKeyCustomNavigator.currentState.pushNamed(
         CustomNavigatorRoutes.listing,
         arguments: result.recognizedWords);
   }

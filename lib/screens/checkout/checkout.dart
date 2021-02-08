@@ -1,10 +1,9 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/checkout_session.dart';
-import 'package:breakq/data/models/wizard_page_model.dart';
-import 'package:breakq/screens/checkout/ch_base_step.dart';
-import 'package:breakq/screens/checkout/ch_choice_step.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
@@ -29,39 +28,25 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen>
-    with
-        PortraitStatefulModeMixin<CheckoutScreen>,
-        SingleTickerProviderStateMixin {
+    with PortraitStatefulModeMixin<CheckoutScreen> {
   // ChCurrentStep _currentStep;
 
   CheckoutSession session;
 
-  List<CheckoutStepsWizardPageModel> wizardPages =
-      <CheckoutStepsWizardPageModel>[];
-
   String _title = 'Checkout';
-
-  TabController _tabController;
 
   @override
   void dispose() {
     super.dispose();
+    getIt.get<AppGlobals>().globalKeyCheckoutNavigator = null;
   }
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     BlocProvider.of<CheckoutBloc>(context).add(LoadCartChEvent());
-    wizardPages.add(CheckoutStepsWizardPageModel.fromJson(<String, dynamic>{
-      'step': 0,
-      'body': CheckoutBaseStep(),
-    }));
-    wizardPages.add(CheckoutStepsWizardPageModel.fromJson(<String, dynamic>{
-      'type': CheckoutType.walkIn,
-      'step': 1,
-      'body': CheckoutChoiceSelector(),
-    }));
+    getIt.get<AppGlobals>().globalKeyCheckoutNavigator =
+        GlobalKey(debugLabel: 'checkout_navigator');
   }
 
   void _nextStep() {
@@ -116,11 +101,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
               break;
           }
         }
-
-        if (session.currentStep.step <= 0)
-          _tabController.animateTo(0);
-        else
-          _tabController.animateTo(1);
 
         return WillPopScope(
           onWillPop: () => _onBackPressed(context),
@@ -182,10 +162,9 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                   ),
                 ),
                 Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: List<Widget>.generate(wizardPages.length,
-                        (int index) => wizardPages[index].body),
+                  child: CheckoutNavigator(
+                    navigatorKey:
+                        getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
                   ),
                 ),
               ],

@@ -13,13 +13,13 @@ The changes that are requested by the client.
 - [x] --) Reduce the size of Cart page more and optimise UI
 - [x] 14) Differenciate the the colour for 3 of them (reference sent)
 - [x] 15) Add the required item into the cart, need to display the cart item, show the cart page
+- [ ] 21) Add address option function is not working
+- [ ] 30) Profile edition
+- [ ] 31) Stock maintenance
 - [ ] 24) Product to be cleared only after payment / Nil payment
 - [ ] 33) Delivery charges to be brought
 - [ ] 19) Bill no generation (Invoice generation)
-- [ ] 21) Add address option function is not working
 - [ ] 22) In the checkout screen Advertisement option
-- [ ] 31) Stock maintenance
-- [ ] 30) Profile edition
 - [ ] 23) Branch screen
 - [ ] 26) Need Help 27) FAQ
 - [ ] 28) Order History

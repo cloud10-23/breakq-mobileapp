@@ -36,7 +36,7 @@ class _SearchBarState extends State<SearchBar> {
                       Navigator.pop(context);
                       getIt
                           .get<AppGlobals>()
-                          .globalKeyNavigator
+                          .globalKeyCustomNavigator
                           .currentState
                           .pushNamed(CustomNavigatorRoutes.listing);
                     }),
@@ -64,7 +64,7 @@ class _SearchBarState extends State<SearchBar> {
               Navigator.pop(context);
               getIt
                   .get<AppGlobals>()
-                  .globalKeyNavigator
+                  .globalKeyCustomNavigator
                   .currentState
                   .pushNamed(CustomNavigatorRoutes.listing);
             },

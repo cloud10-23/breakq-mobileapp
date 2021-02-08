@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
 
@@ -86,8 +89,18 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               title: 'QR Code Generated!',
               billNo: "1234556678",
             );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.walkin_1);
             // _subtitle ;
           } else if (session.currentStep.step == 1) {
+            // getIt
+            //     .get<AppGlobals>()
+            //     .globalKeyCheckoutNavigator
+            //     .currentState
+            //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
             add(PaymentDoneChEvent());
             // if (session.selectedProductIds == null ||
             //     session.selectedProductIds.isEmpty) {
@@ -103,6 +116,11 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               billNo: "1234556678",
               isCompleted: true,
             );
+            // getIt
+            //     .get<AppGlobals>()
+            //     .globalKeyCheckoutNavigator
+            //     .currentState
+            //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
             add(ClearCartChEvent());
           }
           break;
@@ -136,10 +154,20 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               billNo: "12345678910",
               address: address,
             );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.deliver_1);
           } else if (session.currentStep.step == 1) {
             newSession = session.rebuild(
               isCompleted: true,
             );
+            // getIt
+            //     .get<AppGlobals>()
+            //     .globalKeyCheckoutNavigator
+            //     .currentState
+            //     .pushNamed(CheckoutNavigatorRoutes.deliver_1);
             add(ClearCartChEvent());
           }
           break;
@@ -157,6 +185,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       final CheckoutSession newSession = session.rebuild(
           currentStep: session.currentStep.decStep(), title: "");
+      getIt.get<AppGlobals>().globalKeyCheckoutNavigator.currentState.pop();
 
       yield SessionRefreshSuccessChState(newSession);
     }
