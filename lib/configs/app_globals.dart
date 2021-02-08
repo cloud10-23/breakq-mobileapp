@@ -104,8 +104,8 @@ class AppGlobals {
   }
 
   // Functions to call for Cart operations
-  final Function(Product, BuildContext) onProductPressed =
-      (product, context) => showModalBottomSheet(
+  final Function(Product, BuildContext, {VoidCallback then}) onProductPressed =
+      (product, context, {then}) => showModalBottomSheet(
             context: context,
             useRootNavigator: true,
             isScrollControlled: true,
@@ -121,7 +121,9 @@ class AppGlobals {
                   topRight: Radius.circular(15.0)),
             ),
             clipBehavior: Clip.antiAlias,
-          );
+          ).then((value) {
+            if (then != null) then();
+          });
   final Function(Product, BuildContext, {int qty}) onProductAdd =
       (product, context, {int qty = 1}) => BlocProvider.of<CartBloc>(context)
           .add(AddPToCartEvent(product: product, qty: qty));

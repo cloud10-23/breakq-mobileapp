@@ -92,20 +92,21 @@ class BarcodeScanner {
     }
 
     if (scanText != "-1") {
-      showDialog(
-          context: context,
-          child: Builder(builder: (context) {
-            return AlertDialog(
-              title: Text("This is a temporary feature"),
-              content: Text(
-                  "This is temporary, only to display the value of the barcode.\nThe reading of the barcode is : $scanText"),
-              actions: [
-                FlatButton(
-                    onPressed: () => Navigator.pop(context), child: Text("Ok"))
-              ],
-            );
-          }),
-          useRootNavigator: true);
+      /// To test the value of the barcode
+      // showDialog(
+      //     context: context,
+      //     child: Builder(builder: (context) {
+      //       return AlertDialog(
+      //         title: Text("This is a temporary feature"),
+      //         content: Text(
+      //             "This is temporary, only to display the value of the barcode.\nThe reading of the barcode is : $scanText"),
+      //         actions: [
+      //           FlatButton(
+      //               onPressed: () => Navigator.pop(context), child: Text("Ok"))
+      //         ],
+      //       );
+      //     }),
+      //     useRootNavigator: true);
 
       // Get the Product to display over here
       Product maggi = Product(
@@ -118,7 +119,9 @@ class BarcodeScanner {
         title: "Maggi Scanned",
         quantity: "500 gm",
       );
-      getIt.get<AppGlobals>().onProductPressed(maggi, context);
+      getIt
+          .get<AppGlobals>()
+          .onProductPressed(maggi, context, then: () => this.scan(context));
     }
   }
 }

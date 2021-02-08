@@ -1,16 +1,35 @@
-# breakq
+# BreakQ Flutter E-Commerce App
 
-An e-commerce retail shop application to scan for barcodes and checkout easily
+An e-commerce retail shop application to scan for barcodes and checkout easily, by 'breaking the queues'.
 
-## Getting Started
+## BreakQ Changes
+The changes that are requested by the client.
 
-This project is a starting point for a Flutter application.
+## The list of changes requested
 
-A few resources to get you started if this is your first Flutter project:
+- [x] 32) Once the product scanned it should return to scan page automatically
+- [ ] 24) Product to be cleared only after payment / Nil payment
+- [ ] 14) Differenciate the the colour for 3 of them (reference sent)
+- [ ] 15) Add the required item into the cart, need to display the cart item, show the cart page
+- [ ] 33) Delivery charges to be brought
+- [ ] 19) Bill no generation (Invoice generation)
+- [ ] 21) Add address option function is not working
+- [ ] 22) In the checkout screen Advertisement option
+- [ ] 31) Stock maintenance
+- [ ] 30) Profile edition
+- [ ] 23) Branch screen
+- [ ] 26) Need Help 27) FAQ
+- [ ] 28) Order History
+- [ ] 29) Notification (SMS)
+- [ ] 34) Caption to be changed to "QR code generated" from "Bill gererated"
+- [ ] 35) Space can be optimized and products can be displayed with borders
+- [ ] 11) Set Budget , My Order and Cart are pending (For set budget - if bill amount is more than budget amount then popup message has to displayed)
+- [ ] 16) If type is self pickup QR code to be generated so that the customer will show and pay.
+- [ ] 18) UPI Payment
+- [ ] 17) Payment mode screen
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Changes cancelled/ done in PHASE - II
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [ ] 20) Should have option to change the address post checkout if required.
+- [ ] 29) Notification (SMS) The SMS part is SERVER side anyway
+- [ ] 25) Reports
