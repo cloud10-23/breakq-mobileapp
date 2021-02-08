@@ -40,6 +40,21 @@ const Color kGold = Color(0xFFF3C952);
 const Color kTransparent = Colors.transparent;
 const Color kBlackAccent = Colors.black45;
 
+const List<Map<String, Color>> checkoutRadioColors = [
+  {
+    "main": Color(0xFFB9D8DA),
+    "sub": Color(0xFFA1CBCD),
+  },
+  {
+    "main": Color(0xFFBDDDF2),
+    "sub": Color(0xFFA7D1F0),
+  },
+  {
+    "main": Color(0xFFBDD1F2),
+    "sub": Color(0xFFA7C2EA),
+  },
+];
+
 // Padding
 const double kPaddingS = 4.0;
 const double kPaddingM = 8.0;

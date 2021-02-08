@@ -11,7 +11,7 @@ The changes that are requested by the client.
 - [x] --) Change from No. Of Products to No. Of Qty
 - [x] --) Caption of Bill Generated : Change to QR Code generated.
 - [x] --) Reduce the size of Cart page more and optimise UI
-- [ ] 14) Differenciate the the colour for 3 of them (reference sent)
+- [x] 14) Differenciate the the colour for 3 of them (reference sent)
 - [ ] 24) Product to be cleared only after payment / Nil payment
 - [ ] 15) Add the required item into the cart, need to display the cart item, show the cart page
 - [ ] 33) Delivery charges to be brought
