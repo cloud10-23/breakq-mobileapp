@@ -81,7 +81,7 @@ class CartBottomSheet extends StatelessWidget {
                               children: [
                                 BoldTitle(
                                   title:
-                                      "No of Products:  ${state.cart.cartItems.length}",
+                                      "No of Qty:  ${state.cart.cartItems.length}",
                                 ),
                                 BoldTitle(
                                   title:

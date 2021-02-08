@@ -83,7 +83,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           if (session.currentStep.step == 0) {
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
-              title: 'Bill Generated!',
+              title: 'QR Code Generated!',
               billNo: "1234556678",
             );
             // _subtitle ;
