@@ -41,6 +41,8 @@ const Color kTransparent = Colors.transparent;
 const Color kBlackAccent = Colors.black45;
 const Color kHyperLinkColor = Color(0xFF0645AD);
 
+const Color kBlue = Color(0xFF1565C0);
+
 const List<Map<String, Color>> checkoutRadioColors = [
   {
     "main": Color(0xFFB9D8DA),

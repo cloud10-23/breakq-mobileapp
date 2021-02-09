@@ -1,6 +1,9 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +30,6 @@ class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
 
           _listItems
               .add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
-          _listItems.add(makeHeader(context, "Select a delivery address"));
 
           final List<DeliveryAddress> _address = session.address;
 
@@ -124,6 +126,11 @@ class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
               ),
             ),
             onTap: () {
+              getIt
+                  .get<AppGlobals>()
+                  .globalKeyCheckoutNavigator
+                  .currentState
+                  .pushNamed(CheckoutNavigatorRoutes.add_address);
               // BlocProvider.of<CheckoutBloc>(context)
               //     .add(CheckoutTypeSelectedChEvent(type: _type));
             },

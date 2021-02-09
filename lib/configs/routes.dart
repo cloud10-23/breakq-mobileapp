@@ -8,6 +8,7 @@ import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:breakq/screens/search/search.dart';
+import 'package:breakq/widgets/add_address.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
@@ -152,7 +153,7 @@ class CheckoutNavigatorRoutes {
   static const String walkin_1 = '/walkin/qr';
   static const String pickup_1 = '/pickup/something';
   static const String deliver_1 = '/deliver/choose_address';
-  static const String deliver_2 = '/deliver/add_address';
+  static const String add_address = '/deliver/add_address';
 }
 
 class CheckoutNavigator extends StatelessWidget {
@@ -167,7 +168,8 @@ class CheckoutNavigator extends StatelessWidget {
       // CheckoutNavigatorRoutes.pickup_1: (context, settings) =>
       CheckoutNavigatorRoutes.deliver_1: (context, settings) =>
           ChDeliverySelectAddress(),
-      // CheckoutNavigatorRoutes.deliver_2: (context, settings) => AddEditAddress(),
+      CheckoutNavigatorRoutes.add_address: (context, settings) =>
+          AddEditAddress(),
     };
   }
 
