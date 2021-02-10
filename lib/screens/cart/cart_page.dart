@@ -115,7 +115,7 @@ class _CartPageState extends State<CartPage> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      SizedBox(height: kPaddingM),
+                      CartScannerOption(),
                       _cartItemsBuilder(context, state),
                       CartFooter(),
                       PriceDetails(state: state),

@@ -1,7 +1,9 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
+import 'package:breakq/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -104,6 +106,7 @@ class CartEmptyScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                CartScannerOption(),
                 CartFooter(),
                 EndPadding(),
               ],
@@ -243,6 +246,48 @@ class CartFooter extends StatelessWidget {
         CartSuggestionsBuilder(),
         CartRecentlyScanned(),
       ],
+    );
+  }
+}
+
+class CartScannerOption extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => BarcodeScanner().scan(context),
+      child: Container(
+        color: kBlue,
+        margin: const EdgeInsets.symmetric(
+            vertical: kPaddingL, horizontal: kPaddingS),
+        padding: EdgeInsets.all(kPaddingS),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(kPaddingM),
+                child: Row(
+                  children: [
+                    Image(
+                      image: AssetImage(AssetImages.scan),
+                      color: Colors.white70,
+                    ),
+                    Spacer(),
+                    BoldTitle(
+                      title: "Scan & Add to Cart".toUpperCase(),
+                      padding: EdgeInsets.symmetric(horizontal: kPaddingM),
+                      color: Colors.white70,
+                      fw: FontWeight.w600,
+                    ),
+                    Spacer(flex: 9),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white70,
+                    ),
+                  ],
+                ),
+              ),
+            ]),
+      ),
     );
   }
 }
