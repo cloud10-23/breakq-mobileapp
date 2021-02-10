@@ -8,6 +8,7 @@ import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
+import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/add_address.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class Routes {
   static const String signIn = '/signIn';
   static const String signInOtp = '/signIn/otp';
   static const String signUp = '/signUp';
+  static const String quickShopping = '/qs';
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String takePicture = '/takePicture';
@@ -50,6 +52,13 @@ class Routes {
             return Picker(
                 params: routeSettings.arguments as Map<String, dynamic>);
           },
+        );
+      case quickShopping:
+        return MaterialPageRoute<ProductScreen>(
+          builder: (BuildContext context) {
+            return QShoppingScreen();
+          },
+          settings: const RouteSettings(name: product),
         );
       case locationGallery:
         return MaterialPageRoute<PhotoGalleryScreen>(

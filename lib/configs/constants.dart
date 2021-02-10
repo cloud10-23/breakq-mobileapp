@@ -165,17 +165,12 @@ const List<Map<String, String>> quickLinks = [
   {
     'name': 'Quick Shopping',
     'image': AssetImages.quickShopping,
-    'link': QShoppingScreen.id,
+    'link': Routes.quickShopping,
   },
   {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
   {'name': 'Cart', 'image': AssetImages.cart, 'link': 'cart'},
   {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'my_order'},
 ];
-
-// Quick Link Widgets
-const Map<String, Widget> quickLinkWidgets = {
-  QShoppingScreen.id: QShoppingScreen(),
-};
 
 /// Cart Bulk Buttons
 const List<Map<String, int>> bulkAddToCart = [
@@ -199,6 +194,8 @@ class AssetImages {
       'assets/images/illustrations/cart-illustration.jpg';
   static const String homeIllustration =
       'assets/images/illustrations/home-illustration-2.jpg';
+  static const String qsIllustration =
+      'assets/images/illustrations/qs_illustration.svg';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';

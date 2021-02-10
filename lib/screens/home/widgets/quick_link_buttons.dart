@@ -1,5 +1,5 @@
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/screens/empty.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -9,10 +9,10 @@ class QuickLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDialog(
-          context: context,
-          builder: (context) =>
-              quickLinkWidgets[quickLinks[index]['link']] ?? EmptyScreen()),
+      onTap: () => Navigator.of(
+        context,
+        rootNavigator: true,
+      ).pushNamed(quickLinks[index]['link'] ?? Routes.cart),
       child: Container(
         width: 110,
         margin: const EdgeInsets.all(1.0), // for card shadow

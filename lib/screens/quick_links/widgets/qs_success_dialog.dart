@@ -1,3 +1,4 @@
+import 'package:breakq/configs/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/qs_success_dialog.dart';
@@ -14,7 +15,7 @@ class _QSSuccessDialogState extends State<QSSuccessDialog> {
   void initState() {
     super.initState();
     Future.delayed(durationBeforeClose).then((_) {
-      if (mounted) Navigator.pop(context);
+      if (mounted) Navigator.of(context, rootNavigator: true).pop();
     });
   }
 

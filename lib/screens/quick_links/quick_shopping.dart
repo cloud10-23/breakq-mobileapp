@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step2.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step1.dart';
@@ -17,6 +18,7 @@ import 'package:breakq/widgets/portrait_mode_mixin.dart';
 import 'package:breakq/widgets/sliver_app_title.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/theme_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sprintf/sprintf.dart';
 
 class QShoppingScreen extends StatefulWidget {
@@ -122,7 +124,18 @@ class _QShoppingScreenState extends State<QShoppingScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<QSBloc, QSState>(
+    return BlocConsumer<QSBloc, QSState>(
+      listenWhen: (previous, current) =>
+          current is SessionRefreshSuccessQSState,
+      listener: (context, state) {
+        if (state is SessionRefreshSuccessQSState &&
+            state.session.isSubmitted) {
+          Navigator.of(context, rootNavigator: true)
+              .popAndPushNamed(Routes.cart);
+          Navigator.of(context, rootNavigator: true)
+              .push(MaterialPageRoute(builder: (context) => QSSuccessDialog()));
+        }
+      },
       builder: (BuildContext context, QSState state) {
         if (state is! SessionRefreshSuccessQSState) {
           /// Show the full screen indicator until we return here.
@@ -135,7 +148,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
         session = (state as SessionRefreshSuccessQSState).session;
 
         if (session.isSubmitted) {
-          return QSSuccessDialog();
+          return Container();
         }
 
         return WillPopScope(
@@ -177,39 +190,55 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                         style: Theme.of(context).textTheme.caption.black,
                       ),
                     ),
+                    backgroundColor: Colors.blue[300],
                     centerTitle: true,
                     flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        padding: const EdgeInsets.only(
-                            top: kPaddingS,
-                            left: kPaddingL,
-                            bottom: kPaddingL,
-                            right: kPaddingM),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              L10n.of(context)
-                                  .bookingLabelSteps(_currentStep, totalSteps),
-                              style:
-                                  Theme.of(context).textTheme.subtitle1.black,
-                              maxLines: 1,
+                      background: Stack(
+                        children: [
+                          Positioned.fill(
+                              child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kPaddingL * 2),
+                            child: SvgPicture.asset(
+                              AssetImages.qsIllustration,
+                              alignment: Alignment.centerRight,
                             ),
-                            SizedBox(height: kPaddingL),
-                            Text(
-                              L10n.of(context).bookingTitleWizardPage(
-                                  'page' + _currentStep.toString()),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5
-                                  .black
-                                  .w400,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          )),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: kPaddingS,
+                                left: kPaddingL,
+                                bottom: kPaddingL,
+                                right: kPaddingM),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  L10n.of(context).bookingLabelSteps(
+                                      _currentStep, totalSteps),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .black,
+                                  maxLines: 1,
+                                ),
+                                SizedBox(height: kPaddingL),
+                                Text(
+                                  L10n.of(context).bookingTitleWizardPage(
+                                      'page' + _currentStep.toString()),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .black
+                                      .w400,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -244,21 +273,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
         top: false,
         child: Row(
           children: <Widget>[
-            BlocBuilder<CartBloc, CartState>(
-                buildWhen: (previous, current) => current is CartLoaded,
-                builder: (context, state) {
-                  if (state is CartLoaded) {
-                    if (state.cart.cartItems?.isNotEmpty ?? false)
-                      return CartButton(
-                        cartValue: state.cart.cartValue,
-                        totalItems: state.cart.noOfProducts,
-                      );
-                  }
-                  return Container(
-                    height: 0,
-                    width: 0,
-                  );
-                }),
+            CartFloatingButton(),
             Spacer(),
             ThemeButton(
               text: _currentStep == totalSteps

@@ -1,11 +1,11 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/main.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_badged/flutter_badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HybridFAB extends StatelessWidget {
@@ -33,6 +33,38 @@ class HybridFAB extends StatelessWidget {
   }
 }
 
+class CartFloatingButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FloatingActionButton(
+          heroTag: null,
+          backgroundColor: kBlue,
+          onPressed: () =>
+              Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart),
+          child: BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              if (state is CartLoaded)
+                return FlutterBadge(
+                  icon: Image(
+                    image: AssetImage(AssetImages.cart),
+                    color: Colors.white,
+                  ),
+                  itemCount: state?.cart?.noOfProducts ?? 0,
+                );
+              return FlutterBadge(
+                icon: Image(
+                  image: AssetImage(AssetImages.scan),
+                  color: Colors.white,
+                ),
+                itemCount: 0,
+              );
+            },
+          )),
+    );
+  }
+}
+
 class CartButton extends StatelessWidget {
   CartButton({this.totalItems, this.cartValue});
   final int totalItems;
@@ -40,7 +72,9 @@ class CartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () => getIt.get<AppGlobals>().showCartPage(context),
+      onPressed: () =>
+          Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart),
+      //getIt.get<AppGlobals>().showCartPage(context),
       heroTag: null,
       label: Container(
         width: 160.0,
@@ -143,23 +177,6 @@ class ScanFloatingButtonExtended extends StatelessWidget {
 //         ));
 //   }
 // }
-
-class ScanFloatingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FloatingActionButton(
-          heroTag: null,
-          backgroundColor: Colors.black,
-          onPressed: () => BarcodeScanner().scan(context),
-          // onPressed: () => Navigator.pushNamed(context, Routes.scan),
-          child: Image(
-            image: AssetImage(AssetImages.scan),
-            color: Colors.white,
-          )),
-    );
-  }
-}
 
 class CircleButton extends StatelessWidget {
   @override

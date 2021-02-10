@@ -192,11 +192,8 @@ class _BookingSuccessDialogState extends State<SuccessDialog>
                   opacity: _showButton ? 1 : 0,
                   child: ThemeButton(
                       text: widget.btnLabel ?? L10n.of(context).commonBtnClose,
-
-                      /// We shall go back to the very first screen in the queue...
                       onPressed: () {
-                        Navigator.of(context)
-                            .popUntil((Route<dynamic> route) => route.isFirst);
+                        Navigator.of(context, rootNavigator: true).pop();
                       }),
                 ),
               ),
