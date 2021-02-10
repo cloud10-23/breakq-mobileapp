@@ -8,6 +8,7 @@ class Base extends StatelessWidget {
   Base({this.homeScreen, this.navigatorKey});
   final Widget homeScreen;
   final GlobalKey<NavigatorState> navigatorKey;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -20,7 +21,7 @@ class Base extends StatelessWidget {
         drawer: Drawer(
           child: DrawerScreen(),
         ),
-        floatingActionButton: HybridFAB(),
+        floatingActionButton: ScanFloatingButtonExtended(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/ch_base_step.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
@@ -32,6 +33,7 @@ class Routes {
   static const String search = '/search';
   static const String scan = '/scan';
   static const String checkout = '/checkout';
+  static const String cart = '/cart';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -82,6 +84,8 @@ class Routes {
             );
           },
         );
+      case cart:
+        return SlideRoute(widget: CartPage());
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
       //     builder: (BuildContext context) {

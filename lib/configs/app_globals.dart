@@ -95,8 +95,7 @@ class AppGlobals {
       isScrollControlled: true,
       useRootNavigator: true,
       builder: (context) => Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          child: CartBottomSheet()),
+          height: MediaQuery.of(context).size.height * 0.9, child: CartPage()),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),

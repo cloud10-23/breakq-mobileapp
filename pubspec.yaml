@@ -89,6 +89,9 @@ dependencies:
   # Speech To Text
   speech_to_text: ^3.1.0
 
+  flutter_badged: ^1.0.3
+  fancy_bottom_navigation: ^0.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -119,6 +122,7 @@ flutter:
     - assets/images/categories/
     - assets/images/offers/
     - assets/images/checkout/
+    - assets/images/illustrations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

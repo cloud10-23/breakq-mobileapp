@@ -1,3 +1,4 @@
+import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -196,6 +197,7 @@ class ListingState extends State<Listing> {
                         actions: [
                           SearchIconButton(),
                           VoiceIconButton(),
+                          CartIconButton(),
                         ],
                         floating: true,
                       ),

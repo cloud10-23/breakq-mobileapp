@@ -1,200 +1,220 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
+import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/jumbotron.dart';
+import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class CartBottomSheet extends StatelessWidget {
+class CartPage extends StatefulWidget {
+  @override
+  _CartPageState createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
         buildWhen: (previous, current) => current is CartLoaded,
         builder: (context, state) {
+          if (state is! CartLoaded) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if ((state as CartLoaded).cart.cartItems?.isEmpty ?? true) {
+            return CartEmptyScreen();
+          }
+
           return Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 50.0,
-              elevation: 0.0,
-              leading: IconButton(
-                  icon: Icon(Icons.arrow_drop_down_circle, size: 30),
-                  onPressed: () => Navigator.pop(context)),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: kPaddingL),
-                  child: InkWell(
-                    onTap: () {
-                      BlocProvider.of<CartBloc>(context).add(ResetCartEvent());
-                    },
-                    child: Icon(Icons.delete),
-                  ),
-                ),
-              ],
-              centerTitle: true,
-              title: Row(
-                children: [
-                  Spacer(flex: 6),
-                  Image(
-                    image: AssetImage(AssetImages.cart),
-                    height: 25,
-                  ),
-                  Spacer(),
-                  Text('Cart'),
-                  Spacer(flex: 6),
-                ],
-              ),
-            ),
-            backgroundColor: kPrimaryColor,
-            body: (state is CartLoaded)
-                ? (state.cart.cartItems?.isEmpty ?? true)
-                    ? Container(
-                        color: kWhite,
-                        margin: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Jumbotron(
-                              title: "Your Cart is Empty!",
-                              icon: Icons.add_shopping_cart,
-                            ),
-                            Text(
-                              "Try adding more items to your cart!",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(
-                                      color: Theme.of(context).disabledColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      )
-                    : Container(
-                        margin: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
+            body: SingleChildScrollView(
+              controller: _controller,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SafeArea(
+                      child: Container(
+                        constraints: BoxConstraints.tight(Size.fromHeight(170)),
+                        child: Stack(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                BoldTitle(
-                                  title:
-                                      "No of Qty:  ${state.cart.cartItems.length}",
-                                  fw: FontWeight.w600,
-                                ),
-                                BoldTitle(
-                                  title:
-                                      "No of Items:  ${state.cart.noOfProducts}",
-                                  fw: FontWeight.w600,
-                                ),
-                              ],
+                            Positioned.fill(
+                              child: Image(
+                                image: AssetImage(AssetImages.cartIllustration),
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            Expanded(
-                              child: Container(
-                                color: kWhite,
-                                padding: EdgeInsets.all(kPaddingS),
-                                child: SingleChildScrollView(
-                                  child: CartListing(
-                                      products:
-                                          state.cart.cartItems.keys.toList()),
-                                ),
+                            Container(
+                              constraints:
+                                  BoxConstraints.tight(Size.fromHeight(50)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                      iconSize: 18,
+                                      padding: EdgeInsets.zero,
+                                      icon: Icon(Icons.arrow_back_ios),
+                                      onPressed: () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop()),
+                                  Image(
+                                    image: AssetImage(AssetImages.cart),
+                                    height: 25,
+                                    // color: kWhite,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text('My Cart',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .fs16),
+                                  Spacer(flex: 6),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        "Items:  ${(state as CartLoaded).cart.cartItems.length}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.0),
+                                        // color: kWhite),
+                                      ),
+                                      Text(
+                                        "Qty:      ${(state as CartLoaded).cart.noOfProducts}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.0),
+                                        // color: kWhite),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(right: kPaddingL),
+                                    child: InkWell(
+                                      onTap: () {
+                                        BlocProvider.of<CartBloc>(context)
+                                            .add(ResetCartEvent());
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.delete,
+                                          ), // color: kWhite),
+                                          Text(
+                                            "CLEAR",
+                                            style: TextStyle(
+                                                // color: kWhite,
+                                                fontSize: 10.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      )
-                : Center(child: CircularProgressIndicator()),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kPaddingL, vertical: kPaddingM),
+                      ),
+                    ),
+                    SizedBox(height: kPaddingM),
+                    _cartItemsBuilder(context, state),
+                    CartFooter(),
+                    PriceDetails(state: state),
+                    EndPadding(),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: _bottomBar(context, state),
+          );
+        });
+  }
+
+  Widget _cartItemsBuilder(BuildContext context, CartLoaded state) {
+    return CartHeading(
+        title: 'Cart Products',
+        children: [CartListing(products: state.cart.cartItems.keys.toList())]);
+  }
+
+  Widget _bottomBar(BuildContext context, CartLoaded state) {
+    return Container(
+      decoration: BoxDecoration(
+        color: kWhite,
+        border: Border(
+          top: BorderSide(
+            width: 2,
+            color: Theme.of(context).dividerColor,
+          ),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(
+          vertical: kPaddingM, horizontal: kPaddingM),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: <Widget>[
+            InkWell(
+              onTap: () => _controller.animateTo(
+                  _controller.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.easeInOut),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 5.0),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      BoldTitle(
-                        title: 'Price: ',
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.black,
-                        fw: FontWeight.w500,
-                      ),
-                      BoldTitle(
-                        title: (state is CartLoaded)
-                            ? '₹ ' +
-                                (state.cart?.orgCartValue?.toStringAsFixed(2) ??
-                                    "00.00")
-                            : '₹ 00.00',
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.black87,
-                        fw: FontWeight.w500,
-                        isNum: true,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: kPaddingS),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BoldTitle(
-                        title: 'Discount: ',
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.green[800],
-                      ),
-                      BoldTitle(
-                        title: (state is CartLoaded)
-                            ? '- ₹ ' +
-                                (((state.cart?.orgCartValue ?? 0) -
-                                            (state.cart?.cartValue ?? 0))
-                                        ?.toStringAsFixed(2) ??
-                                    "00.00")
-                            : '- ₹ 00.00',
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                        color: Colors.green[800],
-                        isNum: true,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: kPaddingM),
-                  Container(
-                    height: 1.0,
-                    color: Colors.black12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      BoldTitle(
-                        title: 'Cart Total:',
+                      CustomTitle(
+                        title: 'Pay:',
+                        padding: EdgeInsets.symmetric(
+                            horizontal: kPaddingS, vertical: kPaddingM),
                         fw: FontWeight.w800,
                       ),
                       CustomTitle(
-                        title: (state is CartLoaded)
-                            ? '₹ ' +
-                                (state.cart?.cartValue?.toStringAsFixed(2) ??
-                                    "00.00")
-                            : '₹ 00.00',
+                        title: '₹ ' +
+                                (state.cart.cartValue - 10)
+                                    .toStringAsFixed(2) ??
+                            "00.00",
+                        padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                         fw: FontWeight.w700,
                       ),
                     ],
                   ),
-                  SizedBox(height: kPaddingM),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true)
-                          .popAndPushNamed(Routes.checkout);
-                    },
-                    color: kBlack,
-                    child: Text('Proceed to Checkout',
-                        style: Theme.of(context).textTheme.bodyText2.white),
+                  BoldTitle(
+                    title: 'View price details',
+                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                    color: kHyperLinkColor,
+                    fw: FontWeight.w700,
                   ),
                 ],
               ),
             ),
-          );
-        });
+            Spacer(),
+            ThemeButton(
+              text: "Checkout",
+              onPressed: () {},
+              disableTouchWhenLoading: true,
+              showLoading: false,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -31,7 +31,7 @@ const double kBadgeRadius = 16.0;
 const double kTimelineDateSize = 88.0;
 
 // Colors
-const Color kPrimaryColor = Color(0xFFFDC500);
+const Color kPrimaryColor = Color(0xFFFDC500); //Color(0xFF1565C0);
 const String kPrimaryColorHex = "0xFFFDC500";
 const Color kPrimaryAccentColor = Color(0x77FDC500);
 const Color kWhite = Color(0xFFFFFFFF);
@@ -42,6 +42,8 @@ const Color kBlackAccent = Colors.black45;
 const Color kHyperLinkColor = Color(0xFF0645AD);
 
 const Color kBlue = Color(0xFF1565C0);
+
+const Color kGreen = Color(0xFF2E7D32);
 
 const List<Map<String, Color>> checkoutRadioColors = [
   {
@@ -191,7 +193,13 @@ class AssetImages {
   static const String onboardingFind = 'assets/images/onboarding/barcode.png';
   static const String onboardingAppointment = 'assets/images/onboarding/qr.png';
   static const String homeWavyHeader = 'assets/images/home-page.jpg';
-  static const String loginBackground = 'assets/images/illustration.jpg';
+  static const String loginBackground =
+      'assets/images/illustrations/illustration.jpg';
+  static const String cartIllustration =
+      'assets/images/illustrations/cart-illustration.jpg';
+  static const String homeIllustration =
+      'assets/images/illustrations/home-illustration-2.jpg';
+  static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
   static const String bq_logo = 'assets/images/bq_logo.png';

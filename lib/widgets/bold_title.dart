@@ -71,9 +71,10 @@ class CustomTitle extends StatelessWidget {
     @required this.title,
     this.padding,
     this.textAlign,
-    this.fw,
+    this.fw = FontWeight.w800,
     this.maxLines = 1,
-    this.color,
+    this.color = Colors.black,
+    this.isNum = false,
   }) : super(key: key);
 
   final String title;
@@ -82,6 +83,7 @@ class CustomTitle extends StatelessWidget {
   final FontWeight fw;
   final TextAlign textAlign;
   final Color color;
+  final bool isNum;
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +102,9 @@ class CustomTitle extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.headline6.copyWith(
-                  fontWeight: (fw != null) ? fw : FontWeight.w800,
-                  color: (color != null) ? color : Colors.black,
+                  fontWeight: fw,
+                  color: color,
+                  fontFamily: (isNum) ? kNumberFontFamily : kFontFamily,
                 ),
             maxLines: maxLines,
             overflow: TextOverflow.ellipsis,
