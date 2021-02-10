@@ -13,10 +13,12 @@ The changes that are requested by the client.
 - [x] --) Reduce the size of Cart page more and optimise UI
 - [x] 14) Differenciate the the colour for 3 of them (reference sent)
 - [x] 15) Add the required item into the cart, need to display the cart item, show the cart page
+- [x] 21) Add address option function is not working
+- [x] 34) Caption to be changed to "QR code generated" from "Bill gererated"
+- [x] 35) Space can be optimized and products can be displayed with borders
 - [ ] --) Add Price Details in checkout screen
 - [ ] --) Add google pay scanner border and/or only subtitle
 - [ ] --) No of quantity and No of items interchange
-- [ ] 21) Add address option function is not working
 - [ ] 30) Profile edition
 - [ ] 31) Stock maintenance
 - [ ] 24) Product to be cleared only after payment / Nil payment
@@ -27,8 +29,6 @@ The changes that are requested by the client.
 - [ ] 26) Need Help 27) FAQ
 - [ ] 28) Order History
 - [ ] 29) Notification (SMS)
-- [ ] 34) Caption to be changed to "QR code generated" from "Bill gererated"
-- [ ] 35) Space can be optimized and products can be displayed with borders
 - [ ] 11) Set Budget , My Order and Cart are pending (For set budget - if bill amount is more than budget amount then popup message has to displayed)
 - [ ] 16) If type is self pickup QR code to be generated so that the customer will show and pay.
 - [ ] 18) UPI Payment

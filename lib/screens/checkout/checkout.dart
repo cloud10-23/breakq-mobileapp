@@ -110,7 +110,7 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                 Container(
                   padding: EdgeInsets.only(top: kPaddingL, left: kPaddingS),
                   color: kPrimaryColor,
-                  height: 150.0,
+                  height: kToolbarHeight + kPaddingL,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -130,8 +130,11 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                             child: Text(
                               _title,
                               textAlign: TextAlign.center,
-                              style:
-                                  Theme.of(context).textTheme.subtitle2.black,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .w800
+                                  .black,
                               maxLines: 1,
                             ),
                           ),
@@ -144,20 +147,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
                           ),
                         ],
                       ),
-                      Spacer(flex: 2),
-                      Padding(
-                        padding: const EdgeInsets.only(left: kPaddingL),
-                        child: Text(
-                          (session?.title?.isEmpty ?? true)
-                              ? "Choose a checkout type"
-                              : session?.title ?? "",
-                          style:
-                              Theme.of(context).textTheme.headline6.black.w400,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Spacer(flex: 2),
                     ],
                   ),
                 ),

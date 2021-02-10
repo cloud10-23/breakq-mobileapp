@@ -86,7 +86,6 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           if (session.currentStep.step == 0) {
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
-              title: 'QR Code Generated!',
               billNo: "1234556678",
             );
             getIt
@@ -150,7 +149,6 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
             ];
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
-              title: 'Select Address',
               billNo: "12345678910",
               address: address,
             );
@@ -184,7 +182,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           (state as SessionRefreshSuccessChState).session;
 
       final CheckoutSession newSession = session.rebuild(
-          currentStep: session.currentStep.decStep(), title: "");
+        currentStep: session.currentStep.decStep(),
+      );
       getIt.get<AppGlobals>().globalKeyCheckoutNavigator.currentState.pop();
 
       yield SessionRefreshSuccessChState(newSession);

@@ -38,7 +38,6 @@ class CheckoutSession {
     this.apiError = '',
     this.address,
     this.selectedAddress,
-    this.title,
   });
 
   CheckoutSession rebuild({
@@ -50,7 +49,6 @@ class CheckoutSession {
     bool isCompleted,
     bool isLoading,
     String apiError,
-    String title,
     List<DeliveryAddress> address,
     int selectedAddress,
   }) {
@@ -64,7 +62,6 @@ class CheckoutSession {
       isLoading: isLoading ?? this.isLoading,
       apiError: apiError ?? '',
       address: address ?? this.address,
-      title: title ?? this.title,
       selectedAddress: selectedAddress ?? this.selectedAddress,
     );
   }
@@ -74,7 +71,6 @@ class CheckoutSession {
   final bool isCompleted, isLoading;
   final String orderNo, billNo, transactionNo;
   final String apiError;
-  final String title;
   final List<DeliveryAddress> address;
   final int selectedAddress;
 

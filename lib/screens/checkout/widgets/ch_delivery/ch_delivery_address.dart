@@ -28,6 +28,33 @@ class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
 
           final List<Widget> _listItems = <Widget>[];
 
+          _listItems.add(SliverToBoxAdapter(
+              child: Container(
+            height: 50.0,
+            color: kPrimaryColor,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Spacer(),
+                  Text(
+                    "Select delivery address",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .fs14
+                        .w600
+                        .copyWith(color: Colors.black54),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+          )));
+
           _listItems
               .add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
 
