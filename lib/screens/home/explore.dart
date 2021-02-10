@@ -1,7 +1,4 @@
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
-import 'package:breakq/main.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
@@ -14,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
-import 'package:flutter_badged/flutter_badge.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeScreen extends StatefulWidget {

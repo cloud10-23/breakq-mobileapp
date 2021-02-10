@@ -2,7 +2,6 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
-import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -46,56 +45,32 @@ class CartEmptyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SafeArea(
-                child: Container(
-                  color: kWhite,
-                  constraints: BoxConstraints.tight(Size.fromHeight(50)),
-                  child: Stack(
-                    children: [
-                      // Positioned.fill(
-                      //   child: Image(
-                      //     image: AssetImage(AssetImages.cartIllustration),
-                      //     fit: BoxFit.fill,
-                      //   ),
-                      // ),
-                      Container(
-                        constraints: BoxConstraints.tight(Size.fromHeight(50)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(width: 10),
-                            IconButton(
-                                icon: Icon(Icons.arrow_back_ios),
-                                onPressed: () =>
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop()),
-                            SizedBox(width: 10),
-                            Image(
-                              image: AssetImage(AssetImages.cart),
-                              height: 25,
-                              // color: kWhite,
-                            ),
-                            SizedBox(width: 10),
-                            Text('My Cart',
-                                style:
-                                    Theme.of(context).textTheme.bodyText1.fs16),
-                            Spacer(flex: 6),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            primary: true,
+            backgroundColor: kWhite,
+            pinned: true,
+            title: Row(
+              children: [
+                Image(
+                  image: AssetImage(AssetImages.cart),
+                  height: 25,
+                  // color: kWhite,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: kPaddingM),
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: kPaddingL),
+                Spacer(),
+                Text('My Cart',
+                    style: Theme.of(context).textTheme.bodyText1.fs16),
+                Spacer(flex: 9),
+              ],
+            ),
+            actions: <Widget>[],
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
                   color: kWhite,
                   child: Column(
                     children: [
@@ -125,15 +100,16 @@ class CartEmptyScreen extends StatelessWidget {
                             .copyWith(color: Theme.of(context).disabledColor),
                         textAlign: TextAlign.center,
                       ),
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),
-              ),
-              CartFooter(),
-              EndPadding(),
-            ],
+                CartFooter(),
+                EndPadding(),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

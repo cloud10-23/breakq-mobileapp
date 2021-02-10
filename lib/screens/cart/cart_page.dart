@@ -37,108 +37,93 @@ class _CartPageState extends State<CartPage> {
           }
 
           return Scaffold(
-            body: SingleChildScrollView(
+            body: CustomScrollView(
               controller: _controller,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SafeArea(
-                      child: Container(
-                        constraints: BoxConstraints.tight(Size.fromHeight(170)),
-                        child: Stack(
+              slivers: [
+                SliverAppBar(
+                  primary: true,
+                  backgroundColor: kWhite,
+                  pinned: true,
+                  expandedHeight: 200,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Row(
+                      children: [
+                        Image(
+                          image: AssetImage(AssetImages.cart),
+                          height: 25,
+                          // color: kWhite,
+                        ),
+                        Spacer(),
+                        Text('My Cart',
+                            style: Theme.of(context).textTheme.bodyText1.fs16),
+                        Spacer(flex: 9),
+                      ],
+                    ),
+                    background: Image(
+                      image: AssetImage(AssetImages.cartIllustration),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: kPaddingL),
+                      child: InkWell(
+                        onTap: () {
+                          BlocProvider.of<CartBloc>(context)
+                              .add(ResetCartEvent());
+                        },
+                        child: Row(
                           children: [
-                            Positioned.fill(
-                              child: Image(
-                                image: AssetImage(AssetImages.cartIllustration),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            Container(
-                              constraints:
-                                  BoxConstraints.tight(Size.fromHeight(50)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                      iconSize: 18,
-                                      padding: EdgeInsets.zero,
-                                      icon: Icon(Icons.arrow_back_ios),
-                                      onPressed: () => Navigator.of(context,
-                                              rootNavigator: true)
-                                          .pop()),
-                                  Image(
-                                    image: AssetImage(AssetImages.cart),
-                                    height: 25,
-                                    // color: kWhite,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text('My Cart',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .fs16),
-                                  Spacer(flex: 6),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        "Items:  ${(state as CartLoaded).cart.cartItems.length}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.0),
-                                        // color: kWhite),
-                                      ),
-                                      Text(
-                                        "Qty:      ${(state as CartLoaded).cart.noOfProducts}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.0),
-                                        // color: kWhite),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: kPaddingL),
-                                    child: InkWell(
-                                      onTap: () {
-                                        BlocProvider.of<CartBloc>(context)
-                                            .add(ResetCartEvent());
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.delete,
-                                          ), // color: kWhite),
-                                          Text(
-                                            "CLEAR",
-                                            style: TextStyle(
-                                                // color: kWhite,
-                                                fontSize: 10.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            Icon(
+                              Icons.delete,
+                            ), // color: kWhite),
+                            Text(
+                              "CLEAR",
+                              style: TextStyle(
+                                  // color: kWhite,
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: kPaddingM),
-                    _cartItemsBuilder(context, state),
-                    CartFooter(),
-                    PriceDetails(state: state),
-                    EndPadding(),
-                  ],
+                  ], // remove the hamburger menu
+                  title: Row(
+                    children: [
+                      Spacer(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Items:  ${(state as CartLoaded).cart.cartItems.length}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 12.0),
+                            // color: kWhite),
+                          ),
+                          Text(
+                            "Qty:      ${(state as CartLoaded).cart.noOfProducts}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 12.0),
+                            // color: kWhite),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      SizedBox(height: kPaddingM),
+                      _cartItemsBuilder(context, state),
+                      CartFooter(),
+                      PriceDetails(state: state),
+                      EndPadding(),
+                    ],
+                  ),
+                ),
+              ],
             ),
             bottomNavigationBar: _bottomBar(context, state),
           );

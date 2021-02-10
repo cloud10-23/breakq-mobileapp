@@ -199,14 +199,13 @@ class ListingState extends State<Listing> {
                           VoiceIconButton(),
                           CartIconButton(),
                         ],
-                        floating: true,
+                        pinned: true,
                       ),
                       SliverAppBar(
                         primary: false,
                         backgroundColor:
                             Theme.of(context).scaffoldBackgroundColor,
-                        // floating: true,
-                        pinned: true,
+                        floating: true,
                         collapsedHeight: 60,
                         expandedHeight: 60,
                         flexibleSpace: SearchListToolbar(
