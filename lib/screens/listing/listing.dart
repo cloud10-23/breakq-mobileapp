@@ -1,3 +1,4 @@
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/foundation.dart';
@@ -174,76 +175,65 @@ class ListingState extends State<Listing> {
 
         /// Lets see what's in it and show the results on the screen.
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
+          value: SystemUiOverlayStyle.dark,
           child: Scaffold(
             key: _scaffoldKey,
             endDrawerEnableOpenDragGesture: false,
             endDrawer: SearchFilterDrawer(),
-            body: SafeArea(
-              child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: LoadingOverlay(
-                  isLoading: session.isLoading,
-                  child: CustomScrollView(
-                    controller: _customScrollViewController,
-                    slivers: <Widget>[
-                      SliverAppBar(
-                        // backgroundColor: Theme.of(context).,
-                        backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
-                        primary: true,
-                        title: Text(widget.title ?? "Category Name",
-                            style: Theme.of(context).textTheme.bodyText1.bold),
-                        actions: [
-                          SearchIconButton(),
-                          VoiceIconButton(),
-                          CartIconButton(),
-                        ],
-                        pinned: true,
-                      ),
-                      SliverAppBar(
-                        primary: false,
-                        backgroundColor:
-                            Theme.of(context).scaffoldBackgroundColor,
-                        floating: true,
-                        collapsedHeight: 60,
-                        expandedHeight: 60,
-                        flexibleSpace: SearchListToolbar(
-                          searchSortTypes: searchSortTypes,
-                          currentSort: session.currentSort,
-                          onFilterTap: () {
-                            _scaffoldKey.currentState.openEndDrawer();
-                          },
-                          onSortChange: (ToolbarOptionModel newSort) {
-                            _homeBloc.add(SortOrderChangedHomeEvent(newSort));
-                          },
+            body: LoadingOverlay(
+              isLoading: session.isLoading,
+              child: CustomScrollView(
+                controller: _customScrollViewController,
+                slivers: <Widget>[
+                  SliverAppBar(
+                    backgroundColor: kWhite,
+                    primary: true,
+                    title: Text(widget.title ?? "Category Name",
+                        style: Theme.of(context).textTheme.bodyText1.bold),
+                    actions: [
+                      SearchIconButton(),
+                      VoiceIconButton(),
+                      CartIconButton(),
+                    ],
+                    pinned: true,
+                  ),
+                  SliverAppBar(
+                    primary: false,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    floating: true,
+                    titleSpacing: 0.0,
+                    leadingWidth: 0.0,
+                    title: SearchListToolbar(
+                      searchSortTypes: searchSortTypes,
+                      currentSort: session.currentSort,
+                      onFilterTap: () {
+                        _scaffoldKey.currentState.openEndDrawer();
+                      },
+                      onSortChange: (ToolbarOptionModel newSort) {
+                        _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                      },
+                      products: session.products,
+                      currentListType: session.currentListType,
+                      searchListTypes: searchListTypes,
+                      onListTypeChange: (ToolbarOptionModel newListType) =>
+                          _homeBloc.add(ListTypeChangedHomeEvent(newListType)),
+                    ),
+                    actions: <Widget>[Container()], // remove the hamburger menu
+                    leading: Container(), // remove back button
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(<Widget>[
+                      if (session.products.isNotNullOrEmpty)
+                        ProductListing(
                           products: session.products,
                           currentListType: session.currentListType,
-                          searchListTypes: searchListTypes,
-                          onListTypeChange: (ToolbarOptionModel newListType) =>
-                              _homeBloc
-                                  .add(ListTypeChangedHomeEvent(newListType)),
                         ),
-                        actions: <Widget>[
-                          Container()
-                        ], // remove the hamburger menu
-                        leading: Container(), // remove back button
-                      ),
-                      SliverList(
-                        delegate: SliverChildListDelegate(<Widget>[
-                          if (session.products.isNotNullOrEmpty)
-                            ProductListing(
-                              products: session.products,
-                              currentListType: session.currentListType,
-                            ),
-                        ]),
-                      ),
-                      SliverToBoxAdapter(
-                        child: SizedBox(height: 120.0),
-                      ),
-                    ],
+                    ]),
                   ),
-                ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(height: 120.0),
+                  ),
+                ],
               ),
             ),
             // floatingActionButton: Visibility(

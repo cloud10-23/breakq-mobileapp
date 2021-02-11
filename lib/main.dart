@@ -1,6 +1,7 @@
 // import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:location/location.dart';
@@ -25,6 +26,15 @@ Future<void> main() async {
 
   /// The App's [BlocObserver].
   Bloc.observer = AppObserver();
+
+  /// For setting the status bar color:
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent, // navigation bar color
+    statusBarColor: Colors.transparent, // status bar color
+    // statusBarBrightness: Brightness.light, //status bar brigtness
+    statusBarIconBrightness: Brightness.dark, //status barIcon Brightness
+    systemNavigationBarIconBrightness: Brightness.dark, //navigation bar icon
+  ));
 
   /// Initialise Firebase Core
   await Firebase.initializeApp();

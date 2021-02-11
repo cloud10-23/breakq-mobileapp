@@ -56,7 +56,7 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
           left: kPaddingM, top: kPaddingS, bottom: kPaddingS),
       color: getIt.get<AppGlobals>().isPlatformBrightnessDark
           ? Theme.of(context).scaffoldBackgroundColor
-          : Theme.of(context).appBarTheme.color,
+          : kBlue200,
       child: Row(
         children: <Widget>[
           FilterButton(

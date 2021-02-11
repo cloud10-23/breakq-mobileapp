@@ -9,8 +9,6 @@ import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,111 +35,108 @@ class HomeScreenState extends State<HomeScreen> {
     // }
 
     // final String imageUrl = getIt.get<AppGlobals>()?.user?.photoURL;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        drawer: Drawer(
-          child: DrawerScreen(),
-        ),
-        body: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: LoadingOverlay(
-            isLoading: false,
-            child: CustomScrollView(
-              controller: _customScrollViewController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  elevation: 0.0,
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  primary: true,
-                  centerTitle: true,
-                  iconTheme: IconThemeData(color: kBlack),
-                  actionsIconTheme: IconThemeData(color: kBlack),
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: kPaddingS),
-                    child: Image(
-                      image: AssetImage(AssetImages.bq_logo),
-                      height: 30,
-                    ),
-                  ),
-                  pinned: true,
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.notifications),
-                      onPressed: () {},
-                    ),
-                    CartIconButton(),
-                  ],
-                ),
-                SliverAppBar(
-                  primary: false,
-                  pinned: true,
-                  toolbarHeight: kToolbarHeight,
-                  automaticallyImplyLeading: false,
-                  titleSpacing: 0,
-                  title: SearchAppBar(),
-                ),
-                SliverToBoxAdapter(
-                    child: Container(
-                  margin: EdgeInsets.only(top: kPaddingS),
-                  height: 120,
-                  child: Swiper(
-                    pagination: SwiperPagination(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    autoplay: true,
-                    duration: 500,
-                    autoplayDelay: 4000,
-                    viewportFraction: 1.0,
-                    itemBuilder: (context, index) => Card(
-                      margin: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0)),
-                      child: Image(
-                        image: AssetImage(AssetImages.homeOffers),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                )),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    SizedBox(height: kPaddingBtwnStrips),
-                    _showQuickStart(),
-                    SizedBox(height: kPaddingBtwnStrips),
-                    BoldTitle(title: 'Top Offers'),
-                    _showGridOfImages(2, 4),
-                    Row(mainAxisSize: MainAxisSize.min, children: [
-                      BoldTitle(title: 'Top Deals'),
-                      Spacer(),
-                      Text('View All'),
-                      Icon(Icons.navigate_next),
-                    ]),
-                    _showHorizontalScrollImages(),
-                    SizedBox(height: kPaddingBtwnStrips),
-                    Row(mainAxisSize: MainAxisSize.min, children: [
-                      BoldTitle(title: "Exclusive Products"),
-                      Spacer(),
-                      Text('View All'),
-                      Icon(Icons.navigate_next),
-                    ]),
-                  ]),
-                ),
-                SliverToBoxAdapter(
-                  child: ProductsHorizontalView(),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    SizedBox(height: kPaddingBtwnStrips),
-                    BoldTitle(title: 'Categories'),
-                  ]),
-                ),
-                _showCategories(),
-                _endPadding(),
-              ],
-            ),
+    // FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    return Scaffold(
+      primary: false,
+      drawer: Drawer(
+        child: DrawerScreen(),
+      ),
+      body: CustomScrollView(
+        controller: _customScrollViewController,
+        slivers: <Widget>[
+          SliverAppBar(
+            elevation: 0.0,
+            toolbarHeight: 35,
+            iconTheme: IconThemeData(color: kBlack),
+            actionsIconTheme: IconThemeData(color: kBlack),
+            title: Text("Home"),
+            // title: Padding(
+            //   padding: const EdgeInsets.only(top: kPaddingS),
+            //   child: Image(
+            //     image: AssetImage(AssetImages.bq_logo),
+            //     height: 30,
+            //   ),
+            // ),
+            pinned: true,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {},
+              ),
+              CartIconButton(),
+            ],
           ),
-        ),
+          // SliverPersistentHeader(
+          //   delegate: ServiceHeaderDelegate(
+          //       child: SearchAppBar(), minHeight: 50, maxHeight: 50),
+          //   pinned: true,
+          // ),
+          SliverAppBar(
+            primary: false,
+            pinned: true,
+            toolbarHeight: kToolbarHeight,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: SearchAppBar(),
+          ),
+          SliverToBoxAdapter(
+              child: Container(
+            margin: EdgeInsets.only(top: kPaddingS),
+            height: 120,
+            child: Swiper(
+              pagination: SwiperPagination(),
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              autoplay: true,
+              duration: 500,
+              autoplayDelay: 4000,
+              viewportFraction: 1.0,
+              itemBuilder: (context, index) => Card(
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0)),
+                child: Image(
+                  image: AssetImage(AssetImages.homeOffers),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          )),
+          SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              SizedBox(height: kPaddingBtwnStrips),
+              _showQuickStart(),
+              SizedBox(height: kPaddingBtwnStrips),
+              BoldTitle(title: 'Top Offers'),
+              _showGridOfImages(2, 4),
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                BoldTitle(title: 'Top Deals'),
+                Spacer(),
+                Text('View All'),
+                Icon(Icons.navigate_next),
+              ]),
+              _showHorizontalScrollImages(),
+              SizedBox(height: kPaddingBtwnStrips),
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                BoldTitle(title: "Exclusive Products"),
+                Spacer(),
+                Text('View All'),
+                Icon(Icons.navigate_next),
+              ]),
+            ]),
+          ),
+          SliverToBoxAdapter(
+            child: ProductsHorizontalView(),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              SizedBox(height: kPaddingBtwnStrips),
+              BoldTitle(title: 'Categories'),
+            ]),
+          ),
+          _showCategories(),
+          _endPadding(),
+        ],
       ),
     );
   }

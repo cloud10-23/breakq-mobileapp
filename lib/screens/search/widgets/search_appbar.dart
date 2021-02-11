@@ -34,8 +34,8 @@ class SearchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: kPrimaryColor,
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: kWhite,
+      // color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.symmetric(
         horizontal: kPaddingS,
         vertical: kPaddingM,

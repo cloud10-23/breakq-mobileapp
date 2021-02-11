@@ -94,7 +94,10 @@ class Routes {
           },
         );
       case cart:
-        return SlideRoute(widget: CartPage());
+        // return SlideRoute(widget: CartPage());
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => CartPage(),
+        );
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
       //     builder: (BuildContext context) {

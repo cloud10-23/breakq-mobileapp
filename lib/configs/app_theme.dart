@@ -40,8 +40,8 @@ class AppTheme {
         hoverColor: Color(0x0a000000),
       ),
       appBarTheme: const AppBarTheme(
-        brightness: Brightness.dark,
-        color: kPrimaryColor,
+        brightness: Brightness.light,
+        color: kWhite,
       ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.black,

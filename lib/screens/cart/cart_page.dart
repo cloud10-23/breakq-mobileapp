@@ -37,6 +37,7 @@ class _CartPageState extends State<CartPage> {
           }
 
           return Scaffold(
+            primary: true,
             body: CustomScrollView(
               controller: _controller,
               slivers: [

@@ -67,6 +67,8 @@ class CartEmptyScreen extends StatelessWidget {
               ],
             ),
             actions: <Widget>[],
+            flexibleSpace:
+                FlexibleSpaceBar(background: Container(color: kWhite)),
           ),
           SliverToBoxAdapter(
             child: Column(
