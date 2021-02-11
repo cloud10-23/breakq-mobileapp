@@ -190,7 +190,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                         style: Theme.of(context).textTheme.caption.black,
                       ),
                     ),
-                    backgroundColor: Colors.blue[300],
+                    backgroundColor: kBlue300,
                     centerTitle: true,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Stack(

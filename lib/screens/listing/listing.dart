@@ -199,7 +199,7 @@ class ListingState extends State<Listing> {
                   ),
                   SliverAppBar(
                     primary: false,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     floating: true,
                     titleSpacing: 0.0,
                     leadingWidth: 0.0,

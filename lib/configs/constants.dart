@@ -44,6 +44,8 @@ const Color kHyperLinkColor = Color(0xFF0645AD);
 const Color kBlue = Color(0xFF1565C0);
 const Color kBlue200 = Color(0xFF90CAF9);
 const Color kBlue300 = Color(0xFF64B5F6);
+const Color kBlue700 = Color(0xFF1976D2);
+const Color kBlue900 = Color(0xFF0D47A1);
 
 const Color kGreen = Color(0xFF2E7D32);
 
