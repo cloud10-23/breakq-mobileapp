@@ -106,12 +106,9 @@ class ScanFloatingButtonExtended extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0),
-              color: Colors.blue[900],
+              color: kBlue900,
               boxShadow: [
-                BoxShadow(
-                    blurRadius: 15.0,
-                    color: Colors.blue[700],
-                    spreadRadius: 0.0),
+                BoxShadow(blurRadius: 15.0, color: kBlue700, spreadRadius: 0.0),
               ]),
           padding: const EdgeInsets.symmetric(
               horizontal: kPaddingL * 1.5, vertical: kPaddingM * 2),

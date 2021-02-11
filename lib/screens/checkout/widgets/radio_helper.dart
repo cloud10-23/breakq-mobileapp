@@ -30,7 +30,7 @@ class CheckoutTypeRadio extends StatelessWidget {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     groupValue: _selectedIndex,
                     value: index,
-                    activeColor: Colors.blue[900],
+                    activeColor: kBlue900,
                     onChanged: (value) => BlocProvider.of<CheckoutBloc>(context)
                         .add(CheckoutTypeSelectedChEvent(type: _type)),
                   ),
