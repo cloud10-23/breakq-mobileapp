@@ -1,13 +1,11 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:breakq/configs/constants.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:breakq/utils/text_style.dart';
 
 class ChWalkInShowQr extends StatefulWidget {
   @override
@@ -17,84 +15,45 @@ class ChWalkInShowQr extends StatefulWidget {
 class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: BlocBuilder<CheckoutBloc, CheckoutState>(
-        builder: (BuildContext context, CheckoutState state) {
-          final CheckoutSession session =
-              (state as SessionRefreshSuccessChState).session;
+    return BlocBuilder<CheckoutBloc, CheckoutState>(
+      builder: (BuildContext context, CheckoutState state) {
+        final CheckoutSession session =
+            (state as SessionRefreshSuccessChState).session;
 
-          if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
-            return Container(
-              alignment: AlignmentDirectional.center,
-              child: Jumbotron(
-                title: L10n.of(context).QSWarningProducts,
-                icon: Icons.report,
-              ),
-            );
-          }
-
-          final List<Widget> _listItems = <Widget>[];
-
-          _listItems.add(SliverToBoxAdapter(
-              child: Container(
-            height: 50.0,
-            color: kPrimaryColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Spacer(),
-                  Text(
-                    "Show this QR code at the counter",
-                    style: Theme.of(context).textTheme.headline6.black.w400,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+        if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
+          return CheckoutTemplate(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Container(
+                  alignment: AlignmentDirectional.center,
+                  child: Jumbotron(
+                    title: L10n.of(context).QSWarningProducts,
+                    icon: Icons.report,
                   ),
-                  Spacer(),
-                ],
-              ),
-            ),
-          )));
-
-          _listItems.add(SliverToBoxAdapter(
-            child: Container(
-              color: kPrimaryAccentColor,
-              child: Padding(
-                padding: const EdgeInsets.all(kPaddingL),
-                child: Column(
-                  children: [
-                    SizedBox(height: kPaddingM),
-                    QrImage(
-                      data: session.billNo ?? 'ERROR',
-                      version: QrVersions.auto,
-                      backgroundColor: kWhite,
-                      size: 240,
-                      gapless: false,
-                      embeddedImage: AssetImage(AssetImages.icon),
-                      embeddedImageStyle: QrEmbeddedImageStyle(
-                        size: Size(30, 30),
-                      ),
-                    ),
-                    SizedBox(height: kPaddingM),
-                    Text("Bill No: ${session.billNo}"),
-                  ],
                 ),
               ),
-            ),
-          ));
-
-          // final List<Product> _products = session.cartProducts.cartItems.keys;
-
-          // _listItems
-          //     .addAll(_products.map((product) => _productItem(product, session)));
-
-          return CustomScrollView(
-            slivers: _listItems,
+            ],
           );
-        },
-      ),
+        }
+
+        final List<Widget> _listItems = <Widget>[];
+
+        _listItems.add(SliverToBoxAdapter(
+            child: CheckoutTypeModule(
+          session: session,
+        )));
+
+        _listItems.add(
+            SliverToBoxAdapter(child: ShowQRModule(billNo: session.billNo)));
+
+        _listItems.add(SliverToBoxAdapter(
+          child: CartProductsModule(session: session),
+        ));
+
+        return CheckoutTemplate(
+          slivers: _listItems,
+        );
+      },
     );
   }
 }

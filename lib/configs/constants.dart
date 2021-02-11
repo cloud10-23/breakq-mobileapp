@@ -51,16 +51,16 @@ const Color kGreen = Color(0xFF2E7D32);
 
 const List<Map<String, Color>> checkoutRadioColors = [
   {
+    "main": Color(0xFFBDD1F2),
+    "sub": Color(0xFFA7C2EA),
+  },
+  {
     "main": Color(0xFFB9D8DA),
     "sub": Color(0xFFA1CBCD),
   },
   {
     "main": Color(0xFFBDDDF2),
     "sub": Color(0xFFA7D1F0),
-  },
-  {
-    "main": Color(0xFFBDD1F2),
-    "sub": Color(0xFFA7C2EA),
   },
 ];
 
@@ -200,6 +200,8 @@ class AssetImages {
       'assets/images/illustrations/home-illustration-2.jpg';
   static const String qsIllustration =
       'assets/images/illustrations/qs_illustration.svg';
+  static const String checkoutIllustration =
+      'assets/images/illustrations/checkout-illustration.png';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';

@@ -1,73 +1,70 @@
-import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class CheckoutTypeRadio extends StatelessWidget {
-  CheckoutTypeRadio({@required this.index, @required this.session});
+class CheckoutTypeOption extends StatelessWidget {
+  CheckoutTypeOption(
+      {@required this.index, @required this.session, this.onTap});
 
   final int index;
   final CheckoutSession session;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     CheckoutType _type = CheckoutType.values[index];
-    int _selectedIndex = session.currentStep.checkoutType.index;
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(kPaddingM),
+      constraints: BoxConstraints.tight(Size.fromHeight(80)),
       child: Card(
         child: InkWell(
           child: CustomPaint(
-            painter: RadioCustomPainter(index: index),
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kPaddingM, vertical: kPaddingL),
-              child: Row(
-                children: [
-                  Radio(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    groupValue: _selectedIndex,
-                    value: index,
-                    activeColor: kBlue900,
-                    onChanged: (value) => BlocProvider.of<CheckoutBloc>(context)
-                        .add(CheckoutTypeSelectedChEvent(type: _type)),
-                  ),
-                  Spacer(),
-                  Expanded(
-                    flex: 10,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          CheckoutTypes.typeToString(_type),
-                          style: Theme.of(context).textTheme.subtitle2.w500,
-                        ),
-                        SizedBox(height: kPaddingM),
-                        Text(CheckoutTypes.typeDescription(_type),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .w300
-                                .copyWith(color: Theme.of(context).hintColor)),
-                      ],
+              painter: RadioCustomPainter(index: index),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  children: [
+                    Flexible(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(kPaddingM),
+                          child: Image(
+                              image: AssetImage(
+                                  AssetImages.checkoutImages(index))),
+                        )),
+                    Spacer(),
+                    Expanded(
+                      flex: 10,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            CheckoutTypes.typeToString(_type),
+                            style:
+                                Theme.of(context).textTheme.subtitle2.fs10.w700,
+                          ),
+                          Text(CheckoutTypes.typeDescription(_type),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .fs10
+                                  .w500
+                                  .copyWith(
+                                      color: Theme.of(context).hintColor)),
+                        ],
+                      ),
                     ),
-                  ),
-                  Spacer(flex: 2),
-                  Flexible(
-                      flex: 3,
-                      child: Image(
-                          image:
-                              AssetImage(AssetImages.checkoutImages(index)))),
-                ],
-              ),
-            ),
-          ),
-          onTap: () {
-            BlocProvider.of<CheckoutBloc>(context)
-                .add(CheckoutTypeSelectedChEvent(type: _type));
-          },
+                    Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.black45,
+                    ),
+                  ],
+                ),
+              )),
+          onTap: onTap ?? () {},
         ),
       ),
     );

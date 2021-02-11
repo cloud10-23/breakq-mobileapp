@@ -165,8 +165,8 @@ class CustomNavigator extends StatelessWidget {
 
 /// The custom navigator for checkout screens:
 class CheckoutNavigatorRoutes {
-  static const String base = '/';
-  static const String walkin_1 = '/walkin/qr';
+  // static const String base = '/';
+  static const String walkin_1 = '/';
   static const String pickup_1 = '/pickup/something';
   static const String deliver_1 = '/deliver/choose_address';
   static const String add_address = '/deliver/add_address';
@@ -179,7 +179,7 @@ class CheckoutNavigator extends StatelessWidget {
   Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
       BuildContext context) {
     return {
-      CheckoutNavigatorRoutes.base: (context, settings) => CheckoutBaseStep(),
+      // CheckoutNavigatorRoutes.base: (context, settings) => CheckoutBaseStep(),
       CheckoutNavigatorRoutes.walkin_1: (context, settings) => ChWalkInShowQr(),
       // CheckoutNavigatorRoutes.pickup_1: (context, settings) =>
       CheckoutNavigatorRoutes.deliver_1: (context, settings) =>
@@ -194,7 +194,7 @@ class CheckoutNavigator extends StatelessWidget {
     var routeBuilders = _routeBuilders(context);
     return Navigator(
         key: navigatorKey,
-        initialRoute: CheckoutNavigatorRoutes.base,
+        initialRoute: CheckoutNavigatorRoutes.walkin_1,
         onGenerateRoute: (routeSettings) {
           return SlideRoute(
               widget:
