@@ -1,3 +1,4 @@
+import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/foundation.dart';
 
@@ -5,8 +6,7 @@ class Cart {
   Cart({this.cartItems, this.cartValue, this.noOfProducts});
   Map<Product, int> cartItems;
   int noOfProducts;
-  double cartValue = 0.0;
-  double orgCartValue = 0.0;
+  Price cartValue;
 
   factory Cart.fromJson(List<dynamic> json) {
     return Cart(
@@ -21,8 +21,9 @@ class Cart {
   }
 
   set setNoOfProducts(_noOfP) => noOfProducts = _noOfP;
-  set setCartValue(_value) => cartValue = _value;
-  set setorgCartValue(_value) => orgCartValue = _value;
+
+  void setCartValue(_orgPrice, _price) =>
+      cartValue = Price.calc(_orgPrice, _price);
 
   void addProduct({@required Product product, int quantity = 1}) {
     if (cartItems.containsKey(product)) {

@@ -22,6 +22,8 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
+            //TODO: Handle this case
+            session: session,
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
@@ -52,6 +54,7 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         return CheckoutTemplate(
           slivers: _listItems,
+          session: session,
         );
       },
     );

@@ -48,8 +48,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     });
 
     event.cartItems.setNoOfProducts = _noOfProducts;
-    event.cartItems.setCartValue = _cartValue;
-    event.cartItems.setorgCartValue = _orgCartValue;
+    event.cartItems.setCartValue(_orgCartValue, _cartValue);
 
     yield CartLoaded(cart: event.cartItems);
   }

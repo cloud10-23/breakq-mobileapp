@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
@@ -21,6 +22,7 @@ class CartHeading extends StatelessWidget {
       padding: EdgeInsets.all(kPaddingS),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(kPaddingM),
@@ -121,9 +123,9 @@ class CartEmptyScreen extends StatelessWidget {
 }
 
 class PriceDetails extends StatelessWidget {
-  PriceDetails({@required this.state});
+  PriceDetails({@required this.price});
 
-  final CartLoaded state;
+  final Price price;
   @override
   Widget build(BuildContext context) {
     return CartHeading(
@@ -141,8 +143,7 @@ class PriceDetails extends StatelessWidget {
                 fw: FontWeight.w600,
               ),
               BoldTitle(
-                title: '₹ ' +
-                    (state.cart?.orgCartValue?.toStringAsFixed(2) ?? "00.00"),
+                title: '₹ ' + (price?.price?.toStringAsFixed(2) ?? "00.00"),
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: Colors.black87,
                 fw: FontWeight.w500,
@@ -163,11 +164,8 @@ class PriceDetails extends StatelessWidget {
                 fw: FontWeight.w600,
               ),
               BoldTitle(
-                title: '- ₹ ' +
-                    (((state.cart?.orgCartValue ?? 0) -
-                                (state.cart?.cartValue ?? 0))
-                            ?.toStringAsFixed(2) ??
-                        "00.00"),
+                title: '- ₹ ' + (price?.discount ?? 0)?.toStringAsFixed(2) ??
+                    "00.00",
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: Colors.green[800],
                 isNum: true,
@@ -187,7 +185,7 @@ class PriceDetails extends StatelessWidget {
                 fw: FontWeight.w600,
               ),
               BoldTitle(
-                title: '- ₹ ' + "10.00",
+                title: '- ₹ ' + (price.extraOffer).toStringAsFixed(2),
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: kGreen,
                 isNum: true,
@@ -209,8 +207,7 @@ class PriceDetails extends StatelessWidget {
                 fw: FontWeight.w800,
               ),
               CustomTitle(
-                title:
-                    '₹ ' + ((state.cart.cartValue - 10.0).toStringAsFixed(2)),
+                title: '₹ ' + (price.totalAmnt).toStringAsFixed(2),
                 fw: FontWeight.w700,
                 isNum: true,
               ),
@@ -225,11 +222,7 @@ class PriceDetails extends StatelessWidget {
           padding: const EdgeInsets.all(kPaddingS),
           child: BoldTitle(
             title: 'You have saved ₹ ' +
-                (((state.cart?.orgCartValue ?? 0) -
-                            (state.cart?.cartValue ?? 0) +
-                            10.0)
-                        ?.toStringAsFixed(2) ??
-                    "00.00") +
+                ((price.savings ?? 0)?.toStringAsFixed(2) ?? "00.00") +
                 ' on this order',
             fw: FontWeight.w800,
             color: kGreen,

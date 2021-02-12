@@ -29,7 +29,7 @@ class CustomDialog extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(top: kPaddingL * 2.5),
+            margin: const EdgeInsets.only(top: kPaddingL),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(kCardRadius),
@@ -42,12 +42,12 @@ class CustomDialog extends StatelessWidget {
                 if (title.isNotNullOrEmpty)
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.bodyText1.fs18.w600,
                   ),
                 const SizedBox(height: kPaddingM),
                 Text(
                   message,
-                  style: Theme.of(context).textTheme.subtitle1.w300.fs16,
+                  style: Theme.of(context).textTheme.caption.w700,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: kPaddingM),
@@ -61,11 +61,11 @@ class CustomDialog extends StatelessWidget {
           ),
           CircleAvatar(
             backgroundColor: iconBackgroundColor ?? Colors.red,
-            maxRadius: 40.0,
+            maxRadius: 20.0,
             child: Icon(
               icon ?? Icons.info,
               color: kWhite,
-              size: 50,
+              size: 30,
             ),
           ),
         ],

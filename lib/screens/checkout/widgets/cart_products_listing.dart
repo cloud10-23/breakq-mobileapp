@@ -10,27 +10,29 @@ class CartProductsReadOnly extends StatelessWidget {
     this.products,
   }) : super(key: key);
 
-  final List<Product> products;
+  final Map<Product, int> products;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _items = [];
+    products.forEach((product, qty) {
+      _items.add(ProductItemReadOnly(product: product, qty: qty));
+    });
     return Container(
       padding: const EdgeInsets.symmetric(
           horizontal: kPaddingS, vertical: kPaddingM),
       child: Wrap(
-        runSpacing: kPaddingM,
-        alignment: WrapAlignment.spaceBetween,
-        children: products.map((Product item) {
-          return ProductItemReadOnly(product: item);
-        }).toList(),
-      ),
+          runSpacing: kPaddingM,
+          alignment: WrapAlignment.spaceBetween,
+          children: _items),
     );
   }
 }
 
 class ProductItemReadOnly extends StatelessWidget {
-  ProductItemReadOnly({this.product});
+  ProductItemReadOnly({this.product, this.qty});
   final Product product;
+  final int qty;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +159,7 @@ class ProductItemReadOnly extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Qty:  2",
+                        "Qty:  $qty",
                         style: Theme.of(context)
                             .textTheme
                             .caption

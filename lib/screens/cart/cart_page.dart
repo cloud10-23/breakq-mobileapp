@@ -120,7 +120,7 @@ class _CartPageState extends State<CartPage> {
                       CartScannerOption(),
                       _cartItemsBuilder(context, state),
                       CartFooter(),
-                      PriceDetails(state: state),
+                      PriceDetails(price: (state as CartLoaded).cart.cartValue),
                       EndPadding(),
                     ],
                   ),
@@ -175,7 +175,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       CustomTitle(
                         title: '₹ ' +
-                                (state.cart.cartValue - 10)
+                                (state.cart.cartValue.totalAmnt)
                                     .toStringAsFixed(2) ??
                             "00.00",
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
@@ -193,12 +193,11 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
             Spacer(),
-            FlatButton(
+            RaisedButton(
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .popAndPushNamed(Routes.checkout);
               },
-              color: kBlue900,
               child: Text('Proceed to Checkout',
                   style: Theme.of(context).textTheme.bodyText2.white),
             ),

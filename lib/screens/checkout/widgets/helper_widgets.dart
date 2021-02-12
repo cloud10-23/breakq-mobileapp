@@ -67,7 +67,7 @@ class CartProductsModule extends StatelessWidget {
       title: 'Cart products',
       children: [
         CartProductsReadOnly(
-          products: session.cartProducts.cartItems.keys.toList(),
+          products: session.cartProducts.cartItems,
         )
       ],
     );

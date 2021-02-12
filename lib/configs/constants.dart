@@ -26,7 +26,7 @@ const double kBottomBarIconSize = 32.0;
 const double kBoxDecorationRadius = 8.0;
 const double kFormFieldsRadius = 6.0;
 const double kRoundedButtonRadius = 24.0;
-const double kCardRadius = 24.0;
+const double kCardRadius = 15.0;
 const double kBadgeRadius = 16.0;
 const double kTimelineDateSize = 88.0;
 

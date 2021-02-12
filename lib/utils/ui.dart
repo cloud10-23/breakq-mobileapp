@@ -15,7 +15,7 @@ class UI {
   }) async {
     return showGeneralDialog(
       useRootNavigator: true,
-      barrierDismissible: false,
+      // barrierDismissible: true,
       context: context,
       barrierColor: Colors.black54, // space around dialog
       transitionDuration: const Duration(milliseconds: 250),
@@ -81,19 +81,19 @@ class UI {
       title: title,
       message: message,
       icon: Icons.help,
+      // iconBackgroundColor: kBlue200,
       actions: <Widget>[
         FlatButton(
           textColor: Theme.of(context).buttonColor,
-          child: Text(cancelButtonText ?? L10n.of(context).commonBtnCancel),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        FlatButton(
-          color: Theme.of(context).buttonColor,
           child: Text(okButtonText ?? L10n.of(context).commonBtnOk),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context, rootNavigator: true).pop();
             onConfirmation();
           },
+        ),
+        RaisedButton(
+          child: Text(cancelButtonText ?? L10n.of(context).commonBtnCancel),
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
         ),
       ],
     );

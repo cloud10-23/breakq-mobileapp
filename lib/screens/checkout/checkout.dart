@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/routes.dart';
@@ -7,7 +6,7 @@ import 'package:breakq/main.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
-import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -15,7 +14,6 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/portrait_mode_mixin.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:breakq/widgets/theme_button.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const id = 'Checkout';
@@ -32,8 +30,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
   // ChCurrentStep _currentStep;
 
   CheckoutSession session;
-
-  String _title = 'Checkout';
 
   @override
   void dispose() {
@@ -65,8 +61,15 @@ class _CheckoutScreenState extends State<CheckoutScreen>
 
   Future<bool> _onBackPressed(BuildContext context) async {
     if (session.currentStep.step <= 0) {
-      Navigator.pop(context);
-      return true;
+      await UI.confirmationDialogBox(context,
+          title: "Warning !",
+          cancelButtonText: "No",
+          okButtonText: "Yes",
+          message: "Are you sure you want to cancel checkout?",
+          onConfirmation: () {
+        Navigator.pop(context);
+      });
+      return false;
     }
     _previousStep();
     return false;
