@@ -1,5 +1,4 @@
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 
@@ -239,6 +238,8 @@ class AssetImages {
   static const String success_plane =
       'assets/images/checkout/success_plane.png';
   static const String success = 'assets/images/checkout/success.png';
+
+  static String ads(int index) => 'assets/images/ads/ad$index.jpeg';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

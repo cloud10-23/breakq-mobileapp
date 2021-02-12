@@ -45,6 +45,26 @@ class CartHeading extends StatelessWidget {
   }
 }
 
+class CardTemplate extends StatelessWidget {
+  CardTemplate({@required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kWhite,
+      margin: const EdgeInsets.all(kPaddingS),
+      padding: EdgeInsets.all(kPaddingS),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      ),
+    );
+  }
+}
+
 class CartEmptyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

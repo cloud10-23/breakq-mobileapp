@@ -48,9 +48,15 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
         _listItems.add(
             SliverToBoxAdapter(child: ShowQRModule(billNo: session.billNo)));
 
+        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 2)));
+
         _listItems.add(SliverToBoxAdapter(
           child: CartProductsModule(session: session),
         ));
+
+        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
+
+        _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
         return CheckoutTemplate(
           slivers: _listItems,

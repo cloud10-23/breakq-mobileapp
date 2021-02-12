@@ -109,3 +109,26 @@ class CartProductsModule extends StatelessWidget {
     );
   }
 }
+
+class AdsModule extends StatelessWidget {
+  AdsModule({this.index});
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return CardTemplate(
+      children: [
+        Image(
+          image: AssetImage(AssetImages.ads(index)),
+        )
+      ],
+    );
+  }
+}
+
+class FooterModule extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: 150);
+  }
+}
