@@ -52,8 +52,44 @@ class CheckoutTypeModule extends StatelessWidget {
       children: [
         Padding(
             padding: const EdgeInsets.only(left: kPaddingM),
-            child: CheckoutTypeOption(index: 0, session: session)),
+            child: CheckoutTypeOption(
+              index: 0,
+              onTap: () => showCheckoutTypeSelector(context),
+            )),
       ],
+    );
+  }
+
+  Future<void> showCheckoutTypeSelector(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      builder: (context) => CheckoutTypeSelector(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      isDismissible: true,
+    );
+  }
+}
+
+class CheckoutTypeSelector extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CartHeading(
+      title: "Choose a Checkout Type",
+      children: List.generate(
+        3,
+        (index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+            child: CheckoutTypeOption(
+              index: index,
+              onTap: () => Navigator.of(context).pop(),
+            )),
+      ),
     );
   }
 }

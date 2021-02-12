@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class CheckoutTypeOption extends StatelessWidget {
-  CheckoutTypeOption(
-      {@required this.index, @required this.session, this.onTap});
+  CheckoutTypeOption({@required this.index, this.onTap});
 
   final int index;
-  final CheckoutSession session;
   final VoidCallback onTap;
 
   @override
