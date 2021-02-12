@@ -1,18 +1,19 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChWalkInShowQr extends StatefulWidget {
+class ChPickup extends StatefulWidget {
   @override
-  _ChWalkInShowQrState createState() => _ChWalkInShowQrState();
+  _ChPickupState createState() => _ChPickupState();
 }
 
-class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
+class _ChPickupState extends State<ChPickup> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -42,19 +43,13 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         _listItems.add(SliverToBoxAdapter(
             child: CheckoutTypeModule(
-          index: 0,
+          index: 1,
         )));
 
-        _listItems.add(
-            SliverToBoxAdapter(child: ShowQRModule(billNo: session.billNo)));
+        _listItems.add(SliverToBoxAdapter(child: StepShowModule()));
 
-        _listItems.add(SliverToBoxAdapter(child: FooterModule()));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 2)));
-
-        _listItems.add(SliverToBoxAdapter(
-          child: CartProductsModule(session: session),
-        ));
+        _listItems
+            .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 

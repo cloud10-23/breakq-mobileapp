@@ -105,10 +105,12 @@ class _CheckoutScreenState extends State<CheckoutScreen>
           }
         }
 
-        return WillPopScope(
-          onWillPop: () => _onBackPressed(context),
-          child: CheckoutNavigator(
-            navigatorKey: getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
+        return Scaffold(
+          body: WillPopScope(
+            onWillPop: () => _onBackPressed(context),
+            child: CheckoutNavigator(
+              navigatorKey: getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
+            ),
           ),
         );
       },

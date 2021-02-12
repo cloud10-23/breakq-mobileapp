@@ -6,6 +6,8 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/timetable_model.dart';
+import 'package:breakq/data/repositories/timeslot_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
@@ -30,6 +32,12 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       yield* _mapBackPressedChEvent(event);
     } else if (event is PaymentDoneChEvent) {
       yield* _mapPaymentDoneChEvent(event);
+    } else if (event is LoadTimeSlots) {
+      yield* _mapGetTimetablesCheckoutEventToState(event);
+    } else if (event is DateRangeSetChEvent) {
+      yield* _mapSetDateRangeCheckoutEventToState(event);
+    } else if (event is TimestampSelectedChEvent) {
+      yield* _mapSelectTimestampCheckoutEventToState(event);
     } else if (event is LoadAddressChEvent) {
       yield* _mapLoadAddressChEventToState(event);
     } else if (event is AddressAddedChEvent) {
@@ -62,6 +70,25 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
+
+      String _routeName = CheckoutNavigatorRoutes.walkin_1;
+      switch (event.type) {
+        case CheckoutType.walkIn:
+          _routeName = CheckoutNavigatorRoutes.walkin_1;
+          break;
+        case CheckoutType.pickUp:
+          add(LoadTimeSlots());
+          _routeName = CheckoutNavigatorRoutes.pickup_1;
+          break;
+        case CheckoutType.delivery:
+          _routeName = CheckoutNavigatorRoutes.deliver_1;
+          break;
+      }
+      getIt
+          .get<AppGlobals>()
+          .globalKeyCheckoutNavigator
+          .currentState
+          .popAndPushNamed(_routeName);
 
       final CheckoutSession newSession = session.rebuild(
         currentStep: ChCurrentStep(checkoutType: event.type, step: 0),
@@ -204,6 +231,50 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       add(ClearCartChEvent());
 
       yield SessionRefreshSuccessChState(newSession);
+    }
+  }
+
+  Stream<CheckoutState> _mapGetTimetablesCheckoutEventToState(
+      LoadTimeSlots event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final List<TimeSlot> _timetables =
+          await const TimeSlotRepository().getTimeSlots();
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      final CheckoutSession newSession =
+          session.rebuild(timetables: _timetables);
+
+      yield SessionRefreshSuccessChState(newSession);
+    }
+  }
+
+  Stream<CheckoutState> _mapSetDateRangeCheckoutEventToState(
+      DateRangeSetChEvent event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      if (session.selectedDateRange != event.dateRange) {
+        final CheckoutSession newSession = session.rebuild(
+          selectedDateRange: event.dateRange,
+          selectedTimestamp: 0,
+        );
+
+        yield SessionRefreshSuccessChState(newSession);
+      }
+    }
+  }
+
+  Stream<CheckoutState> _mapSelectTimestampCheckoutEventToState(
+      TimestampSelectedChEvent event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      if (session.selectedTimestamp != event.timestamp) {
+        final CheckoutSession newSession =
+            session.rebuild(selectedTimestamp: event.timestamp);
+
+        yield SessionRefreshSuccessChState(newSession);
+      }
     }
   }
 

@@ -18,7 +18,7 @@ const String kNumberFontFamily = 'Roboto';
 // Date/time formats
 const String kDateFormat = 'MMM d, y';
 const String kDateTimeFormat = 'MMM d, y HH:mm';
-const String kTimeFormat = 'HH:mm';
+const String kTimeFormat = 'h:mm a';
 
 // Various Sizes
 const double kBottomBarIconSize = 32.0;
@@ -27,7 +27,7 @@ const double kFormFieldsRadius = 6.0;
 const double kRoundedButtonRadius = 24.0;
 const double kCardRadius = 15.0;
 const double kBadgeRadius = 16.0;
-const double kTimelineDateSize = 88.0;
+const double kTimelineDateSize = 70.0;
 
 // Colors
 const Color kPrimaryColor = Color(0xFFFDC500); //Color(0xFF1565C0);

@@ -9,11 +9,13 @@ class Jumbotron extends StatelessWidget {
     this.title,
     this.icon,
     this.padding,
+    this.iconSize = 128,
   }) : super(key: key);
 
   final String title;
   final IconData icon;
   final EdgeInsets padding;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class Jumbotron extends StatelessWidget {
           padding: _padding,
           child: Icon(
             icon ?? Icons.info,
-            size: 128,
+            size: iconSize,
             color: Theme.of(context).highlightColor,
           ),
         ),

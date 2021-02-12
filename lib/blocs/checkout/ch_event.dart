@@ -19,6 +19,20 @@ class BackPressedChEvent extends CheckoutEvent {}
 
 class PaymentDoneChEvent extends CheckoutEvent {}
 
+class LoadTimeSlots extends CheckoutEvent {}
+
+class DateRangeSetChEvent extends CheckoutEvent {
+  DateRangeSetChEvent(this.dateRange);
+
+  final int dateRange;
+}
+
+class TimestampSelectedChEvent extends CheckoutEvent {
+  TimestampSelectedChEvent(this.timestamp);
+
+  final int timestamp;
+}
+
 class LoadAddressChEvent extends CheckoutEvent {
   LoadAddressChEvent({this.address});
 

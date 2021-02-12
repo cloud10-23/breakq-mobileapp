@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/datetime.dart';
+import 'package:breakq/utils/text_style.dart';
 
 /// Vertically scrollable timeline date item.
 class TimelineDate extends StatelessWidget {
@@ -32,7 +33,7 @@ class TimelineDate extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius:
               const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
-          color: isSelected ? kPrimaryColor : Theme.of(context).dividerColor,
+          color: isSelected ? kBlue900 : Theme.of(context).dividerColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(kPaddingS),
@@ -45,7 +46,7 @@ class TimelineDate extends StatelessWidget {
                     ? L10n.of(context)
                         .commonWeekdayShort(DOW.values[date.weekday - 1])
                     : L10n.of(context).commonWeekdayToday.toUpperCase(),
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                style: Theme.of(context).textTheme.bodyText2.fs10.w700.copyWith(
                     color: isSelected
                         ? kWhite
                         : Theme.of(context).textTheme.bodyText2.color),
@@ -53,6 +54,7 @@ class TimelineDate extends StatelessWidget {
               Text(
                 date.day.toString(),
                 style: Theme.of(context).textTheme.headline6.copyWith(
+                    fontFamily: kNumberFontFamily,
                     color: isSelected
                         ? kWhite
                         : Theme.of(context).textTheme.headline6.color),
@@ -61,7 +63,7 @@ class TimelineDate extends StatelessWidget {
                 L10n.of(context)
                     .commonMonthShort(Month.values[date.month - 1])
                     .toUpperCase(),
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                style: Theme.of(context).textTheme.bodyText2.fs10.copyWith(
                     color: isSelected
                         ? kWhite
                         : Theme.of(context).textTheme.bodyText2.color),
