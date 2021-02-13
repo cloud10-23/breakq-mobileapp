@@ -81,17 +81,19 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           _routeName = CheckoutNavigatorRoutes.pickup_1;
           break;
         case CheckoutType.delivery:
-          _routeName = CheckoutNavigatorRoutes.deliver_1;
+          _routeName = CheckoutNavigatorRoutes.walkin_1;
           break;
       }
+
       getIt
           .get<AppGlobals>()
           .globalKeyCheckoutNavigator
           .currentState
-          .popAndPushNamed(_routeName);
+          .pushReplacementNamed(_routeName);
 
-      final CheckoutSession newSession = session.rebuild(
-        currentStep: ChCurrentStep(checkoutType: event.type, step: 0),
+      final CheckoutSession newSession = CheckoutSession(
+        cartProducts: session.cartProducts,
+        currentStep: ChCurrentStep(checkoutType: event.type),
       );
 
       yield SessionRefreshSuccessChState(newSession);
@@ -110,6 +112,9 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       switch (session.currentStep.checkoutType) {
         case CheckoutType.walkIn:
+
+          /// If the type is Walkin then this will be triggered through API when
+          /// the counter scans the code
           if (session.currentStep.step == 0) {
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
@@ -138,15 +143,32 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           break;
         case CheckoutType.pickUp:
           if (session.currentStep.step == 0) {
+            if (session.selectedDateRange < 0 ||
+                session.selectedTimestamp <= 0) {
+              /// Then the user did not select a time slot
+              /// Show an Error dialog
+              yield LoadFailureChState();
+            }
             newSession = session.rebuild(
               billNo: "1234556678",
+              currentStep: session.currentStep.rebuild(step: 1),
+            );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.pickup_2);
+          } else if (session.currentStep.step == 1) {
+            /// This is after the user confirms the self pick up
+            /// Make an API request and conform the order
+            newSession = session.rebuild(
               isCompleted: true,
             );
             // getIt
             //     .get<AppGlobals>()
             //     .globalKeyCheckoutNavigator
             //     .currentState
-            //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
+            //     .pushNamed(CheckoutNavigatorRoutes.pickup_2);
             add(ClearCartChEvent());
           }
           break;

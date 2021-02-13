@@ -1,23 +1,21 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class CheckoutTemplate extends StatefulWidget {
-  CheckoutTemplate({@required this.slivers, @required this.session});
+class CheckoutTemplate extends StatelessWidget {
+  CheckoutTemplate(
+      {@required this.slivers,
+      @required this.bottomBar,
+      this.title = 'Checkout',
+      this.subTitle});
 
+  final String title;
+  final String subTitle;
   final List<Widget> slivers;
-  final CheckoutSession session;
+  final Widget bottomBar;
 
-  @override
-  _CheckoutTemplateState createState() => _CheckoutTemplateState();
-}
-
-class _CheckoutTemplateState extends State<CheckoutTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,19 +34,26 @@ class _CheckoutTemplateState extends State<CheckoutTemplate> {
                     ],
                   ),
                   title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Spacer(flex: 3),
+                      Spacer(flex: 10),
                       Text(
-                        "Checkout",
+                        title,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle2.w800.black,
+                        maxLines: 1,
+                      ),
+                      Spacer(),
+                      Text(
+                        subTitle ?? '',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.caption.w700.fs10,
                         maxLines: 1,
                       ),
                       Spacer(),
                     ],
                   ),
                 ),
-                leading: Container(),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -67,113 +72,9 @@ class _CheckoutTemplateState extends State<CheckoutTemplate> {
                 ],
               ),
             ] +
-            widget.slivers,
+            slivers,
       ),
-      bottomNavigationBar: _bottomBar(),
-    );
-  }
-
-  Widget _bottomBar() {
-    return Builder(builder: (context) {
-      return InkWell(
-        onTap: () => showPriceDetails(),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            border: Border(
-              top: BorderSide(
-                width: 2,
-                color: Theme.of(context).dividerColor,
-              ),
-            ),
-          ),
-          padding: const EdgeInsets.all(kPaddingM),
-          child: SafeArea(
-            top: false,
-            child: Row(
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5.0),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          ((widget.session?.cartProducts?.noOfProducts ?? 0) ==
-                                  1)
-                              ? 'Amount to Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} item)'
-                              : 'Amount to Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} items)',
-                          style:
-                              Theme.of(context).textTheme.bodyText1.fs16.w800,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'View price details',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .fs10
-                          .w800
-                          .copyWith(color: kHyperLinkColor),
-                    ),
-                    SizedBox(height: 5.0),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SizedBox(height: 5.0),
-                    Text(
-                      '₹ ' +
-                          (widget.session?.cartProducts?.cartValue?.totalAmnt
-                                  ?.toStringAsFixed(2) ??
-                              "00.00"),
-                      style: Theme.of(context).textTheme.headline6.w700,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'You have saved ₹ ${widget.session?.cartProducts?.cartValue?.savings ?? 0} on this order',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .fs10
-                          .w800
-                          .copyWith(color: kGreen),
-                    ),
-                    SizedBox(height: 5.0),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-  }
-
-  Future<void> showPriceDetails() {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useRootNavigator: true,
-      builder: (context) => Container(
-        // height: MediaQuery.of(context).size.height * 0.9,
-        child: PriceDetails(
-          price: widget.session.cartProducts.cartValue,
-        ),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      isDismissible: true,
+      bottomNavigationBar: bottomBar,
     );
   }
 }

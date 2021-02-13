@@ -45,10 +45,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
         GlobalKey(debugLabel: 'checkout_navigator');
   }
 
-  void _nextStep() {
-    BlocProvider.of<CheckoutBloc>(context).add(NextPressedChEvent());
-  }
-
   void _previousStep() {
     BlocProvider.of<CheckoutBloc>(context).add(BackPressedChEvent());
     // if (_currentStep.step >= 1) {

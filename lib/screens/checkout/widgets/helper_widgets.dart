@@ -46,8 +46,9 @@ class ShowQRModule extends StatelessWidget {
 }
 
 class CheckoutTypeModule extends StatelessWidget {
-  CheckoutTypeModule({@required this.index});
+  CheckoutTypeModule({@required this.index, this.isReadOnly = false});
   final int index;
+  final bool isReadOnly;
   @override
   Widget build(BuildContext context) {
     return CartHeading(
@@ -56,9 +57,12 @@ class CheckoutTypeModule extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(left: kPaddingM),
             child: CheckoutTypeOption(
-              index: index,
-              onTap: () => showCheckoutTypeSelector(context),
-            )),
+                index: index,
+                onTap: (!isReadOnly)
+                    ? () {
+                        showCheckoutTypeSelector(context);
+                      }
+                    : null)),
       ],
     );
   }
@@ -112,7 +116,7 @@ class CartProductsModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CartHeading(
-      title: 'Cart products',
+      title: 'Products',
       children: [
         CartProductsReadOnly(
           products: session.cartProducts.cartItems,
@@ -123,29 +127,16 @@ class CartProductsModule extends StatelessWidget {
 }
 
 class StepShowModule extends StatelessWidget {
+  StepShowModule({@required this.steps, @required this.currentStep});
+  final List<Step> steps;
+  final int currentStep;
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(primaryColor: kBlue900),
       child: Container(
         constraints: BoxConstraints(maxHeight: 200),
-        child: CustomStepper(currentStep: 1, steps: [
-          Step(
-              isActive: true,
-              title: Text("Checkout type",
-                  style: Theme.of(context).textTheme.caption),
-              content: Container(),
-              state: StepState.complete),
-          Step(
-              isActive: true,
-              title: Text("Select time slot",
-                  style: Theme.of(context).textTheme.caption),
-              content: Container()),
-          Step(
-              title:
-                  Text("Confirm", style: Theme.of(context).textTheme.caption),
-              content: Container()),
-        ]),
+        child: CustomStepper(currentStep: currentStep, steps: steps),
       ),
     );
   }

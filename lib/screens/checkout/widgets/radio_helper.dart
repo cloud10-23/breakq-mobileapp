@@ -1,5 +1,4 @@
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/checkout_session.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -55,10 +54,11 @@ class CheckoutTypeOption extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black45,
-                    ),
+                    if (onTap != null)
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black45,
+                      ),
                   ],
                 ),
               )),

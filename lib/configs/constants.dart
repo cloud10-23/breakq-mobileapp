@@ -17,7 +17,7 @@ const String kNumberFontFamily = 'Roboto';
 
 // Date/time formats
 const String kDateFormat = 'MMM d, y';
-const String kDateTimeFormat = 'MMM d, y HH:mm';
+const String kDateTimeFormat = 'MMM d, y';
 const String kTimeFormat = 'h:mm a';
 
 // Various Sizes

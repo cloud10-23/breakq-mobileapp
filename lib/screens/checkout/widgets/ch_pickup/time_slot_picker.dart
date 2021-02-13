@@ -118,3 +118,26 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
         .add(TimestampSelectedChEvent(timestamp));
   }
 }
+
+class DisplaySelectedTimeSlot extends StatelessWidget {
+  DisplaySelectedTimeSlot({@required this.session});
+
+  final CheckoutSession session;
+  @override
+  Widget build(BuildContext context) {
+    final DateTime time =
+        DateTime.fromMillisecondsSinceEpoch(session.selectedTimestamp);
+    return CartHeading(title: "Time Slot", children: [
+      Padding(
+        padding: const EdgeInsets.only(left: kPaddingL),
+        child: ListItem(
+          title: time.toLocalDateTimeString,
+          titleTextStyle: Theme.of(context).textTheme.subtitle1.fs16.w500,
+          subtitle: time.toLocalTimeString,
+          subtitleTextStyle: Theme.of(context).textTheme.caption.fs14.w700,
+          showBorder: false,
+        ),
+      ),
+    ]);
+  }
+}

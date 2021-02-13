@@ -20,7 +20,7 @@ class AppTheme {
       ),
       buttonColor: kBlue900,
       buttonTheme: const ButtonThemeData(
-        textTheme: ButtonTextTheme.normal,
+        textTheme: ButtonTextTheme.primary,
         minWidth: 88,
         height: 48,
         padding: EdgeInsets.only(left: kPaddingM, right: kPaddingM),

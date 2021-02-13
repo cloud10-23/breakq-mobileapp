@@ -5,6 +5,7 @@ import 'package:breakq/screens/checkout/ch_base_step.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen.dart';
+import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_summary.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
@@ -169,6 +170,7 @@ class CheckoutNavigatorRoutes {
   // static const String base = '/';
   static const String walkin_1 = '/';
   static const String pickup_1 = '/pickup';
+  static const String pickup_2 = '/pickup/confirm';
   static const String deliver_1 = '/deliver';
   static const String add_address = '/deliver/add_address';
 }
@@ -183,6 +185,8 @@ class CheckoutNavigator extends StatelessWidget {
       // CheckoutNavigatorRoutes.base: (context, settings) => CheckoutBaseStep(),
       CheckoutNavigatorRoutes.walkin_1: (context, settings) => ChWalkInShowQr(),
       CheckoutNavigatorRoutes.pickup_1: (context, settings) => ChPickup(),
+      CheckoutNavigatorRoutes.pickup_2: (context, settings) =>
+          ChPickupConfirm(),
       CheckoutNavigatorRoutes.deliver_1: (context, settings) =>
           ChDeliverySelectAddress(),
       CheckoutNavigatorRoutes.add_address: (context, settings) =>

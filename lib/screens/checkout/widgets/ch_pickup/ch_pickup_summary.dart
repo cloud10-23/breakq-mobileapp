@@ -1,24 +1,20 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
-import 'package:breakq/configs/app_globals.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/main.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
-import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChPickup extends StatefulWidget {
+class ChPickupConfirm extends StatefulWidget {
   @override
-  _ChPickupState createState() => _ChPickupState();
+  _ChPickupConfirmState createState() => _ChPickupConfirmState();
 }
 
-class _ChPickupState extends State<ChPickup> {
+class _ChPickupConfirmState extends State<ChPickupConfirm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -47,13 +43,8 @@ class _ChPickupState extends State<ChPickup> {
         final List<Widget> _listItems = <Widget>[];
 
         _listItems.add(SliverToBoxAdapter(
-            child: CheckoutTypeModule(
-          index: 1,
-        )));
-
-        _listItems.add(SliverToBoxAdapter(
             child: StepShowModule(
-          currentStep: 1,
+          currentStep: 2,
           steps: [
             Step(
                 isActive: true,
@@ -62,19 +53,32 @@ class _ChPickupState extends State<ChPickup> {
                 content: Container(),
                 state: StepState.complete),
             Step(
-                isActive: true,
-                title: Text("Select time slot",
-                    style: Theme.of(context).textTheme.caption),
-                content: Container()),
+              isActive: true,
+              title: Text("Select time slot",
+                  style: Theme.of(context).textTheme.caption),
+              content: Container(),
+              state: StepState.complete,
+            ),
             Step(
+                isActive: true,
                 title:
                     Text("Confirm", style: Theme.of(context).textTheme.caption),
                 content: Container()),
           ],
         )));
 
-        _listItems
-            .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
+        _listItems.add(SliverToBoxAdapter(
+            child: CheckoutTypeModule(
+          index: 1,
+          isReadOnly: true,
+        )));
+
+        _listItems.add(SliverToBoxAdapter(
+            child: DisplaySelectedTimeSlot(session: session)));
+
+        _listItems.add(SliverToBoxAdapter(
+          child: CartProductsModule(session: session),
+        ));
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
@@ -82,22 +86,10 @@ class _ChPickupState extends State<ChPickup> {
 
         return CheckoutTemplate(
           slivers: _listItems,
-          subTitle: 'Select Time Slot',
+          subTitle: 'Summary',
           bottomBar: ChBottomBarWithButton(
             session: session,
-            onTap: () {
-              if (session.selectedTimestamp > 0 &&
-                  session.selectedDateRange >= 0)
-                BlocProvider.of<CheckoutBloc>(context)
-                    .add(NextPressedChEvent());
-              else
-                UI.showErrorDialog(
-                  context,
-                  message: "Please select a time slot!",
-                  onPressed: () =>
-                      Navigator.of(context, rootNavigator: true).pop(),
-                );
-            },
+            buttonText: 'Confirm',
           ),
         );
       },

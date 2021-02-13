@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/widgets/jumbotron.dart';
@@ -23,7 +24,7 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
         if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
             //TODO: Handle this case
-            session: session,
+            bottomBar: ChBottomBar(session: session),
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
@@ -62,7 +63,8 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         return CheckoutTemplate(
           slivers: _listItems,
-          session: session,
+          subTitle: 'Proceed To Counter & Pay',
+          bottomBar: ChBottomBar(session: session),
         );
       },
     );
