@@ -34,9 +34,9 @@ class TimestampSelectedChEvent extends CheckoutEvent {
 }
 
 class LoadAddressChEvent extends CheckoutEvent {
-  LoadAddressChEvent({this.address});
+  // LoadAddressChEvent({this.address});
 
-  final /*Address*/ address;
+  // final /*Address*/ address;
 }
 
 class AddressSelectedChEvent extends CheckoutEvent {

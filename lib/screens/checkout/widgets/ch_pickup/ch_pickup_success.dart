@@ -9,14 +9,14 @@ class PickupCheckoutSuccessDialog extends StatefulWidget {
 
 class _PickupCheckoutSuccessDialogState
     extends State<PickupCheckoutSuccessDialog> {
-  final Duration durationBeforeClose = Duration(seconds: 3);
+  final Duration durationBeforeClose = Duration(seconds: 2);
 
   @override
   void initState() {
     super.initState();
-    // Future.delayed(durationBeforeClose).then((_) {
-    //   if (mounted) Navigator.pop(context);
-    // });
+    Future.delayed(durationBeforeClose).then((_) {
+      if (mounted) Navigator.pop(context);
+    });
   }
 
   @override

@@ -1,20 +1,25 @@
+import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CheckoutTemplate extends StatelessWidget {
-  CheckoutTemplate(
-      {@required this.slivers,
-      @required this.bottomBar,
-      this.title = 'Checkout',
-      this.subTitle});
+  CheckoutTemplate({
+    @required this.slivers,
+    @required this.bottomBar,
+    this.title = 'Checkout',
+    this.subTitle,
+    this.showBackButton = true,
+  });
 
   final String title;
   final String subTitle;
   final List<Widget> slivers;
   final Widget bottomBar;
+  final bool showBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +75,17 @@ class CheckoutTemplate extends StatelessWidget {
                     },
                   ),
                 ],
+                leading: Visibility(
+                  visible: showBackButton,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    tooltip: L10n.of(context).commonTooltipInfo,
+                    onPressed: () {
+                      BlocProvider.of<CheckoutBloc>(context)
+                          .add(BackPressedChEvent());
+                    },
+                  ),
+                ),
               ),
             ] +
             slivers,

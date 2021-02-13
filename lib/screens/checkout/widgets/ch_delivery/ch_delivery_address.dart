@@ -4,126 +4,105 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
+import 'package:breakq/screens/cart/widgets/cart_helper.dart';
+import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class ChDeliverySelectAddress extends StatefulWidget {
+class DeliveryAddressModule extends StatefulWidget {
+  DeliveryAddressModule({this.session});
+  final CheckoutSession session;
   @override
-  _ChDeliverySelectAddressState createState() =>
-      _ChDeliverySelectAddressState();
+  _DeliveryAddressModuleState createState() => _DeliveryAddressModuleState();
 }
 
-class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
+class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: BlocBuilder<CheckoutBloc, CheckoutState>(
-        builder: (BuildContext context, CheckoutState state) {
-          final CheckoutSession session =
-              (state as SessionRefreshSuccessChState).session;
+    final List<Widget> _listItems = <Widget>[];
 
-          final List<Widget> _listItems = <Widget>[];
+    final List<DeliveryAddress> _address = widget.session.address;
 
-          _listItems.add(SliverToBoxAdapter(
-              child: Container(
-            height: 50.0,
-            color: kPrimaryColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Spacer(),
-                  Text(
-                    "Select delivery address",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        .fs14
-                        .w600
-                        .copyWith(color: Colors.black54),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ),
-          )));
+    _listItems.add(_addAddress());
 
-          _listItems
-              .add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
+    _listItems.addAll(List.generate(
+      _address.length,
+      (index) => _addressItem(index, widget.session),
+    ));
 
-          final List<DeliveryAddress> _address = session.address;
-
-          _listItems.add(SliverList(
-              delegate: SliverChildBuilderDelegate(
-            (context, index) => _addressItem(index, session),
-            childCount: _address.length,
-          )));
-
-          _listItems.add(_addAddress());
-
-          return CustomScrollView(
-            slivers: _listItems,
-          );
-        },
-      ),
-    );
+    return CartHeading(title: 'Select Address', children: _listItems);
   }
 
   Widget _addressItem(int index, CheckoutSession session) {
     int _selectedIndex =
         session.selectedAddress ?? 0; //Get the selected address
     final DeliveryAddress _address = session.address[index];
-    return Padding(
-      padding: const EdgeInsets.all(kPaddingM),
-      child: Card(
-        color: (_selectedIndex == index) ? kPrimaryColor : kWhite,
-        child: InkWell(
-          child: Padding(
-            padding: const EdgeInsets.all(kPaddingM * 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _address.name,
-                  style: Theme.of(context).textTheme.subtitle1.w500,
+
+    final Widget _child = Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: kPaddingM * 1.5, horizontal: kPaddingL),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
+              Text(
+                _address.name,
+                style: Theme.of(context).textTheme.bodyText2.w600,
+              ),
+              Spacer(),
+              if (_selectedIndex == index)
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamed(Routes.add_address);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: kWhite,
+                      borderRadius: const BorderRadius.all(
+                          Radius.circular(kRoundedButtonRadius)),
+                    ),
+                    padding: EdgeInsets.all(kPaddingS),
+                    child: Text('EDIT',
+                        style: Theme.of(context).textTheme.caption.w700),
+                  ),
                 ),
-                // Row(
-                //   children: [
-                //     Text(
-                //       _address.name,
-                //       style: Theme.of(context).textTheme.subtitle1.w500,
-                //     ),
-                //     SizedBox(width: kPaddingL),
-                //     Text(
-                //       _address.phone,
-                //       style: Theme.of(context).textTheme.subtitle2.w300,
-                //     ),
-                //   ],
-                // ),
-                SizedBox(height: kPaddingL),
-                Text(_address.getFullAddress(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .w300
-                        .copyWith(color: Theme.of(context).hintColor)),
-                SizedBox(height: kPaddingS),
-                Text("Phone: " + _address.phone,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .w500
-                        .copyWith(color: Theme.of(context).hintColor)),
-              ],
-            ),
+            ],
           ),
+          SizedBox(height: kPaddingM),
+          Text(_address.getFullAddress(),
+              style: Theme.of(context).textTheme.caption.w500),
+          SizedBox(height: kPaddingS),
+          Text("Phone: " + _address.phone,
+              style: Theme.of(context).textTheme.caption.w700),
+        ],
+      ),
+    );
+
+    if (_selectedIndex == index)
+      return Padding(
+        padding: const EdgeInsets.all(kPaddingS),
+        child: Card(
+          child: InkWell(
+            child: CustomPaint(
+              painter: RadioCustomPainter(index: 0),
+              child: _child,
+            ),
+            onTap: () {
+              BlocProvider.of<CheckoutBloc>(context)
+                  .add(AddressSelectedChEvent(index: index));
+            },
+          ),
+        ),
+      );
+    return Padding(
+      padding: const EdgeInsets.all(kPaddingS),
+      child: Card(
+        child: InkWell(
+          child: _child,
           onTap: () {
             BlocProvider.of<CheckoutBloc>(context)
                 .add(AddressSelectedChEvent(index: index));
@@ -134,36 +113,76 @@ class _ChDeliverySelectAddressState extends State<ChDeliverySelectAddress> {
   }
 
   Widget _addAddress() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.all(kPaddingM),
-        child: Card(
-          child: InkWell(
-            child: Padding(
-              padding: const EdgeInsets.all(kPaddingM * 2),
-              child: Row(
-                children: [
-                  Icon(Icons.add),
-                  SizedBox(width: kPaddingL),
-                  Text(
-                    "Add Address",
-                    style: Theme.of(context).textTheme.subtitle2.w500,
-                  ),
-                ],
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(
+          bottom: kPaddingS, left: kPaddingS, right: kPaddingS),
+      child: Card(
+        child: InkWell(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: kPaddingM * 1.5, horizontal: kPaddingL),
+            child: Row(
+              children: [
+                Icon(Icons.add),
+                SizedBox(width: kPaddingL),
+                Text(
+                  "Add Address",
+                  style: Theme.of(context).textTheme.subtitle2.w500,
+                ),
+              ],
             ),
-            onTap: () {
-              getIt
-                  .get<AppGlobals>()
-                  .globalKeyCheckoutNavigator
-                  .currentState
-                  .pushNamed(CheckoutNavigatorRoutes.add_address);
-              // BlocProvider.of<CheckoutBloc>(context)
-              //     .add(CheckoutTypeSelectedChEvent(type: _type));
-            },
           ),
+          onTap: () {
+            Navigator.of(context, rootNavigator: true)
+                .pushNamed(Routes.add_address);
+            // BlocProvider.of<CheckoutBloc>(context)
+            //     .add(CheckoutTypeSelectedChEvent(type: _type));
+          },
         ),
       ),
     );
+  }
+}
+
+class DisplaySelectedAddress extends StatelessWidget {
+  DisplaySelectedAddress({@required this.session});
+
+  final CheckoutSession session;
+  @override
+  Widget build(BuildContext context) {
+    int _selectedIndex =
+        session.selectedAddress ?? 0; //Get the selected address
+    final DeliveryAddress _address = session.address[_selectedIndex];
+    final Widget _child = Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: kPaddingM * 1.5, horizontal: kPaddingL),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            _address.name,
+            style: Theme.of(context).textTheme.bodyText2.w600,
+          ),
+          SizedBox(height: kPaddingM),
+          Text(_address.getFullAddress(),
+              style: Theme.of(context).textTheme.caption.w500),
+          SizedBox(height: kPaddingS),
+          Text("Phone: " + _address.phone,
+              style: Theme.of(context).textTheme.caption.w700),
+        ],
+      ),
+    );
+
+    return CartHeading(title: "Delivery Address", children: [
+      Padding(
+        padding: const EdgeInsets.all(kPaddingS),
+        child: Card(
+          child: CustomPaint(
+            painter: RadioCustomPainter(index: 0),
+            child: _child,
+          ),
+        ),
+      ),
+    ]);
   }
 }

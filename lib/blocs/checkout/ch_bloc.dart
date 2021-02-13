@@ -81,7 +81,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           _routeName = CheckoutNavigatorRoutes.pickup_1;
           break;
         case CheckoutType.delivery:
-          _routeName = CheckoutNavigatorRoutes.walkin_1;
+          add(LoadAddressChEvent());
+          _routeName = CheckoutNavigatorRoutes.delivery_1;
           break;
       }
 
@@ -93,7 +94,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       final CheckoutSession newSession = CheckoutSession(
         cartProducts: session.cartProducts,
-        currentStep: ChCurrentStep(checkoutType: event.type),
+        currentStep: ChCurrentStep(checkoutType: event.type, step: 0),
       );
 
       yield SessionRefreshSuccessChState(newSession);
@@ -174,47 +175,34 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           break;
         case CheckoutType.delivery:
           if (session.currentStep.step == 0) {
-            List<DeliveryAddress> address = [
-              DeliveryAddress(
-                name: "Jon Doe",
-                addLine1: "No. 5, 5th Lane",
-                addLine2: "Church Street",
-                cityDistTown: "Riverdale",
-                state: "California",
-                pinCode: "610032",
-                landmark: "DineOut Restraunt",
-                phone: "1234567890",
-              ),
-              DeliveryAddress(
-                name: "Katherine Doe",
-                addLine1: "No. 5, 5th Lane ",
-                addLine2: "Church Street",
-                cityDistTown: "Riverdale",
-                state: "California",
-                pinCode: "610032",
-                landmark: "DineOut Restraunt",
-                phone: "0987654321",
-              ),
-            ];
+            add(LoadTimeSlots());
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
-              billNo: "12345678910",
-              address: address,
             );
             getIt
                 .get<AppGlobals>()
                 .globalKeyCheckoutNavigator
                 .currentState
-                .pushNamed(CheckoutNavigatorRoutes.deliver_1);
+                .pushNamed(CheckoutNavigatorRoutes.delivery_2);
           } else if (session.currentStep.step == 1) {
             newSession = session.rebuild(
-              isCompleted: true,
+              currentStep: session.currentStep.rebuild(step: 2),
             );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.delivery_3);
             // getIt
             //     .get<AppGlobals>()
             //     .globalKeyCheckoutNavigator
             //     .currentState
             //     .pushNamed(CheckoutNavigatorRoutes.deliver_1);
+          } else if (session.currentStep.step == 2) {
+            newSession = session.rebuild(
+              billNo: "1234556678",
+              isCompleted: true,
+            );
             add(ClearCartChEvent());
           }
           break;
@@ -302,7 +290,42 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
   Stream<CheckoutState> _mapLoadAddressChEventToState(
       LoadAddressChEvent event) async* {
-    if (state is SessionRefreshSuccessChState) {}
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+
+      /// Do the API call for loading addresses
+
+      CheckoutSession newSession = session;
+
+      List<DeliveryAddress> address = [
+        DeliveryAddress(
+          name: "Jon Doe",
+          addLine1: "No. 5, 5th Lane",
+          addLine2: "Church Street",
+          cityDistTown: "Riverdale",
+          state: "California",
+          pinCode: "610032",
+          landmark: "DineOut Restraunt",
+          phone: "1234567890",
+        ),
+        DeliveryAddress(
+          name: "Katherine Doe",
+          addLine1: "No. 5, 5th Lane ",
+          addLine2: "Church Street",
+          cityDistTown: "Riverdale",
+          state: "California",
+          pinCode: "610032",
+          landmark: "DineOut Restraunt",
+          phone: "0987654321",
+        ),
+      ];
+      newSession = session.rebuild(
+        address: address,
+      );
+
+      yield SessionRefreshSuccessChState(newSession);
+    }
   }
 
   Stream<CheckoutState> _mapAddressAddedChEventToState() async* {

@@ -4,8 +4,11 @@ import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/ch_base_step.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
-import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen.dart';
-import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_summary.dart';
+import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
+import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_3.dart';
+import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_2.dart';
+import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_1.dart';
+import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/product/product.dart';
@@ -38,6 +41,7 @@ class Routes {
   static const String scan = '/scan';
   static const String checkout = '/checkout';
   static const String cart = '/cart';
+  static const String add_address = '/add_address';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -100,6 +104,8 @@ class Routes {
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) => CartPage(),
         );
+      case add_address:
+        return SlideRoute(widget: AddEditAddress());
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
       //     builder: (BuildContext context) {
@@ -171,8 +177,10 @@ class CheckoutNavigatorRoutes {
   static const String walkin_1 = '/';
   static const String pickup_1 = '/pickup';
   static const String pickup_2 = '/pickup/confirm';
-  static const String deliver_1 = '/deliver';
-  static const String add_address = '/deliver/add_address';
+  static const String delivery_1 = '/delivery';
+  static const String delivery_2 = '/delivery/timeslot';
+  static const String delivery_3 = '/delivery/confirm';
+  static const String add_address = '/add_address';
 }
 
 class CheckoutNavigator extends StatelessWidget {
@@ -187,8 +195,11 @@ class CheckoutNavigator extends StatelessWidget {
       CheckoutNavigatorRoutes.pickup_1: (context, settings) => ChPickup(),
       CheckoutNavigatorRoutes.pickup_2: (context, settings) =>
           ChPickupConfirm(),
-      CheckoutNavigatorRoutes.deliver_1: (context, settings) =>
-          ChDeliverySelectAddress(),
+      CheckoutNavigatorRoutes.delivery_1: (context, settings) => ChDelivery(),
+      CheckoutNavigatorRoutes.delivery_2: (context, settings) =>
+          ChDeliverySlot(),
+      CheckoutNavigatorRoutes.delivery_3: (context, settings) =>
+          ChDeliveryConfirm(),
       CheckoutNavigatorRoutes.add_address: (context, settings) =>
           AddEditAddress(),
     };

@@ -201,6 +201,8 @@ class AssetImages {
       'assets/images/illustrations/qs_illustration.svg';
   static const String checkoutIllustration =
       'assets/images/illustrations/checkout-illustration.png';
+  static const String addressIllustration =
+      'assets/images/illustrations/address_illustration.svg';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';

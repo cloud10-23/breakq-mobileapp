@@ -79,9 +79,6 @@ class _BookingSuccessDialogState extends State<CheckoutSuccessPlane>
       }
     });
 
-    Future.delayed(Duration(seconds: 2))
-        .then((value) => Navigator.of(context).pop());
-
     asyncInitState();
   }
 
