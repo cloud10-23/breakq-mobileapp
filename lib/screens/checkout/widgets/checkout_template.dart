@@ -13,6 +13,7 @@ class CheckoutTemplate extends StatelessWidget {
     this.title = 'Checkout',
     this.subTitle,
     this.showBackButton = true,
+    this.controller,
   });
 
   final String title;
@@ -20,11 +21,13 @@ class CheckoutTemplate extends StatelessWidget {
   final List<Widget> slivers;
   final Widget bottomBar;
   final bool showBackButton;
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        controller: controller, //?? ScrollController(),
         slivers: <Widget>[
               SliverAppBar(
                 pinned: true,

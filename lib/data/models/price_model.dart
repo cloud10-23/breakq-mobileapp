@@ -3,6 +3,7 @@ class Price {
     this.price,
     this.discount,
     this.extraOffer,
+    this.delivery,
     this.totalAmnt,
     this.savings,
   });
@@ -14,6 +15,17 @@ class Price {
       extraOffer: extraOffer,
       totalAmnt: price - extraOffer,
       savings: orgPrice - price + extraOffer,
+    );
+  }
+
+  factory Price.addDelivery(Price oldPrice, double delivery) {
+    return Price(
+      price: oldPrice.price,
+      discount: oldPrice.discount,
+      extraOffer: oldPrice.extraOffer,
+      delivery: delivery,
+      totalAmnt: oldPrice.totalAmnt + delivery,
+      savings: oldPrice.savings - delivery,
     );
   }
 
@@ -29,6 +41,7 @@ class Price {
   final double price;
   final double discount;
   final double extraOffer;
+  final double delivery;
   final double totalAmnt;
   final double savings;
 }

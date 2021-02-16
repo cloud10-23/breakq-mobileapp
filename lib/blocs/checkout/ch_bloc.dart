@@ -6,6 +6,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/timetable_model.dart';
 import 'package:breakq/data/repositories/timeslot_repository.dart';
 import 'package:breakq/main.dart';
@@ -176,7 +177,14 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
         case CheckoutType.delivery:
           if (session.currentStep.step == 0) {
             add(LoadTimeSlots());
+            Cart cartProducts = Cart(
+              cartValue:
+                  Price.addDelivery(session.cartProducts.cartValue, 10.0),
+              cartItems: session.cartProducts.cartItems,
+              noOfProducts: session.cartProducts.noOfProducts,
+            );
             newSession = session.rebuild(
+              cartProducts: cartProducts,
               currentStep: session.currentStep.rebuild(step: 1),
             );
             getIt
