@@ -42,7 +42,7 @@ class GridAddRemButtons extends StatelessWidget {
           Expanded(
             child: FlatButton(
               onPressed: onAdd,
-              color: kPrimaryColor,
+              color: kBlue200,
               child: Text(
                 qty.toString(),
                 style: Theme.of(context)
@@ -133,7 +133,7 @@ class ListAddRemButtons extends StatelessWidget {
                 topRight: Radius.circular(25.0),
                 bottomRight: Radius.circular(25.0),
               )),
-              color: kPrimaryColor,
+              color: kBlue200,
               onPressed: onAdd,
               child: Icon(Icons.add, color: kBlack, size: 15),
             ),
@@ -187,7 +187,7 @@ class ListAddRemButtonSmall extends StatelessWidget {
                 topRight: Radius.circular(25.0),
                 bottomRight: Radius.circular(25.0),
               )),
-              color: kPrimaryColor,
+              color: kBlue200,
               onPressed: onAdd,
               child: Icon(Icons.add, color: kBlack, size: 12),
             ),

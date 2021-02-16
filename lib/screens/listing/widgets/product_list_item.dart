@@ -72,7 +72,7 @@ class ProductListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       InkWell(
-                        splashColor: kPrimaryColor,
+                        splashColor: kBlue200,
                         onTap: onProductPressed ?? () {},
                         onLongPress: () {},
                         child: Column(
