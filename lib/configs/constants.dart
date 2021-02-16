@@ -171,8 +171,8 @@ const List<Map<String, String>> quickLinks = [
     'link': Routes.quickShopping,
   },
   {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
-  {'name': 'Cart', 'image': AssetImages.cart, 'link': 'cart'},
-  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'my_order'},
+  {'name': 'Cart', 'image': AssetImages.cart, 'link': Routes.cart},
+  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'orders'},
 ];
 
 /// Cart Bulk Buttons

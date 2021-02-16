@@ -21,7 +21,7 @@ class QuickLinkButton extends StatelessWidget {
           onTap: () => Navigator.of(
             context,
             rootNavigator: true,
-          ).pushNamed(quickLinks[index]['link'] ?? Routes.cart),
+          ).pushNamed(quickLinks[index]['link']),
           child: CustomPaint(
             painter: RadioCustomPainter(index: index % 2),
             child: Padding(
