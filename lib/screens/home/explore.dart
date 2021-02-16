@@ -111,6 +111,7 @@ class HomeScreenState extends State<HomeScreen> {
               CartHeading(title: "Top Offers", children: [
                 _showGridOfImages(2, 4),
               ]),
+              SizedBox(height: kPaddingBtwnStrips),
               CartHeading(title: "Top Deals", children: [
                 _showHorizontalScrollImages(),
               ]),
