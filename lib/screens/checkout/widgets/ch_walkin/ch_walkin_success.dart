@@ -1,7 +1,6 @@
 import 'package:breakq/widgets/checkout_success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/qs_success_dialog.dart';
 
 class WalkinCheckoutSuccess extends StatefulWidget {
   @override

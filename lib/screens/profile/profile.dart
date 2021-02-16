@@ -86,7 +86,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             trailing: const ArrowRightIcon(),
                             onPressed: () {
                               Navigator.pop(context);
-                              getIt.get<AppGlobals>().showCartPage(context);
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(Routes.cart);
+                              // getIt.get<AppGlobals>().showCartPage(context);
                             },
                           ),
                           ListItem(
@@ -247,7 +249,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               );
                             }),
                           ),
-                          SizedBox(height: kPaddingL),
+                          SizedBox(height: 100),
                         ],
                       ),
                     ),

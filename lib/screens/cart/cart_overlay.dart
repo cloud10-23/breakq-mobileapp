@@ -22,7 +22,7 @@ class HybridFAB extends StatelessWidget {
                 children: [
                   CartButton(
                     totalItems: state.cart.noOfProducts,
-                    cartValue: state.cart.cartValue,
+                    cartValue: state.cart.cartValue.price,
                   ),
                   ScanFloatingButtonExtended(),
                 ],

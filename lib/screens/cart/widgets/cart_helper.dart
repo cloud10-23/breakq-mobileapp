@@ -1,16 +1,15 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
-import 'package:breakq/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class CartHeading extends StatelessWidget {
-  CartHeading({@required this.title, @required this.children});
+class CardTemplate extends StatelessWidget {
+  CardTemplate({@required this.children});
 
-  final String title;
   final List<Widget> children;
 
   @override
@@ -21,23 +20,8 @@ class CartHeading extends StatelessWidget {
       padding: EdgeInsets.all(kPaddingS),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(kPaddingM),
-                child: BoldTitle(
-                  title: title.toUpperCase(),
-                  padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                  color: Colors.black54,
-                  fw: FontWeight.w600,
-                ),
-              ),
-              Container(
-                height: 0.5,
-                color: Colors.black12,
-              ),
-              SizedBox(height: 5),
-            ] +
-            children,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
       ),
     );
   }
@@ -116,126 +100,6 @@ class CartEmptyScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class PriceDetails extends StatelessWidget {
-  PriceDetails({@required this.state});
-
-  final CartLoaded state;
-  @override
-  Widget build(BuildContext context) {
-    return CartHeading(
-      title: 'PRICE DETAILS',
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(kPaddingM),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BoldTitle(
-                title: 'Price: ',
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: Colors.black,
-                fw: FontWeight.w600,
-              ),
-              BoldTitle(
-                title: '₹ ' +
-                    (state.cart?.orgCartValue?.toStringAsFixed(2) ?? "00.00"),
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: Colors.black87,
-                fw: FontWeight.w500,
-                isNum: true,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingM),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BoldTitle(
-                title: 'Discount: ',
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: kGreen,
-                fw: FontWeight.w600,
-              ),
-              BoldTitle(
-                title: '- ₹ ' +
-                    (((state.cart?.orgCartValue ?? 0) -
-                                (state.cart?.cartValue ?? 0))
-                            ?.toStringAsFixed(2) ??
-                        "00.00"),
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: Colors.green[800],
-                isNum: true,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingM),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BoldTitle(
-                title: 'Extra offer: ',
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: kGreen,
-                fw: FontWeight.w600,
-              ),
-              BoldTitle(
-                title: '- ₹ ' + "10.00",
-                padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                color: kGreen,
-                isNum: true,
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 0.5,
-          color: Colors.black12,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingM),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BoldTitle(
-                title: 'Total Amount:',
-                fw: FontWeight.w800,
-              ),
-              CustomTitle(
-                title:
-                    '₹ ' + ((state.cart.cartValue - 10.0).toStringAsFixed(2)),
-                fw: FontWeight.w700,
-                isNum: true,
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 0.5,
-          color: Colors.black12,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(kPaddingS),
-          child: BoldTitle(
-            title: 'You have saved ₹ ' +
-                (((state.cart?.orgCartValue ?? 0) -
-                            (state.cart?.cartValue ?? 0) +
-                            10.0)
-                        ?.toStringAsFixed(2) ??
-                    "00.00") +
-                ' on this order',
-            fw: FontWeight.w800,
-            color: kGreen,
-          ),
-        ),
-      ],
     );
   }
 }

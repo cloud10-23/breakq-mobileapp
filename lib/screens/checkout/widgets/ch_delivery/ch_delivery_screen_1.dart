@@ -2,18 +2,20 @@ import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
+import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:breakq/utils/text_style.dart';
 
-class ChWalkInShowQr extends StatefulWidget {
+class ChDelivery extends StatefulWidget {
   @override
-  _ChWalkInShowQrState createState() => _ChWalkInShowQrState();
+  _ChDeliveryState createState() => _ChDeliveryState();
 }
 
-class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
+class _ChDeliveryState extends State<ChDelivery> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -44,19 +46,37 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         _listItems.add(SliverToBoxAdapter(
             child: CheckoutTypeModule(
-          index: 0,
+          index: 2,
+        )));
+
+        _listItems.add(SliverToBoxAdapter(
+            child: StepShowModule(
+          currentStep: 1,
+          steps: [
+            Step(
+                isActive: true,
+                title: Text("Checkout type",
+                    style: Theme.of(context).textTheme.caption.fs8.w700),
+                content: Container(),
+                state: StepState.complete),
+            Step(
+                isActive: true,
+                title: Text("Address",
+                    style: Theme.of(context).textTheme.caption.fs8.w700),
+                content: Container()),
+            Step(
+                title: Text("Time slot",
+                    style: Theme.of(context).textTheme.caption.fs8.w700),
+                content: Container()),
+            Step(
+                title: Text("Confirm",
+                    style: Theme.of(context).textTheme.caption.fs8.w700),
+                content: Container()),
+          ],
         )));
 
         _listItems.add(
-            SliverToBoxAdapter(child: ShowQRModule(billNo: session.billNo)));
-
-        _listItems.add(SliverToBoxAdapter(child: FooterModule()));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 2)));
-
-        _listItems.add(SliverToBoxAdapter(
-          child: CartProductsModule(session: session),
-        ));
+            SliverToBoxAdapter(child: DeliveryAddressModule(session: session)));
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
@@ -65,8 +85,13 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
         return CheckoutTemplate(
           slivers: _listItems,
           showBackButton: false,
-          subTitle: 'Proceed To Counter & Pay',
-          bottomBar: ChBottomBar(session: session),
+          subTitle: 'Select delivery address',
+          bottomBar: ChBottomBarWithButton(
+            session: session,
+            onTap: () {
+              BlocProvider.of<CheckoutBloc>(context).add(NextPressedChEvent());
+            },
+          ),
         );
       },
     );

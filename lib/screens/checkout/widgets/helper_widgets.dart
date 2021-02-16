@@ -1,59 +1,167 @@
-import 'dart:math' as math;
-
+import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/utils/text_style.dart';
+import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/screens/cart/widgets/cart_helper.dart';
+import 'package:breakq/screens/checkout/widgets/cart_products_listing.dart';
+import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
+import 'package:breakq/widgets/card_template.dart';
+import 'package:breakq/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-SliverPersistentHeader makeHeader(BuildContext context, String headerText) {
-  return SliverPersistentHeader(
-    pinned: true,
-    delegate: ServiceHeaderDelegate(
-      minHeight: kPaddingM * 9,
-      maxHeight: kPaddingM * 9,
-      child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: kPaddingL * 2, vertical: kPaddingM),
+class ShowQRModule extends StatelessWidget {
+  ShowQRModule({@required this.billNo});
+  final String billNo;
+
+  @override
+  Widget build(BuildContext context) {
+    return CartHeading(
+      title: 'Show QR Code',
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
           child: Text(
-            headerText,
-            style: Theme.of(context).textTheme.headline5,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            "Order No: ${billNo ?? 123445678990}",
+            style: Theme.of(context).textTheme.caption,
           ),
         ),
-      ),
-    ),
-  );
+        SizedBox(height: kPaddingS),
+        Center(
+          child: QrImage(
+            data: billNo ?? 'ERROR',
+            version: QrVersions.auto,
+            backgroundColor: kWhite,
+            size: 100,
+            gapless: false,
+            // embeddedImage: AssetImage(AssetImages.icon),
+            embeddedImageStyle: QrEmbeddedImageStyle(
+              size: Size(30, 30),
+            ),
+          ),
+        ),
+        SizedBox(height: kPaddingM),
+      ],
+    );
+  }
 }
 
-class ServiceHeaderDelegate extends SliverPersistentHeaderDelegate {
-  ServiceHeaderDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
-  });
-
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
+class CheckoutTypeModule extends StatelessWidget {
+  CheckoutTypeModule({@required this.index, this.isReadOnly = false});
+  final int index;
+  final bool isReadOnly;
   @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => math.max(maxHeight, minHeight);
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
+  Widget build(BuildContext context) {
+    return CartHeading(
+      title: 'Checkout Type',
+      children: [
+        Padding(
+            padding: const EdgeInsets.only(left: kPaddingM),
+            child: CheckoutTypeOption(
+                index: index,
+                onTap: (!isReadOnly)
+                    ? () {
+                        showCheckoutTypeSelector(context);
+                      }
+                    : null)),
+      ],
+    );
   }
 
+  Future<void> showCheckoutTypeSelector(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      builder: (_) => CheckoutTypeSelector(onTap: (index) {
+        BlocProvider.of<CheckoutBloc>(context)
+            .add(CheckoutTypeSelectedChEvent(type: CheckoutType.values[index]));
+      }),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      isDismissible: true,
+    );
+  }
+}
+
+class CheckoutTypeSelector extends StatelessWidget {
+  CheckoutTypeSelector({this.onTap});
+  final ValueSetter<int> onTap;
+
   @override
-  bool shouldRebuild(ServiceHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+  Widget build(BuildContext context) {
+    return CartHeading(
+      title: "Choose a Checkout Type",
+      children: List.generate(
+        3,
+        (index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+            child: CheckoutTypeOption(
+              index: index,
+              onTap: () {
+                Navigator.of(context).pop();
+                onTap(index);
+              },
+            )),
+      ),
+    );
+  }
+}
+
+class CartProductsModule extends StatelessWidget {
+  CartProductsModule({@required this.session});
+  final CheckoutSession session;
+  @override
+  Widget build(BuildContext context) {
+    return CartHeading(
+      title: 'Products',
+      children: [
+        CartProductsReadOnly(
+          products: session.cartProducts.cartItems,
+        )
+      ],
+    );
+  }
+}
+
+class StepShowModule extends StatelessWidget {
+  StepShowModule({@required this.steps, @required this.currentStep});
+  final List<Step> steps;
+  final int currentStep;
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(primaryColor: kBlue900),
+      child: Container(
+        constraints: BoxConstraints(maxHeight: 200),
+        child: CustomStepper(currentStep: currentStep, steps: steps),
+      ),
+    );
+  }
+}
+
+class AdsModule extends StatelessWidget {
+  AdsModule({this.index});
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return CardTemplate(
+      children: [
+        Image(
+          image: AssetImage(AssetImages.ads(index)),
+        )
+      ],
+    );
+  }
+}
+
+class FooterModule extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: 50);
   }
 }

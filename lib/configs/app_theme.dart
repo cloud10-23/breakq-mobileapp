@@ -12,15 +12,15 @@ class AppTheme {
     lightTheme = ThemeData(
       fontFamily: kFontFamily,
       brightness: Brightness.light,
-      accentColor: kPrimaryColor,
+      accentColor: kBlue200,
       primaryColor: kPrimaryColor,
       scaffoldBackgroundColor: const Color(0xfff8f8f8),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color(0xfff5f5f5),
       ),
-      buttonColor: kBlack,
+      buttonColor: kBlue900,
       buttonTheme: const ButtonThemeData(
-        textTheme: ButtonTextTheme.normal,
+        textTheme: ButtonTextTheme.primary,
         minWidth: 88,
         height: 48,
         padding: EdgeInsets.only(left: kPaddingM, right: kPaddingM),
@@ -32,7 +32,7 @@ class AppTheme {
           ),
           borderRadius: BorderRadius.all(Radius.circular(kFormFieldsRadius)),
         ),
-        buttonColor: kBlack,
+        buttonColor: kBlue900,
         disabledColor: Color(0x61000000),
         highlightColor: Color(0x29000000),
         splashColor: Color(0x1f000000),

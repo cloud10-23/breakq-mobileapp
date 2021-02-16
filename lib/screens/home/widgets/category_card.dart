@@ -10,8 +10,8 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+      child: AspectRatio(
+        aspectRatio: 1.0,
         child: Card(
           margin: EdgeInsets.all(1.0),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),

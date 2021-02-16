@@ -16,15 +16,15 @@ The changes that are requested by the client.
 - [x] 21) Add address option function is not working
 - [x] 34) Caption to be changed to "QR code generated" from "Bill gererated"
 - [x] 35) Space can be optimized and products can be displayed with borders
-- [ ] --) Add Price Details in checkout screen
+- [x] --) Add Price Details in checkout screen
 - [ ] --) Add google pay scanner border and/or only subtitle
-- [ ] --) No of quantity and No of items interchange
+- [x] --) No of quantity and No of items interchange
 - [ ] 30) Profile edition
 - [ ] 31) Stock maintenance
-- [ ] 24) Product to be cleared only after payment / Nil payment
+- [x] 24) Product to be cleared only after payment / Nil payment
 - [ ] 33) Delivery charges to be brought
 - [ ] 19) Bill no generation (Invoice generation)
-- [ ] 22) In the checkout screen Advertisement option
+- [x] 22) In the checkout screen Advertisement option
 - [ ] 23) Branch screen
 - [ ] 26) Need Help 27) FAQ
 - [ ] 28) Order History

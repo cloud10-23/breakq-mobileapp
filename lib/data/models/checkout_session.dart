@@ -1,6 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
+import 'package:breakq/data/models/timetable_model.dart';
 
 class ChCurrentStep {
   final CheckoutType checkoutType;
@@ -38,6 +39,9 @@ class CheckoutSession {
     this.apiError = '',
     this.address,
     this.selectedAddress,
+    this.timetables,
+    this.selectedDateRange = 0,
+    this.selectedTimestamp = 0,
   });
 
   CheckoutSession rebuild({
@@ -51,6 +55,9 @@ class CheckoutSession {
     String apiError,
     List<DeliveryAddress> address,
     int selectedAddress,
+    List<TimeSlot> timetables,
+    int selectedDateRange,
+    int selectedTimestamp,
   }) {
     return CheckoutSession(
       currentStep: currentStep ?? this.currentStep,
@@ -63,6 +70,9 @@ class CheckoutSession {
       apiError: apiError ?? '',
       address: address ?? this.address,
       selectedAddress: selectedAddress ?? this.selectedAddress,
+      timetables: timetables ?? this.timetables,
+      selectedDateRange: selectedDateRange ?? this.selectedDateRange,
+      selectedTimestamp: selectedTimestamp ?? this.selectedTimestamp,
     );
   }
 
@@ -73,6 +83,9 @@ class CheckoutSession {
   final String apiError;
   final List<DeliveryAddress> address;
   final int selectedAddress;
+  final List<TimeSlot> timetables;
+  final int selectedDateRange;
+  final int selectedTimestamp;
 
   @override
   String toString() {

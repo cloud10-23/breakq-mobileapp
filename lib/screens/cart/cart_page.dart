@@ -3,8 +3,9 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
+import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/theme_button.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -120,7 +121,7 @@ class _CartPageState extends State<CartPage> {
                       CartScannerOption(),
                       _cartItemsBuilder(context, state),
                       CartFooter(),
-                      PriceDetails(state: state),
+                      PriceDetails(price: (state as CartLoaded).cart.cartValue),
                       EndPadding(),
                     ],
                   ),
@@ -175,7 +176,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       CustomTitle(
                         title: '₹ ' +
-                                (state.cart.cartValue - 10)
+                                (state.cart.cartValue.totalAmnt)
                                     .toStringAsFixed(2) ??
                             "00.00",
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
@@ -193,12 +194,11 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
             Spacer(),
-            FlatButton(
+            RaisedButton(
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
                     .popAndPushNamed(Routes.checkout);
               },
-              color: kBlue900,
               child: Text('Proceed to Checkout',
                   style: Theme.of(context).textTheme.bodyText2.white),
             ),

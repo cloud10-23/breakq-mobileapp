@@ -6,6 +6,9 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/price_model.dart';
+import 'package:breakq/data/models/timetable_model.dart';
+import 'package:breakq/data/repositories/timeslot_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
@@ -30,6 +33,12 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       yield* _mapBackPressedChEvent(event);
     } else if (event is PaymentDoneChEvent) {
       yield* _mapPaymentDoneChEvent(event);
+    } else if (event is LoadTimeSlots) {
+      yield* _mapGetTimetablesCheckoutEventToState(event);
+    } else if (event is DateRangeSetChEvent) {
+      yield* _mapSetDateRangeCheckoutEventToState(event);
+    } else if (event is TimestampSelectedChEvent) {
+      yield* _mapSelectTimestampCheckoutEventToState(event);
     } else if (event is LoadAddressChEvent) {
       yield* _mapLoadAddressChEventToState(event);
     } else if (event is AddressAddedChEvent) {
@@ -63,7 +72,29 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
 
-      final CheckoutSession newSession = session.rebuild(
+      String _routeName = CheckoutNavigatorRoutes.walkin_1;
+      switch (event.type) {
+        case CheckoutType.walkIn:
+          _routeName = CheckoutNavigatorRoutes.walkin_1;
+          break;
+        case CheckoutType.pickUp:
+          add(LoadTimeSlots());
+          _routeName = CheckoutNavigatorRoutes.pickup_1;
+          break;
+        case CheckoutType.delivery:
+          add(LoadAddressChEvent());
+          _routeName = CheckoutNavigatorRoutes.delivery_1;
+          break;
+      }
+
+      getIt
+          .get<AppGlobals>()
+          .globalKeyCheckoutNavigator
+          .currentState
+          .pushReplacementNamed(_routeName);
+
+      final CheckoutSession newSession = CheckoutSession(
+        cartProducts: session.cartProducts,
         currentStep: ChCurrentStep(checkoutType: event.type, step: 0),
       );
 
@@ -83,6 +114,9 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       switch (session.currentStep.checkoutType) {
         case CheckoutType.walkIn:
+
+          /// If the type is Walkin then this will be triggered through API when
+          /// the counter scans the code
           if (session.currentStep.step == 0) {
             newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
@@ -111,53 +145,24 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           break;
         case CheckoutType.pickUp:
           if (session.currentStep.step == 0) {
+            if (session.selectedDateRange < 0 ||
+                session.selectedTimestamp <= 0) {
+              /// Then the user did not select a time slot
+              /// Show an Error dialog
+              yield LoadFailureChState();
+            }
             newSession = session.rebuild(
               billNo: "1234556678",
-              isCompleted: true,
-            );
-            // getIt
-            //     .get<AppGlobals>()
-            //     .globalKeyCheckoutNavigator
-            //     .currentState
-            //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
-            add(ClearCartChEvent());
-          }
-          break;
-        case CheckoutType.delivery:
-          if (session.currentStep.step == 0) {
-            List<DeliveryAddress> address = [
-              DeliveryAddress(
-                name: "Jon Doe",
-                addLine1: "No. 5, 5th Lane",
-                addLine2: "Church Street",
-                cityDistTown: "Riverdale",
-                state: "California",
-                pinCode: "610032",
-                landmark: "DineOut Restraunt",
-                phone: "1234567890",
-              ),
-              DeliveryAddress(
-                name: "Katherine Doe",
-                addLine1: "No. 5, 5th Lane ",
-                addLine2: "Church Street",
-                cityDistTown: "Riverdale",
-                state: "California",
-                pinCode: "610032",
-                landmark: "DineOut Restraunt",
-                phone: "0987654321",
-              ),
-            ];
-            newSession = session.rebuild(
               currentStep: session.currentStep.rebuild(step: 1),
-              billNo: "12345678910",
-              address: address,
             );
             getIt
                 .get<AppGlobals>()
                 .globalKeyCheckoutNavigator
                 .currentState
-                .pushNamed(CheckoutNavigatorRoutes.deliver_1);
+                .pushNamed(CheckoutNavigatorRoutes.pickup_2);
           } else if (session.currentStep.step == 1) {
+            /// This is after the user confirms the self pick up
+            /// Make an API request and conform the order
             newSession = session.rebuild(
               isCompleted: true,
             );
@@ -165,7 +170,47 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
             //     .get<AppGlobals>()
             //     .globalKeyCheckoutNavigator
             //     .currentState
+            //     .pushNamed(CheckoutNavigatorRoutes.pickup_2);
+            add(ClearCartChEvent());
+          }
+          break;
+        case CheckoutType.delivery:
+          if (session.currentStep.step == 0) {
+            add(LoadTimeSlots());
+            Cart cartProducts = Cart(
+              cartValue:
+                  Price.addDelivery(session.cartProducts.cartValue, 10.0),
+              cartItems: session.cartProducts.cartItems,
+              noOfProducts: session.cartProducts.noOfProducts,
+            );
+            newSession = session.rebuild(
+              cartProducts: cartProducts,
+              currentStep: session.currentStep.rebuild(step: 1),
+            );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.delivery_2);
+          } else if (session.currentStep.step == 1) {
+            newSession = session.rebuild(
+              currentStep: session.currentStep.rebuild(step: 2),
+            );
+            getIt
+                .get<AppGlobals>()
+                .globalKeyCheckoutNavigator
+                .currentState
+                .pushNamed(CheckoutNavigatorRoutes.delivery_3);
+            // getIt
+            //     .get<AppGlobals>()
+            //     .globalKeyCheckoutNavigator
+            //     .currentState
             //     .pushNamed(CheckoutNavigatorRoutes.deliver_1);
+          } else if (session.currentStep.step == 2) {
+            newSession = session.rebuild(
+              billNo: "1234556678",
+              isCompleted: true,
+            );
             add(ClearCartChEvent());
           }
           break;
@@ -207,9 +252,88 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     }
   }
 
+  Stream<CheckoutState> _mapGetTimetablesCheckoutEventToState(
+      LoadTimeSlots event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final List<TimeSlot> _timetables =
+          await const TimeSlotRepository().getTimeSlots();
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      final CheckoutSession newSession =
+          session.rebuild(timetables: _timetables);
+
+      yield SessionRefreshSuccessChState(newSession);
+    }
+  }
+
+  Stream<CheckoutState> _mapSetDateRangeCheckoutEventToState(
+      DateRangeSetChEvent event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      if (session.selectedDateRange != event.dateRange) {
+        final CheckoutSession newSession = session.rebuild(
+          selectedDateRange: event.dateRange,
+          selectedTimestamp: 0,
+        );
+
+        yield SessionRefreshSuccessChState(newSession);
+      }
+    }
+  }
+
+  Stream<CheckoutState> _mapSelectTimestampCheckoutEventToState(
+      TimestampSelectedChEvent event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+      if (session.selectedTimestamp != event.timestamp) {
+        final CheckoutSession newSession =
+            session.rebuild(selectedTimestamp: event.timestamp);
+
+        yield SessionRefreshSuccessChState(newSession);
+      }
+    }
+  }
+
   Stream<CheckoutState> _mapLoadAddressChEventToState(
       LoadAddressChEvent event) async* {
-    if (state is SessionRefreshSuccessChState) {}
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+
+      /// Do the API call for loading addresses
+
+      CheckoutSession newSession = session;
+
+      List<DeliveryAddress> address = [
+        DeliveryAddress(
+          name: "Jon Doe",
+          addLine1: "No. 5, 5th Lane",
+          addLine2: "Church Street",
+          cityDistTown: "Riverdale",
+          state: "California",
+          pinCode: "610032",
+          landmark: "DineOut Restraunt",
+          phone: "1234567890",
+        ),
+        DeliveryAddress(
+          name: "Katherine Doe",
+          addLine1: "No. 5, 5th Lane ",
+          addLine2: "Church Street",
+          cityDistTown: "Riverdale",
+          state: "California",
+          pinCode: "610032",
+          landmark: "DineOut Restraunt",
+          phone: "0987654321",
+        ),
+      ];
+      newSession = session.rebuild(
+        address: address,
+      );
+
+      yield SessionRefreshSuccessChState(newSession);
+    }
   }
 
   Stream<CheckoutState> _mapAddressAddedChEventToState() async* {

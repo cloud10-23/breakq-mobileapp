@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/routes.dart';
@@ -7,7 +6,7 @@ import 'package:breakq/main.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
-import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -15,7 +14,6 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/portrait_mode_mixin.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:breakq/widgets/theme_button.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const id = 'Checkout';
@@ -33,8 +31,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
 
   CheckoutSession session;
 
-  String _title = 'Checkout';
-
   @override
   void dispose() {
     super.dispose();
@@ -49,10 +45,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
         GlobalKey(debugLabel: 'checkout_navigator');
   }
 
-  void _nextStep() {
-    BlocProvider.of<CheckoutBloc>(context).add(NextPressedChEvent());
-  }
-
   void _previousStep() {
     BlocProvider.of<CheckoutBloc>(context).add(BackPressedChEvent());
     // if (_currentStep.step >= 1) {
@@ -65,8 +57,15 @@ class _CheckoutScreenState extends State<CheckoutScreen>
 
   Future<bool> _onBackPressed(BuildContext context) async {
     if (session.currentStep.step <= 0) {
-      Navigator.pop(context);
-      return true;
+      await UI.confirmationDialogBox(context,
+          title: "Warning !",
+          cancelButtonText: "No",
+          okButtonText: "Yes",
+          message: "Are you sure you want to cancel checkout?",
+          onConfirmation: () {
+        Navigator.pop(context);
+      });
+      return false;
     }
     _previousStep();
     return false;
@@ -102,174 +101,15 @@ class _CheckoutScreenState extends State<CheckoutScreen>
           }
         }
 
-        return WillPopScope(
-          onWillPop: () => _onBackPressed(context),
-          child: Scaffold(
-            body: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: kPaddingL, left: kPaddingS),
-                  color: kPrimaryColor,
-                  height: kToolbarHeight + kPaddingL,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Spacer(),
-                      Row(
-                        children: [
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: const Icon(Icons.arrow_back),
-                            tooltip: L10n.of(context).commonTooltipInfo,
-                            onPressed: (session.currentStep.step > 0)
-                                ? _previousStep
-                                : null,
-                            disabledColor: kPrimaryColor,
-                          ),
-                          Expanded(
-                            child: Text(
-                              _title,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .w800
-                                  .black,
-                              maxLines: 1,
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            tooltip: L10n.of(context).commonTooltipInfo,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: CheckoutNavigator(
-                    navigatorKey:
-                        getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
-                  ),
-                ),
-              ],
+        return Scaffold(
+          body: WillPopScope(
+            onWillPop: () => _onBackPressed(context),
+            child: CheckoutNavigator(
+              navigatorKey: getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
             ),
-            bottomNavigationBar: _bottomBar(),
           ),
         );
       },
-    );
-  }
-
-  Widget _bottomBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        border: Border(
-          top: BorderSide(
-            width: 2,
-            color: Theme.of(context).dividerColor,
-          ),
-        ),
-      ),
-      padding: const EdgeInsets.all(kPaddingM * 2),
-      child: SafeArea(
-        top: false,
-        child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-          if (state is! CartLoaded) {
-            return Container();
-          }
-          return Row(
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CustomTitle(
-                        title: 'Pay:',
-                        fw: FontWeight.w800,
-                      ),
-                      CustomTitle(
-                        title: (state is CartLoaded)
-                            ? '₹ ' +
-                                (state.cart?.cartValue?.toStringAsFixed(2) ??
-                                    "00.00")
-                            : '₹ 00.00',
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                        fw: FontWeight.w700,
-                      ),
-                    ],
-                  ),
-                  BoldTitle(
-                    title: 'View price details',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: kHyperLinkColor,
-                    isNum: true,
-                  ),
-                  //     Row
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         BoldTitle(
-                  //           title: 'Discount: ',
-                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                  //           color: Colors.green[800],
-                  //           isNum: true,
-                  //         ),
-                  //         BoldTitle(
-                  //           title: (state is CartLoaded)
-                  //               ? '- ₹ ' +
-                  //                   (((state.cart?.orgCartValue ?? 0) -
-                  //                               (state.cart?.cartValue ?? 0))
-                  //                           ?.toStringAsFixed(2) ??
-                  //                       "00.00")
-                  //               : '- ₹ 00.00',
-                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                  //           color: Colors.green[800],
-                  //           isNum: true,
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         BoldTitle(
-                  //           title: 'Tax (GST): ',
-                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                  //           color: Colors.black,
-                  //           fw: FontWeight.w500,
-                  //           isNum: true,
-                  //         ),
-                  //         BoldTitle(
-                  //           title: '₹ 50.00',
-                  //           padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                  //           color: Colors.black87,
-                  //           fw: FontWeight.w500,
-                  //           isNum: true,
-                  //         ),
-                  //       ],
-                  //     ),
-                ],
-              ),
-              Spacer(),
-              ThemeButton(
-                text: ((session?.currentStep?.step ?? 0) >=
-                        totalSteps[session?.currentStep?.checkoutType ?? 0])
-                    ? "Pay"
-                    : "Next",
-                onPressed: _nextStep,
-                disableTouchWhenLoading: true,
-                showLoading: session.isLoading,
-              ),
-            ],
-          );
-        }),
-      ),
     );
   }
 }

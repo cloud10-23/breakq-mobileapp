@@ -1,5 +1,4 @@
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 
@@ -18,17 +17,17 @@ const String kNumberFontFamily = 'Roboto';
 
 // Date/time formats
 const String kDateFormat = 'MMM d, y';
-const String kDateTimeFormat = 'MMM d, y HH:mm';
-const String kTimeFormat = 'HH:mm';
+const String kDateTimeFormat = 'MMM d, y';
+const String kTimeFormat = 'h:mm a';
 
 // Various Sizes
 const double kBottomBarIconSize = 32.0;
 const double kBoxDecorationRadius = 8.0;
 const double kFormFieldsRadius = 6.0;
 const double kRoundedButtonRadius = 24.0;
-const double kCardRadius = 24.0;
+const double kCardRadius = 15.0;
 const double kBadgeRadius = 16.0;
-const double kTimelineDateSize = 88.0;
+const double kTimelineDateSize = 70.0;
 
 // Colors
 const Color kPrimaryColor = Color(0xFFFDC500); //Color(0xFF1565C0);
@@ -51,16 +50,16 @@ const Color kGreen = Color(0xFF2E7D32);
 
 const List<Map<String, Color>> checkoutRadioColors = [
   {
+    "main": Color(0xFFBDD1F2),
+    "sub": Color(0xFFA7C2EA),
+  },
+  {
     "main": Color(0xFFB9D8DA),
     "sub": Color(0xFFA1CBCD),
   },
   {
     "main": Color(0xFFBDDDF2),
     "sub": Color(0xFFA7D1F0),
-  },
-  {
-    "main": Color(0xFFBDD1F2),
-    "sub": Color(0xFFA7C2EA),
   },
 ];
 
@@ -172,8 +171,8 @@ const List<Map<String, String>> quickLinks = [
     'link': Routes.quickShopping,
   },
   {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
-  {'name': 'Cart', 'image': AssetImages.cart, 'link': 'cart'},
-  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'my_order'},
+  {'name': 'Cart', 'image': AssetImages.cart, 'link': Routes.cart},
+  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'orders'},
 ];
 
 /// Cart Bulk Buttons
@@ -200,6 +199,10 @@ class AssetImages {
       'assets/images/illustrations/home-illustration-2.jpg';
   static const String qsIllustration =
       'assets/images/illustrations/qs_illustration.svg';
+  static const String checkoutIllustration =
+      'assets/images/illustrations/checkout-illustration.png';
+  static const String addressIllustration =
+      'assets/images/illustrations/address_illustration.svg';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
@@ -237,6 +240,8 @@ class AssetImages {
   static const String success_plane =
       'assets/images/checkout/success_plane.png';
   static const String success = 'assets/images/checkout/success.png';
+
+  static String ads(int index) => 'assets/images/ads/ad$index.jpeg';
 }
 
 /// Preference keys used to store/read values using [AppPreferences].

@@ -62,7 +62,7 @@ class _CheckoutBaseStepState extends State<CheckoutBaseStep> {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-                  child: CheckoutTypeRadio(index: index, session: session)),
+                  child: CheckoutTypeOption(index: index)),
               childCount: 3,
             ),
           ));
