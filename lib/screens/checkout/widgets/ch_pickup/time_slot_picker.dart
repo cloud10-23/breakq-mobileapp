@@ -1,6 +1,6 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
-import 'package:breakq/screens/cart/widgets/cart_helper.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';

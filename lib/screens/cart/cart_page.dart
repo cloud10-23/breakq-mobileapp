@@ -4,7 +4,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
 import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/theme_button.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';

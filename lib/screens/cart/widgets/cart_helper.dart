@@ -1,49 +1,11 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
-import 'package:breakq/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
-
-class CartHeading extends StatelessWidget {
-  CartHeading({@required this.title, @required this.children});
-
-  final String title;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: kWhite,
-      margin: const EdgeInsets.all(kPaddingS),
-      padding: EdgeInsets.all(kPaddingS),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(kPaddingM),
-                child: BoldTitle(
-                  title: title.toUpperCase(),
-                  padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                  color: Colors.black54,
-                  fw: FontWeight.w600,
-                ),
-              ),
-              Container(
-                height: 0.5,
-                color: Colors.black12,
-              ),
-              SizedBox(height: 5),
-            ] +
-            children,
-      ),
-    );
-  }
-}
 
 class CardTemplate extends StatelessWidget {
   CardTemplate({@required this.children});

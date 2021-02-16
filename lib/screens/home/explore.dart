@@ -6,6 +6,7 @@ import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/bold_title.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -107,34 +108,22 @@ class HomeScreenState extends State<HomeScreen> {
               SizedBox(height: kPaddingBtwnStrips),
               _showQuickStart(),
               SizedBox(height: kPaddingBtwnStrips),
-              BoldTitle(title: 'Top Offers'),
-              _showGridOfImages(2, 4),
-              Row(mainAxisSize: MainAxisSize.min, children: [
-                BoldTitle(title: 'Top Deals'),
-                Spacer(),
-                Text('View All'),
-                Icon(Icons.navigate_next),
+              CartHeading(title: "Top Offers", children: [
+                _showGridOfImages(2, 4),
               ]),
-              _showHorizontalScrollImages(),
+              CartHeading(title: "Top Deals", children: [
+                _showHorizontalScrollImages(),
+              ]),
               SizedBox(height: kPaddingBtwnStrips),
-              Row(mainAxisSize: MainAxisSize.min, children: [
-                BoldTitle(title: "Exclusive Products"),
-                Spacer(),
-                Text('View All'),
-                Icon(Icons.navigate_next),
+              CartHeading(title: "Exclusive Products", children: [
+                ProductsHorizontalView(),
+              ]),
+              SizedBox(height: kPaddingBtwnStrips),
+              CartHeading(title: "Categories", children: [
+                _showCategories(),
               ]),
             ]),
           ),
-          SliverToBoxAdapter(
-            child: ProductsHorizontalView(),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              SizedBox(height: kPaddingBtwnStrips),
-              BoldTitle(title: 'Categories'),
-            ]),
-          ),
-          _showCategories(),
           _endPadding(),
         ],
       ),
@@ -142,14 +131,9 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showQuickStart() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return CartHeading(
+      title: "Quick Links",
       children: [
-        Container(
-            // color: kPrimaryColor,
-            child: BoldTitle(
-          title: 'At home?',
-        )),
         Container(
           // color: kPrimaryColor,
           height: 50 + kPaddingS * 3,
@@ -212,18 +196,18 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showCategories() {
-    return SliverPadding(
-      padding: EdgeInsets.all(kPaddingM),
-      sliver: SliverGrid(
+    return Padding(
+      padding: EdgeInsets.only(bottom: kPaddingM),
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 0.0,
           mainAxisSpacing: 0.0,
         ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) => CategoryCard(index: index),
-          childCount: 9,
-        ),
+        itemBuilder: (context, index) => CategoryCard(index: index),
+        itemCount: 9,
+        shrinkWrap: true,
       ),
     );
   }

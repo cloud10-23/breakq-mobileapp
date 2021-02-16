@@ -4,6 +4,7 @@ import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/checkout/widgets/cart_products_listing.dart';
 import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
+import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
