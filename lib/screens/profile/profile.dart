@@ -249,7 +249,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               );
                             }),
                           ),
-                          SizedBox(height: kPaddingL),
+                          SizedBox(height: 100),
                         ],
                       ),
                     ),
