@@ -143,14 +143,11 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
 }
 
 class DisplaySelectedAddress extends StatelessWidget {
-  DisplaySelectedAddress({@required this.session});
+  DisplaySelectedAddress({@required this.address});
 
-  final CheckoutSession session;
+  final DeliveryAddress address;
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex =
-        session.selectedAddress ?? 0; //Get the selected address
-    final DeliveryAddress _address = session.address[_selectedIndex];
     final Widget _child = Padding(
       padding: const EdgeInsets.symmetric(
           vertical: kPaddingM * 1.5, horizontal: kPaddingL),
@@ -158,14 +155,14 @@ class DisplaySelectedAddress extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            _address.name,
+            address.name,
             style: Theme.of(context).textTheme.bodyText2.w600,
           ),
           SizedBox(height: kPaddingM),
-          Text(_address.getFullAddress(),
+          Text(address.getFullAddress(),
               style: Theme.of(context).textTheme.caption.w500),
           SizedBox(height: kPaddingS),
-          Text("Phone: " + _address.phone,
+          Text("Phone: " + address.phone,
               style: Theme.of(context).textTheme.caption.w700),
         ],
       ),

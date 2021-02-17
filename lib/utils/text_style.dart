@@ -15,6 +15,7 @@ extension TextStyleExtension on TextStyle {
 
   TextStyle get fs8 => copyWith(fontSize: 8);
   TextStyle get fs10 => copyWith(fontSize: 10);
+  TextStyle get fs12 => copyWith(fontSize: 12);
   TextStyle get fs14 => copyWith(fontSize: 14);
   TextStyle get fs16 => copyWith(fontSize: 16);
   TextStyle get fs18 => copyWith(fontSize: 18);

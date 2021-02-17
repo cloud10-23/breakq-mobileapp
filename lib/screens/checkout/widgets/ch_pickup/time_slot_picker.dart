@@ -120,13 +120,11 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
 }
 
 class DisplaySelectedTimeSlot extends StatelessWidget {
-  DisplaySelectedTimeSlot({@required this.session});
+  DisplaySelectedTimeSlot({@required this.time});
 
-  final CheckoutSession session;
+  final DateTime time;
   @override
   Widget build(BuildContext context) {
-    final DateTime time =
-        DateTime.fromMillisecondsSinceEpoch(session.selectedTimestamp);
     return CartHeading(title: "Time Slot", children: [
       Padding(
         padding: const EdgeInsets.only(left: kPaddingL),

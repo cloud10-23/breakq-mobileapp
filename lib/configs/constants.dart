@@ -172,7 +172,7 @@ const List<Map<String, String>> quickLinks = [
   },
   {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
   {'name': 'Cart', 'image': AssetImages.cart, 'link': Routes.cart},
-  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': 'orders'},
+  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': Routes.orders},
 ];
 
 /// Cart Bulk Buttons
@@ -203,6 +203,8 @@ class AssetImages {
       'assets/images/illustrations/checkout-illustration.png';
   static const String addressIllustration =
       'assets/images/illustrations/address_illustration.svg';
+  static const String orderIllustration =
+      'assets/images/illustrations/orders-illustration.jpg';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
@@ -218,6 +220,8 @@ class AssetImages {
 
   static const String cat = 'assets/images/categories/cat';
 
+  static const String shop = 'assets/images/store_icon.jpeg';
+
   static const String quickShopping = 'assets/images/quick_shopping.png';
   static const String setBudget = 'assets/images/orders.png';
   static const String scan = 'assets/images/Scan.png';
@@ -227,6 +231,8 @@ class AssetImages {
 
   //Product Images
   static const String maggi = 'assets/images/products/maggi.jpeg';
+  static const String dove = 'assets/images/products/dove.jpeg';
+  static const String wheat = 'assets/images/products/wheat.jpeg';
 
   /// TopOffer Stock Images
   static String topOffers(int colIndex, int rowIndex) =>

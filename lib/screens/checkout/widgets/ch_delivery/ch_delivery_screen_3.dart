@@ -82,13 +82,16 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
         )));
 
         _listItems.add(SliverToBoxAdapter(
-            child: DisplaySelectedAddress(session: session)));
+            child: DisplaySelectedAddress(
+                address: session.address[session.selectedAddress ?? 0])));
 
         _listItems.add(SliverToBoxAdapter(
-            child: DisplaySelectedTimeSlot(session: session)));
+            child: DisplaySelectedTimeSlot(
+          time: DateTime.fromMillisecondsSinceEpoch(session.selectedTimestamp),
+        )));
 
         _listItems.add(SliverToBoxAdapter(
-          child: CartProductsModule(session: session),
+          child: CartProductsModule(products: session.cartProducts.cartItems),
         ));
 
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));

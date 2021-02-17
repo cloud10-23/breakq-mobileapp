@@ -95,7 +95,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             title: L10n.of(context).orderListMyOrders,
                             leading: Icon(Icons.my_library_books, size: 15),
                             trailing: const ArrowRightIcon(),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.of(context, rootNavigator: true)
+                                  .pushNamed(Routes.orders);
+                            },
                           ),
                           SizedBox(height: kPaddingL),
                           ListTitle(

@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/checkout/widgets/cart_products_listing.dart';
 import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
@@ -112,15 +113,15 @@ class CheckoutTypeSelector extends StatelessWidget {
 }
 
 class CartProductsModule extends StatelessWidget {
-  CartProductsModule({@required this.session});
-  final CheckoutSession session;
+  CartProductsModule({@required this.products});
+  final Map<Product, int> products;
   @override
   Widget build(BuildContext context) {
     return CartHeading(
       title: 'Products',
       children: [
         CartProductsReadOnly(
-          products: session.cartProducts.cartItems,
+          products: products,
         )
       ],
     );
