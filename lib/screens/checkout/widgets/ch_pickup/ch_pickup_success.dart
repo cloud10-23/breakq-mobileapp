@@ -18,7 +18,7 @@ class _PickupCheckoutSuccessDialogState
     Future.delayed(durationBeforeClose).then((_) {
       if (mounted) {
         Navigator.of(context, rootNavigator: true)
-            .popAndPushNamed(Routes.orders);
+            .popAndPushNamed(Routes.order_detail);
       }
     });
   }

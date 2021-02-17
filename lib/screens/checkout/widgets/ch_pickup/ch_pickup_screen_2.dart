@@ -76,10 +76,12 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
         )));
 
         _listItems.add(SliverToBoxAdapter(
-            child: DisplaySelectedTimeSlot(session: session)));
+            child: DisplaySelectedTimeSlot(
+                time: DateTime.fromMillisecondsSinceEpoch(
+                    session.selectedTimestamp))));
 
         _listItems.add(SliverToBoxAdapter(
-          child: CartProductsModule(session: session),
+          child: CartProductsModule(products: session.cartProducts.cartItems),
         ));
 
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));

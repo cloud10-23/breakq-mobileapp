@@ -231,6 +231,8 @@ class AssetImages {
 
   //Product Images
   static const String maggi = 'assets/images/products/maggi.jpeg';
+  static const String dove = 'assets/images/products/dove.jpeg';
+  static const String wheat = 'assets/images/products/wheat.jpeg';
 
   /// TopOffer Stock Images
   static String topOffers(int colIndex, int rowIndex) =>

@@ -10,6 +10,7 @@ import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dar
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/orders/my_orders.dart';
+import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
@@ -113,7 +114,7 @@ class Routes {
         );
       case order_detail:
         return MaterialPageRoute<CheckoutScreen>(
-          builder: (BuildContext context) => MyOrders(),
+          builder: (BuildContext context) => OrderDetails(),
         );
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
