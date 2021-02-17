@@ -1,9 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
-import 'package:breakq/screens/checkout/ch_base_step.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
-import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_3.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_2.dart';
@@ -11,6 +9,7 @@ import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_1.dar
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
 import 'package:breakq/screens/listing/listing.dart';
+import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/onboarding/sign_in.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
@@ -42,6 +41,8 @@ class Routes {
   static const String checkout = '/checkout';
   static const String cart = '/cart';
   static const String add_address = '/add_address';
+  static const String orders = '/orders';
+  static const String order_detail = '/orders/detail';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -106,6 +107,14 @@ class Routes {
         );
       case add_address:
         return SlideRoute(widget: AddEditAddress());
+      case orders:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => MyOrders(),
+        );
+      case order_detail:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => MyOrders(),
+        );
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
       //     builder: (BuildContext context) {

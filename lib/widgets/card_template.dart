@@ -3,10 +3,12 @@ import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 
 class CartHeading extends StatelessWidget {
-  CartHeading({@required this.title, @required this.children});
+  CartHeading(
+      {@required this.title, @required this.children, this.isCaps = true});
 
   final String title;
   final List<Widget> children;
+  final bool isCaps;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class CartHeading extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(kPaddingM),
                 child: BoldTitle(
-                  title: title.toUpperCase(),
+                  title: (isCaps) ? title.toUpperCase() : title,
                   padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                   color: Colors.black54,
                   fw: FontWeight.w600,

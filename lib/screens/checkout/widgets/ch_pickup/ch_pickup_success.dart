@@ -1,3 +1,4 @@
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_success_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,10 @@ class _PickupCheckoutSuccessDialogState
   void initState() {
     super.initState();
     Future.delayed(durationBeforeClose).then((_) {
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        Navigator.of(context, rootNavigator: true)
+            .popAndPushNamed(Routes.orders);
+      }
     });
   }
 

@@ -69,6 +69,68 @@ class CheckoutTypeOption extends StatelessWidget {
   }
 }
 
+class CheckoutTypeSmall extends StatelessWidget {
+  CheckoutTypeSmall({@required this.index, this.onTap});
+
+  final int index;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    CheckoutType _type = CheckoutType.values[index];
+    return Container(
+      padding: EdgeInsets.zero,
+      constraints: BoxConstraints.tight(Size.fromHeight(50)),
+      child: Card(
+        child: InkWell(
+          child: CustomPaint(
+              painter: RadioCustomPainter(index: index),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Row(
+                  children: [
+                    Flexible(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: Image(
+                              image: AssetImage(
+                                  AssetImages.checkoutImages(index))),
+                        )),
+                    Spacer(),
+                    Expanded(
+                      flex: 10,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Bill Type:  ',
+                            style:
+                                Theme.of(context).textTheme.subtitle2.fs10.w500,
+                          ),
+                          Text(
+                            CheckoutTypes.typeToString(_type),
+                            style:
+                                Theme.of(context).textTheme.caption.fs12.w800,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    if (onTap != null)
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black45,
+                      ),
+                  ],
+                ),
+              )),
+          onTap: onTap ?? () {},
+        ),
+      ),
+    );
+  }
+}
+
 class RadioCustomPainter extends CustomPainter {
   RadioCustomPainter({this.index});
 
