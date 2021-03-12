@@ -48,8 +48,8 @@ class ExclProductsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      padding: EdgeInsets.all(1.0),
+      width: 120,
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
         product: Product(

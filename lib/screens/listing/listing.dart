@@ -187,6 +187,7 @@ class ListingState extends State<Listing> {
                 slivers: <Widget>[
                   SliverAppBar(
                     backgroundColor: kWhite,
+                    toolbarHeight: 45,
                     primary: true,
                     title: Text(widget.title ?? "Category Name",
                         style: Theme.of(context).textTheme.bodyText1.bold),
@@ -200,6 +201,7 @@ class ListingState extends State<Listing> {
                   SliverAppBar(
                     primary: false,
                     // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    toolbarHeight: 45,
                     floating: true,
                     titleSpacing: 0.0,
                     leadingWidth: 0.0,

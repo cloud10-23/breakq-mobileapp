@@ -13,7 +13,6 @@ import 'package:breakq/screens/profile/widgets/profile_info.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
-import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/list_title.dart';
 
 class DrawerScreen extends StatefulWidget {

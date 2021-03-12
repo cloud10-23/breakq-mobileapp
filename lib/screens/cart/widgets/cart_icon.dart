@@ -9,7 +9,8 @@ class CartIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: kPaddingL),
+      padding:
+          const EdgeInsets.symmetric(horizontal: kPaddingS, vertical: 12.0),
       child: InkWell(
           onTap: () {
             Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart);
@@ -19,13 +20,13 @@ class CartIconButton extends StatelessWidget {
             builder: (context, state) {
               if (state is CartLoaded) {
                 return FlutterBadge(
-                  icon: Icon(Icons.shopping_cart_sharp),
+                  icon: Image(image: AssetImage(AssetImages.cartIcon)),
                   textSize: 8.0,
                   itemCount: state?.cart?.noOfProducts ?? 0,
                 );
               }
               return FlutterBadge(
-                icon: Icon(Icons.shopping_cart_sharp),
+                icon: Image(image: AssetImage(AssetImages.cartIcon)),
                 itemCount: 0,
               );
             },

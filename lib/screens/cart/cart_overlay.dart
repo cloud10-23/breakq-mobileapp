@@ -39,18 +39,20 @@ class CartFloatingButton extends StatelessWidget {
     return Container(
       child: FloatingActionButton(
           heroTag: null,
-          backgroundColor: kBlue,
+          backgroundColor: kWhite,
           onPressed: () =>
               Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart),
           child: BlocBuilder<CartBloc, CartState>(
             builder: (context, state) {
               if (state is CartLoaded)
-                return FlutterBadge(
-                  icon: Image(
-                    image: AssetImage(AssetImages.cart),
-                    color: Colors.white,
+                return Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: FlutterBadge(
+                    icon: Image(
+                      image: AssetImage(AssetImages.cartIcon),
+                    ),
+                    itemCount: state?.cart?.noOfProducts ?? 0,
                   ),
-                  itemCount: state?.cart?.noOfProducts ?? 0,
                 );
               return FlutterBadge(
                 icon: Image(
@@ -81,7 +83,7 @@ class CartButton extends StatelessWidget {
         child: Row(
           children: [
             Spacer(flex: 3),
-            Image(height: 25, image: AssetImage(AssetImages.cart)),
+            Image(height: 25, image: AssetImage(AssetImages.cartIcon)),
             Spacer(),
             BoldTitle(title: '( $totalItems )'),
             Spacer(),
@@ -99,8 +101,7 @@ class CartButton extends StatelessWidget {
 class ScanFloatingButtonExtended extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-        padding: EdgeInsets.zero,
+    return TextButton(
         onPressed: () => BarcodeScanner().scan(context),
         // onPressed: () => Navigator.pushNamed(context, Routes.scan),
         child: Container(

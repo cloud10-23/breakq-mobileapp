@@ -5,7 +5,6 @@ import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
-import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +46,7 @@ class HomeScreenState extends State<HomeScreen> {
         slivers: <Widget>[
           SliverAppBar(
             elevation: 0.0,
-            toolbarHeight: 35,
+            toolbarHeight: 45,
             iconTheme: IconThemeData(color: kBlack),
             actionsIconTheme: IconThemeData(color: kBlack),
             title: Text("Home"),
@@ -60,11 +59,15 @@ class HomeScreenState extends State<HomeScreen> {
             // ),
             pinned: true,
             actions: [
-              IconButton(
-                icon: Icon(Icons.notifications),
-                onPressed: () {},
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: InkWell(
+                  child: Image(image: AssetImage(AssetImages.notification)),
+                  onTap: () {},
+                ),
               ),
               CartIconButton(),
+              SizedBox(width: kPaddingM),
             ],
           ),
           // SliverPersistentHeader(
@@ -108,19 +111,30 @@ class HomeScreenState extends State<HomeScreen> {
               SizedBox(height: kPaddingBtwnStrips),
               _showQuickStart(),
               SizedBox(height: kPaddingBtwnStrips),
-              CartHeading(title: "Top Offers", children: [
+              HomeHeading(image: AssetImages.banner_to, children: [
                 _showGridOfImages(2, 4),
               ]),
               SizedBox(height: kPaddingBtwnStrips),
-              CartHeading(title: "Top Deals", children: [
+              HomeHeading(image: AssetImages.banner_td, children: [
                 _showHorizontalScrollImages(),
               ]),
               SizedBox(height: kPaddingBtwnStrips),
-              CartHeading(title: "Exclusive Products", children: [
-                ProductsHorizontalView(),
-              ]),
+              HomeHeading(
+                image: AssetImages.banner_exc2,
+                children: [
+                  HomeCard(image: AssetImages.banner_brick, children: [
+                    SizedBox(
+                      height: 75,
+                    ),
+                    ProductsHorizontalView(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ]),
+                ],
+              ),
               SizedBox(height: kPaddingBtwnStrips),
-              CartHeading(title: "Categories", children: [
+              HomeHeading(image: AssetImages.banner_cat, children: [
                 _showCategories(),
               ]),
             ]),
@@ -132,8 +146,8 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showQuickStart() {
-    return CartHeading(
-      title: "Quick Links",
+    return HomeHeading(
+      image: AssetImages.banner_qs,
       children: [
         Container(
           // color: kPrimaryColor,
@@ -201,6 +215,7 @@ class HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.only(bottom: kPaddingM),
       child: GridView.builder(
         physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 0.0,
@@ -216,7 +231,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget _endPadding() {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 200,
+        height: 150,
       ),
     );
   }

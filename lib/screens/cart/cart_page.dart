@@ -52,7 +52,7 @@ class _CartPageState extends State<CartPage> {
                     title: Row(
                       children: [
                         Image(
-                          image: AssetImage(AssetImages.cart),
+                          image: AssetImage(AssetImages.cartIcon),
                           height: 25,
                           // color: kWhite,
                         ),

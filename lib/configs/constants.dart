@@ -74,7 +74,7 @@ const double kButtonHeight = 45.0;
 const double kSocialButtonHeight = kButtonHeight * 1.5;
 
 /// Height beiween home strips
-const double kPaddingBtwnStrips = 8.0;
+const double kPaddingBtwnStrips = 15.0;
 
 // Avatar sizes
 const double kCircleAvatarSizeRadiusAppBar = 20.0;
@@ -172,7 +172,7 @@ const List<Map<String, String>> quickLinks = [
   },
   {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
   {'name': 'Cart', 'image': AssetImages.cart, 'link': Routes.cart},
-  {'name': 'My Orders', 'image': AssetImages.setBudget, 'link': Routes.orders},
+  {'name': 'My Orders', 'image': AssetImages.myOrders, 'link': Routes.orders},
 ];
 
 /// Cart Bulk Buttons
@@ -222,17 +222,32 @@ class AssetImages {
 
   static const String shop = 'assets/images/store_icon.jpeg';
 
-  static const String quickShopping = 'assets/images/quick_shopping.png';
-  static const String setBudget = 'assets/images/orders.png';
-  static const String scan = 'assets/images/Scan.png';
+  static const String cartIcon = 'assets/images/icons/quick_shopping_3_c.png';
+
+  static const String quickShopping =
+      'assets/images/icons/quick_shopping_blue.png';
+  static const String setBudget = 'assets/images/icons/piggy.png';
+  static const String myOrders = 'assets/images/icons/wallet.png';
+  static const String cart = 'assets/images/icons/cart.png';
+
+  static const String notification = 'assets/images/icons/loudspeaker_a.png';
 
   static const String orDivider = 'assets/images/or.png';
-  static const String cart = 'assets/images/cart.png';
+  static const String scan = 'assets/images/Scan.png';
 
   //Product Images
   static const String maggi = 'assets/images/products/maggi.jpeg';
   static const String dove = 'assets/images/products/dove.jpeg';
   static const String wheat = 'assets/images/products/wheat.jpeg';
+
+  /// Banners
+  static const String banner_qs = 'assets/images/banners/B1.png';
+  static const String banner_to = 'assets/images/banners/B2.png';
+  static const String banner_td = 'assets/images/banners/B3.png';
+
+  static const String banner_exc2 = 'assets/images/banners/Exclusive4.png';
+  static const String banner_cat = 'assets/images/banners/Categories3.png';
+  static const String banner_brick = 'assets/images/banners/brick.jpg';
 
   /// TopOffer Stock Images
   static String topOffers(int colIndex, int rowIndex) =>

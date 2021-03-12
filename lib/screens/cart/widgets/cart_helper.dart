@@ -40,7 +40,7 @@ class CartEmptyScreen extends StatelessWidget {
             title: Row(
               children: [
                 Image(
-                  image: AssetImage(AssetImages.cart),
+                  image: AssetImage(AssetImages.cartIcon),
                   height: 25,
                   // color: kWhite,
                 ),

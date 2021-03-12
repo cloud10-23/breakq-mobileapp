@@ -40,3 +40,51 @@ class CartHeading extends StatelessWidget {
     );
   }
 }
+
+class HomeHeading extends StatelessWidget {
+  HomeHeading({@required this.image, @required this.children});
+
+  final String image;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kWhite,
+      margin: const EdgeInsets.all(kPaddingS),
+      // padding: EdgeInsets.all(kPaddingS),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+              Image(
+                image: AssetImage(image),
+              ),
+              SizedBox(height: 5.0)
+            ] +
+            children,
+      ),
+    );
+  }
+}
+
+class HomeCard extends StatelessWidget {
+  HomeCard({@required this.image, @required this.children});
+
+  final String image;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: children,
+      ),
+    );
+  }
+}
