@@ -34,21 +34,21 @@ dependencies:
   path: null
 
   # A simple Service Locator.
-  get_it: ^5.0.1
+  get_it: ^6.0.0
   # BLoC Design Pattern (Business Logic Component)
   bloc: ^6.1.0
   # Widgets that make it easy to integrate blocs and cubits into Flutter.
   flutter_bloc: ^6.1.1
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode.
-  equatable: ^1.2.5
+  equatable: ^2.0.0
   # Dart implementation of sprintf.
-  sprintf: ^5.0.0
+  sprintf: ^6.0.0
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
-  shared_preferences: ^0.5.12
+  shared_preferences: ^2.0.4
   # A Flutter plugin to easily handle realtime location in iOS and Android.
-  location: ^3.0.2
+  location: ^4.0.0-nullsafety.0
   # Introduction/Onboarding package for flutter app with some customizations possibilities.
-  introduction_screen: ^1.0.9
+  introduction_screen: ^2.0.0
   # A package provides an easy way to add shimmer effect in Flutter project.
   shimmer: ^1.1.1
   # A widget provided to the flutter scroll component drop-down refresh and pull up load.
@@ -70,16 +70,16 @@ dependencies:
   # Slidable list item with directional slide actions that can be dismissed.
   # flutter_slidable: ^0.5.7
   # A Markdown renderer for Flutter.
-  flutter_markdown: ^0.4.4
+  flutter_markdown: ^0.6.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
   #Firebase Deps
-  firebase_core: "0.5.2+1"
-  firebase_auth: "^0.18.3+1"
-  google_sign_in: ^4.5.6
-  flutter_facebook_auth: ^1.0.2+2
+  firebase_core: ^0.8.0-nullsafety.1
+  firebase_auth: ^0.21.0-nullsafety.0
+  google_sign_in: ^5.0.0
+  flutter_facebook_auth: ^2.0.2+1
 
   #Barcode Scanning
   # qrscan: ^0.2.21
@@ -90,7 +90,7 @@ dependencies:
   speech_to_text: ^3.1.0
 
   # SVG Assets
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.21.0-nullsafety.0
 
   flutter_badged: ^1.0.3
   fancy_bottom_navigation: ^0.3.2
@@ -98,7 +98,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.8.1"
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   image_path: "assets/images/icon_new.jpeg"
