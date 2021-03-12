@@ -173,88 +173,89 @@ class ListingState extends State<Listing> {
         final SearchSessionModel session =
             (state as RefreshSuccessHomeState).session;
 
-        /// Lets see what's in it and show the results on the screen.
-        return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark,
-          child: Scaffold(
-            key: _scaffoldKey,
-            endDrawerEnableOpenDragGesture: false,
-            endDrawer: SearchFilterDrawer(),
-            body: LoadingOverlay(
-              isLoading: session.isLoading,
-              child: CustomScrollView(
-                controller: _customScrollViewController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    backgroundColor: kWhite,
-                    toolbarHeight: 45,
-                    primary: true,
-                    title: Text(widget.title ?? "Category Name",
-                        style: Theme.of(context).textTheme.bodyText1.bold),
-                    actions: [
-                      SearchIconButton(),
-                      VoiceIconButton(),
-                      CartIconButton(),
-                    ],
-                    pinned: true,
+        return Scaffold(
+          key: _scaffoldKey,
+          endDrawerEnableOpenDragGesture: false,
+          endDrawer: SearchFilterDrawer(),
+          body: LoadingOverlay(
+            isLoading: session.isLoading,
+            child: CustomScrollView(
+              controller: _customScrollViewController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: kWhite,
+                  toolbarHeight: 50,
+                  primary: true,
+                  title: Text(widget.title ?? "Category Name",
+                      style: Theme.of(context).textTheme.bodyText1.bold),
+                  automaticallyImplyLeading: true,
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context),
                   ),
-                  SliverAppBar(
-                    primary: false,
-                    // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    toolbarHeight: 45,
-                    floating: true,
-                    titleSpacing: 0.0,
-                    leadingWidth: 0.0,
-                    title: SearchListToolbar(
-                      searchSortTypes: searchSortTypes,
-                      currentSort: session.currentSort,
-                      onFilterTap: () {
-                        _scaffoldKey.currentState.openEndDrawer();
-                      },
-                      onSortChange: (ToolbarOptionModel newSort) {
-                        _homeBloc.add(SortOrderChangedHomeEvent(newSort));
-                      },
-                      products: session.products,
-                      currentListType: session.currentListType,
-                      searchListTypes: searchListTypes,
-                      onListTypeChange: (ToolbarOptionModel newListType) =>
-                          _homeBloc.add(ListTypeChangedHomeEvent(newListType)),
-                    ),
-                    actions: <Widget>[Container()], // remove the hamburger menu
-                    leading: Container(), // remove back button
+                  actions: [
+                    SearchIconButton(),
+                    VoiceIconButton(),
+                    CartIconButton(),
+                  ],
+                  pinned: true,
+                ),
+                SliverAppBar(
+                  primary: false,
+                  // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  toolbarHeight: 45,
+                  floating: true,
+                  titleSpacing: 0.0,
+                  leadingWidth: 0.0,
+                  title: SearchListToolbar(
+                    searchSortTypes: searchSortTypes,
+                    currentSort: session.currentSort,
+                    onFilterTap: () {
+                      _scaffoldKey.currentState.openEndDrawer();
+                    },
+                    onSortChange: (ToolbarOptionModel newSort) {
+                      _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                    },
+                    products: session.products,
+                    currentListType: session.currentListType,
+                    searchListTypes: searchListTypes,
+                    onListTypeChange: (ToolbarOptionModel newListType) =>
+                        _homeBloc.add(ListTypeChangedHomeEvent(newListType)),
                   ),
-                  SliverList(
-                    delegate: SliverChildListDelegate(<Widget>[
-                      if (session.products.isNotNullOrEmpty)
-                        ProductListing(
-                          products: session.products,
-                          currentListType: session.currentListType,
-                        ),
-                    ]),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: 120.0),
-                  ),
-                ],
-              ),
+                  actions: <Widget>[Container()], // remove the hamburger menu
+                  leading: Container(), // remove back button
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    if (session.products.isNotNullOrEmpty)
+                      ProductListing(
+                        products: session.products,
+                        currentListType: session.currentListType,
+                      ),
+                  ]),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 120.0),
+                ),
+              ],
             ),
-            // floatingActionButton: Visibility(
-            //   visible: !session.isLoading && session.products.isNotNullOrEmpty,
-            //   child: FloatingActionButton(
-            //     tooltip: L10n.of(context).searchTooltipMap,
-            //     elevation: 3,
-            //     onPressed: () {
-            //       Navigator.pushNamed(
-            //         context,
-            //         Routes.searchMap,
-            //         arguments: <String, dynamic>{'locations': session.products},
-            //       );
-            //     },
-            //     child: const Icon(Icons.near_me, color: kWhite),
-            //     backgroundColor: kPrimaryColor,
-            //   ),
-            // ),
           ),
+          // floatingActionButton: Visibility(
+          //   visible: !session.isLoading && session.products.isNotNullOrEmpty,
+          //   child: FloatingActionButton(
+          //     tooltip: L10n.of(context).searchTooltipMap,
+          //     elevation: 3,
+          //     onPressed: () {
+          //       Navigator.pushNamed(
+          //         context,
+          //         Routes.searchMap,
+          //         arguments: <String, dynamic>{'locations': session.products},
+          //       );
+          //     },
+          //     child: const Icon(Icons.near_me, color: kWhite),
+          //     backgroundColor: kPrimaryColor,
+          //   ),
+          // ),
         );
       },
     );

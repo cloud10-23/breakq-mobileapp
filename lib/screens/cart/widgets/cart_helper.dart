@@ -122,7 +122,9 @@ class CartScannerOption extends StatelessWidget {
     return InkWell(
       onTap: () => BarcodeScanner().scan(context),
       child: Container(
-        color: kBlue,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(AssetImages.banner), fit: BoxFit.fill)),
         margin: const EdgeInsets.symmetric(
             vertical: kPaddingL, horizontal: kPaddingS),
         padding: EdgeInsets.all(kPaddingS),

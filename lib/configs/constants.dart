@@ -249,6 +249,8 @@ class AssetImages {
   static const String banner_cat = 'assets/images/banners/Categories3.png';
   static const String banner_brick = 'assets/images/banners/brick.jpg';
 
+  static const String banner = 'assets/images/banners/banner-4.jpg';
+
   /// TopOffer Stock Images
   static String topOffers(int colIndex, int rowIndex) =>
       'assets/images/offers/Offer($colIndex,$rowIndex).png';

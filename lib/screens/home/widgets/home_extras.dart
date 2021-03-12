@@ -15,7 +15,7 @@ class GridImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
+      onTap: () => Navigator.pushNamed(context, Routes.listing),
       child: Card(
         margin: EdgeInsets.all(1.0),
         child: Image(

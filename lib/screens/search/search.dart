@@ -34,11 +34,8 @@ class _SearchBarState extends State<SearchBar> {
                     textInputAction: TextInputAction.search,
                     onSubmitted: (value) {
                       Navigator.pop(context);
-                      getIt
-                          .get<AppGlobals>()
-                          .globalKeyCustomNavigator
-                          .currentState
-                          .pushNamed(CustomNavigatorRoutes.listing);
+                      Navigator.of(context, rootNavigator: true)
+                          .pushNamed(Routes.listing);
                     }),
               ),
               IconButton(
@@ -62,11 +59,8 @@ class _SearchBarState extends State<SearchBar> {
           itemBuilder: (context, index) => ListItem(
             onPressed: () {
               Navigator.pop(context);
-              getIt
-                  .get<AppGlobals>()
-                  .globalKeyCustomNavigator
-                  .currentState
-                  .pushNamed(CustomNavigatorRoutes.listing);
+              Navigator.of(context, rootNavigator: true)
+                  .pushNamed(Routes.listing);
             },
             leading: Image(image: AssetImage(AssetImages.maggi), height: 80),
             title: "Suggestion ${index + 1}",

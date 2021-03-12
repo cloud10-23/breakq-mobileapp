@@ -9,7 +9,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, CustomNavigatorRoutes.listing),
+      onTap: () => Navigator.pushNamed(context, Routes.listing),
       child: AspectRatio(
         aspectRatio: 1.0,
         child: Card(

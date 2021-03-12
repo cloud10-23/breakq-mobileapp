@@ -49,8 +49,6 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         GlobalKey(debugLabel: 'home_screen');
     getIt.get<AppGlobals>().globalKeySearchScreen =
         GlobalKey(debugLabel: 'search_screen');
-    getIt.get<AppGlobals>().globalKeyCustomNavigator =
-        GlobalKey(debugLabel: 'home_navigator');
     _initBlocs();
 
     super.initState();
@@ -122,10 +120,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
 
           // if (appState is SetupSuccessApplicationState) {
           homeWidget = Base(
-              homeScreen: HomeScreen(
-                key: getIt.get<AppGlobals>().globalKeySearchScreen,
-              ),
-              navigatorKey: getIt.get<AppGlobals>().globalKeyCustomNavigator);
+            homeScreen: HomeScreen(
+              key: getIt.get<AppGlobals>().globalKeySearchScreen,
+            ),
+          );
           // } else if (appState is OnboardingInProgressApplicationState) {
           //   homeWidget = const OnboardingScreen();
           // } else {

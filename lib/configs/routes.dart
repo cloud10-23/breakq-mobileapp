@@ -44,6 +44,7 @@ class Routes {
   static const String add_address = '/add_address';
   static const String orders = '/orders';
   static const String order_detail = '/orders/detail';
+  static const String listing = '/listing';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -116,6 +117,13 @@ class Routes {
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) => OrderDetails(),
         );
+
+      case listing:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => Listing(
+            title: routeSettings?.arguments ?? null,
+          ),
+        );
       // case scan:
       //   return MaterialPageRoute<PhotoGalleryScreen>(
       //     builder: (BuildContext context) {
@@ -146,40 +154,40 @@ class Routes {
 /// https://medium.com/coding-with-flutter/flutter-case-study-multiple-navigators-with-bottomnavigationbar-90eb6caa6dbf
 ///
 
-class CustomNavigatorRoutes {
-  static const String home = '/';
-  static const String listing = '/listing';
-  static const String qs = '/quick_shopping';
-}
+// class CustomNavigatorRoutes {
+//   static const String home = '/';
+//   static const String listing = '/listing';
+//   static const String qs = '/quick_shopping';
+// }
 
-class CustomNavigator extends StatelessWidget {
-  CustomNavigator({this.navigatorKey, this.homeScreen});
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Widget homeScreen;
+// class CustomNavigator extends StatelessWidget {
+//   CustomNavigator({this.navigatorKey, this.homeScreen});
+//   final GlobalKey<NavigatorState> navigatorKey;
+//   final Widget homeScreen;
 
-  Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
-      BuildContext context) {
-    return {
-      CustomNavigatorRoutes.home: (context, settings) => homeScreen,
-      CustomNavigatorRoutes.listing: (context, settings) => Listing(
-            title: settings?.arguments ?? null,
-          ),
-    };
-  }
+//   Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
+//       BuildContext context) {
+//     return {
+//       CustomNavigatorRoutes.home: (context, settings) => homeScreen,
+//       CustomNavigatorRoutes.listing: (context, settings) => Listing(
+//             title: settings?.arguments ?? null,
+//           ),
+//     };
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    var routeBuilders = _routeBuilders(context);
-    return Navigator(
-        key: navigatorKey,
-        initialRoute: CustomNavigatorRoutes.home,
-        onGenerateRoute: (routeSettings) {
-          return SlideRoute(
-              widget:
-                  routeBuilders[routeSettings.name](context, routeSettings));
-        });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     var routeBuilders = _routeBuilders(context);
+//     return Navigator(
+//         key: navigatorKey,
+//         initialRoute: CustomNavigatorRoutes.home,
+//         onGenerateRoute: (routeSettings) {
+//           return SlideRoute(
+//               widget:
+//                   routeBuilders[routeSettings.name](context, routeSettings));
+//         });
+//   }
+// }
 
 /// The custom navigator for checkout screens:
 class CheckoutNavigatorRoutes {

@@ -38,7 +38,7 @@ class AppGlobals {
   GlobalKey globalKeySearchTabs;
 
   /// [GlobalKey] for tab bar in [CustomNavigator].
-  GlobalKey<NavigatorState> globalKeyCustomNavigator;
+  // GlobalKey<NavigatorState> globalKeyCustomNavigator;
 
   /// [GlobalKey] for checkout screen in [CheckoutNavigator].
   GlobalKey<NavigatorState> globalKeyCheckoutNavigator;
