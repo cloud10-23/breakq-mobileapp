@@ -28,7 +28,7 @@ class SearchAppBar extends StatelessWidget {
     // }
     // return queryString;
     // Navigator.pushNamed(context, Routes.search);
-    showDialog(context: context, child: SearchBar());
+    showDialog(context: context, builder: (_) => SearchBar());
   }
 
   @override

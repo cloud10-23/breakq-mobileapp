@@ -137,12 +137,12 @@ class AppGlobals {
           .add(RemovePFromCartEvent(product: product));
 
   /// Show search screen
-  final Function(BuildContext) showSearchScreen =
-      (context) => showDialog(context: context, child: SearchBar());
+  final Function(BuildContext) showSearchScreen = (context) =>
+      showDialog(context: context, builder: (context) => SearchBar());
 
   /// Show Voice search
   final Function(BuildContext) showVoiceScreen = (context) => showDialog(
       context: context,
-      child: Dialog(child: VoiceSearch()),
+      builder: (context) => Dialog(child: VoiceSearch()),
       useRootNavigator: true);
 }

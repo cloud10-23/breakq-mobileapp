@@ -47,7 +47,7 @@ class _SearchBarState extends State<SearchBar> {
                     Navigator.pop(context);
                     showDialog(
                         context: context,
-                        child: Dialog(child: VoiceSearch()),
+                        builder: (context) => Dialog(child: VoiceSearch()),
                         useRootNavigator: true);
                   }),
             ],

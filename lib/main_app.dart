@@ -122,17 +122,17 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         builder: (BuildContext context, ApplicationState appState) {
           Widget homeWidget;
 
-          // if (appState is SetupSuccessApplicationState) {
-          homeWidget = Base(
-              homeScreen: HomeScreen(
-                key: getIt.get<AppGlobals>().globalKeySearchScreen,
-              ),
-              navigatorKey: getIt.get<AppGlobals>().globalKeyCustomNavigator);
-          // } else if (appState is OnboardingInProgressApplicationState) {
-          //   homeWidget = const OnboardingScreen();
-          // } else {
-          //   homeWidget = const SplashScreen();
-          // }
+          if (appState is SetupSuccessApplicationState) {
+            homeWidget = Base(
+                homeScreen: HomeScreen(
+                  key: getIt.get<AppGlobals>().globalKeySearchScreen,
+                ),
+                navigatorKey: getIt.get<AppGlobals>().globalKeyCustomNavigator);
+          } else if (appState is OnboardingInProgressApplicationState) {
+            homeWidget = const OnboardingScreen();
+          } else {
+            homeWidget = const SplashScreen();
+          }
 
           return BlocBuilder<ThemeBloc, ThemeState>(
             builder: (BuildContext context, ThemeState theme) {
