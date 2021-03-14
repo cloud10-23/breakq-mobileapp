@@ -2,6 +2,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
@@ -115,6 +116,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Order Details: #1234567890'),
+        leading: BackButtonCircle(),
         backgroundColor: kWhite,
       ),
       body: CustomScrollView(

@@ -4,6 +4,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
@@ -49,6 +50,7 @@ class _CartPageState extends State<CartPage> {
                   backgroundColor: kWhite,
                   pinned: true,
                   expandedHeight: 200,
+                  leading: BackButtonCircle(),
                   flexibleSpace: FlexibleSpaceBar(
                     title: Row(
                       children: [

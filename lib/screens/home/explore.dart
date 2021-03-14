@@ -113,41 +113,51 @@ class HomeScreenState extends State<HomeScreen> {
             child: SizedBox(height: kPaddingBtwnStrips),
           ),
           SliverToBoxAdapter(
-              child: HomeBoldHeading(title: "Top Offers", children: [
-            Container(
-              margin: EdgeInsets.only(top: kPaddingS),
-              height: 120,
-              child: Swiper(
-                pagination: SwiperPagination(
-                  alignment: Alignment.bottomCenter,
-                  builder: DotSwiperPaginationBuilder(
-                    activeColor: kBlue,
+              child: HomeBoldHeading(
+                  title: "Top Offers",
+                  icon: Icon(MaterialCommunityIcons.brightness_percent),
+                  children: [
+                Container(
+                  margin: EdgeInsets.only(top: kPaddingS),
+                  height: 120,
+                  child: Swiper(
+                    pagination: SwiperPagination(
+                      alignment: Alignment.bottomCenter,
+                      builder: DotSwiperPaginationBuilder(
+                        activeColor: kBlue,
+                      ),
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    autoplay: true,
+                    duration: 500,
+                    autoplayDelay: 4000,
+                    viewportFraction: 1.0,
+                    itemBuilder: (context, index) => Card(
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0.0)),
+                      child: Image(
+                        image: AssetImage(AssetImages.homeOffers),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 ),
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                autoplay: true,
-                duration: 500,
-                autoplayDelay: 4000,
-                viewportFraction: 1.0,
-                itemBuilder: (context, index) => Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0)),
-                  child: Image(
-                    image: AssetImage(AssetImages.homeOffers),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-          ])),
+              ])),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               SizedBox(height: kPaddingBtwnStrips),
-              HomeBoldHeading(title: "Top Deals", isBlue: true, children: [
-                _showGridOfImages(2, 4),
-              ]),
+              HomeBoldHeading(
+                  title: "Top Deals",
+                  icon: Icon(
+                    FontAwesome5Solid.percentage,
+                    color: kWhite,
+                  ),
+                  isBlue: true,
+                  children: [
+                    _showGridOfImages(2, 4),
+                  ]),
               SizedBox(height: kPaddingBtwnStrips),
               HomeBoldHeading(title: "Offers for you!", children: [
                 _showHorizontalScrollImages(),
@@ -155,6 +165,10 @@ class HomeScreenState extends State<HomeScreen> {
               SizedBox(height: kPaddingBtwnStrips),
               HomeBoldHeading(
                 title: "Exclusive Products",
+                icon: Icon(
+                  MaterialCommunityIcons.ticket_percent,
+                  color: kWhite,
+                ),
                 isBlue: true,
                 children: [
                   SizedBox(
@@ -167,9 +181,12 @@ class HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               SizedBox(height: kPaddingBtwnStrips),
-              HomeBoldHeading(title: "Categories", children: [
-                _showCategories(),
-              ]),
+              HomeBoldHeading(
+                  title: "Categories",
+                  icon: Icon(Icons.category_rounded),
+                  children: [
+                    _showCategories(),
+                  ]),
             ]),
           ),
           _endPadding(),

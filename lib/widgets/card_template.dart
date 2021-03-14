@@ -44,9 +44,14 @@ class CartHeading extends StatelessWidget {
 
 class HomeBoldHeading extends StatelessWidget {
   HomeBoldHeading(
-      {@required this.title, @required this.children, this.isBlue = false});
+      {@required this.title,
+      @required this.children,
+      this.isBlue = false,
+      icon})
+      : this.icon = icon ?? Container();
 
   final String title;
+  final Widget icon;
   final List<Widget> children;
   final bool isBlue;
 
@@ -62,11 +67,18 @@ class HomeBoldHeading extends StatelessWidget {
         children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(kPaddingM),
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.headline6.w700.copyWith(
-                        color: isBlue ? kWhite : kBlack,
-                      ),
+                child: Row(
+                  children: [
+                    icon,
+                    SizedBox(width: 5.0),
+                    Text(
+                      title,
+                      style:
+                          Theme.of(context).textTheme.headline6.w700.copyWith(
+                                color: isBlue ? kWhite : kBlack,
+                              ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 5),

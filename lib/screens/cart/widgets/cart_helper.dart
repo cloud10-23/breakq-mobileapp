@@ -1,7 +1,7 @@
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
@@ -47,6 +47,7 @@ class CartEmptyScreen extends StatelessWidget {
                 Spacer(flex: 9),
               ],
             ),
+            leading: BackButtonCircle(),
             actions: <Widget>[],
             flexibleSpace:
                 FlexibleSpaceBar(background: Container(color: kWhite)),

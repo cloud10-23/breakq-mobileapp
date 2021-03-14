@@ -18,6 +18,7 @@ import 'package:breakq/widgets/portrait_mode_mixin.dart';
 import 'package:breakq/widgets/sliver_app_title.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/theme_button.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sprintf/sprintf.dart';
 
@@ -165,7 +166,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                     leading: Visibility(
                       visible: _currentStep > 1,
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
+                        icon: const Icon(Feather.arrow_left_circle),
                         tooltip: L10n.of(context).commonTooltipInfo,
                         onPressed: _previousStep,
                       ),

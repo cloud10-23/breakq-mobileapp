@@ -118,11 +118,12 @@ class _VoiceSearchState extends State<VoiceSearch> {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.all(Radius.circular(50)),
                 ),
                 child: Icon(
-                  Icons.mic,
+                  FontAwesome.microphone,
+                  color: kWhite,
                 ),
               ),
               Spacer(),

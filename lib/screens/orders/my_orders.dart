@@ -1,10 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
-import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
 import 'package:breakq/screens/orders/widgets/order_item.dart';
-import 'package:breakq/widgets/bold_title.dart';
-import 'package:breakq/widgets/card_template.dart';
-import 'package:breakq/widgets/theme_button.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -20,6 +17,7 @@ class MyOrders extends StatelessWidget {
             backgroundColor: kWhite,
             pinned: true,
             expandedHeight: 100,
+            leading: BackButtonCircle(),
             flexibleSpace: FlexibleSpaceBar(
               title: Column(
                 mainAxisSize: MainAxisSize.min,
