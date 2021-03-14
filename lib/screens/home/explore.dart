@@ -3,6 +3,7 @@ import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
+import 'package:breakq/screens/home/widgets/wavy_header_image.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/card_template.dart';
@@ -10,6 +11,7 @@ import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -49,7 +51,10 @@ class HomeScreenState extends State<HomeScreen> {
             toolbarHeight: 45,
             iconTheme: IconThemeData(color: kBlack),
             actionsIconTheme: IconThemeData(color: kBlack),
-            title: Text("Home"),
+            title: Text(
+              "Home",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             // title: Padding(
             //   padding: const EdgeInsets.only(top: kPaddingS),
             //   child: Image(
@@ -59,13 +64,12 @@ class HomeScreenState extends State<HomeScreen> {
             // ),
             pinned: true,
             actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: InkWell(
-                  child: Image(image: AssetImage(AssetImages.notification)),
-                  onTap: () {},
-                ),
-              ),
+              IconButton(
+                  icon: Icon(
+                    AntDesign.bells,
+                    size: 16.0,
+                  ),
+                  onPressed: () {}),
               CartIconButton(),
               SizedBox(width: kPaddingM),
             ],
@@ -78,63 +82,92 @@ class HomeScreenState extends State<HomeScreen> {
           SliverAppBar(
             primary: false,
             pinned: true,
-            toolbarHeight: kToolbarHeight,
+            toolbarHeight: 40,
             automaticallyImplyLeading: false,
             titleSpacing: 0,
-            title: SearchAppBar(),
+            title: Row(
+              children: [
+                SizedBox(width: 5.0),
+                Flexible(flex: 1, child: SelectBranch()),
+                SizedBox(width: 5.0),
+                Expanded(flex: 3, child: SearchAppBar()),
+              ],
+            ),
           ),
           SliverToBoxAdapter(
-              child: Container(
-            margin: EdgeInsets.only(top: kPaddingS),
-            height: 120,
-            child: Swiper(
-              pagination: SwiperPagination(),
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              autoplay: true,
-              duration: 500,
-              autoplayDelay: 4000,
-              viewportFraction: 1.0,
-              itemBuilder: (context, index) => Card(
-                margin: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0)),
-                child: Image(
-                  image: AssetImage(AssetImages.homeOffers),
-                  fit: BoxFit.fill,
+            child: Container(color: kBlue, child: WavyHeaderImage()),
+          ),
+          // SliverToBoxAdapter(
+          //     child: Container(
+          //   margin: EdgeInsets.only(top: kPaddingS),
+          //   height: 190,
+          //   child: Image(
+          //     image: AssetImage(AssetImages.martIllustration),
+          //     fit: BoxFit.fill,
+          //   ),
+          // )),
+          SliverToBoxAdapter(
+            child: _showQuickStart(),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: kPaddingBtwnStrips),
+          ),
+          SliverToBoxAdapter(
+              child: HomeBoldHeading(title: "Top Offers", children: [
+            Container(
+              margin: EdgeInsets.only(top: kPaddingS),
+              height: 120,
+              child: Swiper(
+                pagination: SwiperPagination(
+                  alignment: Alignment.bottomCenter,
+                  builder: DotSwiperPaginationBuilder(
+                    activeColor: kBlue,
+                  ),
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                autoplay: true,
+                duration: 500,
+                autoplayDelay: 4000,
+                viewportFraction: 1.0,
+                itemBuilder: (context, index) => Card(
+                  margin: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0.0)),
+                  child: Image(
+                    image: AssetImage(AssetImages.homeOffers),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-          )),
+          ])),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               SizedBox(height: kPaddingBtwnStrips),
-              _showQuickStart(),
-              SizedBox(height: kPaddingBtwnStrips),
-              HomeHeading(image: AssetImages.banner_to, children: [
+              HomeBoldHeading(title: "Top Deals", isBlue: true, children: [
                 _showGridOfImages(2, 4),
               ]),
               SizedBox(height: kPaddingBtwnStrips),
-              HomeHeading(image: AssetImages.banner_td, children: [
+              HomeBoldHeading(title: "Offers for you!", children: [
                 _showHorizontalScrollImages(),
               ]),
               SizedBox(height: kPaddingBtwnStrips),
-              HomeHeading(
-                image: AssetImages.banner_exc2,
+              HomeBoldHeading(
+                title: "Exclusive Products",
+                isBlue: true,
                 children: [
-                  HomeCard(image: AssetImages.banner_brick, children: [
-                    SizedBox(
-                      height: 75,
-                    ),
-                    ProductsHorizontalView(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ]),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProductsHorizontalView(),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
               SizedBox(height: kPaddingBtwnStrips),
-              HomeHeading(image: AssetImages.banner_cat, children: [
+              HomeBoldHeading(title: "Categories", children: [
                 _showCategories(),
               ]),
             ]),
@@ -146,30 +179,27 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showQuickStart() {
-    return HomeHeading(
-      image: AssetImages.banner_qs,
-      children: [
-        Container(
-          // color: kPrimaryColor,
-          height: 50 + kPaddingS * 3,
-          padding: EdgeInsets.symmetric(vertical: kPaddingS),
-          child: ListView.builder(
-              itemCount: 4,
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => QuickLinkButton(index: index)),
-        ),
-        Container(
-          // color: kPrimaryAccentColor.withOpacity(0.3),
-          height: kPaddingM,
-        )
-      ],
+    final double width =
+        (MediaQuery.of(context).size.width - kPaddingL * 2) / 4;
+    return Container(
+      color: kBlue,
+      height: 70,
+      padding: EdgeInsets.symmetric(vertical: kPaddingS, horizontal: kPaddingL),
+      child: Row(
+        children: List.generate(
+            4,
+            (index) => QuickLinkButton(
+                  index: index,
+                  width: width,
+                )),
+      ),
     );
   }
 
   Widget _showGridOfImages(int columns, int rows) {
-    return Padding(
-      padding: const EdgeInsets.all(kPaddingM),
+    return Container(
+      margin: const EdgeInsets.all(kPaddingM),
+      color: kWhite,
       child: Column(
         children: List.generate(
           columns,
@@ -231,7 +261,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget _endPadding() {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 150,
+        height: 100,
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:breakq/configs/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 typedef ToolbarOptionModelCallback = void Function(
     ToolbarOptionModel sortModel);
@@ -164,15 +165,19 @@ const List<Map<String, String>> categories = [
 ];
 
 /// Quick Links
-const List<Map<String, String>> quickLinks = [
+const List<Map<String, dynamic>> quickLinks = [
   {
     'name': 'Quick Shopping',
-    'image': AssetImages.quickShopping,
+    'icon': Entypo.flash,
     'link': Routes.quickShopping,
   },
-  {'name': 'Set Budget', 'image': AssetImages.setBudget, 'link': 'set_budget'},
-  {'name': 'Cart', 'image': AssetImages.cart, 'link': Routes.cart},
-  {'name': 'My Orders', 'image': AssetImages.myOrders, 'link': Routes.orders},
+  {
+    'name': 'Set Budget',
+    'icon': FontAwesome5Solid.money_bill,
+    'link': 'set_budget'
+  },
+  {'name': 'Cart', 'icon': FontAwesome.shopping_cart, 'link': Routes.cart},
+  {'name': 'My Orders', 'icon': FontAwesome.archive, 'link': Routes.orders},
 ];
 
 /// Cart Bulk Buttons
@@ -205,6 +210,8 @@ class AssetImages {
       'assets/images/illustrations/address_illustration.svg';
   static const String orderIllustration =
       'assets/images/illustrations/orders-illustration.jpg';
+  static const String martIllustration =
+      'assets/images/illustrations/shopping_mart_illustration.jpeg';
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
@@ -215,14 +222,14 @@ class AssetImages {
   static const String cardAmex = 'assets/images/cc/amex.png';
   static const String cardDiscover = 'assets/images/cc/discover.png';
   static const String cardMastercard = 'assets/images/cc/mastercard.png';
-  static const String profileDefault = 'assets/images/profile.png';
+  static const String profileDefault = 'assets/images/icons/profile.png';
   static const String homeOffers = 'assets/images/offers/main_offer.png';
 
   static const String cat = 'assets/images/categories/cat';
 
-  static const String shop = 'assets/images/store_icon.jpeg';
+  static const String shop = 'assets/images/icons/store_icon.jpeg';
 
-  static const String cartIcon = 'assets/images/icons/quick_shopping_3_c.png';
+  // static const String cartIcon = 'assets/images/icons/quick_shopping_3_c.png';
 
   static const String quickShopping =
       'assets/images/icons/quick_shopping_blue.png';
@@ -241,15 +248,15 @@ class AssetImages {
   static const String wheat = 'assets/images/products/wheat.jpeg';
 
   /// Banners
-  static const String banner_qs = 'assets/images/banners/B1.png';
-  static const String banner_to = 'assets/images/banners/B2.png';
-  static const String banner_td = 'assets/images/banners/B3.png';
+  // static const String banner_qs = 'assets/images/banners/B1.png';
+  // static const String banner_to = 'assets/images/banners/B2.png';
+  // static const String banner_td = 'assets/images/banners/B3.png';
 
-  static const String banner_exc2 = 'assets/images/banners/Exclusive4.png';
-  static const String banner_cat = 'assets/images/banners/Categories3.png';
-  static const String banner_brick = 'assets/images/banners/brick.jpg';
+  // static const String banner_exc2 = 'assets/images/banners/Exclusive4.png';
+  // static const String banner_cat = 'assets/images/banners/Categories3.png';
+  // static const String banner_brick = 'assets/images/banners/brick.jpg';
 
-  static const String banner = 'assets/images/banners/banner-4.jpg';
+  // static const String banner = 'assets/images/banners/banner-4.jpg';
 
   /// TopOffer Stock Images
   static String topOffers(int colIndex, int rowIndex) =>

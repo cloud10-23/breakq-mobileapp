@@ -1,6 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class CartHeading extends StatelessWidget {
   CartHeading(
@@ -32,6 +33,41 @@ class CartHeading extends StatelessWidget {
               Container(
                 height: 0.5,
                 color: Colors.black12,
+              ),
+              SizedBox(height: 5),
+            ] +
+            children,
+      ),
+    );
+  }
+}
+
+class HomeBoldHeading extends StatelessWidget {
+  HomeBoldHeading(
+      {@required this.title, @required this.children, this.isBlue = false});
+
+  final String title;
+  final List<Widget> children;
+  final bool isBlue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: isBlue ? kBlue : kWhite,
+      margin: const EdgeInsets.all(kPaddingS),
+      padding: EdgeInsets.all(kPaddingS),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(kPaddingM),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline6.w700.copyWith(
+                        color: isBlue ? kWhite : kBlack,
+                      ),
+                ),
               ),
               SizedBox(height: 5),
             ] +

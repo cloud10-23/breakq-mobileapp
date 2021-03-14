@@ -12,6 +12,7 @@ import 'package:location/location.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:breakq/utils/text_style.dart';
 
 /// Class to store runtime global settings.
 class AppGlobals {
@@ -145,4 +146,7 @@ class AppGlobals {
       context: context,
       builder: (context) => Dialog(child: VoiceSearch()),
       useRootNavigator: true);
+
+  final Function(BuildContext) captionStyle =
+      (context) => Theme.of(context).textTheme.caption.fs10.w800;
 }

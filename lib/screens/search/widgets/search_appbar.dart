@@ -2,10 +2,10 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/search/search.dart';
-import 'package:breakq/screens/search/voice_search.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class SearchAppBar extends StatelessWidget {
   Future<void> _quickSearch(BuildContext context) async {
@@ -36,23 +36,27 @@ class SearchAppBar extends StatelessWidget {
     return Container(
       color: kWhite,
       // color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.symmetric(
-        horizontal: kPaddingS,
-        vertical: kPaddingM,
+      padding: const EdgeInsets.only(
+        right: kPaddingS,
+        bottom: kPaddingM,
       ),
-      height: kToolbarHeight,
+      height: 40,
       child: Card(
         color: getIt.get<AppGlobals>().isPlatformBrightnessDark
             ? Theme.of(context).accentColor
             : Theme.of(context).cardColor,
         margin: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBoxDecorationRadius)),
-        elevation: 2,
-        child: FlatButton(
+          borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+          side: BorderSide(width: 0.5, color: Colors.black45),
+        ),
+        child: TextButton(
           // color: kPrimaryAccentColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(kBoxDecorationRadius / 2)),
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kBoxDecorationRadius / 2)),
+          ),
           onPressed: () {
             // Switch to Search Tab
             _quickSearch(context);
@@ -60,24 +64,28 @@ class SearchAppBar extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Spacer(),
               Icon(
-                Icons.search,
+                Feather.search,
                 color: Theme.of(context).hintColor,
+                size: 16,
               ),
               Spacer(),
               Expanded(
-                flex: 9,
+                flex: 12,
                 child: Text(
                   L10n.of(context).homePlaceholderSearch,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(color: Theme.of(context).hintColor),
+                  style: getIt.get<AppGlobals>().captionStyle(context),
+                  // style: Theme.of(context)
+                  //     .textTheme
+                  //     .subtitle1
+                  //     .copyWith(color: Theme.of(context).hintColor),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
               ),
               VoiceIconButton(),
+              Spacer(),
             ],
           ),
         ),

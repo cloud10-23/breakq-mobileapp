@@ -1,5 +1,6 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/price_model.dart';
+import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
@@ -39,11 +40,7 @@ class CartEmptyScreen extends StatelessWidget {
             pinned: true,
             title: Row(
               children: [
-                Image(
-                  image: AssetImage(AssetImages.cartIcon),
-                  height: 25,
-                  // color: kWhite,
-                ),
+                CartIconPlane(),
                 Spacer(),
                 Text('My Cart',
                     style: Theme.of(context).textTheme.bodyText1.fs16),
@@ -122,9 +119,10 @@ class CartScannerOption extends StatelessWidget {
     return InkWell(
       onTap: () => BarcodeScanner().scan(context),
       child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AssetImages.banner), fit: BoxFit.fill)),
+        color: kBlue,
+        // decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //         image: AssetImage(AssetImages.banner), fit: BoxFit.fill)),
         margin: const EdgeInsets.symmetric(
             vertical: kPaddingL, horizontal: kPaddingS),
         padding: EdgeInsets.all(kPaddingS),
@@ -137,19 +135,19 @@ class CartScannerOption extends StatelessWidget {
                   children: [
                     Image(
                       image: AssetImage(AssetImages.scan),
-                      color: Colors.white70,
+                      color: kWhite,
                     ),
                     Spacer(),
                     BoldTitle(
                       title: "Scan & Add to Cart".toUpperCase(),
                       padding: EdgeInsets.symmetric(horizontal: kPaddingM),
-                      color: Colors.white70,
+                      color: kWhite,
                       fw: FontWeight.w600,
                     ),
                     Spacer(flex: 9),
                     Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.white70,
+                      color: kWhite,
                     ),
                   ],
                 ),

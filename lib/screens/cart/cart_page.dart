@@ -2,6 +2,7 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
+import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/widgets/bold_title.dart';
@@ -51,11 +52,7 @@ class _CartPageState extends State<CartPage> {
                   flexibleSpace: FlexibleSpaceBar(
                     title: Row(
                       children: [
-                        Image(
-                          image: AssetImage(AssetImages.cartIcon),
-                          height: 25,
-                          // color: kWhite,
-                        ),
+                        CartIconPlane(),
                         Spacer(),
                         Text('My Cart',
                             style: Theme.of(context).textTheme.bodyText1.fs16),

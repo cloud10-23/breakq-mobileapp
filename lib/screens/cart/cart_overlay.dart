@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
@@ -48,17 +49,12 @@ class CartFloatingButton extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(12),
                   child: FlutterBadge(
-                    icon: Image(
-                      image: AssetImage(AssetImages.cartIcon),
-                    ),
+                    icon: CartIconPlane(),
                     itemCount: state?.cart?.noOfProducts ?? 0,
                   ),
                 );
               return FlutterBadge(
-                icon: Image(
-                  image: AssetImage(AssetImages.scan),
-                  color: Colors.white,
-                ),
+                icon: CartIconPlane(),
                 itemCount: 0,
               );
             },
@@ -83,7 +79,7 @@ class CartButton extends StatelessWidget {
         child: Row(
           children: [
             Spacer(flex: 3),
-            Image(height: 25, image: AssetImage(AssetImages.cartIcon)),
+            CartIconPlane(),
             Spacer(),
             BoldTitle(title: '( $totalItems )'),
             Spacer(),

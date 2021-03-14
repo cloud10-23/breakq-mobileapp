@@ -41,7 +41,7 @@ class ProfileInfo extends StatelessWidget {
                   Text(
                     getIt.get<AppGlobals>().user?.displayName ?? "Guest",
                     maxLines: 2,
-                    style: Theme.of(context).textTheme.headline5.bold,
+                    style: Theme.of(context).textTheme.headline5.bold.white,
                     overflow: TextOverflow.fade,
                   ),
                   // const Padding(padding: EdgeInsets.only(top: 4)),

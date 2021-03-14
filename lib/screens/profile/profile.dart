@@ -50,215 +50,210 @@ class _DrawerScreenState extends State<DrawerScreen> {
               : SystemUiOverlayStyle.dark,
           child: Scaffold(
             backgroundColor: kWhite,
-            body: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(kPaddingL),
-                    child: Column(
+            body: Column(
+              children: <Widget>[
+                Container(
+                  color: kBlue,
+                  padding: const EdgeInsets.all(kPaddingL),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: kPaddingL),
+                      ProfileInfo(),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                    child: ListView(
                       children: <Widget>[
-                        ProfileInfo(),
+                        ListTitle(
+                            title: L10n.of(context).settingsListTitleMobile),
+                        ListItem(
+                          title: getIt.get<AppGlobals>().user?.phoneNumber ??
+                              'Not available',
+                        ),
+                        SizedBox(height: kPaddingL),
+                        ListTitle(title: L10n.of(context).categoriesTitle),
+                        AllCategoriesListItems(),
+                        SizedBox(height: kPaddingL),
+                        ListTitle(title: L10n.of(context).orderTitle),
+                        SizedBox(height: kPaddingM),
+                        ListItem(
+                          title: L10n.of(context).orderListMyCart,
+                          leading: const Icon(Icons.shopping_cart, size: 15),
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(Routes.cart);
+                            // getIt.get<AppGlobals>().showCartPage(context);
+                          },
+                        ),
+                        ListItem(
+                          title: L10n.of(context).orderListMyOrders,
+                          leading: Icon(Icons.my_library_books, size: 15),
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed(Routes.orders);
+                          },
+                        ),
+                        SizedBox(height: kPaddingL),
+                        ListTitle(
+                            title: L10n.of(context).profileListTitleSettings),
+                        ListItem(
+                          title: L10n.of(context).profileListEdit,
+                          leading: const Icon(Icons.person_outline),
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, Routes.editProfile),
+                        ),
+                        SizedBox(height: kPaddingL),
+                        // ListTitle(
+                        //     title:
+                        //         L10n.of(context).settingsListTitleInterface),
+                        // ListItem(
+                        //   title: L10n.of(context).settingsListLanguage,
+                        //   onPressed: () {
+                        //     _showLanguagePicker(context);
+                        //   },
+                        //   trailing: Row(
+                        //     children: <Widget>[
+                        //       Text(
+                        //         L10n.of(context).commonLocales(getIt
+                        //             .get<AppGlobals>()
+                        //             .selectedLocale
+                        //             .toString()),
+                        //         style: Theme.of(context)
+                        //             .textTheme
+                        //             .bodyText1
+                        //             .bold,
+                        //       ),
+                        //       const ArrowRightIcon(),
+                        //     ],
+                        //   ),
+                        // ),
+                        // ListItem(
+                        //   title: L10n.of(context).settingsListDarkMode,
+                        //   onPressed: () {
+                        //     _showDarkModePicker(context);
+                        //   },
+                        //   trailing: Row(
+                        //     children: <Widget>[
+                        //       Text(
+                        //         L10n.of(context).commonDarkMode(getIt
+                        //             .get<AppGlobals>()
+                        //             .darkThemeOption
+                        //             .toString()),
+                        //         style: Theme.of(context)
+                        //             .textTheme
+                        //             .bodyText1
+                        //             .bold,
+                        //       ),
+                        //       const ArrowRightIcon(),
+                        //     ],
+                        //   ),
+                        // ),
+                        // SizedBox(height: kPaddingL),
+                        ListTitle(
+                            title: L10n.of(context).settingsListTitleSupport),
+                        ListItem(
+                          title: L10n.of(context).settingsListTerms,
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () {
+                            // Async.launchUrl(kTermsOfServiceURL);
+                          },
+                        ),
+                        ListItem(
+                          title: L10n.of(context).settingsListPrivacy,
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () {
+                            // Async.launchUrl(kPrivacyPolicyURL);
+                          },
+                        ),
+                        SizedBox(height: kPaddingL),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: kPaddingL),
+                          child: Column(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  height: 80,
+                                  child: const Image(
+                                      image: AssetImage(AssetImages.mts_logo)),
+                                ),
+                              ),
+                              SizedBox(height: kPaddingM),
+                              Padding(
+                                padding: const EdgeInsets.only(top: kPaddingS),
+                                child: Image(
+                                  image: AssetImage(AssetImages.bq_logo),
+                                  height: 30,
+                                ),
+                              ),
+                              // Padding(
+                              //   padding:
+                              //       const EdgeInsets.only(top: kPaddingS),
+                              //   child: Text(
+                              //     kAppName,
+                              //     style: Theme.of(context)
+                              //         .textTheme
+                              //         .headline6
+                              //         .w600,
+                              //   ),
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: kPaddingS, bottom: kPaddingS),
+                                child: Text(
+                                  L10n.of(context).settingsCopyright,
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: kPaddingM, bottom: kPaddingL),
+                          child: BlocBuilder<AuthBloc, AuthState>(builder:
+                              (BuildContext context, AuthState logoutState) {
+                            return BlocListener<AuthBloc, AuthState>(
+                              listener: (BuildContext context,
+                                  AuthState logoutListener) {
+                                if (logoutListener is LogoutFailureAuthState) {
+                                  UI.showErrorDialog(context,
+                                      message: logoutListener.message);
+                                }
+                              },
+                              child: Center(
+                                child: ThemeButton(
+                                  onPressed: () =>
+                                      BlocProvider.of<AuthBloc>(context)
+                                          .add(UserLoggedOutAuthEvent()),
+                                  text: L10n.of(context).profileListLogout,
+                                  // style: Theme.of(context)
+                                  //     .textTheme
+                                  //     .subtitle1
+                                  //     .w400
+                                  //     .copyWith(
+                                  //         color:
+                                  //             Theme.of(context).hintColor),
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                        SizedBox(height: 100),
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: kPaddingL),
-                      child: ListView(
-                        children: <Widget>[
-                          ListTitle(
-                              title: L10n.of(context).settingsListTitleMobile),
-                          ListItem(
-                            title: getIt.get<AppGlobals>().user?.phoneNumber ??
-                                'Not available',
-                          ),
-                          SizedBox(height: kPaddingL),
-                          ListTitle(title: L10n.of(context).categoriesTitle),
-                          AllCategoriesListItems(),
-                          SizedBox(height: kPaddingL),
-                          ListTitle(title: L10n.of(context).orderTitle),
-                          SizedBox(height: kPaddingM),
-                          ListItem(
-                            title: L10n.of(context).orderListMyCart,
-                            leading: const Icon(Icons.shopping_cart, size: 15),
-                            trailing: const ArrowRightIcon(),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(Routes.cart);
-                              // getIt.get<AppGlobals>().showCartPage(context);
-                            },
-                          ),
-                          ListItem(
-                            title: L10n.of(context).orderListMyOrders,
-                            leading: Icon(Icons.my_library_books, size: 15),
-                            trailing: const ArrowRightIcon(),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushNamed(Routes.orders);
-                            },
-                          ),
-                          SizedBox(height: kPaddingL),
-                          ListTitle(
-                              title: L10n.of(context).profileListTitleSettings),
-                          ListItem(
-                            title: L10n.of(context).profileListEdit,
-                            leading: const Icon(Icons.person_outline),
-                            trailing: const ArrowRightIcon(),
-                            onPressed: () => Navigator.pushNamed(
-                                context, Routes.editProfile),
-                          ),
-                          SizedBox(height: kPaddingL),
-                          // ListTitle(
-                          //     title:
-                          //         L10n.of(context).settingsListTitleInterface),
-                          // ListItem(
-                          //   title: L10n.of(context).settingsListLanguage,
-                          //   onPressed: () {
-                          //     _showLanguagePicker(context);
-                          //   },
-                          //   trailing: Row(
-                          //     children: <Widget>[
-                          //       Text(
-                          //         L10n.of(context).commonLocales(getIt
-                          //             .get<AppGlobals>()
-                          //             .selectedLocale
-                          //             .toString()),
-                          //         style: Theme.of(context)
-                          //             .textTheme
-                          //             .bodyText1
-                          //             .bold,
-                          //       ),
-                          //       const ArrowRightIcon(),
-                          //     ],
-                          //   ),
-                          // ),
-                          // ListItem(
-                          //   title: L10n.of(context).settingsListDarkMode,
-                          //   onPressed: () {
-                          //     _showDarkModePicker(context);
-                          //   },
-                          //   trailing: Row(
-                          //     children: <Widget>[
-                          //       Text(
-                          //         L10n.of(context).commonDarkMode(getIt
-                          //             .get<AppGlobals>()
-                          //             .darkThemeOption
-                          //             .toString()),
-                          //         style: Theme.of(context)
-                          //             .textTheme
-                          //             .bodyText1
-                          //             .bold,
-                          //       ),
-                          //       const ArrowRightIcon(),
-                          //     ],
-                          //   ),
-                          // ),
-                          // SizedBox(height: kPaddingL),
-                          ListTitle(
-                              title: L10n.of(context).settingsListTitleSupport),
-                          ListItem(
-                            title: L10n.of(context).settingsListTerms,
-                            trailing: const ArrowRightIcon(),
-                            onPressed: () {
-                              // Async.launchUrl(kTermsOfServiceURL);
-                            },
-                          ),
-                          ListItem(
-                            title: L10n.of(context).settingsListPrivacy,
-                            trailing: const ArrowRightIcon(),
-                            onPressed: () {
-                              // Async.launchUrl(kPrivacyPolicyURL);
-                            },
-                          ),
-                          SizedBox(height: kPaddingL),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(vertical: kPaddingL),
-                            child: Column(
-                              children: <Widget>[
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    height: 80,
-                                    child: const Image(
-                                        image:
-                                            AssetImage(AssetImages.mts_logo)),
-                                  ),
-                                ),
-                                SizedBox(height: kPaddingM),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: kPaddingS),
-                                  child: Image(
-                                    image: AssetImage(AssetImages.bq_logo),
-                                    height: 30,
-                                  ),
-                                ),
-                                // Padding(
-                                //   padding:
-                                //       const EdgeInsets.only(top: kPaddingS),
-                                //   child: Text(
-                                //     kAppName,
-                                //     style: Theme.of(context)
-                                //         .textTheme
-                                //         .headline6
-                                //         .w600,
-                                //   ),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: kPaddingS, bottom: kPaddingS),
-                                  child: Text(
-                                    L10n.of(context).settingsCopyright,
-                                    style:
-                                        Theme.of(context).textTheme.subtitle1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: kPaddingM, bottom: kPaddingL),
-                            child: BlocBuilder<AuthBloc, AuthState>(builder:
-                                (BuildContext context, AuthState logoutState) {
-                              return BlocListener<AuthBloc, AuthState>(
-                                listener: (BuildContext context,
-                                    AuthState logoutListener) {
-                                  if (logoutListener
-                                      is LogoutFailureAuthState) {
-                                    UI.showErrorDialog(context,
-                                        message: logoutListener.message);
-                                  }
-                                },
-                                child: Center(
-                                  child: ThemeButton(
-                                    onPressed: () =>
-                                        BlocProvider.of<AuthBloc>(context)
-                                            .add(UserLoggedOutAuthEvent()),
-                                    text: L10n.of(context).profileListLogout,
-                                    // style: Theme.of(context)
-                                    //     .textTheme
-                                    //     .subtitle1
-                                    //     .w400
-                                    //     .copyWith(
-                                    //         color:
-                                    //             Theme.of(context).hintColor),
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                          SizedBox(height: 100),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

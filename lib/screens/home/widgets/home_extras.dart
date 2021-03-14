@@ -5,6 +5,8 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class GridImage extends StatelessWidget {
   GridImage({this.colIndex, this.rowIndex, this.height, this.width});
@@ -48,8 +50,8 @@ class ExclProductsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      width: 110,
+      padding: EdgeInsets.symmetric(horizontal: 2.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
         product: Product(
@@ -70,6 +72,110 @@ class ExclProductsCard extends StatelessWidget {
             .get<AppGlobals>()
             .onProductPressed(getProduct(index), context),
       ),
+    );
+  }
+}
+
+class SelectBranch extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kWhite,
+      // color: Theme.of(context).scaffoldBackgroundColor,
+      padding: const EdgeInsets.only(
+        bottom: kPaddingM,
+      ),
+      height: 40,
+      child: Card(
+        color: getIt.get<AppGlobals>().isPlatformBrightnessDark
+            ? Theme.of(context).accentColor
+            : kBlack,
+        margin: const EdgeInsets.all(0),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+        //   side: BorderSide(width: 0.5, color: Colors.),
+        // ),
+        child: TextButton(
+          // color: kPrimaryAccentColor,
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              horizontal: 5,
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kBoxDecorationRadius / 2)),
+          ),
+          onPressed: () {
+            // Open Branch Chooser
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                FontAwesome.building_o,
+                color: kWhite,
+                size: 16,
+              ),
+              SizedBox(width: 5.0),
+              Expanded(
+                child: Text(
+                  "T-Nagar Branch",
+                  style: getIt
+                      .get<AppGlobals>()
+                      .captionStyle(context)
+                      .copyWith(color: kWhite),
+                  overflow: TextOverflow.fade,
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// This is the stateful widget that the main application instantiates.
+class BranchDropDown extends StatefulWidget {
+  const BranchDropDown({Key key}) : super(key: key);
+
+  @override
+  _BranchDropDownState createState() => _BranchDropDownState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _BranchDropDownState extends State<BranchDropDown> {
+  String dropdownValue = 'T-Nagar Branch';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      // icon: const Icon(Icons.arrow_downward),
+      // itemHeight: 50,
+      elevation: 2,
+      icon: Container(),
+      style: getIt.get<AppGlobals>().captionStyle(context),
+      underline: Container(
+        height: 2,
+        color: Colors.black,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>[
+        'T-Nagar Branch',
+        'MV-Nagar Branch',
+        'RT-Nagar Branch',
+        'SK-Nagar Branch'
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }

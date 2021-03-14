@@ -6,6 +6,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -84,11 +85,14 @@ class _VoiceSearchState extends State<VoiceSearch> {
                           spreadRadius: level * 1.5,
                           color: Colors.black.withOpacity(.05))
                     ],
-                    color: Colors.white,
+                    color: Colors.blue,
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.mic),
+                    icon: Icon(
+                      FontAwesome.microphone,
+                      color: kWhite,
+                    ),
                     onPressed: () => startListening(),
                   ),
                 ),

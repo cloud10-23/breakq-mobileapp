@@ -95,6 +95,9 @@ dependencies:
   flutter_badged: ^1.0.3
   fancy_bottom_navigation: ^0.3.2
 
+  #Icons
+  flutter_icons: ^1.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -128,7 +131,7 @@ flutter:
     - assets/images/illustrations/
     - assets/images/ads/
     - assets/images/icons/
-    - assets/images/banners/
+    # - assets/images/banners/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
