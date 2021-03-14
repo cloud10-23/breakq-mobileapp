@@ -1,6 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -189,14 +190,12 @@ class ListingState extends State<Listing> {
                   title: Text(widget.title ?? "Category Name",
                       style: Theme.of(context).textTheme.bodyText1.bold),
                   automaticallyImplyLeading: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  leading: BackButtonCircle(),
                   actions: [
                     SearchIconButton(),
                     VoiceIconButton(),
                     CartIconButton(),
+                    SizedBox(width: 10.0),
                   ],
                   pinned: true,
                 ),

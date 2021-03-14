@@ -72,12 +72,12 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
         margin: EdgeInsets.zero,
         elevation: widget.elevation ?? 0,
         color: _currentSelectedButton == widget.buttonValues[index]
-            ? kPrimaryColor
+            ? kBlue
             : Theme.of(context).highlightColor,
         shape: OutlineInputBorder(
           borderSide: BorderSide(
             color: _currentSelectedButton == widget.buttonValues[index]
-                ? kPrimaryColor
+                ? kBlue
                 : Theme.of(context).highlightColor,
             width: 0,
           ),
@@ -107,7 +107,7 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
               style: const TextStyle().copyWith(
                 fontSize: 12,
                 color: _currentSelectedButton == widget.buttonValues[index]
-                    ? kBlack
+                    ? kWhite
                     : Theme.of(context).textTheme.button.color,
                 fontWeight: _currentSelectedButton == widget.buttonValues[index]
                     ? FontWeight.w500
@@ -170,7 +170,7 @@ class _CategoriesButtonGroupState extends State<CategoriesButtonGroup> {
       child: Card(
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.zero,
-        color: _currentSelectedButton == index ? kPrimaryColor : kWhite,
+        color: _currentSelectedButton == index ? kBlue : kWhite,
         shape: RoundedRectangleBorder(
           borderRadius:
               const BorderRadius.all(Radius.circular(kRoundedButtonRadius)),
@@ -205,7 +205,7 @@ class _CategoriesButtonGroupState extends State<CategoriesButtonGroup> {
                   style: const TextStyle().copyWith(
                     fontSize: 12,
                     color: _currentSelectedButton == index
-                        ? kBlack
+                        ? kWhite
                         : Theme.of(context).textTheme.button.color,
                     fontWeight: _currentSelectedButton == index
                         ? FontWeight.bold

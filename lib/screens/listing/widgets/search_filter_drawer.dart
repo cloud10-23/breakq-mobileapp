@@ -117,7 +117,7 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                           max: 1000,
                           divisions: 10,
                           values: _rangeValues,
-                          activeColor: kPrimaryColor,
+                          activeColor: kBlue,
                           inactiveColor: Theme.of(context).highlightColor,
                           labels: RangeLabels(
                             _rangeValues.start.round().toString(),

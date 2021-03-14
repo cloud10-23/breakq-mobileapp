@@ -24,47 +24,45 @@ class _SearchBarState extends State<SearchBar> {
         leading: BackButtonCircle(),
         primary: true,
         toolbarHeight: 50,
-        title: Card(
-          child: Row(
-            children: [
-              SizedBox(width: kPaddingM),
-              Icon(
-                Feather.search,
-                size: 16.0,
-              ),
-              Expanded(
-                child: TextField(
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      hintText: L10n.of(context).homePlaceholderSearch,
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .w600
-                          .copyWith(color: Colors.black45),
-                      border: InputBorder.none,
-                    ),
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (value) {
-                      Navigator.pop(context);
-                      Navigator.of(context, rootNavigator: true)
-                          .pushNamed(Routes.listing);
-                    }),
-              ),
-              IconButton(
-                  icon: Icon(
-                    Feather.mic,
-                    size: 16.0,
+        title: Row(
+          children: [
+            SizedBox(width: kPaddingM),
+            Icon(
+              Feather.search,
+              size: 16.0,
+            ),
+            Expanded(
+              child: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: L10n.of(context).homePlaceholderSearch,
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .w600
+                        .copyWith(color: Colors.black45),
+                    border: InputBorder.none,
                   ),
-                  onPressed: () {
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) {
                     Navigator.pop(context);
-                    showDialog(
-                        context: context,
-                        builder: (context) => Dialog(child: VoiceSearch()),
-                        useRootNavigator: true);
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamed(Routes.listing);
                   }),
-            ],
-          ),
+            ),
+            IconButton(
+                icon: Icon(
+                  Feather.mic,
+                  size: 16.0,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(child: VoiceSearch()),
+                      useRootNavigator: true);
+                }),
+          ],
         ),
       ),
       body: Padding(

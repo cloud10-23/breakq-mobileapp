@@ -1,5 +1,6 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
@@ -27,8 +28,8 @@ class SearchAppBar extends StatelessWidget {
     //       .add(KeywordChangedHomeEvent(queryString));
     // }
     // return queryString;
-    // Navigator.pushNamed(context, Routes.search);
-    showDialog(context: context, builder: (_) => SearchBar());
+    Navigator.pushNamed(context, Routes.search);
+    // showDialog(context: context, builder: (_) => SearchBar());
   }
 
   @override

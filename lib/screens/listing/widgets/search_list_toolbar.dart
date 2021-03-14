@@ -56,7 +56,7 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
           left: kPaddingM, top: kPaddingS, bottom: kPaddingS),
       color: getIt.get<AppGlobals>().isPlatformBrightnessDark
           ? Theme.of(context).scaffoldBackgroundColor
-          : kBlue200,
+          : kBlue,
       child: Row(
         children: <Widget>[
           FilterButton(
@@ -76,13 +76,19 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
             onPressed: () {
               _switchListTypeSelection(context);
             },
-            icon: Icon(widget.currentListType.icon),
+            icon: Icon(
+              widget.currentListType.icon,
+              color: kWhite,
+            ),
             tooltip: L10n.of(context).searchTooltipView,
           ),
           IconButton(
             padding: const EdgeInsets.only(right: kPaddingM),
             onPressed: widget.onFilterTap,
-            icon: const Icon(Icons.filter_list),
+            icon: const Icon(
+              Icons.filter_list,
+              color: kWhite,
+            ),
             tooltip: L10n.of(context).searchTooltipFilters,
           ),
         ],
