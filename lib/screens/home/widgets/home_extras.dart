@@ -3,7 +3,9 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
+import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -106,6 +108,19 @@ class SelectBranch extends StatelessWidget {
           ),
           onPressed: () {
             // Open Branch Chooser
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              useRootNavigator: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0)),
+              ),
+              clipBehavior: Clip.antiAlias,
+              isDismissible: true,
+              builder: (context) => BranchSelectorBottomSheet(),
+            );
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
