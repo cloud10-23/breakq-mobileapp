@@ -74,7 +74,6 @@ class _QSStep1State extends State<QSStep1> {
         final List<Widget> _slivers = <Widget>[];
 
         _slivers.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingM)));
-        _slivers.add(makeHeader("Select one or more bills"));
         _slivers.add(SliverToBoxAdapter(
             child: Container(
                 child: Row(
@@ -92,9 +91,9 @@ class _QSStep1State extends State<QSStep1> {
                     padding: EdgeInsets.all(kPaddingM),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: kBlackAccent)),
+                        border: Border.all(color: kBlackAccent, width: 2.0)),
                     child: Text("Select All",
-                        style: Theme.of(context).textTheme.caption))),
+                        style: Theme.of(context).textTheme.caption.w800))),
             Visibility(
               visible: (session.selectedBillIds?.isNotEmpty ?? false),
               child: InkWell(
@@ -108,7 +107,7 @@ class _QSStep1State extends State<QSStep1> {
                       margin: EdgeInsets.all(kPaddingM),
                       padding: EdgeInsets.all(kPaddingM),
                       child: Text("Cancel",
-                          style: Theme.of(context).textTheme.caption))),
+                          style: Theme.of(context).textTheme.caption.w800))),
             ),
           ],
         ))));
@@ -159,7 +158,7 @@ class _QSStep1State extends State<QSStep1> {
         subtitleTextStyle: Theme.of(context)
             .textTheme
             .bodyText2
-            .w300
+            .w500
             .copyWith(color: Theme.of(context).hintColor),
         trailing: Padding(
           padding: const EdgeInsets.only(right: kPaddingS),
@@ -177,7 +176,7 @@ class _QSStep1State extends State<QSStep1> {
                 style: Theme.of(context)
                     .textTheme
                     .caption
-                    .w300
+                    .w500
                     .copyWith(color: Theme.of(context).hintColor),
               ),
             ],

@@ -40,9 +40,9 @@ class _QSStep2State extends State<QSStep2> {
                       padding: EdgeInsets.all(kPaddingM),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: kBlackAccent)),
+                          border: Border.all(color: kBlackAccent, width: 2)),
                       child: Text("Add All",
-                          style: Theme.of(context).textTheme.caption))),
+                          style: Theme.of(context).textTheme.caption.w800))),
               Visibility(
                 visible: (session.selectedProductIds?.isNotEmpty ?? false),
                 child: InkWell(
@@ -56,7 +56,7 @@ class _QSStep2State extends State<QSStep2> {
                         margin: EdgeInsets.all(kPaddingM),
                         padding: EdgeInsets.all(kPaddingM),
                         child: Text("Reset",
-                            style: Theme.of(context).textTheme.caption))),
+                            style: Theme.of(context).textTheme.caption.w800))),
               ),
             ],
           ),

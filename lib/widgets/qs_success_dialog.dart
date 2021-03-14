@@ -138,7 +138,7 @@ class _BookingSuccessDialogState extends State<SuccessDialog>
             ? widget.endIcon
             : widget.startIcon,
         size: 160 + extraSize,
-        color: kPrimaryColor,
+        color: kBlue,
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:breakq/configs/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/qs_success_dialog.dart';

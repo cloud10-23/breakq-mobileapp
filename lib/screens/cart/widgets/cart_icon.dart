@@ -24,6 +24,7 @@ class CartIconButton extends StatelessWidget {
                   icon: Icon(
                     FontAwesome.shopping_cart,
                     size: 16.0,
+                    color: kBlack,
                   ),
                   textSize: 8.0,
                   itemCount: state?.cart?.noOfProducts ?? 0,
@@ -33,6 +34,7 @@ class CartIconButton extends StatelessWidget {
                 icon: Icon(
                   FontAwesome.shopping_cart,
                   size: 16.0,
+                  color: kBlack,
                 ),
                 itemCount: 0,
               );
@@ -48,6 +50,7 @@ class CartIconPlane extends StatelessWidget {
     return Icon(
       FontAwesome.shopping_cart,
       size: 16.0,
+      color: kBlack,
     );
   }
 }

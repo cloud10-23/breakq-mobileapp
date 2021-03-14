@@ -44,7 +44,6 @@ class _QShoppingScreenState extends State<QShoppingScreen>
 
   final GlobalKey<NestedScrollViewState> nestedScrollKey =
       GlobalKey<NestedScrollViewState>();
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -166,14 +165,20 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                     leading: Visibility(
                       visible: _currentStep > 1,
                       child: IconButton(
-                        icon: const Icon(Feather.arrow_left_circle),
+                        icon: const Icon(
+                          Feather.arrow_left_circle,
+                          color: kWhite,
+                        ),
                         tooltip: L10n.of(context).commonTooltipInfo,
                         onPressed: _previousStep,
                       ),
                     ),
                     actions: <Widget>[
                       IconButton(
-                        icon: const Icon(Icons.close),
+                        icon: const Icon(
+                          Icons.close,
+                          color: kWhite,
+                        ),
                         tooltip: L10n.of(context).commonTooltipInfo,
                         onPressed: () {
                           Navigator.pop(context);
@@ -188,10 +193,10 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                           L10n.of(context).bookingTitleWizardPage(
                               'page' + _currentStep.toString())
                         ]),
-                        style: Theme.of(context).textTheme.caption.black,
+                        style: Theme.of(context).textTheme.caption.white,
                       ),
                     ),
-                    backgroundColor: kBlue300,
+                    backgroundColor: kBlue,
                     centerTitle: true,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Stack(
@@ -221,7 +226,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
-                                      .black,
+                                      .white,
                                   maxLines: 1,
                                 ),
                                 SizedBox(height: kPaddingL),
@@ -231,7 +236,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6
-                                      .black
+                                      .white
                                       .w400,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

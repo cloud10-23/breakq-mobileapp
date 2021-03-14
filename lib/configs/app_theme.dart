@@ -12,7 +12,7 @@ class AppTheme {
     lightTheme = ThemeData(
       fontFamily: kFontFamily,
       brightness: Brightness.light,
-      accentColor: kBlue200,
+      accentColor: kBlue,
       primaryColor: kPrimaryColor,
       scaffoldBackgroundColor: const Color(0xfff8f8f8),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
