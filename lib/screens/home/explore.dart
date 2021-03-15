@@ -159,9 +159,14 @@ class HomeScreenState extends State<HomeScreen> {
                     _showGridOfImages(2, 4),
                   ]),
               SizedBox(height: kPaddingBtwnStrips),
-              HomeBoldHeading(title: "Offers for you!", children: [
-                _showHorizontalScrollImages(),
-              ]),
+              HomeBoldHeading(
+                  title: "Offers for you!",
+                  icon: Icon(
+                    Entypo.price_tag,
+                  ),
+                  children: [
+                    _showHorizontalScrollImages(),
+                  ]),
               SizedBox(height: kPaddingBtwnStrips),
               HomeBoldHeading(
                 title: "Exclusive Products",

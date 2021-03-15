@@ -2,6 +2,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
+import 'package:breakq/screens/home/widgets/set_budget.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/voice_search.dart';
@@ -136,6 +137,22 @@ class AppGlobals {
   final Function(Product, BuildContext) onProductDel = (product, context) =>
       BlocProvider.of<CartBloc>(context)
           .add(RemovePFromCartEvent(product: product));
+
+  /// Show Set budget bottom sheet
+  final Function(BuildContext) showSetBudget =
+      (context) => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useRootNavigator: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0)),
+            ),
+            clipBehavior: Clip.antiAlias,
+            isDismissible: true,
+            builder: (context) => SetBudgetBottomSheet(),
+          );
 
   /// Show search screen
   // final Function(BuildContext) showSearchScreen = (context) =>

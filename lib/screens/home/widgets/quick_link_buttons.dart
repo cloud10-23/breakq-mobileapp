@@ -1,7 +1,8 @@
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class QuickLinkButton extends StatelessWidget {
   QuickLinkButton({this.index, this.width});
@@ -10,10 +11,15 @@ class QuickLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(
-        context,
-        rootNavigator: true,
-      ).pushNamed(quickLinks[index]['link']),
+      onTap: () {
+        if (quickLinks[index]['link'] == 'SetBudget') {
+          return getIt.get<AppGlobals>().showSetBudget(context);
+        }
+        return Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushNamed(quickLinks[index]['link']);
+      },
       child: Container(
         constraints: BoxConstraints.tight(Size.fromWidth(width)),
         // margin: const EdgeInsets.only(

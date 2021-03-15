@@ -174,7 +174,7 @@ const List<Map<String, dynamic>> quickLinks = [
   {
     'name': 'Set Budget',
     'icon': FontAwesome5Solid.money_bill,
-    'link': 'set_budget'
+    'link': "SetBudget",
   },
   {'name': 'Cart', 'icon': FontAwesome.shopping_cart, 'link': Routes.cart},
   {'name': 'My Orders', 'icon': FontAwesome.archive, 'link': Routes.orders},
