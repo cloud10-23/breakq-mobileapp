@@ -129,6 +129,10 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                       animationDuration: Duration(milliseconds: 100),
                       animationCurve: Curves.fastOutSlowIn,
                       showCursor: false,
+                      textStyle:
+                          Theme.of(context).textTheme.headline6.w400.copyWith(
+                                fontFamily: kNumberFontFamily,
+                              ),
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.underline,
                         activeColor: kBlack,

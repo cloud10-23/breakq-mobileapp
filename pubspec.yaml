@@ -101,6 +101,9 @@ dependencies:
   # OTP field
   pin_code_fields: ^7.0.0
 
+  # Phone Number codes
+  intl_phone_field: ^1.4.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

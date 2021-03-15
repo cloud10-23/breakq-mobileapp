@@ -12,6 +12,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
 /// action.
@@ -32,8 +33,7 @@ class _SignInWidgetState extends State<SignInWidget>
     with SingleTickerProviderStateMixin {
   final TextEditingController _textPhoneController = TextEditingController();
 
-  final GlobalKey<ThemeTextInputState> keyPhoneInput =
-      GlobalKey<ThemeTextInputState>();
+  final GlobalKey<FormState> keyPhoneInput = GlobalKey<FormState>();
 
   AnimationController _controller;
 
@@ -93,34 +93,53 @@ class _SignInWidgetState extends State<SignInWidget>
                       style: Theme.of(context).textTheme.bodyText1.w500,
                     ),
                   ),
-                  ThemeTextInput(
-                    key: keyPhoneInput,
-                    controller: _textPhoneController,
-                    hintText: L10n.of(context).signInHintPhone,
-                    keyboardType: TextInputType.phone,
-                    prefix: ShowSelectedCountry(
-                      /// Implement many countries in future!
-                      country: Country(
-                        code: "IN",
-                        flag: "🇮🇳",
-                        dialCode: "+91",
-                        name: "India",
+                  Theme(
+                    data: Theme.of(context).copyWith(primaryColor: kBlue),
+                    child: Form(
+                      key: keyPhoneInput,
+                      child: IntlPhoneField(
+                        controller: _textPhoneController,
+                        initialCountryCode: 'IN',
+                        keyboardType: TextInputType.phone,
+                        style:
+                            Theme.of(context).textTheme.headline6.w400.copyWith(
+                                  fontFamily: kNumberFontFamily,
+                                ),
+                        decoration: InputDecoration(
+                            errorStyle: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .w600
+                                .copyWith(color: Colors.red),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(kFormFieldsRadius),
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor,
+                              ),
+                            ),
+                            hintText: L10n.of(context).signInHintPhone,
+                            hintStyle:
+                                Theme.of(context).textTheme.caption.w700),
+                        // validator: FormValidator.validators([
+                        //   FormValidator.isRequired(
+                        //       L10n.of(context).formValidatorPhoneRequired),
+                        //   FormValidator.isMinLength(
+                        //       length: 10,
+                        //       errorMessage: "Please enter a 10 digit number"),
+                        //   FormValidator.isMaxLength(
+                        //       length: 10,
+                        //       errorMessage: "Please enter a 10 digit number"),
+                        // ]),
+                        onChanged: (phone) {
+                          print(phone.completeNumber);
+                        },
+                        onSubmitted: (String text) => _validateForm(),
                       ),
-                      onPressed: () {
-                        //Implemented in future!
-                      },
                     ),
-                    onSubmitted: (String text) => _validateForm(),
-                    validator: FormValidator.validators([
-                      FormValidator.isRequired(
-                          L10n.of(context).formValidatorPhoneRequired),
-                      FormValidator.isMinLength(
-                          length: 10,
-                          errorMessage: "Please enter a 10 digit number"),
-                      FormValidator.isMaxLength(
-                          length: 10,
-                          errorMessage: "Please enter a 10 digit number"),
-                    ]),
                   ),
                   const SizedBox(height: kPaddingL * 1.5),
                   BlocBuilder<AuthBloc, AuthState>(
