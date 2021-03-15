@@ -90,7 +90,7 @@ class _SignInWidgetState extends State<SignInWidget>
                         top: kPaddingL, bottom: kPaddingL),
                     child: Text(
                       L10n.of(context).signInFormMobileTitle,
-                      style: Theme.of(context).textTheme.bodyText1.w300,
+                      style: Theme.of(context).textTheme.bodyText1.w500,
                     ),
                   ),
                   ThemeTextInput(
@@ -161,10 +161,12 @@ class _SignInWidgetState extends State<SignInWidget>
           // contentPadding: EdgeInsets.all(kPaddingL),
           onTap: () => Navigator.popAndPushNamed(context, Routes.signUp),
           title: Center(
-            child: Text(
-              L10n.of(context).signInDontHaveAccount,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
+            child: Text(L10n.of(context).signInDontHaveAccount,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .w600
+                    .copyWith(color: Colors.black54)),
           ),
         ),
       ],

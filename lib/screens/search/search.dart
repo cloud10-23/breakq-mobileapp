@@ -34,6 +34,7 @@ class _SearchBarState extends State<SearchBar> {
             Expanded(
               child: TextField(
                   autofocus: true,
+                  style: Theme.of(context).textTheme.headline6.w600,
                   decoration: InputDecoration(
                     hintText: L10n.of(context).homePlaceholderSearch,
                     hintStyle: Theme.of(context)

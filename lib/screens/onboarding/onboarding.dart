@@ -1,5 +1,6 @@
 import 'package:breakq/screens/onboarding/intro_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -48,11 +49,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     /// Styles for the onbarding screen elements
     final PageDecoration pageDecoration = PageDecoration(
       titleTextStyle:
-          Theme.of(context).textTheme.headline5.bold.copyWith(color: kBlack),
+          Theme.of(context).textTheme.headline5.bold.copyWith(color: kWhite),
       bodyTextStyle: Theme.of(context)
           .textTheme
           .subtitle1
-          .copyWith(color: kBlack, height: 1.8),
+          .copyWith(color: kWhite, height: 1.8),
       descriptionPadding:
           const EdgeInsets.fromLTRB(kPaddingM, 0, kPaddingM, kPaddingM),
       imagePadding: const EdgeInsets.all(kPaddingL),
@@ -63,83 +64,86 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           end: Alignment.topCenter,
           stops: const <double>[0.1, 0.9],
           colors: <Color>[
-            kPrimaryColor.withOpacity(.9),
-            kPrimaryColor,
+            kBlue.withOpacity(.9),
+            kBlue,
           ],
         ),
       ),
     );
 
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      body: Stack(
-        children: <Widget>[
-          IntroductionScreen(
-            globalBackgroundColor: kWhite,
-            showSkipButton: true,
-            skipFlex: 0,
-            nextFlex: 0,
-            dotsDecorator: DotsDecorator(
-              size: const Size(10.0, 10.0), // size of dots
-              color: kBlack.withAlpha(128), // color of dots
-              activeSize: const Size(22.0, 10.0),
-              activeColor: kBlack, // color of the active dot
-              activeShape: const RoundedRectangleBorder(
-                // Shape of the active dot.
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        backgroundColor: kPrimaryColor,
+        body: Stack(
+          children: <Widget>[
+            IntroductionScreen(
+              globalBackgroundColor: kWhite,
+              showSkipButton: true,
+              skipFlex: 0,
+              nextFlex: 0,
+              dotsDecorator: DotsDecorator(
+                size: const Size(10.0, 10.0), // size of dots
+                color: kWhite.withAlpha(128), // color of dots
+                activeSize: const Size(22.0, 10.0),
+                activeColor: kWhite, // color of the active dot
+                activeShape: const RoundedRectangleBorder(
+                  // Shape of the active dot.
+                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                ),
               ),
-            ),
-            skip: Text(
-              L10n.of(context).onboardingBtnSkip,
-              style: const TextStyle(color: kBlack),
-            ),
-            next: const Icon(
-              Icons.arrow_forward,
-              color: kBlack,
-            ),
-            done: Text(
-              L10n.of(context).onboardingBtnGetStarted,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w600, color: kBlack),
-            ),
-            pages: <PageViewModel>[
-              PageViewModel(
-                title: L10n.of(context).onboardingPage1Title,
-                body: L10n.of(context).onboardingPage1Body,
-                image: introImage(AssetImages.onboardingWelcome),
-                decoration: pageDecoration,
+              skip: Text(
+                L10n.of(context).onboardingBtnSkip,
+                style: const TextStyle(color: kWhite),
               ),
-              PageViewModel(
-                title: L10n.of(context).onboardingPage2Title,
-                body: L10n.of(context).onboardingPage2Body,
-                image: introImage(AssetImages.onboardingFind),
-                decoration: pageDecoration,
+              next: const Icon(
+                Icons.arrow_forward,
+                color: kWhite,
               ),
-              PageViewModel(
-                title: L10n.of(context).onboardingPage3Title,
-                body: L10n.of(context).onboardingPage3Body,
-                image: introImage(AssetImages.onboardingAppointment),
-                decoration: pageDecoration,
+              done: Text(
+                L10n.of(context).onboardingBtnGetStarted,
+                style:
+                    const TextStyle(fontWeight: FontWeight.w600, color: kWhite),
               ),
-            ],
-            onDone: () => onboardingCompleted(),
-            onSkip: () => onboardingCompleted(),
-          ),
-          AnimatedBuilder(
-            animation: _rippleAnimation,
-            builder: (_, Widget child) {
-              return ripple(
-                context,
-                radius: _rippleAnimation.value,
-                color: Theme.of(context).canvasColor,
-              );
-            },
-          ),
-          Visibility(
-            visible: _rippleAnimationController.isCompleted,
-            child: IntroScreen(),
-          ),
-        ],
+              pages: <PageViewModel>[
+                PageViewModel(
+                  title: L10n.of(context).onboardingPage1Title,
+                  body: L10n.of(context).onboardingPage1Body,
+                  image: introImage(AssetImages.onboardingShopImage),
+                  decoration: pageDecoration,
+                ),
+                PageViewModel(
+                  title: L10n.of(context).onboardingPage2Title,
+                  body: L10n.of(context).onboardingPage2Body,
+                  image: introImageWhite(AssetImages.onboardingBarcode),
+                  decoration: pageDecoration,
+                ),
+                PageViewModel(
+                  title: L10n.of(context).onboardingPage3Title,
+                  body: L10n.of(context).onboardingPage3Body,
+                  image: introImageWhite(AssetImages.onboardingQR),
+                  decoration: pageDecoration,
+                ),
+              ],
+              onDone: () => onboardingCompleted(),
+              onSkip: () => onboardingCompleted(),
+            ),
+            AnimatedBuilder(
+              animation: _rippleAnimation,
+              builder: (_, Widget child) {
+                return ripple(
+                  context,
+                  radius: _rippleAnimation.value,
+                  color: Theme.of(context).canvasColor,
+                );
+              },
+            ),
+            Visibility(
+              visible: _rippleAnimationController.isCompleted,
+              child: IntroScreen(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -148,6 +152,17 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Widget introImage(String assetName) {
     return Align(
       child: Image.asset('$assetName', width: 240.0),
+      alignment: Alignment.bottomCenter,
+    );
+  }
+
+  Widget introImageWhite(String assetName) {
+    return Align(
+      child: Image.asset(
+        '$assetName',
+        width: 240.0,
+        color: kWhite,
+      ),
       alignment: Alignment.bottomCenter,
     );
   }

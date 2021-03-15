@@ -158,10 +158,7 @@ class ThemeTextInputState extends State<ThemeTextInput> {
                   )
                 : null,
             placeholder: widget.hintText,
-            placeholderStyle: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: Theme.of(context).hintColor,
-            ),
+            placeholderStyle: Theme.of(context).textTheme.caption.w600,
             prefix: widget.prefix,
             inputFormatters: <TextInputFormatter>[
               if (widget.lengthLimit > 0)

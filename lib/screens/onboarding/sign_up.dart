@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.80,
+                  height: MediaQuery.of(context).size.height * 0.90,
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: const BorderRadius.only(
@@ -268,10 +268,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               contentPadding: EdgeInsets.all(kPaddingL),
               onTap: () => Navigator.popAndPushNamed(context, Routes.signIn),
               title: Center(
-                child: Text(
-                  L10n.of(context).signUpAlreadyHaveAccount,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
+                child: Text(L10n.of(context).signUpAlreadyHaveAccount,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .w600
+                        .copyWith(color: Colors.black54)),
               ),
             ),
           ],

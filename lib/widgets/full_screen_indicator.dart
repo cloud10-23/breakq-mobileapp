@@ -6,7 +6,7 @@ class FullScreenIndicator extends StatelessWidget {
   const FullScreenIndicator({
     Key key,
     this.color = kWhite,
-    this.backgroundColor = kPrimaryColor,
+    this.backgroundColor = kBlue,
   }) : super(key: key);
 
   final Color color;

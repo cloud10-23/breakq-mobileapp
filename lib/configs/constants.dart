@@ -192,9 +192,11 @@ const List<Map<String, int>> bulkAddToCart = [
 /// Assets images
 class AssetImages {
   static const String introScreen = 'assets/images/onboarding/IntroScreen.png';
-  static const String onboardingWelcome = 'assets/images/onboarding/shop-1.png';
-  static const String onboardingFind = 'assets/images/onboarding/barcode.png';
-  static const String onboardingAppointment = 'assets/images/onboarding/qr.png';
+  static const String onboardingShopImage =
+      'assets/images/onboarding/shop-1.png';
+  static const String onboardingBarcode =
+      'assets/images/onboarding/barcode.png';
+  static const String onboardingQR = 'assets/images/onboarding/qr.png';
   static const String homeWavyHeader = 'assets/images/home-page.jpg';
   static const String loginBackground =
       'assets/images/illustrations/illustration.jpg';

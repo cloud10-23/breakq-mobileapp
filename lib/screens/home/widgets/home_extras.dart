@@ -132,15 +132,13 @@ class SelectBranch extends StatelessWidget {
               ),
               SizedBox(width: 5.0),
               Expanded(
-                child: Text(
-                  "T-Nagar Branch",
-                  style: getIt
-                      .get<AppGlobals>()
-                      .captionStyle(context)
-                      .copyWith(color: kWhite),
-                  overflow: TextOverflow.fade,
-                  maxLines: 1,
-                ),
+                child: Text("Select Branch",
+                    style: Theme.of(context).textTheme.caption.fs8.w800.white),
+              ),
+              Icon(
+                AntDesign.caretdown,
+                color: kWhite,
+                size: 10,
               ),
             ],
           ),

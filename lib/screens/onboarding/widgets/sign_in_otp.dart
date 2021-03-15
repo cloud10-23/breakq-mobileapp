@@ -8,6 +8,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
 /// action.
@@ -128,7 +129,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
+                          icon: Icon(Feather.arrow_left_circle),
                           onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
                         ),
                         Padding(
@@ -216,15 +217,19 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
               children: [
                 Text(
                   L10n.of(context).signInOTPResendTitle,
-                  style: Theme.of(context).textTheme.caption.fs16.w300,
+                  style: Theme.of(context).textTheme.bodyText1.w500,
                   textAlign: TextAlign.center,
                 ),
                 FlatButton(
                   onPressed: () {},
                   child: Text(
                     L10n.of(context).signInOTPResend,
-                    style:
-                        Theme.of(context).textTheme.caption.fs14.primaryColor,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .fs14
+                        .w800
+                        .primaryColor,
                     textAlign: TextAlign.center,
                   ),
                 ),
