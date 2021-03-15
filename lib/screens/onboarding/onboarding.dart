@@ -72,7 +72,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     );
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: Color(0xFFFFFFFF),
+        systemNavigationBarDividerColor: null,
+        statusBarColor: null,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
+      ),
       child: Scaffold(
         backgroundColor: kPrimaryColor,
         body: Stack(

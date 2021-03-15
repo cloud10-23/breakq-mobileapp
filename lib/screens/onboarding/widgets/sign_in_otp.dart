@@ -1,14 +1,17 @@
+import 'dart:async';
+
+import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/utils/form_utils.dart';
-import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
 /// action.
@@ -29,13 +32,8 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ThemeTextInputState> keyOTPInput =
       GlobalKey<ThemeTextInputState>();
-
-  final FocusNode focusNode1 = FocusNode();
-  final FocusNode focusNode2 = FocusNode();
-  final FocusNode focusNode3 = FocusNode();
-  final FocusNode focusNode4 = FocusNode();
-  final FocusNode focusNode5 = FocusNode();
-  final FocusNode focusNode6 = FocusNode();
+  StreamController<ErrorAnimationType> _errorController;
+  TextEditingController _otpController;
 
   AnimationController _controller;
 
@@ -47,7 +45,8 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
     _controller = AnimationController(vsync: this);
 
     _loginBloc = BlocProvider.of<AuthBloc>(context);
-
+    _errorController = StreamController<ErrorAnimationType>();
+    _otpController = TextEditingController();
     super.initState();
   }
 
@@ -57,59 +56,8 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
     super.dispose();
   }
 
-  Widget getPinField({String key, FocusNode focusNode}) => SizedBox(
-        height: 50.0,
-        width: kPaddingL,
-        child: TextField(
-          key: Key(key),
-          expands: false,
-          // autofocus: key.contains("1") ? true : false,
-          autofocus: false,
-          focusNode: focusNode,
-          onSubmitted: (_) => _submitOTP(),
-          onChanged: (String value) {
-            if (value.length == 1) {
-              _code += value;
-              switch (_code.length) {
-                case 1:
-                  FocusScope.of(context).requestFocus(focusNode2);
-                  break;
-                case 2:
-                  FocusScope.of(context).requestFocus(focusNode3);
-                  break;
-                case 3:
-                  FocusScope.of(context).requestFocus(focusNode4);
-                  break;
-                case 4:
-                  FocusScope.of(context).requestFocus(focusNode5);
-                  break;
-                case 5:
-                  FocusScope.of(context).requestFocus(focusNode6);
-                  break;
-                case 6:
-
-                  /// Submit the OTP
-                  break;
-                default:
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  break;
-              }
-            }
-          },
-          maxLengthEnforced: false,
-          textAlign: TextAlign.center,
-          cursorColor: Colors.white,
-          keyboardType: TextInputType.number,
-          style: Theme.of(context).textTheme.headline6.w600,
-          decoration:
-              InputDecoration(contentPadding: const EdgeInsets.all(kPaddingS)),
-        ),
-      );
-
-  void _submitOTP() {
-    FormUtils.hideKeyboard(context);
-
-    _loginBloc.add(OTPVerificationAuthEvent(otp: _code));
+  void _submitOTP(String code) {
+    _loginBloc.add(OTPVerificationAuthEvent(otp: code));
   }
 
   @override
@@ -148,7 +96,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                       padding: const EdgeInsets.only(bottom: kPaddingL),
                       child: Text(
                         L10n.of(context).signInOTPFormTitle,
-                        style: Theme.of(context).textTheme.bodyText1.w300,
+                        style: Theme.of(context).textTheme.bodyText1.w500,
                       ),
                     ),
                     SizedBox(height: kPaddingL * 1.5),
@@ -156,7 +104,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                       children: [
                         Text(
                           L10n.of(context).signInOTPAutoVerify,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.caption.w800,
                         ),
                         Spacer(),
                         SizedBox(
@@ -170,16 +118,50 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        getPinField(key: "1", focusNode: focusNode1),
-                        getPinField(key: "2", focusNode: focusNode2),
-                        getPinField(key: "3", focusNode: focusNode3),
-                        getPinField(key: "4", focusNode: focusNode4),
-                        getPinField(key: "5", focusNode: focusNode5),
-                        getPinField(key: "6", focusNode: focusNode6),
-                      ],
+                    SizedBox(height: kPaddingL),
+                    PinCodeTextField(
+                      appContext: context,
+                      length: 6,
+                      obscureText: false,
+                      autoFocus: true,
+                      keyboardType: TextInputType.number,
+                      animationType: AnimationType.slide,
+                      animationDuration: Duration(milliseconds: 100),
+                      animationCurve: Curves.fastOutSlowIn,
+                      showCursor: false,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.underline,
+                        activeColor: kBlack,
+                        selectedColor: kBlue900,
+                        inactiveColor: kBlack,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        // activeFillColor: Colors.white,
+                      ),
+                      enableActiveFill: false,
+                      errorAnimationController: _errorController,
+                      controller: _otpController,
+                      // onChanged: (value) {},
+                      onCompleted: (code) {
+                        _submitOTP(code);
+                      },
+                      onChanged: (value) {
+                        // print(value);
+                        setState(() {
+                          _code = value;
+                        });
+                      },
+                      beforeTextPaste: (text) {
+                        if (int.tryParse(text) != null && text.length == 6) {
+                          print("Allowing to paste $text");
+                          return true;
+                        }
+                        // if(text.contains(RegExp('[\d]*')))
+                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                        return false;
+                      },
                     ),
                     const Padding(padding: EdgeInsets.only(top: kPaddingL)),
                     BlocBuilder<AuthBloc, AuthState>(
@@ -188,17 +170,21 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                           listener:
                               (BuildContext context, AuthState loginListener) {
                             if (loginListener is LoginFailureAuthState) {
-                              UI.showErrorDialog(
-                                context,
-                                message: loginListener.message,
-                              );
+                              _otpController.clear();
+                              _errorController.add(ErrorAnimationType.shake);
+                              Future.delayed(Duration(seconds: 1))
+                                  .then((value) => UI.showErrorDialog(
+                                        context,
+                                        message: loginListener.message,
+                                        // onPressed: () => Navigator.pop(context),
+                                      ));
                             } else if (loginListener is LoginSuccessAuthState) {
                               if (Navigator.of(context).canPop())
                                 Navigator.of(context).pop();
                             }
                           },
                           child: ThemeButton(
-                            onPressed: () => _submitOTP(),
+                            onPressed: () => _submitOTP(_code),
                             text: L10n.of(context).signInOTPButtonLogin,
                             showLoading: login is ProcessInProgressAuthState,
                             disableTouchWhenLoading: true,

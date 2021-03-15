@@ -118,7 +118,8 @@ class UI {
           onPressed: () {
             if (onPressed != null) {
               onPressed();
-            }
+            } else
+              Navigator.pop(context);
           },
         ),
       ],

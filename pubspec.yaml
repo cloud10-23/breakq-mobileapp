@@ -98,6 +98,9 @@ dependencies:
   #Icons
   flutter_icons: ^1.1.0
 
+  # OTP field
+  pin_code_fields: ^7.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
