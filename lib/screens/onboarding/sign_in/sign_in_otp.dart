@@ -18,11 +18,11 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class SignInOTPWidget extends StatefulWidget {
   const SignInOTPWidget({
     Key key,
-    this.title,
+    this.phoneNumber,
   }) : super(key: key);
 
   /// Optional widget title.
-  final String title;
+  final String phoneNumber;
 
   @override
   _SignInOTPWidgetState createState() => _SignInOTPWidgetState();
@@ -62,172 +62,168 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: kPaddingL, right: kPaddingL),
-              child: SingleChildScrollView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Spacer(),
+        Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(kCardRadius),
+              topRight: Radius.circular(kCardRadius),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Feather.arrow_left_circle),
+                    onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: kPaddingL, bottom: kPaddingL),
+                    child: Text(
+                      L10n.of(context).signInOTPTitle,
+                      style: Theme.of(context).textTheme.headline6.bold,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: kPaddingM),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                child: Row(
+                  children: [
+                    Text(
+                      L10n.of(context).signInOTPAutoVerify,
+                      style: Theme.of(context).textTheme.caption.w800,
+                    ),
+                    Spacer(),
+                    SizedBox(
+                        height: kPaddingL,
+                        width: kPaddingL,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.0,
+                        )),
+                    Spacer(
+                      flex: 5,
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: kPaddingL),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                child: PinCodeTextField(
+                  appContext: context,
+                  length: 6,
+                  obscureText: false,
+                  autoFocus: true,
+                  keyboardType: TextInputType.number,
+                  animationType: AnimationType.slide,
+                  animationDuration: Duration(milliseconds: 100),
+                  animationCurve: Curves.fastOutSlowIn,
+                  showCursor: false,
+                  textStyle:
+                      Theme.of(context).textTheme.headline6.w400.copyWith(
+                            fontFamily: kNumberFontFamily,
+                          ),
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.underline,
+                    activeColor: kBlack,
+                    selectedColor: kBlue900,
+                    inactiveColor: kBlack,
+                    borderRadius: BorderRadius.circular(5),
+                    fieldHeight: 50,
+                    fieldWidth: 40,
+                    // activeFillColor: Colors.white,
+                  ),
+                  enableActiveFill: false,
+                  errorAnimationController: _errorController,
+                  controller: _otpController,
+                  // onChanged: (value) {},
+                  onCompleted: (code) {
+                    _submitOTP(code);
+                  },
+                  onChanged: (value) {
+                    // print(value);
+                    setState(() {
+                      _code = value;
+                    });
+                  },
+                  beforeTextPaste: (text) {
+                    if (int.tryParse(text) != null && text.length == 6) {
+                      print("Allowing to paste $text");
+                      return true;
+                    }
+                    // if(text.contains(RegExp('[\d]*')))
+                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                    return false;
+                  },
+                ),
+              ),
+              BlocListener<AuthBloc, AuthState>(
+                listenWhen: (previous, current) =>
+                    current is LoginFailureAuthState,
+                listener: (BuildContext context, AuthState loginListener) {
+                  if (loginListener is LoginFailureAuthState) {
+                    _otpController.clear();
+                    _errorController.add(ErrorAnimationType.shake);
+                    Future.delayed(Duration(seconds: 1))
+                        .then((value) => UI.showErrorDialog(
+                              context,
+                              message: loginListener.message,
+                              // onPressed: () => Navigator.pop(context),
+                            ));
+                    // } else if (loginListener is LoginSuccessAuthState) {
+                    //   if (Navigator.of(context, rootNavigator: true).canPop())
+                    //     Navigator.of(context, rootNavigator: true).pop();
+                  }
+                },
+                child: Container(),
+                //   child: ThemeButton(
+                //     onPressed: () => _submitOTP(_code),
+                //     text: L10n.of(context).signInOTPButtonLogin,
+                //     showLoading: login is ProcessInProgressAuthState,
+                //     disableTouchWhenLoading: true,
+                //   ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingL, vertical: kPaddingS),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Feather.arrow_left_circle),
-                          onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: kPaddingL, bottom: kPaddingL),
-                          child: Text(
-                            L10n.of(context).signInOTPTitle,
-                            style: Theme.of(context).textTheme.headline6.bold,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
+                  children: [
+                    Text(
+                      L10n.of(context).signInOTPResendTitle,
+                      style: Theme.of(context).textTheme.bodyText1.w500,
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: kPaddingL),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: kPaddingL),
+                    FlatButton(
+                      onPressed: () {},
                       child: Text(
-                        L10n.of(context).signInOTPFormTitle,
-                        style: Theme.of(context).textTheme.bodyText1.w500,
+                        L10n.of(context).signInOTPResend,
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            .fs14
+                            .w800
+                            .primaryColor,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    SizedBox(height: kPaddingL * 1.5),
-                    Row(
-                      children: [
-                        Text(
-                          L10n.of(context).signInOTPAutoVerify,
-                          style: Theme.of(context).textTheme.caption.w800,
-                        ),
-                        Spacer(),
-                        SizedBox(
-                            height: kPaddingL,
-                            width: kPaddingL,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                            )),
-                        Spacer(
-                          flex: 5,
-                        )
-                      ],
-                    ),
-                    SizedBox(height: kPaddingL),
-                    PinCodeTextField(
-                      appContext: context,
-                      length: 6,
-                      obscureText: false,
-                      autoFocus: true,
-                      keyboardType: TextInputType.number,
-                      animationType: AnimationType.slide,
-                      animationDuration: Duration(milliseconds: 100),
-                      animationCurve: Curves.fastOutSlowIn,
-                      showCursor: false,
-                      textStyle:
-                          Theme.of(context).textTheme.headline6.w400.copyWith(
-                                fontFamily: kNumberFontFamily,
-                              ),
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.underline,
-                        activeColor: kBlack,
-                        selectedColor: kBlue900,
-                        inactiveColor: kBlack,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        // activeFillColor: Colors.white,
-                      ),
-                      enableActiveFill: false,
-                      errorAnimationController: _errorController,
-                      controller: _otpController,
-                      // onChanged: (value) {},
-                      onCompleted: (code) {
-                        _submitOTP(code);
-                      },
-                      onChanged: (value) {
-                        // print(value);
-                        setState(() {
-                          _code = value;
-                        });
-                      },
-                      beforeTextPaste: (text) {
-                        if (int.tryParse(text) != null && text.length == 6) {
-                          print("Allowing to paste $text");
-                          return true;
-                        }
-                        // if(text.contains(RegExp('[\d]*')))
-                        //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                        return false;
-                      },
-                    ),
-                    const Padding(padding: EdgeInsets.only(top: kPaddingL)),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (BuildContext context, AuthState login) {
-                        return BlocListener<AuthBloc, AuthState>(
-                          listener:
-                              (BuildContext context, AuthState loginListener) {
-                            if (loginListener is LoginFailureAuthState) {
-                              _otpController.clear();
-                              _errorController.add(ErrorAnimationType.shake);
-                              Future.delayed(Duration(seconds: 1))
-                                  .then((value) => UI.showErrorDialog(
-                                        context,
-                                        message: loginListener.message,
-                                        // onPressed: () => Navigator.pop(context),
-                                      ));
-                            } else if (loginListener is LoginSuccessAuthState) {
-                              if (Navigator.of(context).canPop())
-                                Navigator.of(context).pop();
-                            }
-                          },
-                          child: ThemeButton(
-                            onPressed: () => _submitOTP(_code),
-                            text: L10n.of(context).signInOTPButtonLogin,
-                            showLoading: login is ProcessInProgressAuthState,
-                            disableTouchWhenLoading: true,
-                          ),
-                        );
-                      },
                     ),
                   ],
                 ),
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(kPaddingL),
-            child: Column(
-              children: [
-                Text(
-                  L10n.of(context).signInOTPResendTitle,
-                  style: Theme.of(context).textTheme.bodyText1.w500,
-                  textAlign: TextAlign.center,
-                ),
-                FlatButton(
-                  onPressed: () {},
-                  child: Text(
-                    L10n.of(context).signInOTPResend,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .fs14
-                        .w800
-                        .primaryColor,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

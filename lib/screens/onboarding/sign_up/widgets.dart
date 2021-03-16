@@ -1,5 +1,5 @@
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/onboarding/sign_in/sigin_helper.dart';
+import 'package:breakq/screens/onboarding/sign_in/widgets/sign_in_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -205,19 +205,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 //     onPressed: () {}, //Async.launchUrl(kTermsOfServiceURL),
                 //   ),
                 // ),
-                ListTile(
-                  contentPadding: EdgeInsets.all(kPaddingL),
-                  onTap: () =>
-                      Navigator.popAndPushNamed(context, Routes.signIn),
-                  title: Center(
-                    child: Text(L10n.of(context).signUpAlreadyHaveAccount,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            .w600
-                            .copyWith(color: Colors.black54)),
-                  ),
-                ),
               ],
             ),
           ),

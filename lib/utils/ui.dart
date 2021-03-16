@@ -11,11 +11,12 @@ class UI {
     String message,
     IconData icon,
     Color iconBackgroundColor,
+    bool barrierDissmissable = false,
     @required List<Widget> actions,
   }) async {
     return showGeneralDialog(
       useRootNavigator: true,
-      // barrierDismissible: true,
+      // barrierDismissible: barrierDissmissable,
       context: context,
       barrierColor: Colors.black54, // space around dialog
       transitionDuration: const Duration(milliseconds: 250),
@@ -111,6 +112,7 @@ class UI {
       message: message,
       icon: Icons.error,
       iconBackgroundColor: Colors.red,
+      barrierDissmissable: true,
       actions: <Widget>[
         FlatButton(
           color: Theme.of(context).buttonColor,
@@ -119,7 +121,7 @@ class UI {
             if (onPressed != null) {
               onPressed();
             } else
-              Navigator.pop(context);
+              Navigator.of(context, rootNavigator: true).pop();
           },
         ),
       ],

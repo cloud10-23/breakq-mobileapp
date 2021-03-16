@@ -9,10 +9,11 @@ import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_1.dar
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
 import 'package:breakq/screens/listing/listing.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in_mobile_num.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
 import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
-import 'package:breakq/screens/onboarding/sign_in/sign_in.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/add_address.dart';
@@ -20,7 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
 import 'package:breakq/widgets/photo_gallery.dart';
-import 'package:breakq/screens/onboarding/sign_up.dart';
 import 'package:breakq/widgets/picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,9 +29,6 @@ class Routes {
   static const String product = '/product';
   static const String picker = '/picker';
   static const String forgotPassword = '/forgotPassword';
-  static const String signIn = '/signIn';
-  static const String signInOtp = '/signIn/otp';
-  static const String signUp = '/signUp';
   static const String quickShopping = '/qs';
   static const String settings = '/settings';
   static const String editProfile = '/editProfile';
@@ -76,10 +73,6 @@ class Routes {
                 params: routeSettings.arguments as Map<String, dynamic>);
           },
         );
-      case signIn:
-        return SlideRoute(widget: const SignInScreen());
-      case signUp:
-        return SlideRoute(widget: const SignUpScreen());
       case editProfile:
         return MaterialPageRoute<EditProfileScreen>(
           builder: (BuildContext context) {
@@ -154,40 +147,43 @@ class Routes {
 /// https://medium.com/coding-with-flutter/flutter-case-study-multiple-navigators-with-bottomnavigationbar-90eb6caa6dbf
 ///
 
-// class CustomNavigatorRoutes {
-//   static const String home = '/';
-//   static const String listing = '/listing';
-//   static const String qs = '/quick_shopping';
-// }
+class OnboardingRoutes {
+  static const String home = '/';
+  static const String mobileLogin = '/mobileLogin';
+  static const String otp = '/mobileLogin/otp';
+}
 
-// class CustomNavigator extends StatelessWidget {
-//   CustomNavigator({this.navigatorKey, this.homeScreen});
-//   final GlobalKey<NavigatorState> navigatorKey;
-//   final Widget homeScreen;
+class OnboardingNavigator extends StatelessWidget {
+  OnboardingNavigator({this.navigatorKey, this.homeScreen});
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Widget homeScreen;
 
-//   Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
-//       BuildContext context) {
-//     return {
-//       CustomNavigatorRoutes.home: (context, settings) => homeScreen,
-//       CustomNavigatorRoutes.listing: (context, settings) => Listing(
-//             title: settings?.arguments ?? null,
-//           ),
-//     };
-//   }
+  Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
+      BuildContext context) {
+    return {
+      OnboardingRoutes.home: (context, settings) => homeScreen,
+      OnboardingRoutes.mobileLogin: (context, settings) => SignInWidget(
+          // : settings?.arguments ?? null,
+          ),
+      OnboardingRoutes.otp: (context, settings) => SignInOTPWidget(
+            phoneNumber: settings?.arguments ?? null,
+          ),
+    };
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     var routeBuilders = _routeBuilders(context);
-//     return Navigator(
-//         key: navigatorKey,
-//         initialRoute: CustomNavigatorRoutes.home,
-//         onGenerateRoute: (routeSettings) {
-//           return SlideRoute(
-//               widget:
-//                   routeBuilders[routeSettings.name](context, routeSettings));
-//         });
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    var routeBuilders = _routeBuilders(context);
+    return Navigator(
+        key: navigatorKey,
+        initialRoute: OnboardingRoutes.home,
+        onGenerateRoute: (routeSettings) {
+          return SlideRoute(
+              widget:
+                  routeBuilders[routeSettings.name](context, routeSettings));
+        });
+  }
+}
 
 /// The custom navigator for checkout screens:
 class CheckoutNavigatorRoutes {

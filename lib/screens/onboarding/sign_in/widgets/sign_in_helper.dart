@@ -69,22 +69,20 @@ class SignInSocialButton extends StatelessWidget {
               (social == Social.google)
                   ? Image(
                       image: AssetImage("assets/images/google-icon.png"),
-                      height: 25.0)
+                      height: 18.0)
                   : Icon(
                       FontAwesome5Brands.facebook_f,
-                      size: 25.0,
+                      size: 18.0,
                       color: kWhite,
                     ),
               Spacer(flex: 2),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  (social == Social.google)
-                      ? 'Sign in with Google'
-                      : 'Sign in with Facebook',
+                  (social == Social.google) ? 'Google' : 'Facebook',
                   style: (social == Social.google)
-                      ? Theme.of(context).textTheme.subtitle2.w500
-                      : Theme.of(context).textTheme.subtitle2.w500.white,
+                      ? Theme.of(context).textTheme.caption.w600
+                      : Theme.of(context).textTheme.caption.w600.white,
                 ),
               ),
               Spacer(flex: 4),
@@ -146,8 +144,8 @@ class SignUpSocialButton extends StatelessWidget {
                       ? 'Sign up with Google'
                       : 'Sign up with Facebook',
                   style: (social == Social.google)
-                      ? Theme.of(context).textTheme.subtitle2.w500
-                      : Theme.of(context).textTheme.subtitle2.w500.white,
+                      ? Theme.of(context).textTheme.subtitle2.w600
+                      : Theme.of(context).textTheme.subtitle2.w600.white,
                 ),
               ),
               Spacer(flex: 4),
