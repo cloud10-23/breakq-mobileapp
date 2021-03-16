@@ -1,22 +1,19 @@
 import 'package:breakq/blocs/application/application_bloc.dart';
-import 'package:breakq/screens/onboarding/widgets/sign_in_otp.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
+import 'package:breakq/screens/onboarding/sign_up/widgets.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/screens/onboarding/widgets/sign_in.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key key}) : super(key: key);
-
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key key}) : super(key: key);
   @override
-  _SignInScreenState createState() {
-    return _SignInScreenState();
-  }
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen>
+class _SignUpScreenState extends State<SignUpScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
@@ -34,14 +31,10 @@ class _SignInScreenState extends State<SignInScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      buildWhen: (AuthState prevState, AuthState currentState) {
-        return currentState is! LoginSuccessAuthState;
-      },
-      builder: (BuildContext context, AuthState state) {
-        return Scaffold(
-          backgroundColor: kWhite,
-          body: LoadingOverlay(
+    return Scaffold(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return LoadingOverlay(
             isLoading: (state is ProcessInProgressAuthState),
             child: Stack(
               alignment: Alignment.bottomCenter,
@@ -57,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen>
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.80,
+                  height: MediaQuery.of(context).size.height * 0.90,
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: const BorderRadius.only(
@@ -69,25 +62,25 @@ class _SignInScreenState extends State<SignInScreen>
                     controller: _controller,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
-                      SignInWidget(),
+                      SignUpWidget(),
                       SignInOTPWidget(),
                     ],
                   ),
-                )
+                ),
               ],
             ),
-          ),
-        );
-      },
-      listenWhen: (previous, current) => (current is VerifyOTPAuthState ||
-          current is InitialAuthState ||
-          current is LoginSuccessAuthState),
-      listener: (context, state) => (state is LoginSuccessAuthState)
-          ? BlocProvider.of<ApplicationBloc>(context)
-              .add(OnboardingCompletedApplicationEvent())
-          : (state is VerifyOTPAuthState)
-              ? _controller.animateTo(1)
-              : _controller.animateTo(0),
+          );
+        },
+        listenWhen: (previous, current) => (current is VerifyOTPAuthState ||
+            current is InitialAuthState ||
+            current is LoginSuccessAuthState),
+        listener: (context, state) => (state is LoginSuccessAuthState)
+            ? BlocProvider.of<ApplicationBloc>(context)
+                .add(OnboardingCompletedApplicationEvent())
+            : (state is VerifyOTPAuthState)
+                ? _controller.animateTo(1)
+                : _controller.animateTo(0),
+      ),
     );
   }
 }

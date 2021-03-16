@@ -12,7 +12,7 @@ import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
-import 'package:breakq/screens/onboarding/sign_in.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/add_address.dart';
