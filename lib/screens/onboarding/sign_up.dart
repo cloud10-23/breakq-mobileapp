@@ -1,6 +1,5 @@
 import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/data/models/country.dart';
 import 'package:breakq/screens/onboarding/widgets/sigin_helper.dart';
 import 'package:breakq/screens/onboarding/widgets/sign_in_otp.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
@@ -15,7 +14,6 @@ import 'package:breakq/utils/form_validator.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/form_label.dart';
 import 'package:breakq/widgets/theme_button.dart';
-import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -114,6 +112,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final GlobalKey<FormState> keyPhoneInput = GlobalKey<FormState>();
 
   bool _consentGiven = true;
+  String _phoneNum = "";
 
   void _signUp() {
     FormUtils.hideKeyboard(context);
@@ -130,7 +129,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     if (keyPhoneInput.currentState.validate()) {
       BlocProvider.of<AuthBloc>(context).add(UserRegisteredAuthEvent(
         fullName: _textNameController.text,
-        phone: "+91" + _textPhoneController.text,
+        phone: _phoneNum,
       ));
     }
   }
@@ -220,8 +219,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       ),
                       hintText: L10n.of(context).signInHintPhone,
                       hintStyle: Theme.of(context).textTheme.caption.w700),
-                  // onChanged: (phone) {
-                  // },
+                  onChanged: (phone) {
+                    _phoneNum = phone.completeNumber;
+                  },
                   onSubmitted: (String text) => _signUp(),
                 ),
                 const SizedBox(height: kPaddingL),

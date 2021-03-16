@@ -1,5 +1,4 @@
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/data/models/country.dart';
 import 'package:breakq/screens/onboarding/widgets/sigin_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +6,8 @@ import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/form_utils.dart';
-import 'package:breakq/utils/form_validator.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/theme_button.dart';
-import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -39,11 +36,15 @@ class _SignInWidgetState extends State<SignInWidget>
 
   AuthBloc _loginBloc;
 
+  String _phoneNum;
+
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
 
     _loginBloc = BlocProvider.of<AuthBloc>(context);
+
+    _phoneNum = "";
 
     super.initState();
   }
@@ -59,7 +60,7 @@ class _SignInWidgetState extends State<SignInWidget>
 
     if (keyPhoneInput.currentState.validate()) {
       _loginBloc.add(LoginRequestedAuthEvent(
-        phone: "+91" + _textPhoneController.text,
+        phone: _phoneNum,
       ));
     }
   }
@@ -124,18 +125,8 @@ class _SignInWidgetState extends State<SignInWidget>
                             hintText: L10n.of(context).signInHintPhone,
                             hintStyle:
                                 Theme.of(context).textTheme.caption.w700),
-                        // validator: FormValidator.validators([
-                        //   FormValidator.isRequired(
-                        //       L10n.of(context).formValidatorPhoneRequired),
-                        //   FormValidator.isMinLength(
-                        //       length: 10,
-                        //       errorMessage: "Please enter a 10 digit number"),
-                        //   FormValidator.isMaxLength(
-                        //       length: 10,
-                        //       errorMessage: "Please enter a 10 digit number"),
-                        // ]),
                         onChanged: (phone) {
-                          print(phone.completeNumber);
+                          _phoneNum = phone.completeNumber;
                         },
                         onSubmitted: (String text) => _validateForm(),
                       ),
