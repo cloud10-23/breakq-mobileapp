@@ -62,7 +62,7 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   # share: ^0.6.5+2
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.
-  # image_picker: ^0.6.7+11
+  image_picker: ^0.7.2+1
   # A list with helper methods to programmatically scroll to an item.
   scrollable_positioned_list: ^0.1.7
   # Flutter library for simple and fast QR code rendering via a Widget or custom painter.
@@ -83,7 +83,8 @@ dependencies:
 
   #Barcode Scanning
   # qrscan: ^0.2.21
-  flutter_barcode_scanner: ^1.0.2
+  # flutter_barcode_scanner: ^1.0.2
+  flutter_barcode_scanner: ^2.0.0-nullsafety.0
   # qr_code_scanner: ^0.3.0
 
   # Speech To Text

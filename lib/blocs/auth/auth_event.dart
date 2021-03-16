@@ -41,13 +41,11 @@ class OTPVerificationAuthEvent extends AuthEvent {
 }
 
 class UserRegisteredAuthEvent extends AuthEvent {
-  UserRegisteredAuthEvent({
-    this.fullName,
-    this.phone,
-  });
+  UserRegisteredAuthEvent({this.fullName, this.email, this.photoUrl});
 
   final String fullName;
-  final String phone;
+  final String email;
+  final String photoUrl;
 }
 
 class UserSavedAuthEvent extends AuthEvent {

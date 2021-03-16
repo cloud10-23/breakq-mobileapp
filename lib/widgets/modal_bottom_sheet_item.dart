@@ -58,7 +58,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             margin: const EdgeInsets.only(
                 left: kPaddingS, right: kPaddingS, bottom: 56),
             decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: kWhite,
               borderRadius:
                   const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
             ),
@@ -123,7 +123,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             padding: const EdgeInsets.only(left: kPaddingS, right: kPaddingS),
             child: FlatButton(
               color: Theme.of(context).scaffoldBackgroundColor,
-              highlightColor: kPrimaryColor,
+              highlightColor: kBlue,
               shape: const RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(kBoxDecorationRadius))),

@@ -7,16 +7,16 @@ import 'package:breakq/configs/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class IntroScreen extends StatefulWidget {
-  const IntroScreen({Key key}) : super(key: key);
+class SignInBase extends StatefulWidget {
+  const SignInBase({Key key}) : super(key: key);
 
   @override
-  _IntroScreenState createState() {
-    return _IntroScreenState();
+  _SignInBaseState createState() {
+    return _SignInBaseState();
   }
 }
 
-class _IntroScreenState extends State<IntroScreen> {
+class _SignInBaseState extends State<SignInBase> {
   GlobalKey<NavigatorState> globalKeyOnboardingNavigator;
 
   @override
@@ -99,6 +99,9 @@ class _IntroScreenState extends State<IntroScreen> {
                             onPressed: () {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
+                              globalKeyOnboardingNavigator.currentState
+                                  .pushNamedAndRemoveUntil(
+                                      OnboardingRoutes.profile, (_) => false);
                             },
                           )
                         ],

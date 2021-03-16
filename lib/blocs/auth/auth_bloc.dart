@@ -78,10 +78,17 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     ///Notify loading to UI
     yield ProcessInProgressAuthState();
 
-    subscription = sendOtp(event.phone).listen((event) {
-      add(event);
-    });
-    yield VerifyOTPAuthState();
+    /// Post the name, email, photo to the Server API
+    print("<<API CALL>>");
+    print("Name: ${event.fullName}\n" +
+        "Email: ${event.email}\n" +
+        "PhotoUrl: ${event.photoUrl}");
+
+    // subscription = sendOtp(event.email).listen((event) {
+    //   add(event);
+    // });
+    // yield VerifyOTPAuthState();
+    yield ProfileUpdateSuccessAuthState();
   }
 
   Stream<AuthState> _mapOTPVerificationAuthEventToState(

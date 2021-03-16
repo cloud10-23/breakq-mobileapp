@@ -1,4 +1,5 @@
 // import 'package:camera/camera.dart';
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,10 +47,10 @@ Future<void> main() async {
 /// Completes with a list of available cameras.
 Future<void> initCameras() async {
   /// Obtain a list of the available cameras on the device.
-  // final List<CameraDescription> cameras = await availableCameras();
+  final List<CameraDescription> cameras = await availableCameras();
 
   /// Save the list of available cameras.
-  // getIt.get<AppGlobals>().cameras = cameras;
+  getIt.get<AppGlobals>().cameras = cameras;
 }
 
 /// Registers all the singletons we need by passing a factory function.

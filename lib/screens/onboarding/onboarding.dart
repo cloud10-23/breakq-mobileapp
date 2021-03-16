@@ -147,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ),
             Visibility(
               visible: _rippleAnimationController.isCompleted,
-              child: IntroScreen(),
+              child: SignInBase(),
             ),
           ],
         ),

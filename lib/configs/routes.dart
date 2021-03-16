@@ -11,6 +11,7 @@ import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_mobile_num.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
+import 'package:breakq/screens/onboarding/sign_up/sign_up.dart';
 import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
@@ -151,6 +152,7 @@ class OnboardingRoutes {
   static const String home = '/';
   static const String mobileLogin = '/mobileLogin';
   static const String otp = '/mobileLogin/otp';
+  static const String profile = '/profile';
 }
 
 class OnboardingNavigator extends StatelessWidget {
@@ -168,6 +170,7 @@ class OnboardingNavigator extends StatelessWidget {
       OnboardingRoutes.otp: (context, settings) => SignInOTPWidget(
             phoneNumber: settings?.arguments ?? null,
           ),
+      OnboardingRoutes.profile: (context, settings) => SignUpWidget(),
     };
   }
 

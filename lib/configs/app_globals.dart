@@ -6,6 +6,7 @@ import 'package:breakq/screens/home/widgets/set_budget.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/voice_search.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,7 @@ class AppGlobals {
   static final AppGlobals instance = AppGlobals._();
 
   /// List of available cameras on device.
-  // List<CameraDescription> cameras;
+  List<CameraDescription> cameras;
 
   /// [GlobalKey] for our bottom bar.
   GlobalKey globalKeyBottomBar;
