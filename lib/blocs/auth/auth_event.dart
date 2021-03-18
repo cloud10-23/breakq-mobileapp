@@ -12,12 +12,6 @@ class UserLoggedOutAuthEvent extends AuthEvent {}
 
 class UserClearedAuthEvent extends AuthEvent {}
 
-class NewPasswordRequestedAuthEvent extends AuthEvent {
-  NewPasswordRequestedAuthEvent(this.email);
-
-  final String email;
-}
-
 class LoginRequestedAuthEvent extends AuthEvent {
   LoginRequestedAuthEvent({this.phone});
 
@@ -31,8 +25,6 @@ class GoogleLoginRequestedAuthEvent extends AuthEvent {
 class FacebookLoginRequestedAuthEvent extends AuthEvent {
   FacebookLoginRequestedAuthEvent();
 }
-
-class OTPGoBackAuthEvent extends AuthEvent {}
 
 class OTPVerificationAuthEvent extends AuthEvent {
   OTPVerificationAuthEvent({this.otp});
@@ -51,7 +43,7 @@ class UserRegisteredAuthEvent extends AuthEvent {
 class UserSavedAuthEvent extends AuthEvent {
   UserSavedAuthEvent(this.user);
 
-  final User user;
+  final UserModel user;
 }
 
 class LoginFailureAuthEvent extends AuthEvent {

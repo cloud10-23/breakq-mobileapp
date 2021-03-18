@@ -80,9 +80,9 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
         await getIt.get<AppPreferences>().getString(PreferenceKey.appVersion);
 
     /// Is the user onboarded already?
-    // getIt.get<AppGlobals>().isUserOnboarded = await getIt
-    //     .get<AppPreferences>()
-    //     .containsKey(PreferenceKey.isOnboarded);
+    getIt.get<AppGlobals>().isUserOnboarded = await getIt
+        .get<AppPreferences>()
+        .containsKey(PreferenceKey.isOnboarded);
 
     // New install/version?
     if (oldVersion != kAppVersion) {
@@ -166,7 +166,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   Stream<ApplicationState>
       _mapCompletedOnboardingApplicationEventToState() async* {
     // Save the info about completed onboarding process to shared preferences.
-    // await getIt.get<AppPreferences>().setBool(PreferenceKey.isOnboarded, true);
+    await getIt.get<AppPreferences>().setBool(PreferenceKey.isOnboarded, true);
 
     /// Init the locations services via [ApplicationBloc] event.
     add(LocationServicesInitedApplicationEvent());

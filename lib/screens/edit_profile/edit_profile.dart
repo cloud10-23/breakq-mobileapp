@@ -235,7 +235,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: ThemeButton(
                       onPressed: _update,
                       text: L10n.of(context).editProfileBtnUpdate,
-                      showLoading: apiState is ProcessInProgressAuthState,
+                      showLoading: apiState is LoadingAuthState,
                       disableTouchWhenLoading: true,
                     ),
                   );

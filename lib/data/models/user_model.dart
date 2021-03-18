@@ -1,32 +1,38 @@
 class UserModel {
-  UserModel(
-    this.id,
-    this.fullName,
-    this.profilePhoto,
-    this.phone,
-    this.upcomingAppointments,
-  );
-  factory UserModel.forReview({int id, String name, String image}) {
-    return UserModel(id, name, image, '', 0);
-  }
+  UserModel({
+    this.phoneId,
+    this.googleId,
+    this.facebookId,
+    this.displayName,
+    this.email,
+    this.photoURL,
+    this.phoneNumber,
+  });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    final String _profilePhoto = json['profile_photo'] as String ?? '';
-
+  UserModel copyWith(
+      {String phoneId,
+      String googleId,
+      String facebookId,
+      String fullName,
+      String email,
+      String profilePhoto,
+      String phone}) {
     return UserModel(
-      json['user_id'] as int ?? 0,
-      json['full_name'] as String ?? '',
-      _profilePhoto.isNotEmpty
-          ? 'assets/images/data/users/' + _profilePhoto
-          : '',
-      json['phone'] as String ?? '',
-      json['upcoming_appointments'] as int ?? 0,
+      phoneId: phoneId ?? this.phoneId,
+      googleId: googleId ?? this.googleId,
+      facebookId: facebookId ?? this.facebookId,
+      displayName: fullName ?? this.displayName,
+      email: email ?? this.email,
+      photoURL: profilePhoto ?? this.photoURL,
+      phoneNumber: phone ?? this.phoneNumber,
     );
   }
 
-  final int id;
-  final String fullName;
-  final String profilePhoto;
-  final String phone;
-  final int upcomingAppointments;
+  final String phoneId;
+  final String googleId;
+  final String facebookId;
+  final String displayName;
+  final String email;
+  final String photoURL;
+  final String phoneNumber;
 }

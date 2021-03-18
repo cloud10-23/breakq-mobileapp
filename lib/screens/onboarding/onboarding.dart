@@ -1,4 +1,4 @@
-import 'package:breakq/screens/onboarding/sign_in/sign_in_base.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -147,7 +147,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ),
             Visibility(
               visible: _rippleAnimationController.isCompleted,
-              child: SignInBase(),
+              child: IntroMain(),
             ),
           ],
         ),

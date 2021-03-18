@@ -8,13 +8,19 @@ abstract class AuthState {
 
 class InitialAuthState extends AuthState {}
 
+class SocialLoginSuccessAuthState extends AuthState {}
+
 class LoginSuccessAuthState extends AuthState {}
+
+class LoginSuccessWithSocialAuthState extends AuthState {}
 
 class VerifyOTPAuthState extends AuthState {}
 
-class ProcessInProgressAuthState extends AuthState {}
+class LoadingAuthState extends AuthState {}
 
 class PreferenceSaveSuccessAuthState extends AuthState {}
+
+class OnboardingCompleteAuthState extends AuthState {}
 
 class AuthenticationFailureAuthState extends AuthState {}
 

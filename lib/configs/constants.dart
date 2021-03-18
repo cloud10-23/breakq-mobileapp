@@ -193,7 +193,7 @@ const List<Map<String, int>> bulkAddToCart = [
 class AssetImages {
   static const String introScreen = 'assets/images/onboarding/IntroScreen.png';
   static const String onboardingShopImage =
-      'assets/images/onboarding/shop-1.png';
+      'assets/images/icons/BQ_Logo_Text.png';
   static const String onboardingBarcode =
       'assets/images/onboarding/barcode.png';
   static const String onboardingQR = 'assets/images/onboarding/qr.png';
@@ -218,6 +218,9 @@ class AssetImages {
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
   static const String bq_logo = 'assets/images/bq_logo.png';
+  static const String bq_icon = 'assets/images/icons/BQ_Logo_Plane.png';
+  static const String bq_icon_alt = 'assets/images/icons/BQ_Logo_Plane_Alt.png';
+  static const String bq_icon_text = 'assets/images/icons/BQ_Logo_Text.png';
   static const String mts_logo = 'assets/images/mts_logo_compact.png';
   static const String chip = 'assets/images/cc/chip.png';
   static const String cardVisa = 'assets/images/cc/visa.png';
@@ -280,7 +283,8 @@ class AssetImages {
 class PreferenceKey {
   static const String appVersion = 'appVersion';
   static const String isOnboarded = 'isOnboarded';
-  static const String user = 'user';
+  static const String phoneID = 'phoneID';
+  static const String socialID = 'socialID';
   static const String language = 'language';
   static const String notification = 'notification';
   static const String darkOption = 'darkOption';

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:breakq/screens/onboarding/sign_in/sign_in_base.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,168 +63,164 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Spacer(),
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(kCardRadius),
-              topRight: Radius.circular(kCardRadius),
-            ),
+    return SignInBase(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(kCardRadius),
+            topRight: Radius.circular(kCardRadius),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Feather.arrow_left_circle),
-                    onPressed: () => _loginBloc.add(OTPGoBackAuthEvent()),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Feather.arrow_left_circle),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: kPaddingL, bottom: kPaddingL),
+                  child: Text(
+                    L10n.of(context).signInOTPTitle,
+                    style: Theme.of(context).textTheme.headline6.bold,
+                    textAlign: TextAlign.center,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: kPaddingL, bottom: kPaddingL),
+                ),
+              ],
+            ),
+            SizedBox(height: kPaddingL),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+              child: Row(
+                children: [
+                  Text(
+                    L10n.of(context).signInOTPAutoVerify,
+                    style: Theme.of(context).textTheme.caption.w800,
+                  ),
+                  Spacer(),
+                  SizedBox(
+                      height: kPaddingL,
+                      width: kPaddingL,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.0,
+                      )),
+                  Spacer(
+                    flex: 5,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: kPaddingL),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+              child: PinCodeTextField(
+                appContext: context,
+                length: 6,
+                obscureText: false,
+                autoFocus: true,
+                keyboardType: TextInputType.number,
+                animationType: AnimationType.slide,
+                animationDuration: Duration(milliseconds: 100),
+                animationCurve: Curves.fastOutSlowIn,
+                showCursor: false,
+                textStyle: Theme.of(context).textTheme.headline6.w400.copyWith(
+                      fontFamily: kNumberFontFamily,
+                    ),
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.underline,
+                  activeColor: kBlack,
+                  selectedColor: kBlue900,
+                  inactiveColor: kBlack,
+                  borderRadius: BorderRadius.circular(5),
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  // activeFillColor: Colors.white,
+                ),
+                enableActiveFill: false,
+                errorAnimationController: _errorController,
+                controller: _otpController,
+                // onChanged: (value) {},
+                onCompleted: (code) {
+                  _submitOTP(code);
+                },
+                onChanged: (value) {
+                  // print(value);
+                  setState(() {
+                    _code = value;
+                  });
+                },
+                beforeTextPaste: (text) {
+                  if (int.tryParse(text) != null && text.length == 6) {
+                    print("Allowing to paste $text");
+                    return true;
+                  }
+                  // if(text.contains(RegExp('[\d]*')))
+                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                  return false;
+                },
+              ),
+            ),
+            BlocListener<AuthBloc, AuthState>(
+              listenWhen: (previous, current) =>
+                  current is LoginFailureAuthState,
+              listener: (BuildContext context, AuthState loginListener) {
+                if (loginListener is LoginFailureAuthState) {
+                  _otpController.clear();
+                  _errorController.add(ErrorAnimationType.shake);
+                  Future.delayed(Duration(seconds: 1))
+                      .then((value) => UI.showErrorDialog(
+                            context,
+                            message: loginListener.message,
+                            // onPressed: () => Navigator.pop(context),
+                          ));
+                  // } else if (loginListener is LoginSuccessAuthState) {
+                  //   if (Navigator.of(context, rootNavigator: true).canPop())
+                  //     Navigator.of(context, rootNavigator: true).pop();
+                }
+              },
+              child: Container(),
+              //   child: ThemeButton(
+              //     onPressed: () => _submitOTP(_code),
+              //     text: L10n.of(context).signInOTPButtonLogin,
+              //     showLoading: login is ProcessInProgressAuthState,
+              //     disableTouchWhenLoading: true,
+              //   ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: kPaddingL, vertical: kPaddingS),
+              child: Column(
+                children: [
+                  Text(
+                    L10n.of(context).signInOTPResendTitle,
+                    style: Theme.of(context).textTheme.bodyText1.w500,
+                    textAlign: TextAlign.center,
+                  ),
+                  FlatButton(
+                    onPressed: () {},
                     child: Text(
-                      L10n.of(context).signInOTPTitle,
-                      style: Theme.of(context).textTheme.headline6.bold,
+                      L10n.of(context).signInOTPResend,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .fs14
+                          .w800
+                          .primaryColor,
                       textAlign: TextAlign.center,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: kPaddingM),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
-                child: Row(
-                  children: [
-                    Text(
-                      L10n.of(context).signInOTPAutoVerify,
-                      style: Theme.of(context).textTheme.caption.w800,
-                    ),
-                    Spacer(),
-                    SizedBox(
-                        height: kPaddingL,
-                        width: kPaddingL,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.0,
-                        )),
-                    Spacer(
-                      flex: 5,
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: kPaddingL),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
-                child: PinCodeTextField(
-                  appContext: context,
-                  length: 6,
-                  obscureText: false,
-                  autoFocus: true,
-                  keyboardType: TextInputType.number,
-                  animationType: AnimationType.slide,
-                  animationDuration: Duration(milliseconds: 100),
-                  animationCurve: Curves.fastOutSlowIn,
-                  showCursor: false,
-                  textStyle:
-                      Theme.of(context).textTheme.headline6.w400.copyWith(
-                            fontFamily: kNumberFontFamily,
-                          ),
-                  pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.underline,
-                    activeColor: kBlack,
-                    selectedColor: kBlue900,
-                    inactiveColor: kBlack,
-                    borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 50,
-                    fieldWidth: 40,
-                    // activeFillColor: Colors.white,
-                  ),
-                  enableActiveFill: false,
-                  errorAnimationController: _errorController,
-                  controller: _otpController,
-                  // onChanged: (value) {},
-                  onCompleted: (code) {
-                    _submitOTP(code);
-                  },
-                  onChanged: (value) {
-                    // print(value);
-                    setState(() {
-                      _code = value;
-                    });
-                  },
-                  beforeTextPaste: (text) {
-                    if (int.tryParse(text) != null && text.length == 6) {
-                      print("Allowing to paste $text");
-                      return true;
-                    }
-                    // if(text.contains(RegExp('[\d]*')))
-                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                    return false;
-                  },
-                ),
-              ),
-              BlocListener<AuthBloc, AuthState>(
-                listenWhen: (previous, current) =>
-                    current is LoginFailureAuthState,
-                listener: (BuildContext context, AuthState loginListener) {
-                  if (loginListener is LoginFailureAuthState) {
-                    _otpController.clear();
-                    _errorController.add(ErrorAnimationType.shake);
-                    Future.delayed(Duration(seconds: 1))
-                        .then((value) => UI.showErrorDialog(
-                              context,
-                              message: loginListener.message,
-                              // onPressed: () => Navigator.pop(context),
-                            ));
-                    // } else if (loginListener is LoginSuccessAuthState) {
-                    //   if (Navigator.of(context, rootNavigator: true).canPop())
-                    //     Navigator.of(context, rootNavigator: true).pop();
-                  }
-                },
-                child: Container(),
-                //   child: ThemeButton(
-                //     onPressed: () => _submitOTP(_code),
-                //     text: L10n.of(context).signInOTPButtonLogin,
-                //     showLoading: login is ProcessInProgressAuthState,
-                //     disableTouchWhenLoading: true,
-                //   ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: kPaddingL, vertical: kPaddingS),
-                child: Column(
-                  children: [
-                    Text(
-                      L10n.of(context).signInOTPResendTitle,
-                      style: Theme.of(context).textTheme.bodyText1.w500,
-                      textAlign: TextAlign.center,
-                    ),
-                    FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        L10n.of(context).signInOTPResend,
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption
-                            .fs14
-                            .w800
-                            .primaryColor,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+            Spacer(),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

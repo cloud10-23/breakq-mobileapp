@@ -1,3 +1,5 @@
+import 'package:breakq/screens/onboarding/sign_in/sign_in_base.dart';
+import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/form_utils.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
@@ -63,71 +66,92 @@ class _SignInWidgetState extends State<SignInWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Spacer(),
-        Container(
-          padding: const EdgeInsets.only(left: kPaddingL, right: kPaddingL),
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(kCardRadius),
-              topRight: Radius.circular(kCardRadius),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: kPaddingL, bottom: kPaddingL),
-                child: Text(
-                  "Enter your mobile number",
-                  style: Theme.of(context).textTheme.headline6.fs18.w600,
+    return SignInBase(
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: kPaddingL, right: kPaddingL),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(kCardRadius),
+                  topRight: Radius.circular(kCardRadius),
                 ),
               ),
-              Theme(
-                data: Theme.of(context).copyWith(primaryColor: kBlue),
-                child: Form(
-                  key: keyPhoneInput,
-                  child: IntlPhoneField(
-                    // focusNode: FocusNode()..requestFocus(),
-                    controller: _textPhoneController,
-                    initialCountryCode: 'IN',
-                    keyboardType: TextInputType.phone,
-                    style: Theme.of(context).textTheme.headline6.w400.copyWith(
-                          fontFamily: kNumberFontFamily,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: kPaddingL, bottom: kPaddingL),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Feather.arrow_left_circle),
+                          onPressed: () => Navigator.of(context).pop(),
                         ),
-                    decoration: InputDecoration(
-                        errorStyle: Theme.of(context)
-                            .textTheme
-                            .caption
-                            .w600
-                            .copyWith(color: Colors.red),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(kFormFieldsRadius),
-                          borderSide: BorderSide(
-                            width: 2,
-                            color: Theme.of(context)
-                                .inputDecorationTheme
-                                .fillColor,
+                        Expanded(
+                          child: Text(
+                            widget.title ?? "Enter your mobile number",
+                            style:
+                                Theme.of(context).textTheme.headline6.fs18.w600,
                           ),
                         ),
-                        hintText: L10n.of(context).signInHintPhone,
-                        hintStyle: Theme.of(context).textTheme.caption.w700),
-                    onChanged: (phone) {
-                      _phoneNum = phone.completeNumber;
-                    },
-                    onSubmitted: (String text) => _validateForm(),
+                      ],
+                    ),
                   ),
-                ),
+                  Theme(
+                    data: Theme.of(context).copyWith(primaryColor: kBlue),
+                    child: Form(
+                      key: keyPhoneInput,
+                      child: IntlPhoneField(
+                        // focusNode: FocusNode()..requestFocus(),
+                        controller: _textPhoneController,
+                        initialCountryCode: 'IN',
+                        keyboardType: TextInputType.phone,
+                        style:
+                            Theme.of(context).textTheme.headline6.w400.copyWith(
+                                  fontFamily: kNumberFontFamily,
+                                ),
+                        decoration: InputDecoration(
+                            errorStyle: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .w600
+                                .copyWith(color: Colors.red),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(kFormFieldsRadius),
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .fillColor,
+                              ),
+                            ),
+                            hintText: L10n.of(context).signInHintPhone,
+                            hintStyle:
+                                Theme.of(context).textTheme.caption.w700),
+                        onChanged: (phone) {
+                          _phoneNum = phone.completeNumber;
+                        },
+                        onSubmitted: (String text) => _validateForm(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: kPaddingL * 2),
+                  ThemeButton(
+                    onPressed: () => _validateForm(),
+                    text: "Verify",
+                  ),
+                  const SizedBox(height: kPaddingL * 2),
+                ],
               ),
-              const SizedBox(height: kPaddingL * 1.5),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

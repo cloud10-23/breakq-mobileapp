@@ -8,7 +8,7 @@ class WavyHeaderImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       child: Container(
-        height: 190,
+        height: 250,
         decoration: BoxDecoration(
           color: kBlue,
           image: DecorationImage(

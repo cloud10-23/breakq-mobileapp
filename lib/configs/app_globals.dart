@@ -4,7 +4,6 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/home/widgets/set_budget.dart';
 import 'package:breakq/screens/product/product.dart';
-import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/voice_search.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:breakq/data/models/user_model.dart';
 
 /// Class to store runtime global settings.
 class AppGlobals {
@@ -56,7 +55,7 @@ class AppGlobals {
   List<CategoryModel> categories;
 
   /// Logged in user data.
-  User user;
+  UserModel user;
 
   /// Currently selected [Locale].
   Locale selectedLocale;

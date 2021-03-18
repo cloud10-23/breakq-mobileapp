@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:breakq/blocs/base_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/user_model.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_cache_manager.dart';
@@ -37,8 +38,6 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       yield* _mapGoogleLoginAuthEventToState(event);
     } else if (event is FacebookLoginRequestedAuthEvent) {
       yield* _mapFacebookLoginAuthEventToState(event);
-    } else if (event is OTPGoBackAuthEvent) {
-      yield* _mapOTPGoBackEventToState(event);
     } else if (event is LoginFailureAuthEvent) {
       yield* _mapLoginFailureAuthEventToState(event);
     } else if (event is OTPVerificationAuthEvent) {
@@ -62,11 +61,6 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     super.close();
   }
 
-  Stream<AuthState> _mapOTPGoBackEventToState(OTPGoBackAuthEvent event) async* {
-    // Go back to Initial State
-    yield InitialAuthState();
-  }
-
   Stream<AuthState> _mapLoginFailureAuthEventToState(
       LoginFailureAuthEvent event) async* {
     // Go back to Initial State
@@ -76,7 +70,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
   Stream<AuthState> _mapOnRegisterAuthEventToState(
       UserRegisteredAuthEvent event) async* {
     ///Notify loading to UI
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
     /// Post the name, email, photo to the Server API
     print("<<API CALL>>");
@@ -88,13 +82,13 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     //   add(event);
     // });
     // yield VerifyOTPAuthState();
-    yield ProfileUpdateSuccessAuthState();
+    yield OnboardingCompleteAuthState();
   }
 
   Stream<AuthState> _mapOTPVerificationAuthEventToState(
       OTPVerificationAuthEvent event) async* {
     ///Notify loading to UI
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
     UserCredential user;
     try {
       user = await UserRepository().verifyAndLogin(_verID, event.otp);
@@ -108,7 +102,15 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     if (user == null) {
       yield LoginFailureAuthState('Invalid OTP!');
     } else {
-      getIt.get<AppGlobals>().user = user.user;
+      try {
+        getIt.get<AppGlobals>().user = getIt
+            .get<AppGlobals>()
+            .user
+            .copyWith(phoneId: user.user.uid, phone: user.user.phoneNumber);
+      } catch (e) {
+        getIt.get<AppGlobals>().user = UserModel(
+            phoneId: user.user.uid, phoneNumber: user.user.phoneNumber);
+      }
       AppCacheManager.instance.emptyCache();
 
       try {
@@ -131,44 +133,58 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapGoogleLoginAuthEventToState(
       GoogleLoginRequestedAuthEvent event) async* {
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
     final user = await _userRepository.signInWithGoogle();
     if (user == null) {
       yield LoginFailureAuthState('Login with Google Failed! Please try again');
     } else {
-      getIt.get<AppGlobals>().user = user;
-      AppCacheManager.instance.emptyCache();
-
       try {
-        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-
-        yield LoginSuccessAuthState();
-      } catch (error) {
-        yield LoginFailureAuthState(error.toString());
+        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+              googleId: user.uid,
+              fullName: user.displayName,
+              email: user.email,
+              profilePhoto: user.photoURL,
+            );
+      } catch (e) {
+        getIt.get<AppGlobals>().user = UserModel(
+          googleId: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        );
       }
+      AppCacheManager.instance.emptyCache();
+      yield SocialLoginSuccessAuthState();
     }
   }
 
   Stream<AuthState> _mapFacebookLoginAuthEventToState(
       FacebookLoginRequestedAuthEvent event) async* {
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
     final user = await _userRepository.signInWithFacebook();
     if (user == null) {
       yield LoginFailureAuthState(
           'Login with Facebook Failed! Please try again');
     } else {
-      getIt.get<AppGlobals>().user = user;
-      AppCacheManager.instance.emptyCache();
-
       try {
-        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-
-        yield LoginSuccessAuthState();
-      } catch (error) {
-        yield LoginFailureAuthState(error.toString());
+        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+              facebookId: user.uid,
+              fullName: user.displayName,
+              email: user.email,
+              profilePhoto: user.photoURL,
+            );
+      } catch (e) {
+        getIt.get<AppGlobals>().user = UserModel(
+          facebookId: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        );
       }
+      AppCacheManager.instance.emptyCache();
+      yield SocialLoginSuccessAuthState();
     }
   }
 
@@ -178,24 +194,35 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
     ///Save to Storage phone
     final bool savePreferences = await getIt.get<AppPreferences>().setString(
-          PreferenceKey.user,
-          event.user?.uid?.toString(),
+          PreferenceKey.phoneID,
+          event.user?.phoneId?.toString(),
         );
 
     if (savePreferences) {
       yield PreferenceSaveSuccessAuthState();
-      yield LoginSuccessAuthState();
+      if (getIt.get<AppGlobals>().user.googleId != null ||
+          getIt.get<AppGlobals>().user.facebookId != null)
+        yield LoginSuccessWithSocialAuthState();
+      else
+        yield LoginSuccessAuthState();
     }
   }
 
   Stream<AuthState> _mapGetProfileAuthEventToState() async* {
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
     final bool hasToken =
-        await getIt.get<AppPreferences>().containsKey(PreferenceKey.user);
+        await getIt.get<AppPreferences>().containsKey(PreferenceKey.phoneID);
 
+    /// TODO : Implement the way to save the User details in Preferences
     if (hasToken) {
-      getIt.get<AppGlobals>().user = _userRepository.getUser();
+      // User user = _userRepository.getUser();
+      // getIt.get<AppGlobals>().user = UserModel(
+      //   facebookId: user.uid,
+      //   fullName: user.displayName,
+      //   email: user.email,
+      //   profilePhoto: user.photoURL,
+      // );
 
       add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
     } else {
@@ -204,7 +231,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _mapLogoutAuthEventToState() async* {
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
     try {
       add(UserClearedAuthEvent());
@@ -217,7 +244,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapClearUserAuthEventToState() async* {
     final bool deletePreferences =
-        await getIt.get<AppPreferences>().remove(PreferenceKey.user);
+        await getIt.get<AppPreferences>().remove(PreferenceKey.phoneID);
 
     if (deletePreferences) {
       getIt.get<AppGlobals>().user = null;
@@ -229,11 +256,12 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapProfileUpdateAuthEventToState(
       ProfileUpdatedAuthEvent event) async* {
-    yield ProcessInProgressAuthState();
+    yield LoadingAuthState();
 
-    getIt.get<AppGlobals>().user = _userRepository.getUser();
+    /// TODO:
+    // getIt.get<AppGlobals>().user = _userRepository.getUser();
 
-    add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
+    // add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
 
     yield ProfileUpdateSuccessAuthState();
   }
@@ -242,9 +270,21 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     StreamController<AuthEvent> eventStream = StreamController();
     final phoneVerificationCompleted =
         (PhoneAuthCredential authCredential) async {
+      /// This is executed when the OTP is Auto verified
       var userCredential =
           await FirebaseAuth.instance.signInWithCredential(authCredential);
-      getIt.get<AppGlobals>().user = userCredential.user;
+      User user = userCredential.user;
+      try {
+        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+              phoneId: user.uid,
+              phone: user.phoneNumber,
+            );
+      } catch (e) {
+        getIt.get<AppGlobals>().user = UserModel(
+          phoneId: user.uid,
+          phoneNumber: user.phoneNumber,
+        );
+      }
       AppCacheManager.instance.emptyCache();
 
       try {

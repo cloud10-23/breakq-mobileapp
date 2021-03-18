@@ -8,7 +8,9 @@ import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_2
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_1.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
+import 'package:breakq/screens/edit_profile/take_picture.dart';
 import 'package:breakq/screens/listing/listing.dart';
+import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_mobile_num.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
 import 'package:breakq/screens/onboarding/sign_up/sign_up.dart';
@@ -22,30 +24,76 @@ import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
 import 'package:breakq/widgets/photo_gallery.dart';
-import 'package:breakq/widgets/picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Generate [MaterialPageRoute] for our screens.
 class Routes {
+  static const String o_home = '/';
+  static const String o_mobileLogin = '/mobileLogin';
+  static const String o_otp = '/mobileLogin/otp';
+  static const String o_profile = '/profile';
+
+  /// Product Listing
+  static const String listing = '/listing';
+
+  /// Product Details
   static const String product = '/product';
-  static const String picker = '/picker';
-  static const String forgotPassword = '/forgotPassword';
+
+  /// Quick Shopping
   static const String quickShopping = '/qs';
-  static const String settings = '/settings';
+
+  /// Search
+  static const String search = '/search';
+
+  /// Cart and Checkout
+  static const String cart = '/cart';
+  static const String checkout = '/checkout';
+  static const String add_address = '/add_address';
+
+  /// My Orders
+  static const String orders = '/orders';
+  static const String order_detail = '/orders/detail';
+
+  /// Settings Page
+  // static const String settings = '/settings';
   static const String editProfile = '/editProfile';
   static const String takePicture = '/takePicture';
   static const String locationGallery = '/locationGallery';
-  static const String search = '/search';
-  static const String scan = '/scan';
-  static const String checkout = '/checkout';
-  static const String cart = '/cart';
-  static const String add_address = '/add_address';
-  static const String orders = '/orders';
-  static const String order_detail = '/orders/detail';
-  static const String listing = '/listing';
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+
+      /// Onboarding Routes:
+
+      case o_home:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => IntroMain(),
+        );
+      case o_mobileLogin:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => SignInWidget(
+            title: routeSettings?.arguments ?? null,
+          ),
+        );
+      case o_otp:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => SignInOTPWidget(),
+        );
+      case o_profile:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => SignUpWidget(),
+        );
+
+      /// Product Listing
+
+      case listing:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => Listing(
+            title: routeSettings?.arguments ?? null,
+          ),
+        );
+
+      /// Product details
       case product:
         return MaterialPageRoute<ProductScreen>(
           builder: (BuildContext context) {
@@ -53,13 +101,8 @@ class Routes {
           },
           settings: const RouteSettings(name: product),
         );
-      case picker:
-        return MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) {
-            return Picker(
-                params: routeSettings.arguments as Map<String, dynamic>);
-          },
-        );
+
+      /// Quick Shopping
       case quickShopping:
         return MaterialPageRoute<ProductScreen>(
           builder: (BuildContext context) {
@@ -67,25 +110,16 @@ class Routes {
           },
           settings: const RouteSettings(name: product),
         );
-      case locationGallery:
-        return MaterialPageRoute<PhotoGalleryScreen>(
-          builder: (BuildContext context) {
-            return PhotoGalleryScreen(
-                params: routeSettings.arguments as Map<String, dynamic>);
-          },
-        );
-      case editProfile:
-        return MaterialPageRoute<EditProfileScreen>(
-          builder: (BuildContext context) {
-            return const EditProfileScreen();
-          },
-        );
+
+      /// Search
       case search:
         return MaterialPageRoute<SearchBar>(
           builder: (BuildContext context) {
             return SearchBar();
           },
         );
+
+      /// Cart and Checkout
       case checkout:
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) {
@@ -103,6 +137,8 @@ class Routes {
         );
       case add_address:
         return SlideRoute(widget: AddEditAddress());
+
+      /// My Orders
       case orders:
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) => MyOrders(),
@@ -112,22 +148,31 @@ class Routes {
           builder: (BuildContext context) => OrderDetails(),
         );
 
-      case listing:
-        return MaterialPageRoute<CheckoutScreen>(
-          builder: (BuildContext context) => Listing(
-            title: routeSettings?.arguments ?? null,
-          ),
+      /// Settings Page
+      case locationGallery:
+        return MaterialPageRoute<PhotoGalleryScreen>(
+          builder: (BuildContext context) {
+            return PhotoGalleryScreen(
+                params: routeSettings.arguments as Map<String, dynamic>);
+          },
         );
-      // case scan:
-      //   return MaterialPageRoute<PhotoGalleryScreen>(
+      case editProfile:
+        return MaterialPageRoute<EditProfileScreen>(
+          builder: (BuildContext context) {
+            return const EditProfileScreen();
+          },
+        );
+      case takePicture:
+        return MaterialPageRoute<String>(
+          builder: (BuildContext context) {
+            return const TakePictureScreen();
+          },
+        );
+      // case picker:
+      //   return MaterialPageRoute<dynamic>(
       //     builder: (BuildContext context) {
-      //       return BarcodeScanner();
-      //     },
-      //   );
-      // case takePicture:
-      //   return MaterialPageRoute<String>(
-      //     builder: (BuildContext context) {
-      //       return const TakePictureScreen();
+      //       return Picker(
+      //           params: routeSettings.arguments as Map<String, dynamic>);
       //     },
       //   );
       default:
@@ -148,45 +193,45 @@ class Routes {
 /// https://medium.com/coding-with-flutter/flutter-case-study-multiple-navigators-with-bottomnavigationbar-90eb6caa6dbf
 ///
 
-class OnboardingRoutes {
-  static const String home = '/';
-  static const String mobileLogin = '/mobileLogin';
-  static const String otp = '/mobileLogin/otp';
-  static const String profile = '/profile';
-}
+// class OnboardingRoutes {
+//   static const String home = '/';
+//   static const String mobileLogin = '/mobileLogin';
+//   static const String otp = '/mobileLogin/otp';
+//   static const String profile = '/profile';
+// }
 
-class OnboardingNavigator extends StatelessWidget {
-  OnboardingNavigator({this.navigatorKey, this.homeScreen});
-  final GlobalKey<NavigatorState> navigatorKey;
-  final Widget homeScreen;
+// class OnboardingNavigator extends StatelessWidget {
+//   OnboardingNavigator({this.navigatorKey, this.homeScreen});
+//   final GlobalKey<NavigatorState> navigatorKey;
+//   final Widget homeScreen;
 
-  Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
-      BuildContext context) {
-    return {
-      OnboardingRoutes.home: (context, settings) => homeScreen,
-      OnboardingRoutes.mobileLogin: (context, settings) => SignInWidget(
-          // : settings?.arguments ?? null,
-          ),
-      OnboardingRoutes.otp: (context, settings) => SignInOTPWidget(
-            phoneNumber: settings?.arguments ?? null,
-          ),
-      OnboardingRoutes.profile: (context, settings) => SignUpWidget(),
-    };
-  }
+//   Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
+//       BuildContext context) {
+//     return {
+//       OnboardingRoutes.home: (context, settings) => homeScreen,
+//       OnboardingRoutes.mobileLogin: (context, settings) => SignInWidget(
+//           // : settings?.arguments ?? null,
+//           ),
+//       OnboardingRoutes.otp: (context, settings) => SignInOTPWidget(
+//             phoneNumber: settings?.arguments ?? null,
+//           ),
+//       OnboardingRoutes.profile: (context, settings) => SignUpWidget(),
+//     };
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    var routeBuilders = _routeBuilders(context);
-    return Navigator(
-        key: navigatorKey,
-        initialRoute: OnboardingRoutes.home,
-        onGenerateRoute: (routeSettings) {
-          return SlideRoute(
-              widget:
-                  routeBuilders[routeSettings.name](context, routeSettings));
-        });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     var routeBuilders = _routeBuilders(context);
+//     return Navigator(
+//         key: navigatorKey,
+//         initialRoute: OnboardingRoutes.home,
+//         onGenerateRoute: (routeSettings) {
+//           return SlideRoute(
+//               widget:
+//                   routeBuilders[routeSettings.name](context, routeSettings));
+//         });
+//   }
+// }
 
 /// The custom navigator for checkout screens:
 class CheckoutNavigatorRoutes {
