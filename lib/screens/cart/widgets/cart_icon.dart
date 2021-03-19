@@ -11,7 +11,7 @@ class CartIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.symmetric(horizontal: kPaddingS, vertical: 12.0),
+          const EdgeInsets.symmetric(horizontal: kPaddingM, vertical: 12.0),
       child: InkWell(
           onTap: () {
             Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart);
@@ -23,8 +23,8 @@ class CartIconButton extends StatelessWidget {
                 return FlutterBadge(
                   icon: Icon(
                     FontAwesome.shopping_cart,
-                    size: 16.0,
-                    color: kBlack,
+                    size: 22.0,
+                    // color: kBlack,
                   ),
                   textSize: 8.0,
                   itemCount: state?.cart?.noOfProducts ?? 0,
@@ -49,7 +49,7 @@ class CartIconPlane extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       FontAwesome.shopping_cart,
-      size: 16.0,
+      size: 20.0,
       color: kBlack,
     );
   }

@@ -4,6 +4,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
+import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/widgets/bold_title.dart';
@@ -49,30 +50,22 @@ class _CartPageState extends State<CartPage> {
                   primary: true,
                   backgroundColor: kWhite,
                   pinned: true,
-                  expandedHeight: 200,
                   leading: BackButtonCircle(),
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Row(
-                      children: [
-                        CartIconPlane(),
-                        Spacer(),
-                        Text('My Cart',
-                            style: Theme.of(context).textTheme.bodyText1.fs16),
-                        Spacer(flex: 9),
-                      ],
-                    ),
-                    background: Image(
-                      image: AssetImage(AssetImages.cartIllustration),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
                   actions: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(right: kPaddingL),
                       child: InkWell(
                         onTap: () {
-                          BlocProvider.of<CartBloc>(context)
-                              .add(ResetCartEvent());
+                          UI.confirmationDialogBox(context,
+                              title: "Warning !",
+                              cancelButtonText: "No",
+                              okButtonText: "Yes",
+                              message:
+                                  "Are you sure you want to clear the cart?",
+                              onConfirmation: () {
+                            BlocProvider.of<CartBloc>(context)
+                                .add(ResetCartEvent());
+                          });
                         },
                         child: Row(
                           children: [
@@ -93,7 +86,11 @@ class _CartPageState extends State<CartPage> {
                   ], // remove the hamburger menu
                   title: Row(
                     children: [
+                      CartIconPlane(),
                       Spacer(),
+                      Text('My Cart',
+                          style: Theme.of(context).textTheme.bodyText1.fs16),
+                      Spacer(flex: 9),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

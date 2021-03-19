@@ -10,7 +10,6 @@ import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/portrait_mode_mixin.dart';
 import 'package:breakq/utils/text_style.dart';

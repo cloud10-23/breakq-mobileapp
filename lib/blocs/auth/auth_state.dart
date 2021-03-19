@@ -14,7 +14,7 @@ class LoginSuccessAuthState extends AuthState {}
 
 class LoginSuccessWithSocialAuthState extends AuthState {}
 
-class VerifyOTPAuthState extends AuthState {}
+class OTPSentAuthState extends AuthState {}
 
 class LoadingAuthState extends AuthState {}
 

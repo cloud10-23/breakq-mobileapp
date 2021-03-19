@@ -141,10 +141,14 @@ class _SignInWidgetState extends State<SignInWidget>
                     ),
                   ),
                   const SizedBox(height: kPaddingL * 2),
-                  ThemeButton(
-                    onPressed: () => _validateForm(),
-                    text: "Verify",
-                  ),
+                  BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                    return ThemeButton(
+                      showLoading: state is LoadingAuthState,
+                      disableTouchWhenLoading: true,
+                      onPressed: () => _validateForm(),
+                      text: "Verify",
+                    );
+                  }),
                   const SizedBox(height: kPaddingL * 2),
                 ],
               ),

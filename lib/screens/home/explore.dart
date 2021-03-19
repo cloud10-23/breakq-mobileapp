@@ -1,9 +1,9 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
+import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
-import 'package:breakq/screens/home/widgets/wavy_header_image.dart';
 import 'package:breakq/screens/profile/profile.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/card_template.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -38,38 +39,36 @@ class HomeScreenState extends State<HomeScreen> {
 
     // final String imageUrl = getIt.get<AppGlobals>()?.user?.photoURL;
     // FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-    return Scaffold(
-      primary: false,
-      drawer: Drawer(
-        child: DrawerScreen(),
-      ),
+    return Base(
       body: CustomScrollView(
         controller: _customScrollViewController,
         slivers: <Widget>[
           SliverAppBar(
             elevation: 0.0,
-            toolbarHeight: 45,
-            iconTheme: IconThemeData(color: kBlack),
-            actionsIconTheme: IconThemeData(color: kBlack),
-            title: Text(
-              "Home",
-              style: Theme.of(context).textTheme.bodyText1,
+            iconTheme: IconThemeData(color: kWhite),
+            actionsIconTheme: IconThemeData(color: kWhite),
+            backgroundColor: kBlue,
+            title: Padding(
+              padding: const EdgeInsets.only(top: kPaddingS),
+              child: Row(
+                children: [
+                  Spacer(flex: 2),
+                  Image(
+                    image: AssetImage(AssetImages.bq_icon_alt),
+                    height: 30,
+                  ),
+                  Text(
+                    "BreakQ",
+                    style: Theme.of(context).textTheme.headline6.w700.white,
+                  ),
+                  Spacer(),
+                ],
+              ),
             ),
-            // title: Padding(
-            //   padding: const EdgeInsets.only(top: kPaddingS),
-            //   child: Image(
-            //     image: AssetImage(AssetImages.bq_logo),
-            //     height: 30,
-            //   ),
-            // ),
             pinned: true,
             actions: [
-              IconButton(
-                  icon: Icon(
-                    AntDesign.bells,
-                    size: 16.0,
-                  ),
-                  onPressed: () {}),
+              NotificationBell(),
+              SelectBranchIcon(),
               CartIconButton(),
               SizedBox(width: kPaddingM),
             ],
@@ -82,21 +81,15 @@ class HomeScreenState extends State<HomeScreen> {
           SliverAppBar(
             primary: false,
             pinned: true,
-            toolbarHeight: 40,
+            toolbarHeight: 50,
+            backgroundColor: kBlue,
             automaticallyImplyLeading: false,
             titleSpacing: 0,
-            title: Row(
-              children: [
-                SizedBox(width: 5.0),
-                Flexible(flex: 1, child: SelectBranch()),
-                SizedBox(width: 5.0),
-                Expanded(flex: 3, child: SearchAppBar()),
-              ],
-            ),
+            title: SearchAppBar(),
           ),
-          SliverToBoxAdapter(
-            child: Container(color: kBlue, child: WavyHeaderImage()),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Container(color: kBlue, child: WavyHeaderImage()),
+          // ),
           // SliverToBoxAdapter(
           //     child: Container(
           //   margin: EdgeInsets.only(top: kPaddingS),

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 
 class Base extends StatelessWidget {
-  Base({this.homeScreen});
-  final Widget homeScreen;
+  Base({this.body});
+  final Widget body;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onBackPressed(context),
       child: Scaffold(
-        body: homeScreen,
+        body: body,
         drawer: Drawer(
           child: DrawerScreen(),
         ),

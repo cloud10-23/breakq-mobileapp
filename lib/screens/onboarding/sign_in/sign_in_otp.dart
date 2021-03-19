@@ -175,12 +175,9 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                   Future.delayed(Duration(seconds: 1))
                       .then((value) => UI.showErrorDialog(
                             context,
-                            message: loginListener.message,
-                            // onPressed: () => Navigator.pop(context),
+                            message: loginListener?.message ??
+                                "There was an un-expected error",
                           ));
-                  // } else if (loginListener is LoginSuccessAuthState) {
-                  //   if (Navigator.of(context, rootNavigator: true).canPop())
-                  //     Navigator.of(context, rootNavigator: true).pop();
                 }
               },
               child: Container(),

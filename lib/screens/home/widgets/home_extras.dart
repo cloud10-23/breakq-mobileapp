@@ -78,6 +78,46 @@ class ExclProductsCard extends StatelessWidget {
   }
 }
 
+class NotificationBell extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        icon: Icon(
+          AntDesign.bells,
+          size: 20.0,
+        ),
+        onPressed: () {});
+  }
+}
+
+class SelectBranchIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Entypo.location_pin,
+        size: 20.0,
+      ),
+      onPressed: () {
+        // Open Branch Chooser
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          useRootNavigator: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)),
+          ),
+          clipBehavior: Clip.antiAlias,
+          isDismissible: true,
+          builder: (context) => BranchSelectorBottomSheet(),
+        );
+      },
+    );
+  }
+}
+
 class SelectBranch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

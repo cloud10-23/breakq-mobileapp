@@ -1,4 +1,5 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
@@ -178,6 +179,9 @@ class ListingState extends State<Listing> {
           key: _scaffoldKey,
           endDrawerEnableOpenDragGesture: false,
           endDrawer: SearchFilterDrawer(),
+          floatingActionButton: ScanFloatingButtonExtended(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           body: LoadingOverlay(
             isLoading: session.isLoading,
             child: CustomScrollView(
@@ -185,10 +189,9 @@ class ListingState extends State<Listing> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
-                  toolbarHeight: 50,
                   primary: true,
                   title: Text(widget.title ?? "Category Name",
-                      style: Theme.of(context).textTheme.bodyText1.bold),
+                      style: Theme.of(context).textTheme.headline6.fs16.w600),
                   automaticallyImplyLeading: true,
                   leading: BackButtonCircle(),
                   actions: [

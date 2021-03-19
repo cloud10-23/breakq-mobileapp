@@ -27,13 +27,19 @@ class UserRepository {
         codeAutoRetrievalTimeout: autoRetrievalTimeout);
   }
 
-  Future<UserCredential> verifyAndLogin(
+  Future<AuthCredential> getPhoneAuthCredential(
       String verificationId, String smsCode) async {
     AuthCredential authCredential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
 
-    return _firebaseAuth.signInWithCredential(authCredential);
+    return authCredential;
   }
+
+  Future<UserCredential> linkCredential(AuthCredential authCred) =>
+      _firebaseAuth.currentUser.linkWithCredential(authCred);
+
+  Future<UserCredential> signInCredential(AuthCredential authCred) =>
+      _firebaseAuth.signInWithCredential(authCred);
 
   User getUser() {
     var user = _firebaseAuth.currentUser;
@@ -61,7 +67,7 @@ class UserRepository {
       final User currentUser = _firebaseAuth.currentUser;
       assert(user.uid == currentUser.uid);
 
-      print('signInWithGoogle succeeded: $user');
+      print('signInWithGoogle succeeded: ${user.displayName}');
 
       return user;
     }

@@ -1,6 +1,5 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/home/widgets/wavy_header_image.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_base.dart';
 import 'package:breakq/screens/onboarding/sign_in/widgets/sign_in_helper.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +32,9 @@ class IntroMain extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline5.w600,
                 ),
               ),
+              // Spacer(),
               Image(image: AssetImage(AssetImages.homeIllustration)),
+              // Spacer(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
                     kPaddingL, kPaddingM, kPaddingL, kPaddingS),
@@ -47,70 +48,65 @@ class IntroMain extends StatelessWidget {
                       .copyWith(color: Colors.black45),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Spacer(),
-                    Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: kPaddingL),
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          // side: BorderSide(color: Colors.grey),
-                          elevation: 0.0,
-                          backgroundColor: kBlue900,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: kPaddingM * 2),
-                        ),
-                        onPressed: () => Navigator.of(context)
-                            .pushNamed(Routes.o_mobileLogin),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Spacer(flex: 1),
-                            Icon(
-                              FontAwesome5Solid.mobile_alt,
-                              size: 18.0,
-                              color: kWhite,
-                            ),
-                            Spacer(flex: 2),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Continue wih Mobile Number",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption
-                                    .w600
-                                    .white,
-                              ),
-                            ),
-                            Spacer(flex: 4),
-                          ],
-                        ),
-                        // splashColor: Colors.grey,
+              Spacer(),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                        // side: BorderSide(color: Colors.grey),
+                        elevation: 0.0,
+                        backgroundColor: kBlue900,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: kPaddingM * 2),
                       ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: kPaddingL,
-                      ),
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(Routes.o_mobileLogin),
                       child: Row(
-                        children: [
-                          Expanded(
-                              child: SignInSocialButton(social: Social.google)),
-                          Expanded(
-                              child:
-                                  SignInSocialButton(social: Social.facebook)),
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Spacer(flex: 1),
+                          Icon(
+                            FontAwesome5Solid.mobile_alt,
+                            size: 18.0,
+                            color: kWhite,
+                          ),
+                          Spacer(flex: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Continue wih Mobile Number",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .w600
+                                  .white,
+                            ),
+                          ),
+                          Spacer(flex: 4),
                         ],
                       ),
+                      // splashColor: Colors.grey,
                     ),
-                    Spacer(),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: kPaddingL,
+                      vertical: kPaddingL,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: SignInSocialButton(social: Social.google)),
+                        Expanded(
+                            child: SignInSocialButton(social: Social.facebook)),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

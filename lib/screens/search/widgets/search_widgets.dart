@@ -14,7 +14,7 @@ class SearchIconButton extends StatelessWidget {
         child: Icon(
           Feather.search,
           color: kBlack,
-          size: 16,
+          size: 20,
         ),
       ),
       onTap: () =>
@@ -32,7 +32,7 @@ class VoiceIconButton extends StatelessWidget {
           child: Icon(
             Feather.mic,
             color: kBlack,
-            size: 16,
+            size: 20,
           ),
         ),
         onTap: () => getIt.get<AppGlobals>().showVoiceScreen(context));

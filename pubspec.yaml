@@ -110,10 +110,12 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.9.0
 
+# To run the Flutter Launcher Icons:
+# flutter pub run flutter_launcher_icons:main
 flutter_icons:
-  image_path: "assets/images/icon_new.jpeg"
-  # adaptive_icon_background: "#FFFFFF"
-  # adaptive_icon_foreground: "images/icon.png"
+  image_path: "assets/images/icons/BQ_Icon.png"
+  adaptive_icon_background: "#1565C0"
+  adaptive_icon_foreground: "assets/images/icons/BQ_Icon.png"
   android: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

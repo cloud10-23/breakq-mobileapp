@@ -1,4 +1,3 @@
-// import 'package:camera/camera.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
@@ -13,7 +12,7 @@ import 'package:location/location.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:breakq/data/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// Class to store runtime global settings.
 class AppGlobals {
@@ -55,7 +54,7 @@ class AppGlobals {
   List<CategoryModel> categories;
 
   /// Logged in user data.
-  UserModel user;
+  User user;
 
   /// Currently selected [Locale].
   Locale selectedLocale;
@@ -165,5 +164,5 @@ class AppGlobals {
       useRootNavigator: true);
 
   final Function(BuildContext) captionStyle =
-      (context) => Theme.of(context).textTheme.caption.fs10.w800;
+      (context) => Theme.of(context).textTheme.caption.fs14.w600;
 }

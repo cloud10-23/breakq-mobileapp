@@ -60,7 +60,7 @@ class HomeBoldHeading extends StatelessWidget {
     return Container(
       color: isBlue ? kBlue : kWhite,
       margin: const EdgeInsets.all(kPaddingS),
-      padding: EdgeInsets.all(kPaddingS),
+      padding: EdgeInsets.only(left: kPaddingS, bottom: kPaddingS),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,

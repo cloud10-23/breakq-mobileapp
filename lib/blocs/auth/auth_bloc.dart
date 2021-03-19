@@ -40,16 +40,18 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       yield* _mapFacebookLoginAuthEventToState(event);
     } else if (event is LoginFailureAuthEvent) {
       yield* _mapLoginFailureAuthEventToState(event);
+    } else if (event is OTPSentAuthEvent) {
+      yield* _mapOTPSentAuthEventToState(event);
     } else if (event is OTPVerificationAuthEvent) {
       yield* _mapOTPVerificationAuthEventToState(event);
+    } else if (event is PhoneAuthCredEvent) {
+      yield* _mapPhoneAuthCredEventToState(event);
     } else if (event is UserSavedAuthEvent) {
       yield* _mapSaveUserAuthEventToState(event);
     } else if (event is ProfileLoadedAuthEvent) {
       yield* _mapGetProfileAuthEventToState();
     } else if (event is UserLoggedOutAuthEvent) {
       yield* _mapLogoutAuthEventToState();
-    } else if (event is UserClearedAuthEvent) {
-      yield* _mapClearUserAuthEventToState();
     } else if (event is ProfileUpdatedAuthEvent) {
       yield* _mapProfileUpdateAuthEventToState(event);
     }
@@ -85,50 +87,26 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     yield OnboardingCompleteAuthState();
   }
 
+  Stream<AuthState> _mapOTPSentAuthEventToState(OTPSentAuthEvent event) async* {
+    print("OTP has been sent");
+
+    yield OTPSentAuthState();
+  }
+
   Stream<AuthState> _mapOTPVerificationAuthEventToState(
       OTPVerificationAuthEvent event) async* {
     ///Notify loading to UI
     yield LoadingAuthState();
-    UserCredential user;
-    try {
-      user = await UserRepository().verifyAndLogin(_verID, event.otp);
-    } catch (e) {
-      user = null;
-      print(e);
-    }
-
-    _verID = null;
-
-    if (user == null) {
-      yield LoginFailureAuthState('Invalid OTP!');
-    } else {
-      try {
-        getIt.get<AppGlobals>().user = getIt
-            .get<AppGlobals>()
-            .user
-            .copyWith(phoneId: user.user.uid, phone: user.user.phoneNumber);
-      } catch (e) {
-        getIt.get<AppGlobals>().user = UserModel(
-            phoneId: user.user.uid, phoneNumber: user.user.phoneNumber);
-      }
-      AppCacheManager.instance.emptyCache();
-
-      try {
-        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-
-        yield LoginSuccessAuthState();
-      } catch (error) {
-        yield LoginFailureAuthState(error.toString());
-      }
-    }
+    AuthCredential _authCred;
+    _authCred =
+        await UserRepository().getPhoneAuthCredential(_verID, event.otp);
+    add(PhoneAuthCredEvent(_authCred));
   }
 
   Stream<AuthState> _mapLoginAuthEventToState(
       LoginRequestedAuthEvent event) async* {
-    subscription = sendOtp(event.phone).listen((event) {
-      add(event);
-    });
-    yield VerifyOTPAuthState();
+    sendOtp(event.phone);
+    yield OTPSentAuthState();
   }
 
   Stream<AuthState> _mapGoogleLoginAuthEventToState(
@@ -139,21 +117,22 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     if (user == null) {
       yield LoginFailureAuthState('Login with Google Failed! Please try again');
     } else {
-      try {
-        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
-              googleId: user.uid,
-              fullName: user.displayName,
-              email: user.email,
-              profilePhoto: user.photoURL,
-            );
-      } catch (e) {
-        getIt.get<AppGlobals>().user = UserModel(
-          googleId: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        );
-      }
+      getIt.get<AppGlobals>().user = user;
+      // try {
+      //   getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+      //         googleId: user.uid,
+      //         fullName: user.displayName,
+      //         email: user.email,
+      //         profilePhoto: user.photoURL,
+      //       );
+      // } catch (e) {
+      //   getIt.get<AppGlobals>().user = UserModel(
+      //     googleId: user.uid,
+      //     displayName: user.displayName,
+      //     email: user.email,
+      //     photoURL: user.photoURL,
+      //   );
+      // }
       AppCacheManager.instance.emptyCache();
       yield SocialLoginSuccessAuthState();
     }
@@ -168,23 +147,66 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       yield LoginFailureAuthState(
           'Login with Facebook Failed! Please try again');
     } else {
-      try {
-        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
-              facebookId: user.uid,
-              fullName: user.displayName,
-              email: user.email,
-              profilePhoto: user.photoURL,
-            );
-      } catch (e) {
-        getIt.get<AppGlobals>().user = UserModel(
-          facebookId: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        );
-      }
+      getIt.get<AppGlobals>().user = user;
+      // try {
+      //   getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+      //         facebookId: user.uid,
+      //         fullName: user.displayName,
+      //         email: user.email,
+      //         profilePhoto: user.photoURL,
+      //       );
+      // } catch (e) {
+      //   getIt.get<AppGlobals>().user = UserModel(
+      //     facebookId: user.uid,
+      //     displayName: user.displayName,
+      //     email: user.email,
+      //     photoURL: user.photoURL,
+      //   );
+      // }
       AppCacheManager.instance.emptyCache();
       yield SocialLoginSuccessAuthState();
+    }
+  }
+
+  Stream<AuthState> _mapPhoneAuthCredEventToState(
+      PhoneAuthCredEvent event) async* {
+    AppCacheManager.instance.emptyCache();
+
+    User user;
+    try {
+      user = (await UserRepository().linkCredential(event.phoneCred)).user;
+    } catch (e) {
+      try {
+        user = (await UserRepository().signInCredential(event.phoneCred)).user;
+
+        ///Save to Storage phone
+        final bool savePreferences =
+            await getIt.get<AppPreferences>().setString(
+                  PreferenceKey.phoneID,
+                  user?.uid?.toString(),
+                  // event.user?.phoneId?.toString(),
+                );
+
+        if (savePreferences) {
+          yield PreferenceSaveSuccessAuthState();
+
+          /// TODO
+          if (getIt.get<AppGlobals>().user != null) {
+            // if (getIt.get<AppGlobals>().usergoogleId != null ||
+            //     getIt.get<AppGlobals>().user.facebookId != null)
+            yield LoginSuccessWithSocialAuthState();
+          } else
+            yield LoginSuccessAuthState();
+
+          getIt.get<AppGlobals>().user = user;
+        }
+
+        /// We got the User creds over here so set the VerID to null now
+        _verID = null;
+      } catch (e1) {
+        print(e1);
+        yield LoginFailureAuthState('Invalid OTP!');
+      }
     }
   }
 
@@ -195,16 +217,12 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     ///Save to Storage phone
     final bool savePreferences = await getIt.get<AppPreferences>().setString(
           PreferenceKey.phoneID,
-          event.user?.phoneId?.toString(),
+          event.user?.uid?.toString(),
         );
 
     if (savePreferences) {
       yield PreferenceSaveSuccessAuthState();
-      if (getIt.get<AppGlobals>().user.googleId != null ||
-          getIt.get<AppGlobals>().user.facebookId != null)
-        yield LoginSuccessWithSocialAuthState();
-      else
-        yield LoginSuccessAuthState();
+      yield LoginSuccessAuthState();
     }
   }
 
@@ -214,8 +232,8 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     final bool hasToken =
         await getIt.get<AppPreferences>().containsKey(PreferenceKey.phoneID);
 
-    /// TODO : Implement the way to save the User details in Preferences
     if (hasToken) {
+      getIt.get<AppGlobals>().user = _userRepository.getUser();
       // User user = _userRepository.getUser();
       // getIt.get<AppGlobals>().user = UserModel(
       //   facebookId: user.uid,
@@ -234,87 +252,80 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     yield LoadingAuthState();
 
     try {
-      add(UserClearedAuthEvent());
+      final bool deletePreferences =
+          await getIt.get<AppPreferences>().remove(PreferenceKey.phoneID);
 
+      if (deletePreferences) {
+        getIt.get<AppGlobals>().user = null;
+        getIt.get<AppGlobals>().isUserOnboarded = false;
+        await getIt.get<AppPreferences>().remove(PreferenceKey.isOnboarded);
+        yield AuthenticationFailureAuthState();
+      }
       yield LogoutSuccessAuthState();
     } catch (error) {
       yield LogoutFailureAuthState(error.toString());
     }
   }
 
-  Stream<AuthState> _mapClearUserAuthEventToState() async* {
-    final bool deletePreferences =
-        await getIt.get<AppPreferences>().remove(PreferenceKey.phoneID);
-
-    if (deletePreferences) {
-      getIt.get<AppGlobals>().user = null;
-      getIt.get<AppGlobals>().isUserOnboarded = false;
-      await getIt.get<AppPreferences>().remove(PreferenceKey.isOnboarded);
-      yield AuthenticationFailureAuthState();
-    }
-  }
+  Stream<AuthState> _mapClearUserAuthEventToState() async* {}
 
   Stream<AuthState> _mapProfileUpdateAuthEventToState(
       ProfileUpdatedAuthEvent event) async* {
     yield LoadingAuthState();
 
-    /// TODO:
-    // getIt.get<AppGlobals>().user = _userRepository.getUser();
+    getIt.get<AppGlobals>().user = _userRepository.getUser();
 
-    // add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
+    add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
 
     yield ProfileUpdateSuccessAuthState();
   }
 
-  Stream<AuthEvent> sendOtp(String phoNo) async* {
-    StreamController<AuthEvent> eventStream = StreamController();
+  Future<void> sendOtp(String phoNo) async {
     final phoneVerificationCompleted =
         (PhoneAuthCredential authCredential) async {
       /// This is executed when the OTP is Auto verified
-      var userCredential =
-          await FirebaseAuth.instance.signInWithCredential(authCredential);
-      User user = userCredential.user;
-      try {
-        getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
-              phoneId: user.uid,
-              phone: user.phoneNumber,
-            );
-      } catch (e) {
-        getIt.get<AppGlobals>().user = UserModel(
-          phoneId: user.uid,
-          phoneNumber: user.phoneNumber,
-        );
-      }
-      AppCacheManager.instance.emptyCache();
+      // var userCredential =
+      //     await FirebaseAuth.instance.signInWithCredential(authCredential);
+      // User user = userCredential.user;
+      // getIt.get<AppGlobals>().user = user;
+      // try {
+      //   getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
+      //         phoneId: user.uid,
+      //         phone: user.phoneNumber,
+      //       );
+      // } catch (e) {
+      //   getIt.get<AppGlobals>().user = UserModel(
+      //     phoneId: user.uid,
+      //     phoneNumber: user.phoneNumber,
+      //   );
+      // }
+      // AppCacheManager.instance.emptyCache();
 
-      try {
-        add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-      } catch (error) {
-        add(LoginFailureAuthEvent(error.toString()));
-      }
+      // try {
+      add(PhoneAuthCredEvent(authCredential));
+      // } catch (error) {
+      //   add(LoginFailureAuthEvent(error.toString()));
+      // }
     };
 
     final phoneVerificationFailed = (FirebaseAuthException authException) {
       print(authException.message);
-      eventStream.add(LoginFailureAuthEvent(authException.message));
-      eventStream.close();
+      add(LoginFailureAuthEvent(authException.message));
     };
     final phoneCodeSent = (String verId, [int forceResent]) {
-      this._verID = verId;
+      _verID = verId;
     };
     final phoneCodeAutoRetrievalTimeout = (String verid) {
-      this._verID = verid;
-      eventStream.close();
+      /// TODO: Is this really needed?
+      _verID = verid;
     };
 
     await _userRepository.sendOtp(
         phoNo,
-        Duration(seconds: 1),
+        Duration(seconds: 60),
         phoneVerificationFailed,
         phoneVerificationCompleted,
         phoneCodeSent,
         phoneCodeAutoRetrievalTimeout);
-
-    yield* eventStream.stream;
   }
 }

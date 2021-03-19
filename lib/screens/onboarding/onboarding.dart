@@ -1,6 +1,7 @@
 import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -122,13 +123,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 PageViewModel(
                   title: L10n.of(context).onboardingPage2Title,
                   body: L10n.of(context).onboardingPage2Body,
-                  image: introImageWhite(AssetImages.onboardingBarcode),
+                  image: introIconWhite(Ionicons.ios_barcode),
                   decoration: pageDecoration,
                 ),
                 PageViewModel(
                   title: L10n.of(context).onboardingPage3Title,
                   body: L10n.of(context).onboardingPage3Body,
-                  image: introImageWhite(AssetImages.onboardingQR),
+                  image: introIconWhite(FontAwesome5Solid.qrcode),
                   decoration: pageDecoration,
                 ),
               ],
@@ -168,6 +169,17 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       child: Image.asset(
         '$assetName',
         width: 240.0,
+        color: kWhite,
+      ),
+      alignment: Alignment.bottomCenter,
+    );
+  }
+
+  Widget introIconWhite(IconData assetName) {
+    return Align(
+      child: Icon(
+        assetName,
+        size: 240.0,
         color: kWhite,
       ),
       alignment: Alignment.bottomCenter,

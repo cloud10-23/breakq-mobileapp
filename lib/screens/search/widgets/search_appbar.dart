@@ -2,7 +2,6 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/main.dart';
-import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/generated/l10n.dart';
@@ -35,13 +34,13 @@ class SearchAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kWhite,
       // color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.only(
-        right: kPaddingS,
+        left: kPaddingM,
+        right: kPaddingM,
         bottom: kPaddingM,
       ),
-      height: 40,
+      height: 50,
       child: Card(
         color: getIt.get<AppGlobals>().isPlatformBrightnessDark
             ? Theme.of(context).accentColor
@@ -73,7 +72,7 @@ class SearchAppBar extends StatelessWidget {
               ),
               Spacer(),
               Expanded(
-                flex: 12,
+                flex: 16,
                 child: Text(
                   L10n.of(context).homePlaceholderSearch,
                   style: getIt.get<AppGlobals>().captionStyle(context),

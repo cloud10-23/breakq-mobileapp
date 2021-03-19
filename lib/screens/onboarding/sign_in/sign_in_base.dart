@@ -55,7 +55,7 @@ class BaseBlocWrapper extends StatefulWidget {
 class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
   Future<bool> _onBackPressed(BuildContext context) async {
     if (Navigator.canPop(context)) {
-      BlocProvider.of<AuthBloc>(context).add(UserClearedAuthEvent());
+      BlocProvider.of<AuthBloc>(context).add(UserLoggedOutAuthEvent());
       return !await Navigator.maybePop(context);
     }
     bool exit = await showDialog(
@@ -122,14 +122,13 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
         backgroundColor: kWhite,
         body: BlocListener<AuthBloc, AuthState>(
           // listenWhen: (previous, current) => current is LoginSuccessAuthState,
-          listenWhen: (previous, current) => (current is VerifyOTPAuthState ||
+          listenWhen: (previous, current) => (current is OTPSentAuthState ||
               current is LoginSuccessAuthState ||
               current is SocialLoginSuccessAuthState ||
               current is LoginSuccessWithSocialAuthState ||
               current is OnboardingCompleteAuthState ||
               current is ApiFailureAuthState),
           listener: (context, state) {
-            print("Listener is being called!");
             if (state is LoginSuccessAuthState) {
               _apiCall(
                 message: "The Phone login was succesfull " +
@@ -140,7 +139,8 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
                       Routes.o_profile, ModalRoute.withName(Routes.o_home));
                 },
                 userOld: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .popUntil(ModalRoute.withName(Routes.o_home));
                   BlocProvider.of<ApplicationBloc>(context)
                       .add(OnboardingCompletedApplicationEvent());
                 },
@@ -164,7 +164,7 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
             } else if (state is LoginSuccessWithSocialAuthState) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.o_profile, ModalRoute.withName(Routes.o_home));
-            } else if (state is VerifyOTPAuthState)
+            } else if (state is OTPSentAuthState)
               Navigator.of(context).pushNamed(Routes.o_otp);
             else if (state is RegistrationFailureAuthState) {
               UI.showErrorDialog(
@@ -172,12 +172,15 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
                 message: state.message,
               );
             } else if (state is OnboardingCompleteAuthState) {
-              if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+              Navigator.of(context)
+                  .popUntil(ModalRoute.withName(Routes.o_home));
               BlocProvider.of<ApplicationBloc>(context)
                   .add(OnboardingCompletedApplicationEvent());
+            } else if (state is LoginFailureAuthState) {
+              /// Exccept this Api Failure, anything else go back to home screen
             } else
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  Routes.o_home, (Route<dynamic> route) => false);
+              Navigator.of(context)
+                  .popUntil(ModalRoute.withName(Routes.o_home));
           },
           child: widget.child,
         ),

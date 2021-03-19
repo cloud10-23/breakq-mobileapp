@@ -121,11 +121,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           if (appState is SetupSuccessApplicationState) {
-            homeWidget = Base(
-              homeScreen: HomeScreen(
-                key: getIt.get<AppGlobals>().globalKeySearchScreen,
-              ),
-            );
+            homeWidget = HomeScreen();
           } else if (appState is OnboardingInProgressApplicationState) {
             homeWidget = const OnboardingScreen();
           } else {

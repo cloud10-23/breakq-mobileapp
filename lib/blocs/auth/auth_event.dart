@@ -10,8 +10,6 @@ class ProfileLoadedAuthEvent extends AuthEvent {}
 
 class UserLoggedOutAuthEvent extends AuthEvent {}
 
-class UserClearedAuthEvent extends AuthEvent {}
-
 class LoginRequestedAuthEvent extends AuthEvent {
   LoginRequestedAuthEvent({this.phone});
 
@@ -24,6 +22,10 @@ class GoogleLoginRequestedAuthEvent extends AuthEvent {
 
 class FacebookLoginRequestedAuthEvent extends AuthEvent {
   FacebookLoginRequestedAuthEvent();
+}
+
+class OTPSentAuthEvent extends AuthEvent {
+  OTPSentAuthEvent();
 }
 
 class OTPVerificationAuthEvent extends AuthEvent {
@@ -43,7 +45,13 @@ class UserRegisteredAuthEvent extends AuthEvent {
 class UserSavedAuthEvent extends AuthEvent {
   UserSavedAuthEvent(this.user);
 
-  final UserModel user;
+  final User user;
+}
+
+class PhoneAuthCredEvent extends AuthEvent {
+  PhoneAuthCredEvent(this.phoneCred);
+
+  final AuthCredential phoneCred;
 }
 
 class LoginFailureAuthEvent extends AuthEvent {

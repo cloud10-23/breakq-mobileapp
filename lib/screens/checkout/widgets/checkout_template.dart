@@ -5,6 +5,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class CheckoutTemplate extends StatelessWidget {
   CheckoutTemplate({
@@ -81,7 +82,7 @@ class CheckoutTemplate extends StatelessWidget {
                 leading: Visibility(
                   visible: showBackButton,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Feather.arrow_left_circle),
                     tooltip: L10n.of(context).commonTooltipInfo,
                     onPressed: () {
                       BlocProvider.of<CheckoutBloc>(context)
