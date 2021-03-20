@@ -178,35 +178,36 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     } catch (e) {
       try {
         user = (await UserRepository().signInCredential(event.phoneCred)).user;
-
-        ///Save to Storage phone
-        final bool savePreferences =
-            await getIt.get<AppPreferences>().setString(
-                  PreferenceKey.phoneID,
-                  user?.uid?.toString(),
-                  // event.user?.phoneId?.toString(),
-                );
-
-        if (savePreferences) {
-          yield PreferenceSaveSuccessAuthState();
-
-          /// TODO
-          if (getIt.get<AppGlobals>().user != null) {
-            // if (getIt.get<AppGlobals>().usergoogleId != null ||
-            //     getIt.get<AppGlobals>().user.facebookId != null)
-            yield LoginSuccessWithSocialAuthState();
-          } else
-            yield LoginSuccessAuthState();
-
-          getIt.get<AppGlobals>().user = user;
-        }
-
-        /// We got the User creds over here so set the VerID to null now
-        _verID = null;
       } catch (e1) {
         print(e1);
         yield LoginFailureAuthState('Invalid OTP!');
       }
+    }
+
+    if (user != null) {
+      ///Save to Storage phone
+      final bool savePreferences = await getIt.get<AppPreferences>().setString(
+            PreferenceKey.phoneID,
+            user?.uid?.toString(),
+            // event.user?.phoneId?.toString(),
+          );
+
+      if (savePreferences) {
+        yield PreferenceSaveSuccessAuthState();
+
+        /// TODO
+        if (getIt.get<AppGlobals>().user != null) {
+          // if (getIt.get<AppGlobals>().usergoogleId != null ||
+          //     getIt.get<AppGlobals>().user.facebookId != null)
+          yield LoginSuccessWithSocialAuthState();
+        } else
+          yield LoginSuccessAuthState();
+
+        getIt.get<AppGlobals>().user = user;
+      }
+
+      /// We got the User creds over here so set the VerID to null now
+      _verID = null;
     }
   }
 
@@ -266,8 +267,6 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       yield LogoutFailureAuthState(error.toString());
     }
   }
-
-  Stream<AuthState> _mapClearUserAuthEventToState() async* {}
 
   Stream<AuthState> _mapProfileUpdateAuthEventToState(
       ProfileUpdatedAuthEvent event) async* {
