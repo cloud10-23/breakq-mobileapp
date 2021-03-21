@@ -16,13 +16,9 @@ class LoginRequestedAuthEvent extends AuthEvent {
   final String phone;
 }
 
-class GoogleLoginRequestedAuthEvent extends AuthEvent {
-  GoogleLoginRequestedAuthEvent();
-}
+class GoogleLoginRequestedAuthEvent extends AuthEvent {}
 
-class FacebookLoginRequestedAuthEvent extends AuthEvent {
-  FacebookLoginRequestedAuthEvent();
-}
+class FacebookLoginRequestedAuthEvent extends AuthEvent {}
 
 class OTPSentAuthEvent extends AuthEvent {
   OTPSentAuthEvent();
@@ -35,9 +31,9 @@ class OTPVerificationAuthEvent extends AuthEvent {
 }
 
 class UserRegisteredAuthEvent extends AuthEvent {
-  UserRegisteredAuthEvent({this.fullName, this.email, this.photoUrl});
+  UserRegisteredAuthEvent({this.displayName, this.email, this.photoUrl});
 
-  final String fullName;
+  final String displayName;
   final String email;
   final String photoUrl;
 }

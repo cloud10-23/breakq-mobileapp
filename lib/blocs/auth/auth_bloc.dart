@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:breakq/blocs/base_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/user_model.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_cache_manager.dart';
@@ -63,6 +62,15 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     super.close();
   }
 
+  Future<bool> updateProfile(displayName, email, photoUrl) async {
+    try {
+      await _userRepository.updateProfile(displayName, email, photoUrl);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Stream<AuthState> _mapLoginFailureAuthEventToState(
       LoginFailureAuthEvent event) async* {
     // Go back to Initial State
@@ -74,17 +82,26 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     ///Notify loading to UI
     yield LoadingAuthState();
 
+    String displayName = event.displayName;
+    String email = event.email;
+    String photoUrl = getIt.get<AppGlobals>().user.photoURL;
+
     /// Post the name, email, photo to the Server API
     print("<<API CALL>>");
-    print("Name: ${event.fullName}\n" +
-        "Email: ${event.email}\n" +
+    print("Name: $displayName\n" +
+        "Email: $email\n" +
         "PhotoUrl: ${event.photoUrl}");
 
-    // subscription = sendOtp(event.email).listen((event) {
-    //   add(event);
-    // });
-    // yield VerifyOTPAuthState();
-    yield OnboardingCompleteAuthState();
+    /// Update the details of the current user with Firebase
+    // if (getIt.get<AppGlobals>().user.displayName == null) {
+    /// User registered through only mobile login
+    // }
+    if (await updateProfile(displayName, email, photoUrl)) {
+      getIt.get<AppGlobals>().user = _userRepository.getUser();
+      yield OnboardingCompleteAuthState();
+    } else {
+      yield OnboardingCompleteAuthState();
+    }
   }
 
   Stream<AuthState> _mapOTPSentAuthEventToState(OTPSentAuthEvent event) async* {
@@ -98,8 +115,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     ///Notify loading to UI
     yield LoadingAuthState();
     AuthCredential _authCred;
-    _authCred =
-        await UserRepository().getPhoneAuthCredential(_verID, event.otp);
+    _authCred = await _userRepository.getPhoneAuthCredential(_verID, event.otp);
     add(PhoneAuthCredEvent(_authCred));
   }
 
@@ -112,29 +128,26 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
   Stream<AuthState> _mapGoogleLoginAuthEventToState(
       GoogleLoginRequestedAuthEvent event) async* {
     yield LoadingAuthState();
-
-    final user = await _userRepository.signInWithGoogle();
-    if (user == null) {
+    var userCred;
+    User user;
+    try {
+      userCred = await _userRepository.signInWithGoogle();
+      user = userCred?.user;
+    } catch (e) {
+      user = null;
       yield LoginFailureAuthState('Login with Google Failed! Please try again');
-    } else {
+    }
+    if (user != null) {
       getIt.get<AppGlobals>().user = user;
-      // try {
-      //   getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
-      //         googleId: user.uid,
-      //         fullName: user.displayName,
-      //         email: user.email,
-      //         profilePhoto: user.photoURL,
-      //       );
-      // } catch (e) {
-      //   getIt.get<AppGlobals>().user = UserModel(
-      //     googleId: user.uid,
-      //     displayName: user.displayName,
-      //     email: user.email,
-      //     photoURL: user.photoURL,
-      //   );
-      // }
       AppCacheManager.instance.emptyCache();
-      yield SocialLoginSuccessAuthState();
+
+      /// Check whether the user is new or old, or if the phoneNumber is linked
+      if (user.phoneNumber == null || userCred.additionalUserInfo.isNewUser)
+
+        /// Is new user, redirect to phone number linking
+        yield LinkPhoneAuthState();
+      else
+        yield LoginSuccessAuthState();
     }
   }
 
@@ -142,29 +155,27 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       FacebookLoginRequestedAuthEvent event) async* {
     yield LoadingAuthState();
 
-    final user = await _userRepository.signInWithFacebook();
-    if (user == null) {
+    var userCred;
+    User user;
+    try {
+      userCred = await _userRepository.signInWithFacebook();
+      user = userCred?.user;
+    } catch (e) {
+      user = null;
       yield LoginFailureAuthState(
           'Login with Facebook Failed! Please try again');
-    } else {
+    }
+    if (user != null) {
       getIt.get<AppGlobals>().user = user;
-      // try {
-      //   getIt.get<AppGlobals>().user = getIt.get<AppGlobals>().user.copyWith(
-      //         facebookId: user.uid,
-      //         fullName: user.displayName,
-      //         email: user.email,
-      //         profilePhoto: user.photoURL,
-      //       );
-      // } catch (e) {
-      //   getIt.get<AppGlobals>().user = UserModel(
-      //     facebookId: user.uid,
-      //     displayName: user.displayName,
-      //     email: user.email,
-      //     photoURL: user.photoURL,
-      //   );
-      // }
       AppCacheManager.instance.emptyCache();
-      yield SocialLoginSuccessAuthState();
+
+      /// Check whether the user is new or old, or if the phoneNumber is linked
+      if (user.phoneNumber == null || userCred.additionalUserInfo.isNewUser)
+
+        /// Is new user, redirect to phone number linking
+        yield LinkPhoneAuthState();
+      else
+        yield LoginSuccessAuthState();
     }
   }
 
@@ -173,41 +184,72 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     AppCacheManager.instance.emptyCache();
 
     User user;
-    try {
-      user = (await UserRepository().linkCredential(event.phoneCred)).user;
-    } catch (e) {
+
+    /// If social sign-in then link the credential (TODO)
+    if (getIt.get<AppGlobals>().user != null) {
       try {
-        user = (await UserRepository().signInCredential(event.phoneCred)).user;
+        user = (await _userRepository.linkCredential(event.phoneCred))?.user;
+      } catch (e) {
+        print(e);
+        if (e?.code == 'invalid-credential' ||
+            e?.code == 'invalid-verification-code')
+          yield LoginFailureAuthState('Invalid OTP!');
+        else {
+          yield LoginFailureAuthState(
+              "Sorry! Couldn't link your social account" +
+                  "with phone! Please try again later! " +
+                  "Contact the store if this persists.");
+        }
+      }
+      if (user != null) {
+        ///Save to Storage phone
+        final bool savePreferences =
+            await getIt.get<AppPreferences>().setString(
+                  PreferenceKey.phoneID,
+                  user?.uid?.toString(),
+                  // event.user?.phoneId?.toString(),
+                );
+
+        if (savePreferences) {
+          yield PreferenceSaveSuccessAuthState();
+          yield NewUserRegisterAuthState();
+          getIt.get<AppGlobals>().user = user;
+        }
+      }
+    } else {
+      UserCredential userCred;
+      try {
+        userCred = await _userRepository.signInCredential(event.phoneCred);
+        user = userCred?.user;
       } catch (e1) {
         print(e1);
         yield LoginFailureAuthState('Invalid OTP!');
       }
-    }
 
-    if (user != null) {
-      ///Save to Storage phone
-      final bool savePreferences = await getIt.get<AppPreferences>().setString(
-            PreferenceKey.phoneID,
-            user?.uid?.toString(),
-            // event.user?.phoneId?.toString(),
-          );
+      /// Check if user in new or old here
+      if (user != null) {
+        ///Save to Storage phone
+        final bool savePreferences =
+            await getIt.get<AppPreferences>().setString(
+                  PreferenceKey.phoneID,
+                  user?.uid?.toString(),
+                );
+        if (savePreferences) {
+          yield PreferenceSaveSuccessAuthState();
+          if ((userCred.additionalUserInfo.isNewUser ||
+              user.displayName == null)) {
+            /// User is new
+            yield NewUserRegisterAuthState();
+          } else {
+            yield LoginSuccessAuthState();
+          }
 
-      if (savePreferences) {
-        yield PreferenceSaveSuccessAuthState();
+          getIt.get<AppGlobals>().user = user;
+        }
 
-        /// TODO
-        if (getIt.get<AppGlobals>().user != null) {
-          // if (getIt.get<AppGlobals>().usergoogleId != null ||
-          //     getIt.get<AppGlobals>().user.facebookId != null)
-          yield LoginSuccessWithSocialAuthState();
-        } else
-          yield LoginSuccessAuthState();
-
-        getIt.get<AppGlobals>().user = user;
+        /// We got the User creds over here so set the VerID to null now
+        _verID = null;
       }
-
-      /// We got the User creds over here so set the VerID to null now
-      _verID = null;
     }
   }
 

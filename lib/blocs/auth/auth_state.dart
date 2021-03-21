@@ -8,18 +8,23 @@ abstract class AuthState {
 
 class InitialAuthState extends AuthState {}
 
-class SocialLoginSuccessAuthState extends AuthState {}
-
+/// Existing User when they login, to directly complete login process
 class LoginSuccessAuthState extends AuthState {}
 
-class LoginSuccessWithSocialAuthState extends AuthState {}
+/// For showing phone number verification after social login
+class LinkPhoneAuthState extends AuthState {}
 
+/// For showing profile details and for them to verify it
+class NewUserRegisterAuthState extends AuthState {}
+
+/// For showing OTP screen after the phone number is given
 class OTPSentAuthState extends AuthState {}
 
 class LoadingAuthState extends AuthState {}
 
 class PreferenceSaveSuccessAuthState extends AuthState {}
 
+/// When the user registration completed succesfully, if the user was new
 class OnboardingCompleteAuthState extends AuthState {}
 
 class AuthenticationFailureAuthState extends AuthState {}

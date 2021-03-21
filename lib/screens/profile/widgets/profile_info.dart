@@ -34,7 +34,7 @@ class ProfileInfo extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+              padding: const EdgeInsets.only(left: kPaddingL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -44,13 +44,16 @@ class ProfileInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5.bold.white,
                     overflow: TextOverflow.fade,
                   ),
-                  // const Padding(padding: EdgeInsets.only(top: 4)),
-                  // Text(
-                  //   getIt.get<AppGlobals>().user.email,
-                  //   maxLines: 1,
-                  //   style: Theme.of(context).textTheme.caption.fs14,
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
+                  const Padding(padding: EdgeInsets.only(top: 4)),
+                  Text(
+                    getIt.get<AppGlobals>().user?.email ?? "",
+                    // (getIt.get<AppGlobals>().user?.email?.isNotEmpty ?? false)
+                    //     ? getIt.get<AppGlobals>().user.email
+                    //     : "(Not verified)",
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.caption.w600.white,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),

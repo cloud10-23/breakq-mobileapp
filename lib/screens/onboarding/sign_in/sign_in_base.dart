@@ -124,58 +124,36 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
           // listenWhen: (previous, current) => current is LoginSuccessAuthState,
           listenWhen: (previous, current) => (current is OTPSentAuthState ||
               current is LoginSuccessAuthState ||
-              current is SocialLoginSuccessAuthState ||
-              current is LoginSuccessWithSocialAuthState ||
+              current is LinkPhoneAuthState ||
+              current is NewUserRegisterAuthState ||
               current is OnboardingCompleteAuthState ||
               current is ApiFailureAuthState),
           listener: (context, state) {
             if (state is LoginSuccessAuthState) {
-              _apiCall(
-                message: "The Phone login was succesfull " +
-                    " this firebase ID will be sent to the server to check if it already exists. " +
-                    "For now select whether the user exists or not!",
-                userNew: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.o_profile, ModalRoute.withName(Routes.o_home));
-                },
-                userOld: () {
-                  Navigator.of(context)
-                      .popUntil(ModalRoute.withName(Routes.o_home));
-                  BlocProvider.of<ApplicationBloc>(context)
-                      .add(OnboardingCompletedApplicationEvent());
-                },
-              );
-            } else if (state is SocialLoginSuccessAuthState) {
-              _apiCall(
-                message: "The Google/ Facebook login was succesfull " +
-                    " this firebase ID will be sent to the server to check if it already exists. " +
-                    "For now select whether the user exists or not!",
-                userNew: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushNamed(Routes.o_mobileLogin,
-                      arguments: "Almost there!\nEnter your mobile number");
-                },
-                userOld: () {
-                  Navigator.of(context).pop();
-                  BlocProvider.of<ApplicationBloc>(context)
-                      .add(OnboardingCompletedApplicationEvent());
-                },
-              );
-            } else if (state is LoginSuccessWithSocialAuthState) {
+              /// This is the way for existing users to complete login
+              Navigator.of(context)
+                  .popUntil(ModalRoute.withName(Routes.o_home));
+              BlocProvider.of<ApplicationBloc>(context)
+                  .add(OnboardingCompletedApplicationEvent());
+            } else if (state is LinkPhoneAuthState) {
+              /// After they login with Social account, if the user is new
+              Navigator.of(context).pushNamed(Routes.o_mobileLogin,
+                  arguments: "Almost there!\nEnter your mobile number");
+            } else if (state is OTPSentAuthState) {
+              Navigator.of(context).pushNamed(Routes.o_otp);
+            } else if (state is NewUserRegisterAuthState) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.o_profile, ModalRoute.withName(Routes.o_home));
-            } else if (state is OTPSentAuthState)
-              Navigator.of(context).pushNamed(Routes.o_otp);
-            else if (state is RegistrationFailureAuthState) {
-              UI.showErrorDialog(
-                context,
-                message: state.message,
-              );
             } else if (state is OnboardingCompleteAuthState) {
               Navigator.of(context)
                   .popUntil(ModalRoute.withName(Routes.o_home));
               BlocProvider.of<ApplicationBloc>(context)
                   .add(OnboardingCompletedApplicationEvent());
+            } else if (state is RegistrationFailureAuthState) {
+              UI.showErrorDialog(
+                context,
+                message: state.message,
+              );
             } else if (state is LoginFailureAuthState) {
               /// Exccept this Api Failure, anything else go back to home screen
             } else

@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:breakq/utils/form_utils.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;
@@ -41,12 +42,27 @@ class UserRepository {
   Future<UserCredential> signInCredential(AuthCredential authCred) =>
       _firebaseAuth.signInWithCredential(authCred);
 
+  Future<void> updateProfile(
+      String displayName, String email, String photoURL) async {
+    /// Update DisplayName and photoURL
+    await _firebaseAuth.currentUser.updateProfile(
+      displayName: displayName,
+      photoURL: photoURL,
+    );
+
+    if ((email?.isNotEmpty ?? false) &&
+        _firebaseAuth.currentUser.email != email)
+      await _firebaseAuth.currentUser.verifyBeforeUpdateEmail(
+        email,
+      );
+  }
+
   User getUser() {
     var user = _firebaseAuth.currentUser;
     return user;
   }
 
-  Future<User> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -69,7 +85,7 @@ class UserRepository {
 
       print('signInWithGoogle succeeded: ${user.displayName}');
 
-      return user;
+      return authResult;
     }
 
     return null;
@@ -81,7 +97,7 @@ class UserRepository {
     print("User Signed Out");
   }
 
-  Future<User> signInWithFacebook() async {
+  Future<UserCredential> signInWithFacebook() async {
     try {
       // by default the login method has the next permissions ['email','public_profile']
       AccessToken _accessToken = await FacebookAuth.instance.login();
@@ -94,10 +110,10 @@ class UserRepository {
               .token); // _token is your facebook access token as a string
 
 // FirebaseUser is deprecated
-      final User user =
-          (await _firebaseAuth.signInWithCredential(credential)).user;
+      final UserCredential userCred =
+          await _firebaseAuth.signInWithCredential(credential);
 
-      return user;
+      return userCred;
     } on FacebookAuthException catch (e) {
       switch (e.errorCode) {
         case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
