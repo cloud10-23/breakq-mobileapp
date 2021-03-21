@@ -14,6 +14,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/list_title.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({Key key}) : super(key: key);
@@ -72,6 +73,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         ListItem(
                           title: getIt.get<AppGlobals>().user?.phoneNumber ??
                               'Not available',
+                          titleTextStyle:
+                              Theme.of(context).textTheme.bodyText1.number,
                         ),
                         SizedBox(height: kPaddingL),
                         ListTitle(title: L10n.of(context).categoriesTitle),
@@ -187,14 +190,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                       image: AssetImage(AssetImages.mts_logo)),
                                 ),
                               ),
-                              SizedBox(height: kPaddingM),
-                              Padding(
-                                padding: const EdgeInsets.only(top: kPaddingS),
-                                child: Image(
-                                  image: AssetImage(AssetImages.bq_logo),
-                                  height: 30,
-                                ),
-                              ),
+                              // SizedBox(height: kPaddingM),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(top: kPaddingS),
+                              //   child: Image(
+                              //     image: AssetImage(AssetImages.bq_logo),
+                              //     height: 30,
+                              //   ),
+                              // ),
                               // Padding(
                               //   padding:
                               //       const EdgeInsets.only(top: kPaddingS),
