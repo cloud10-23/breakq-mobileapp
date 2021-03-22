@@ -26,8 +26,8 @@ class _DeliveryCheckoutSuccessDialogState
   @override
   Widget build(BuildContext context) {
     return CheckoutSuccessPlane(
-      title: "Your order will be delivered shortly!",
-      subtitle: "Thanks for shopping with BreakQ!",
+      subtitle: "Your order will be delivered shortly!",
+      title: "Thanks for shopping with BreakQ!",
     );
   }
 }

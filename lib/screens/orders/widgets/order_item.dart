@@ -52,7 +52,7 @@ class OrderItem extends StatelessWidget {
               ],
             ),
             // CheckoutTypeSmall(index: 0),
-            SizedBox(height: 5),
+            SizedBox(height: kPaddingM),
             // Container(
             //   height: 0.5,
             //   color: Colors.black12,
@@ -65,8 +65,8 @@ class OrderItem extends StatelessWidget {
                   BoldTitle(
                     title: 'Bill No: ',
                     padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: Colors.black45,
-                    fw: FontWeight.w800,
+                    color: kBlack,
+                    fw: FontWeight.w500,
                   ),
                   BoldTitle(
                     title: '1234567890',
@@ -86,8 +86,8 @@ class OrderItem extends StatelessWidget {
                   BoldTitle(
                     title: 'Checkout Type: ',
                     padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: Colors.black45,
-                    fw: FontWeight.w800,
+                    color: kBlack,
+                    fw: FontWeight.w500,
                   ),
                   BoldTitle(
                     title: 'Walkin',
@@ -99,6 +99,28 @@ class OrderItem extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(kPaddingS),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BoldTitle(
+                    title: 'Payment Mode: ',
+                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                    color: kBlack,
+                    fw: FontWeight.w500,
+                  ),
+                  BoldTitle(
+                    title: 'UPI',
+                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+                    color: Colors.black54,
+                    fw: FontWeight.w700,
+                    isNum: true,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: kPaddingL),
             Container(
               height: 0.8,
               color: Colors.black12,

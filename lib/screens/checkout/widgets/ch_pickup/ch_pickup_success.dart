@@ -26,8 +26,8 @@ class _PickupCheckoutSuccessDialogState
   @override
   Widget build(BuildContext context) {
     return CheckoutSuccessPlane(
-      title: "Your order was recieved!",
-      subtitle: "Thanks for shopping with BreakQ!",
+      subtitle: "Your order was recieved!",
+      title: "Thanks for shopping with BreakQ!",
     );
   }
 }

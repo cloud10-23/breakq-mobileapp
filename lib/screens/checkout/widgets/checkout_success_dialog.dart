@@ -153,7 +153,7 @@ class _BookingSuccessDialogState extends State<CheckoutSuccessPlane>
                         padding: const EdgeInsets.only(top: kPaddingM),
                         child: Text(
                           widget.title ?? '',
-                          style: Theme.of(context).textTheme.headline5.bold,
+                          style: Theme.of(context).textTheme.headline5.w700,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -167,14 +167,8 @@ class _BookingSuccessDialogState extends State<CheckoutSuccessPlane>
                               right: kPaddingM),
                           child: Text(
                             widget.subtitle ?? '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                .copyWith(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .caption
-                                        .color),
+                            style:
+                                Theme.of(context).textTheme.headline6.w600.grey,
                             textAlign: TextAlign.center,
                           ),
                         ),

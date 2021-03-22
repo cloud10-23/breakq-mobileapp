@@ -92,7 +92,8 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
   }
 
   ListItem _timetableItem(int timestamp, int selectedTimestamp) {
-    final DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final DateTime range1Date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final DateTime range2Date = range1Date.add(Duration(hours: 1));
 
     return ListItem(
       leading: Padding(
@@ -106,7 +107,8 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
           },
         ),
       ),
-      title: date.toLocalTimeString,
+      title:
+          "${range1Date.toLocalTimeString} - ${range2Date.toLocalTimeString}",
       onPressed: () {
         selectTimestampEvent(timestamp);
       },
