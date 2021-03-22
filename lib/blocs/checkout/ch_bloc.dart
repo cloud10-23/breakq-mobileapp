@@ -23,7 +23,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
   @override
   Stream<CheckoutState> mapEventToState(CheckoutEvent event) async* {
-    if (event is LoadCartChEvent) {
+    if (event is LoadCartAndTypeChEvent) {
       yield* _mapLoadCartChEventToState(event);
     } else if (event is CheckoutTypeSelectedChEvent) {
       yield* _mapCheckoutSelectedChEventToState(event);
@@ -53,13 +53,17 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   }
 
   Stream<CheckoutState> _mapLoadCartChEventToState(
-      LoadCartChEvent event) async* {
+      LoadCartAndTypeChEvent event) async* {
     try {
       Cart cartItems = (cartBloc.state as CartLoaded).cart;
-      if (cartItems?.cartItems?.isNotEmpty ?? false)
-        yield SessionRefreshSuccessChState(
-            CheckoutSession(cartProducts: cartItems));
-      else
+      if (cartItems?.cartItems?.isNotEmpty ?? false) {
+        if (event.type == CheckoutType.pickUp)
+          add(LoadTimeSlots());
+        else if (event.type == CheckoutType.delivery) add(LoadAddressChEvent());
+        yield SessionRefreshSuccessChState(CheckoutSession(
+            cartProducts: cartItems,
+            currentStep: ChCurrentStep(checkoutType: event.type)));
+      } else
         yield LoadFailureChState();
     } catch (e) {
       yield LoadFailureChState();

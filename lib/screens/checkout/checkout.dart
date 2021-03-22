@@ -39,7 +39,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<CheckoutBloc>(context).add(LoadCartChEvent());
     getIt.get<AppGlobals>().globalKeyCheckoutNavigator =
         GlobalKey(debugLabel: 'checkout_navigator');
   }
@@ -105,6 +104,19 @@ class _CheckoutScreenState extends State<CheckoutScreen>
             onWillPop: () => _onBackPressed(context),
             child: CheckoutNavigator(
               navigatorKey: getIt.get<AppGlobals>().globalKeyCheckoutNavigator,
+              initialRoute: <String>(CheckoutType type) {
+                switch (type) {
+                  case CheckoutType.walkIn:
+                    return CheckoutNavigatorRoutes.walkin_1;
+                    break;
+                  case CheckoutType.pickUp:
+                    return CheckoutNavigatorRoutes.pickup_1;
+                    break;
+                  case CheckoutType.delivery:
+                    return CheckoutNavigatorRoutes.delivery_1;
+                    break;
+                }
+              }(session.currentStep.checkoutType),
             ),
           ),
         );

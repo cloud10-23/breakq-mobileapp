@@ -4,6 +4,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/cart/widgets/cart_listing.dart';
+import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/price_details.dart';
@@ -178,8 +179,23 @@ class _CartPageState extends State<CartPage> {
             Spacer(),
             RaisedButton(
               onPressed: () {
-                Navigator.of(context, rootNavigator: true)
-                    .popAndPushNamed(Routes.checkout);
+                return showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useRootNavigator: true,
+                  builder: (_) => CheckoutTypeSelector(onTap: (index) {
+                    Navigator.of(context, rootNavigator: true).popAndPushNamed(
+                        Routes.checkout,
+                        arguments: CheckoutType.values[index]);
+                  }),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  isDismissible: true,
+                );
               },
               child: Text('Proceed to Checkout',
                   style: Theme.of(context).textTheme.bodyText2.white),

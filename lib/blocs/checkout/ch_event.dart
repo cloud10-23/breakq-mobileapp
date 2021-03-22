@@ -5,7 +5,11 @@ abstract class CheckoutEvent {
   String toString() => '$runtimeType';
 }
 
-class LoadCartChEvent extends CheckoutEvent {}
+class LoadCartAndTypeChEvent extends CheckoutEvent {
+  LoadCartAndTypeChEvent({this.type});
+
+  final CheckoutType type;
+}
 
 class CheckoutTypeSelectedChEvent extends CheckoutEvent {
   CheckoutTypeSelectedChEvent({this.type});

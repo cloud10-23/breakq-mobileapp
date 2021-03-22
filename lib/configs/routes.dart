@@ -5,9 +5,12 @@ import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_3.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_2.dart';
+import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_1.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_screen_2.dart';
+import 'package:breakq/screens/checkout/widgets/ch_pickup/ch_pickup_success.dart';
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart';
+import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
 import 'package:breakq/screens/edit_profile/take_picture.dart';
 import 'package:breakq/screens/listing/listing.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
@@ -124,8 +127,9 @@ class Routes {
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) {
             return BlocProvider<CheckoutBloc>(
-              create: (context) =>
-                  CheckoutBloc(cartBloc: BlocProvider.of<CartBloc>(context)),
+              create: (context) => CheckoutBloc(
+                  cartBloc: BlocProvider.of<CartBloc>(context))
+                ..add(LoadCartAndTypeChEvent(type: routeSettings.arguments)),
               child: CheckoutScreen(),
             );
           },
@@ -243,11 +247,18 @@ class CheckoutNavigatorRoutes {
   static const String delivery_2 = '/delivery/timeslot';
   static const String delivery_3 = '/delivery/confirm';
   static const String add_address = '/add_address';
+  static const String walkin_success = '/success';
+  static const String pickup_success = '/pickup/success';
+  static const String delivery_success = '/delivery/success';
 }
 
 class CheckoutNavigator extends StatelessWidget {
-  CheckoutNavigator({this.navigatorKey});
+  CheckoutNavigator({
+    this.navigatorKey,
+    this.initialRoute = CheckoutNavigatorRoutes.walkin_1,
+  });
   final GlobalKey<NavigatorState> navigatorKey;
+  final String initialRoute;
 
   Map<String, Function(BuildContext, RouteSettings)> _routeBuilders(
       BuildContext context) {
@@ -264,6 +275,12 @@ class CheckoutNavigator extends StatelessWidget {
           ChDeliveryConfirm(),
       CheckoutNavigatorRoutes.add_address: (context, settings) =>
           AddEditAddress(),
+      CheckoutNavigatorRoutes.walkin_success: (context, settings) =>
+          WalkinCheckoutSuccess(),
+      CheckoutNavigatorRoutes.pickup_success: (context, settings) =>
+          PickupCheckoutSuccessDialog(),
+      CheckoutNavigatorRoutes.delivery_success: (context, settings) =>
+          DeliveryCheckoutSuccessDialog()
     };
   }
 
@@ -272,7 +289,7 @@ class CheckoutNavigator extends StatelessWidget {
     var routeBuilders = _routeBuilders(context);
     return Navigator(
         key: navigatorKey,
-        initialRoute: CheckoutNavigatorRoutes.walkin_1,
+        initialRoute: initialRoute,
         onGenerateRoute: (routeSettings) {
           return SlideRoute(
               widget:
