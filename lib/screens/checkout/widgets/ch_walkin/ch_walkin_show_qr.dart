@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
@@ -42,6 +43,8 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         final List<Widget> _listItems = <Widget>[];
 
+        _listItems.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingS)));
+
         _listItems.add(SliverToBoxAdapter(
             child: CheckoutTypeModule(
           index: 0,
@@ -49,8 +52,6 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         _listItems.add(
             SliverToBoxAdapter(child: ShowQRModule(billNo: session.billNo)));
-
-        _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 2)));
 

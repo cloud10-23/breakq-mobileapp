@@ -35,6 +35,7 @@ class _ChBottomBarState extends State<ChBottomBar> {
             top: false,
             child: Row(
               children: <Widget>[
+                Spacer(),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +47,8 @@ class _ChBottomBarState extends State<ChBottomBar> {
                         Text(
                           ((widget.session?.cartProducts?.noOfProducts ?? 0) ==
                                   1)
-                              ? 'Amount to Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} item)'
-                              : 'Amount to Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} items)',
+                              ? 'Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} item)'
+                              : 'Pay (${widget.session?.cartProducts?.noOfProducts ?? 0} items)',
                           style:
                               Theme.of(context).textTheme.bodyText1.fs16.w800,
                         ),
@@ -66,7 +67,7 @@ class _ChBottomBarState extends State<ChBottomBar> {
                     SizedBox(height: 5.0),
                   ],
                 ),
-                Spacer(),
+                Spacer(flex: 10),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -77,7 +78,7 @@ class _ChBottomBarState extends State<ChBottomBar> {
                           (widget.session?.cartProducts?.cartValue?.totalAmnt
                                   ?.toStringAsFixed(2) ??
                               "00.00"),
-                      style: Theme.of(context).textTheme.headline6.w700,
+                      style: Theme.of(context).textTheme.headline6.w700.number,
                     ),
                     SizedBox(height: 5.0),
                     Text(
@@ -92,6 +93,7 @@ class _ChBottomBarState extends State<ChBottomBar> {
                     SizedBox(height: 5.0),
                   ],
                 ),
+                Spacer(),
               ],
             ),
           ),

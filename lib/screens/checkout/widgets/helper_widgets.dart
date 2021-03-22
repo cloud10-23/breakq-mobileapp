@@ -1,7 +1,8 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/checkout/widgets/cart_products_listing.dart';
 import 'package:breakq/screens/checkout/widgets/radio_helper.dart';
@@ -10,6 +11,7 @@ import 'package:breakq/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:breakq/utils/text_style.dart';
 
 class ShowQRModule extends StatelessWidget {
   ShowQRModule({@required this.billNo});
@@ -23,11 +25,21 @@ class ShowQRModule extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
           child: Text(
-            "Order No: ${billNo ?? 123445678990}",
-            style: Theme.of(context).textTheme.caption,
+            "${getIt.get<AppGlobals>().user.displayName}",
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
           ),
         ),
         SizedBox(height: kPaddingS),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+          child: Text(
+            "${getIt.get<AppGlobals>().user.phoneNumber}",
+            style: Theme.of(context).textTheme.subtitle1.w700.number.grey,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(height: kPaddingL),
         Center(
           child: QrImage(
             data: billNo ?? 'ERROR',
@@ -39,6 +51,15 @@ class ShowQRModule extends StatelessWidget {
             embeddedImageStyle: QrEmbeddedImageStyle(
               size: Size(30, 30),
             ),
+          ),
+        ),
+        SizedBox(height: kPaddingM),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+          child: Text(
+            "Order No: ${billNo ?? 123445678990}",
+            style: Theme.of(context).textTheme.bodyText1,
+            textAlign: TextAlign.center,
           ),
         ),
         SizedBox(height: kPaddingM),
