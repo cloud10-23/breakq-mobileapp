@@ -159,6 +159,66 @@ class CartScannerOption extends StatelessWidget {
   }
 }
 
+class CartQtyDisplay extends StatelessWidget {
+  CartQtyDisplay({@required this.items, @required this.qty});
+  final int items;
+  final int qty;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kWhite,
+      padding: const EdgeInsets.symmetric(vertical: kPaddingM),
+      child: Table(
+        border: TableBorder(
+          verticalInside: BorderSide(width: 1.0, color: Colors.black45),
+        ),
+        children: [
+          TableRow(
+            children: [
+              TableCell(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Items",
+                      style: Theme.of(context).textTheme.bodyText1.fs16.w600,
+                    ),
+                    Text(
+                      "$items",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(color: Colors.black54),
+                    ),
+                  ],
+                ),
+              ),
+              TableCell(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Quantity",
+                      style: Theme.of(context).textTheme.bodyText1.fs16.w600,
+                    ),
+                    Text(
+                      "$qty",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(color: Colors.black54),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class CartSuggestionsBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

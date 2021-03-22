@@ -91,29 +91,15 @@ class _CartPageState extends State<CartPage> {
                       Text('My Cart',
                           style: Theme.of(context).textTheme.bodyText1.fs16),
                       Spacer(flex: 9),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Items:  ${(state as CartLoaded).cart.cartItems.length}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 12.0),
-                            // color: kWhite),
-                          ),
-                          Text(
-                            "Qty:      ${(state as CartLoaded).cart.noOfProducts}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 12.0),
-                            // color: kWhite),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
+                      CartQtyDisplay(
+                          items: (state as CartLoaded).cart.cartItems.length,
+                          qty: (state as CartLoaded).cart.noOfProducts),
                       CartScannerOption(),
                       _cartItemsBuilder(context, state),
                       CartFooter(),
