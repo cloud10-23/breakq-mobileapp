@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:equatable/equatable.dart';
@@ -9,7 +10,8 @@ part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CartInitial());
+  final BudgetBloc budgetBloc;
+  CartBloc({this.budgetBloc}) : super(CartInitial());
 
   @override
   Stream<CartState> mapEventToState(CartEvent event) async* {
@@ -50,6 +52,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     event.cartItems.setNoOfProducts = _noOfProducts;
     event.cartItems.setCartValue(_orgCartValue, _cartValue);
 
+    if (event.isAdded) {
+      /// Notifying the BudgetBLoc of addition
+      budgetBloc.add(BudgetProductAddedEvent(
+          cartValue: event.cartItems.cartValue.totalAmnt));
+    }
+
     yield CartLoaded(cart: event.cartItems);
   }
 
@@ -61,7 +69,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // Add the product to cart here
     cartItems.addProduct(product: event.product, quantity: event.qty);
 
-    add(LoadCartEvent(cartItems: cartItems));
+    add(LoadCartEvent(cartItems: cartItems, isAdded: true));
   }
 
   Stream<CartState> _mapBulkAddEventToState(BulkAddPToCartEvent event) async* {
@@ -72,7 +80,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // Add all the products to cart here
     cartItems.bulkAddProducts(newCartItems: event.cartItems);
 
-    add(LoadCartEvent(cartItems: cartItems));
+    add(LoadCartEvent(cartItems: cartItems, isAdded: true));
   }
 
   Stream<CartState> _mapReduceQEventToState(ReduceQOfPCartEvent event) async* {
@@ -104,7 +112,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapSetFABEventToState(SetFABEvent event) async* {
-    if (state is CartLoaded)
-      yield CartLoaded(cart: (state as CartLoaded).cart, hide: event.hide);
+    if (state is CartLoaded) yield CartLoaded(cart: (state as CartLoaded).cart);
   }
 }

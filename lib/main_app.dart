@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
@@ -31,6 +32,7 @@ AuthBloc _authBloc;
 HomeBloc _searchBloc;
 LanguageBloc _languageBloc;
 ThemeBloc _themeBloc;
+BudgetBloc _budgetBloc;
 CartBloc _cartBloc;
 QSBloc _qsBloc;
 
@@ -62,7 +64,8 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _searchBloc = HomeBloc();
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
-    _cartBloc = CartBloc()..add(InitCartEvent());
+    _budgetBloc = BudgetBloc();
+    _cartBloc = CartBloc(budgetBloc: _budgetBloc)..add(InitCartEvent());
     _qsBloc = QSBloc(cartBloc: _cartBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
@@ -81,6 +84,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _themeBloc.close();
     _cartBloc.close();
     _qsBloc.close();
+    _budgetBloc.close();
     _applicationBloc.close();
     super.dispose();
   }
@@ -110,6 +114,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),
         BlocProvider<CartBloc>(create: (BuildContext context) => _cartBloc),
         BlocProvider<QSBloc>(create: (BuildContext context) => _qsBloc),
+        BlocProvider<BudgetBloc>(create: (BuildContext context) => _budgetBloc),
       ],
       child: BlocBuilder<ApplicationBloc, ApplicationState>(
         buildWhen:

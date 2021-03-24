@@ -11,9 +11,16 @@ class QuickLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (quickLinks[index]['link'] == 'SetBudget') {
-          return getIt.get<AppGlobals>().showSetBudget(context);
+          final _showSuccess =
+              await getIt.get<AppGlobals>().showSetBudget(context);
+          if (_showSuccess != null) {
+            final _snackBar =
+                SnackBar(content: Text("Budget has been set successfully!"));
+            ScaffoldMessenger.maybeOf(context).showSnackBar(_snackBar);
+          }
+          return null;
         }
         return Navigator.of(
           context,

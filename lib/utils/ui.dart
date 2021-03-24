@@ -31,7 +31,7 @@ class UI {
             title: title,
             message: message,
             icon: icon ?? Icons.info,
-            iconBackgroundColor: iconBackgroundColor ?? kPrimaryColor,
+            iconBackgroundColor: iconBackgroundColor ?? kBlue,
             actions: actions,
           ),
         );
@@ -56,7 +56,7 @@ class UI {
       message: message,
       actions: <Widget>[
         FlatButton(
-          color: Theme.of(context).buttonColor,
+          color: kBlue,
           child: Text(buttonText),
           onPressed: () {
             Navigator.of(context).pop();

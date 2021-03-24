@@ -12,10 +12,9 @@ class CartInitial extends CartState {}
 class CartLoading extends CartState {}
 
 class CartLoaded extends CartState {
-  CartLoaded({this.cart, this.hide = false});
+  CartLoaded({this.cart});
   final Cart cart;
-  final bool hide;
 
   @override
-  List<Object> get props => [hide];
+  List<Object> get props => [cart];
 }

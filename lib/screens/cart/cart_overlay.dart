@@ -16,7 +16,6 @@ class HybridFAB extends StatelessWidget {
         buildWhen: (previous, current) => current is CartLoaded,
         builder: (context, state) {
           if (state is CartLoaded) {
-            if (state.hide) return Container();
             if (state.cart.cartItems?.isNotEmpty ?? false)
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

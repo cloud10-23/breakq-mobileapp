@@ -10,8 +10,9 @@ abstract class CartEvent extends Equatable {
 class InitCartEvent extends CartEvent {}
 
 class LoadCartEvent extends CartEvent {
-  LoadCartEvent({this.cartItems});
+  LoadCartEvent({this.cartItems, this.isAdded = false});
   final Cart cartItems;
+  final bool isAdded;
 }
 
 class AddPToCartEvent extends CartEvent {
