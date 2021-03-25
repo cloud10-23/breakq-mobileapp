@@ -17,6 +17,7 @@ import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_mobile_num.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
 import 'package:breakq/screens/onboarding/sign_up/sign_up.dart';
+import 'package:breakq/screens/orders/invoice.dart';
 import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
@@ -56,6 +57,7 @@ class Routes {
   /// My Orders
   static const String orders = '/orders';
   static const String order_detail = '/orders/detail';
+  static const String order_invoice = '/orders/detail/invoice';
 
   /// Settings Page
   // static const String settings = '/settings';
@@ -150,6 +152,10 @@ class Routes {
       case order_detail:
         return MaterialPageRoute<CheckoutScreen>(
           builder: (BuildContext context) => OrderDetails(),
+        );
+      case order_invoice:
+        return MaterialPageRoute<CheckoutScreen>(
+          builder: (BuildContext context) => Invoice(),
         );
 
       /// Settings Page

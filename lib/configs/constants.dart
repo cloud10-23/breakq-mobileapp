@@ -1,4 +1,6 @@
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/data/models/price_model.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -276,8 +278,48 @@ class AssetImages {
       'assets/images/checkout/success_plane.png';
   static const String success = 'assets/images/checkout/success.png';
 
+  static const String paid_image = 'assets/images/icons/paid_green.png';
+
   static String ads(int index) => 'assets/images/ads/ad$index.jpeg';
 }
+
+/// Sample Products for display
+Map<Product, int> generateSampleProducts() => {
+      Product(
+        id: 100,
+        image: AssetImages.maggi,
+        oldPrice: 60,
+        price: 40,
+        quantity: '500 gm',
+        title: 'Maggi',
+      ): 2,
+      Product(
+        id: 101,
+        image: AssetImages.dove,
+        oldPrice: 100,
+        price: 70,
+        quantity: '500 ml',
+        title: 'Dove',
+      ): 4,
+      Product(
+        id: 102,
+        image: AssetImages.wheat,
+        oldPrice: 500,
+        price: 490,
+        quantity: '5 kg',
+        title: 'Aashirvad Atta',
+      ): 1,
+    };
+
+/// Sample price details
+
+Price generateSamplePrice() => Price(
+    price: 660,
+    discount: 50,
+    totalAmnt: 650,
+    extraOffer: 10,
+    savings: 10,
+    delivery: 50);
 
 /// Preference keys used to store/read values using [AppPreferences].
 class PreferenceKey {

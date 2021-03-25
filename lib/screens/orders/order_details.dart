@@ -1,7 +1,6 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
-import 'package:breakq/data/models/price_model.dart';
-import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/price_details.dart';
@@ -72,43 +71,13 @@ class _OrderDetailsState extends State<OrderDetails> {
         child: DisplaySelectedTimeSlot(time: DateTime(2021, 1, 1, 13, 0))));
 
     _listItems.add(SliverToBoxAdapter(
-      child: CartProductsModule(products: {
-        Product(
-          id: 100,
-          image: AssetImages.maggi,
-          oldPrice: 60,
-          price: 40,
-          quantity: '500 gm',
-          title: 'Maggi',
-        ): 2,
-        Product(
-          id: 101,
-          image: AssetImages.dove,
-          oldPrice: 100,
-          price: 70,
-          quantity: '500 ml',
-          title: 'Dove',
-        ): 4,
-        Product(
-          id: 102,
-          image: AssetImages.wheat,
-          oldPrice: 500,
-          price: 490,
-          quantity: '5 kg',
-          title: 'Aashirvad Atta',
-        ): 1,
-      }),
+      child: CartProductsModule(products: generateSampleProducts()),
     ));
 
     _listItems.add(SliverToBoxAdapter(
       child: PriceDetails(
-          price: Price(
-              price: 660,
-              discount: 50,
-              totalAmnt: 650,
-              extraOffer: 10,
-              savings: 10,
-              delivery: 50)),
+        price: generateSamplePrice(),
+      ),
     ));
 
     _listItems.add(SliverToBoxAdapter(child: FooterModule()));
@@ -132,7 +101,14 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Text('Need Help?'),
               textColor: kBlack,
             ),
-            RaisedButton(onPressed: () {}, child: Text('Download Invoice PDF')),
+            RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.order_invoice);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                  child: Text('Show Invoice'),
+                )),
           ],
         ),
       ),
