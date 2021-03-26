@@ -1,6 +1,8 @@
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter/material.dart';
@@ -106,8 +108,10 @@ class InvoiceBillDetails extends StatelessWidget {
       child: Table(
         children: [
           _tableRow(context, 'Bill No.', '1234567890'),
-          _tableRow(context, 'Name', 'Shrivathsa Prakash'),
-          _tableRow(context, 'Mobile No.', '+911234567890'),
+          _tableRow(context, 'Name',
+              getIt.get<AppGlobals>().user.displayName ?? '(Unavailable)'),
+          _tableRow(context, 'Mobile No.',
+              getIt.get<AppGlobals>().user.phoneNumber ?? '(Unavailable'),
           _tableRow(context, 'Payment Mode', 'UPI'),
         ],
       ),
