@@ -13,7 +13,7 @@ class ListTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: kPaddingL, bottom: kPaddingS),
+      padding: const EdgeInsets.only(top: kPaddingM * 2, bottom: kPaddingS),
       child: Row(
         children: <Widget>[
           Text(
@@ -21,7 +21,7 @@ class ListTitle extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .caption
-                .w400
+                .w700
                 .copyWith(color: Theme.of(context).hintColor),
           ),
           const Spacer(),

@@ -15,11 +15,8 @@ class ProfileInfo extends StatelessWidget {
     else
       _image = NetworkImage(_photoURL);
 
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.editProfile);
-      },
-      child: Row(
+    final List<Widget> profileColumn = [
+      Row(
         children: <Widget>[
           Container(
             width: 64,
@@ -44,21 +41,46 @@ class ProfileInfo extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5.bold.white,
                     overflow: TextOverflow.fade,
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 4)),
+                  const Padding(padding: EdgeInsets.only(top: kPaddingM)),
                   Text(
-                    getIt.get<AppGlobals>().user?.email ?? "",
-                    // (getIt.get<AppGlobals>().user?.email?.isNotEmpty ?? false)
-                    //     ? getIt.get<AppGlobals>().user.email
-                    //     : "(Not verified)",
+                    getIt.get<AppGlobals>().user?.phoneNumber ?? '',
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.caption.w600.white,
-                    overflow: TextOverflow.ellipsis,
+                    style:
+                        Theme.of(context).textTheme.bodyText1.w400.white.number,
+                    overflow: TextOverflow.fade,
                   ),
                 ],
               ),
             ),
           ),
+          Icon(
+            Icons.arrow_right,
+            size: 30,
+            color: kWhite,
+          )
         ],
+      ),
+    ];
+
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.pushNamed(context, Routes.editProfile);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: (getIt.get<AppGlobals>().user?.email == null)
+            ? profileColumn
+            : profileColumn +
+                [
+                  SizedBox(height: kPaddingL),
+                  Text(
+                    getIt.get<AppGlobals>().user?.email ?? "",
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.caption.w600.white,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
       ),
     );
   }

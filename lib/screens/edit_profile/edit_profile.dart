@@ -178,12 +178,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.only(
-                    left: kPaddingM, right: kPaddingM, top: kPaddingM),
+                    left: kPaddingM, right: kPaddingM, top: kPaddingL),
                 children: <Widget>[
                   _profilePicture(),
-                  ListTitle(
-                      title: L10n.of(context).editProfileListTitleContact),
+                  SizedBox(height: kPaddingL * 2),
                   FormLabel(text: L10n.of(context).editProfileLabelFullname),
+                  SizedBox(height: kPaddingM),
                   ThemeTextInput(
                     key: keyNameInput,
                     focusNode: _focusName,
@@ -199,7 +199,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     validator: FormValidator.isRequired(
                         L10n.of(context).formValidatorNameRequired),
                   ),
+                  SizedBox(height: kPaddingL * 2),
                   FormLabel(text: L10n.of(context).editProfileLabelPhone),
+                  SizedBox(height: kPaddingM),
                   ThemeTextInput(
                     focusNode: _focusPhone,
                     readOnly: true,
@@ -211,7 +213,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: kPaddingM, vertical: kPaddingS),
+                  horizontal: kPaddingM, vertical: kPaddingL),
               child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (BuildContext context, AuthState apiState) {
                   return BlocListener<AuthBloc, AuthState>(

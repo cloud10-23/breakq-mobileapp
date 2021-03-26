@@ -15,6 +15,7 @@ import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/list_title.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({Key key}) : super(key: key);
@@ -68,23 +69,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
                     child: ListView(
                       children: <Widget>[
-                        ListTitle(
-                            title: L10n.of(context).settingsListTitleMobile),
-                        ListItem(
-                          title: getIt.get<AppGlobals>().user?.phoneNumber ??
-                              'Not available',
-                          titleTextStyle:
-                              Theme.of(context).textTheme.bodyText1.number,
-                        ),
-                        SizedBox(height: kPaddingL),
                         ListTitle(title: L10n.of(context).categoriesTitle),
                         AllCategoriesListItems(),
-                        SizedBox(height: kPaddingL),
+                        SizedBox(height: kPaddingM),
                         ListTitle(title: L10n.of(context).orderTitle),
                         SizedBox(height: kPaddingM),
                         ListItem(
                           title: L10n.of(context).orderListMyCart,
-                          leading: const Icon(Icons.shopping_cart, size: 15),
+                          leading:
+                              const Icon(FontAwesome.shopping_cart, size: 18),
                           trailing: const ArrowRightIcon(),
                           onPressed: () {
                             Navigator.pop(context);
@@ -95,7 +88,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         ),
                         ListItem(
                           title: L10n.of(context).orderListMyOrders,
-                          leading: Icon(Icons.my_library_books, size: 15),
+                          leading: const Icon(FontAwesome.archive, size: 18),
                           trailing: const ArrowRightIcon(),
                           onPressed: () {
                             Navigator.pop(context);
@@ -103,17 +96,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 .pushNamed(Routes.orders);
                           },
                         ),
-                        SizedBox(height: kPaddingL),
+                        SizedBox(height: kPaddingM),
                         ListTitle(
                             title: L10n.of(context).profileListTitleSettings),
                         ListItem(
                           title: L10n.of(context).profileListEdit,
-                          leading: const Icon(Icons.person_outline),
+                          leading:
+                              const Icon(FontAwesome5Solid.user_edit, size: 18),
                           trailing: const ArrowRightIcon(),
-                          onPressed: () =>
-                              Navigator.pushNamed(context, Routes.editProfile),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, Routes.editProfile);
+                          },
                         ),
-                        SizedBox(height: kPaddingL),
+                        SizedBox(height: kPaddingM),
                         // ListTitle(
                         //     title:
                         //         L10n.of(context).settingsListTitleInterface),
@@ -176,7 +172,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             // Async.launchUrl(kPrivacyPolicyURL);
                           },
                         ),
-                        SizedBox(height: kPaddingL),
+                        SizedBox(height: kPaddingM),
                         Padding(
                           padding:
                               const EdgeInsets.symmetric(vertical: kPaddingL),
@@ -251,7 +247,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             );
                           }),
                         ),
-                        SizedBox(height: 100),
+                        SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -337,19 +333,31 @@ class AllCategoriesListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: List.generate(
-      5,
-      (index) => ExpansionTile(
-        title: Text('Category - ${index + 1}'),
-        tilePadding: EdgeInsets.zero,
         children: categories
-            .map((category) => ListItem(
-                  title: category['name'],
-                  trailing: const ArrowRightIcon(),
-                  onPressed: () {},
-                ))
-            .toList(),
-      ),
-    ));
+            .map(
+              (category) => ExpansionTile(
+                title: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: AssetImage(category['image']),
+                      radius: 15,
+                    ),
+                    SizedBox(width: kPaddingL),
+                    Text(category['name']),
+                  ],
+                ),
+                tilePadding: EdgeInsets.zero,
+                children: List.generate(
+                    5,
+                    (index) => ListItem(
+                          title: 'Sub-Category ${index + 1}',
+                          titleTextStyle:
+                              Theme.of(context).textTheme.caption.black.w600,
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () {},
+                        )),
+              ),
+            )
+            .toList());
   }
 }

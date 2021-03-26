@@ -77,7 +77,8 @@ class ListItem extends StatelessWidget {
               Container(),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: kPaddingM),
+                padding: const EdgeInsets.only(
+                    top: kPaddingM * 2, bottom: kPaddingM * 2, left: kPaddingL),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
