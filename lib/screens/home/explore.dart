@@ -4,7 +4,7 @@ import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
-import 'package:breakq/screens/profile/profile.dart';
+import 'package:breakq/screens/profile/drawer.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';

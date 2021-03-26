@@ -1,7 +1,7 @@
 import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/profile/profile.dart';
+import 'package:breakq/screens/profile/drawer.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
