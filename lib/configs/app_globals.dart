@@ -86,10 +86,6 @@ class AppGlobals {
     }
   }
 
-  hideFAB(CartBloc bloc, bool hide) {
-    bloc.add(SetFABEvent(hide: hide));
-  }
-
   Future<void> showCartPage(BuildContext context) {
     return showModalBottomSheet(
       context: context,

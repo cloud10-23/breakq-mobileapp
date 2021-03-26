@@ -56,14 +56,14 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.only(
-                left: kPaddingS, right: kPaddingS, bottom: 56),
+                left: kPaddingM, right: kPaddingM, bottom: 56 + kPaddingM),
             decoration: BoxDecoration(
               color: kWhite,
               borderRadius:
                   const BorderRadius.all(Radius.circular(kBoxDecorationRadius)),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingM),
+              padding: const EdgeInsets.only(left: kPaddingM, right: kPaddingL),
               child: SingleChildScrollView(
                 child: IntrinsicHeight(
                   child: Column(
@@ -71,12 +71,11 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                     children: <Widget>[
                       if (widget.title != null)
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: kPaddingM, bottom: kPaddingS),
+                          padding: const EdgeInsets.all(kPaddingL),
                           child: Text(
                             widget.title,
                             textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.headline5.bold,
+                            style: Theme.of(context).textTheme.headline6.bold,
                           ),
                         ),
                       Column(
@@ -88,10 +87,10 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                     item.text == _selected.text
                                 ? Theme.of(context)
                                     .textTheme
-                                    .subtitle1
-                                    .fs18
+                                    .bodyText1
+                                    .w700
                                     .primaryColor
-                                : Theme.of(context).textTheme.subtitle1.fs18,
+                                : Theme.of(context).textTheme.subtitle2.w600,
                             trailing:
                                 _selected != null && item.text == _selected.text
                                     ? Icon(
@@ -120,9 +119,10 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: kPaddingS, right: kPaddingS),
+            padding: const EdgeInsets.only(
+                left: kPaddingM, right: kPaddingM, bottom: kPaddingM),
             child: FlatButton(
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: kWhite,
               highlightColor: kBlue,
               shape: const RoundedRectangleBorder(
                   borderRadius:

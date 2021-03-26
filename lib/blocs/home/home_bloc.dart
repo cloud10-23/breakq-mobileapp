@@ -65,6 +65,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       List<Product> _products;
 
+      /// This is where the tab related query for products is done
       if (session.activeSearchTab == 0) {
         _products = await productRepository.search();
       } else {

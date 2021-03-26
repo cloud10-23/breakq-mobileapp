@@ -1,11 +1,11 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
+import 'package:breakq/screens/listing/widgets/search_header.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
@@ -23,6 +23,7 @@ import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 import 'package:breakq/utils/list.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class Listing extends StatefulWidget {
   const Listing({Key key, this.title}) : super(key: key);
@@ -91,12 +92,12 @@ class ListingState extends State<Listing> {
       <String, dynamic>{
         'code': describeEnum(ProductListItemViewType.grid),
         'label': '',
-        'icon': Icons.view_quilt,
+        'icon': Ionicons.ios_list,
       },
       <String, dynamic>{
         'code': describeEnum(ProductListItemViewType.list),
         'label': '',
-        'icon': Icons.view_list,
+        'icon': Icons.view_comfy,
       },
       // <String, dynamic>{
       //   'code': describeEnum(ProductListItemViewType.block),
@@ -108,34 +109,14 @@ class ListingState extends State<Listing> {
             ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
         .toList();
 
-    /// First tab in the list is ALL (categories).
-    categoryTabs.add(SearchTabModel.fromJson(<String, dynamic>{
-      'id': 0,
-      'globalKey': GlobalKey(debugLabel: 'searchTab_all'),
-      'label': L10n.of(context).searchLabelAll,
-    }));
-
-    categoryTabs.add(SearchTabModel.fromJson(<String, dynamic>{
-      'id': 1,
-      // 'globalKey': GlobalKey(debugLabel: 'searchTab_all'),
-      'label': "Grocery",
-    }));
-
-    categoryTabs.add(SearchTabModel.fromJson(<String, dynamic>{
-      'id': 2,
-      // 'globalKey': GlobalKey(debugLabel: 'searchTab_all'),
-      'label': "Essentials",
-    }));
-    categoryTabs.add(SearchTabModel.fromJson(<String, dynamic>{
-      'id': 3,
-      // 'globalKey': GlobalKey(debugLabel: 'searchTab_all'),
-      'label': "Household",
-    }));
-    categoryTabs.add(SearchTabModel.fromJson(<String, dynamic>{
-      'id': 4,
-      // 'globalKey': GlobalKey(debugLabel: 'searchTab_all'),
-      'label': "Snacks",
-    }));
+    /// The tabs are for Sub categories
+    categoryTabs.addAll(List.generate(
+        5,
+        (index) => SearchTabModel.fromJson(<String, dynamic>{
+              'id': index,
+              'globalKey': GlobalKey(debugLabel: 'subCat-$index'),
+              'label': "Sub Category",
+            })));
   }
 
   bool _initglobal = true;
@@ -182,82 +163,118 @@ class ListingState extends State<Listing> {
           floatingActionButton: ScanFloatingButtonExtended(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          body: LoadingOverlay(
-            isLoading: session.isLoading,
-            child: CustomScrollView(
-              controller: _customScrollViewController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  backgroundColor: kWhite,
-                  primary: true,
-                  title: Text(widget.title ?? "Category Name",
-                      style: Theme.of(context).textTheme.headline6.fs16.w600),
-                  automaticallyImplyLeading: true,
-                  leading: BackButtonCircle(),
-                  actions: [
-                    SearchIconButton(),
-                    VoiceIconButton(),
-                    CartIconButton(),
-                    SizedBox(width: 10.0),
-                  ],
-                  pinned: true,
-                ),
-                SliverAppBar(
-                  primary: false,
-                  // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  toolbarHeight: 45,
-                  floating: true,
-                  titleSpacing: 0.0,
-                  leadingWidth: 0.0,
-                  title: SearchListToolbar(
-                    searchSortTypes: searchSortTypes,
-                    currentSort: session.currentSort,
-                    onFilterTap: () {
-                      _scaffoldKey.currentState.openEndDrawer();
-                    },
-                    onSortChange: (ToolbarOptionModel newSort) {
-                      _homeBloc.add(SortOrderChangedHomeEvent(newSort));
-                    },
-                    products: session.products,
-                    currentListType: session.currentListType,
-                    searchListTypes: searchListTypes,
-                    onListTypeChange: (ToolbarOptionModel newListType) =>
-                        _homeBloc.add(ListTypeChangedHomeEvent(newListType)),
+          body: SafeArea(
+            child: LoadingOverlay(
+              isLoading: session.isLoading,
+              child: CustomScrollView(
+                controller: _customScrollViewController,
+                slivers: <Widget>[
+                  SliverAppBar(
+                    backgroundColor: kWhite,
+                    primary: true,
+                    title: Text(widget.title ?? "Category Name",
+                        style: Theme.of(context).textTheme.headline6.fs16.w600),
+                    automaticallyImplyLeading: true,
+                    leading: BackButtonCircle(),
+                    expandedHeight: kToolbarHeight * 2,
+                    snap: true,
+                    flexibleSpace: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Spacer(),
+                            SearchTabs(
+                              activeSearchTab: session.activeSearchTab,
+                              searchTabs: categoryTabs,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(color: kWhite, height: kToolbarHeight),
+                            Spacer(),
+                          ],
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      SearchIconButton(),
+                      VoiceIconButton(),
+                      CartIconButton(),
+                      SizedBox(width: 10.0),
+                    ],
+                    floating: true,
                   ),
-                  actions: <Widget>[Container()], // remove the hamburger menu
-                  leading: Container(), // remove back button
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    if (session.products.isNotNullOrEmpty)
-                      ProductListing(
+                  // SliverPersistentHeader(
+                  //   pinned: true,
+                  //   // floating: true,
+                  //   delegate: SearchHeader(
+                  //     expandedHeight: 60,
+                  //   ),
+                  // ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SearchHeader(
+                      expandedHeight: 45,
+                      child: SearchListToolbar(
+                        searchSortTypes: searchSortTypes,
+                        currentSort: session.currentSort,
+                        onFilterTap: () {
+                          _scaffoldKey.currentState.openEndDrawer();
+                        },
+                        onSortChange: (ToolbarOptionModel newSort) {
+                          _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                        },
                         products: session.products,
                         currentListType: session.currentListType,
+                        searchListTypes: searchListTypes,
+                        onListTypeChange: (ToolbarOptionModel newListType) =>
+                            _homeBloc
+                                .add(ListTypeChangedHomeEvent(newListType)),
                       ),
-                  ]),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 120.0),
-                ),
-              ],
+                    ),
+                  ),
+                  // SliverAppBar(
+                  //   primary: false,
+                  //   // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  //   toolbarHeight: 45,
+                  //   floating: true,
+                  //   titleSpacing: 0.0,
+                  //   leadingWidth: 0.0,
+                  //   title: SearchListToolbar(
+                  //     searchSortTypes: searchSortTypes,
+                  //     currentSort: session.currentSort,
+                  //     onFilterTap: () {
+                  //       _scaffoldKey.currentState.openEndDrawer();
+                  //     },
+                  //     onSortChange: (ToolbarOptionModel newSort) {
+                  //       _homeBloc.add(SortOrderChangedHomeEvent(newSort));
+                  //     },
+                  //     products: session.products,
+                  //     currentListType: session.currentListType,
+                  //     searchListTypes: searchListTypes,
+                  //     onListTypeChange: (ToolbarOptionModel newListType) =>
+                  //         _homeBloc.add(ListTypeChangedHomeEvent(newListType)),
+                  //   ),
+                  //   actions: <Widget>[Container()], // remove the hamburger menu
+                  //   leading: Container(), // remove back button
+                  // ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(<Widget>[
+                      if (session.products.isNotNullOrEmpty)
+                        ProductListing(
+                          products: session.products,
+                          currentListType: session.currentListType,
+                        ),
+                    ]),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(height: 120.0),
+                  ),
+                ],
+              ),
             ),
           ),
-          // floatingActionButton: Visibility(
-          //   visible: !session.isLoading && session.products.isNotNullOrEmpty,
-          //   child: FloatingActionButton(
-          //     tooltip: L10n.of(context).searchTooltipMap,
-          //     elevation: 3,
-          //     onPressed: () {
-          //       Navigator.pushNamed(
-          //         context,
-          //         Routes.searchMap,
-          //         arguments: <String, dynamic>{'locations': session.products},
-          //       );
-          //     },
-          //     child: const Icon(Icons.near_me, color: kWhite),
-          //     backgroundColor: kPrimaryColor,
-          //   ),
-          // ),
         );
       },
     );

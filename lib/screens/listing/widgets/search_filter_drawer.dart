@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
@@ -15,20 +14,6 @@ class SearchFilterDrawer extends StatefulWidget {
 }
 
 class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
-  CartBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<CartBloc>(context)..add(SetFABEvent(hide: true));
-  }
-
-  @override
-  void dispose() {
-    _bloc.add(SetFABEvent(hide: false));
-    super.dispose();
-  }
-
   RangeValues _rangeValues = const RangeValues(0, 1000);
   final List<ButtonGroupModel> priceRanges = [
     ButtonGroupModel(
@@ -154,20 +139,12 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                       isUnselectable: true,
                       onChange: (ButtonGroupModel selectedButton) {},
                     ),
-                    UppercaseTitle(
-                      title: L10n.of(context).searchTitleCategories,
-                      padding: const EdgeInsets.only(
-                          top: kPaddingL, bottom: kPaddingL),
-                    ),
-                    CategoriesButtonGroup(
-                      onChange: (selectedButton) {},
-                    ),
-                    SizedBox(height: 50.0),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(kPaddingM),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingM, vertical: kPaddingL),
                 child: ThemeButton(
                   text: L10n.of(context).commonBtnApply,
                   onPressed: () {

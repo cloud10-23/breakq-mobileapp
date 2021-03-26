@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,27 +14,8 @@ import 'package:breakq/widgets/list_title.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-class DrawerScreen extends StatefulWidget {
+class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key key}) : super(key: key);
-
-  @override
-  _DrawerScreenState createState() => _DrawerScreenState();
-}
-
-class _DrawerScreenState extends State<DrawerScreen> {
-  CartBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<CartBloc>(context)..add(SetFABEvent(hide: true));
-  }
-
-  @override
-  void dispose() {
-    _bloc.add(SetFABEvent(hide: false));
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

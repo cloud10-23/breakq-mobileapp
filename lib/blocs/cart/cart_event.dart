@@ -37,8 +37,3 @@ class RemovePFromCartEvent extends CartEvent {
 }
 
 class ResetCartEvent extends CartEvent {}
-
-class SetFABEvent extends CartEvent {
-  SetFABEvent({this.hide});
-  final bool hide;
-}

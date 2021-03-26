@@ -74,18 +74,12 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
         color: _currentSelectedButton == widget.buttonValues[index]
             ? kBlue
             : Theme.of(context).highlightColor,
-        shape: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: _currentSelectedButton == widget.buttonValues[index]
-                ? kBlue
-                : Theme.of(context).highlightColor,
-            width: 0,
-          ),
+        shape: RoundedRectangleBorder(
           borderRadius:
               const BorderRadius.all(Radius.circular(kRoundedButtonRadius)),
         ),
         child: MaterialButton(
-            padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingM * 2),
             onPressed: () {
               if (widget.onChange != null) {
                 widget.onChange(button);
@@ -104,15 +98,15 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
               // textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
-              style: const TextStyle().copyWith(
-                fontSize: 12,
-                color: _currentSelectedButton == widget.buttonValues[index]
-                    ? kWhite
-                    : Theme.of(context).textTheme.button.color,
-                fontWeight: _currentSelectedButton == widget.buttonValues[index]
-                    ? FontWeight.w500
-                    : FontWeight.w400,
-              ),
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: _currentSelectedButton == widget.buttonValues[index]
+                        ? kWhite
+                        : Theme.of(context).textTheme.button.color,
+                    fontWeight:
+                        _currentSelectedButton == widget.buttonValues[index]
+                            ? FontWeight.w500
+                            : FontWeight.w600,
+                  ),
             )),
       );
     }).toList();

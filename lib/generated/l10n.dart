@@ -485,20 +485,20 @@ class L10n {
     );
   }
 
-  /// `Price High-Low`
+  /// `Price:  High-Low`
   String get commonSortHTL {
     return Intl.message(
-      'Price High-Low',
+      'Price:  High-Low',
       name: 'commonSortHTL',
       desc: '',
       args: [],
     );
   }
 
-  /// `Price Low-High`
+  /// `Price:  Low-High`
   String get commonSortLTL {
     return Intl.message(
-      'Price Low-High',
+      'Price:  Low-High',
       name: 'commonSortLTL',
       desc: '',
       args: [],

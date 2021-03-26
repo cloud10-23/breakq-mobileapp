@@ -35,54 +35,71 @@ class SearchTabsState extends State<SearchTabs> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kPaddingS),
-      child: Container(
-        color: Theme.of(context).appBarTheme.color,
-        height: 60,
-        child: ScrollablePositionedList.builder(
-          padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-          itemCount: widget.searchTabs.length,
-          itemScrollController: itemScrollController,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index) {
-            final SearchTabModel item = widget.searchTabs[index];
-            final bool isActive = item.id == widget.activeSearchTab;
-            return InkWell(
-              key: item.globalKey,
-              onTap: () {
-                BlocProvider.of<HomeBloc>(context)
-                    .add(CategoryFilteredHomeEvent(activeSearchTab: item.id));
-              },
-              child: Container(
-                //key: item.keyTabItem,
-                padding: const EdgeInsets.only(
-                    top: kPaddingS, left: kPaddingS, right: kPaddingS),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: isActive
-                          ? Theme.of(context).tabBarTheme.labelColor
-                          : Theme.of(context).appBarTheme.color,
-                      width: 2,
-                    ),
-                  ),
+    return Container(
+      color: Theme.of(context).appBarTheme.color,
+      height: kToolbarHeight,
+      child: ScrollablePositionedList.builder(
+        padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+        itemCount: widget.searchTabs.length,
+        itemScrollController: itemScrollController,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          final SearchTabModel item = widget.searchTabs[index];
+          final bool isActive = item.id == widget.activeSearchTab;
+          return Container(
+            width: 120,
+            child: Card(
+              margin: const EdgeInsets.all(kPaddingM),
+              clipBehavior: Clip.antiAlias,
+              color: isActive ? kBlue : kWhite,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: isActive ? kBlue : kBlackAccent,
+                  width: 1,
                 ),
-                child: Text(
-                  item.label,
-                  style: isActive
-                      ? Theme.of(context).textTheme.bodyText1.bold.copyWith(
-                          color: Theme.of(context).tabBarTheme.labelColor)
-                      : Theme.of(context).textTheme.bodyText1.copyWith(
-                          color: Theme.of(context)
-                              .tabBarTheme
-                              .labelColor
-                              .withOpacity(0.75)),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: InkWell(
+                key: item.globalKey,
+                onTap: () {
+                  BlocProvider.of<HomeBloc>(context)
+                      .add(CategoryFilteredHomeEvent(activeSearchTab: item.id));
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Flexible(
+                      child: Image.asset(
+                        categories[index]['image'],
+                      ),
+                    ),
+                    SizedBox(width: kPaddingM),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(item.label,
+                              style: isActive
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .fs10
+                                      .bold
+                                      .white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .bold
+                                      .fs10),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

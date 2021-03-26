@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
+import 'package:breakq/utils/text_style.dart';
 
 /// Filter button used on search screen for filtering data.
 ///
@@ -75,7 +76,7 @@ class _FilterButtonState extends State<FilterButton>
         _showModal(context);
       },
       child: Card(
-        color: _isOpened ? kPrimaryColor : Theme.of(context).cardColor,
+        color: _isOpened ? kBlue : Theme.of(context).cardColor,
         margin: const EdgeInsets.only(right: kPaddingS / 2),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kRoundedButtonRadius)),
@@ -83,14 +84,14 @@ class _FilterButtonState extends State<FilterButton>
         child: Container(
           padding: const EdgeInsets.only(
               top: kPaddingS / 2,
-              left: kPaddingM,
+              left: kPaddingM * 2,
               bottom: kPaddingS / 2,
-              right: kPaddingS),
+              right: kPaddingS * 2),
           child: Row(
             children: <Widget>[
               Text(
                 widget.label,
-                style: Theme.of(context).textTheme.subtitle2.copyWith(
+                style: Theme.of(context).textTheme.subtitle2.w600.copyWith(
                     color: _isOpened
                         ? kWhite
                         : Theme.of(context).textTheme.subtitle2.color),

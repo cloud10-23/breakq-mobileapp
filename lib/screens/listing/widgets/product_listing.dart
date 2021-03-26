@@ -65,7 +65,7 @@ class ProductListing extends StatelessWidget {
           horizontal: kPaddingM, vertical: kPaddingM),
       child: Wrap(
         runSpacing: 1.0,
-        alignment: WrapAlignment.spaceBetween,
+        alignment: WrapAlignment.start,
         children: products.map((Product item) {
           switch (_viewType) {
             case ProductListItemViewType.grid:

@@ -44,9 +44,10 @@ class ProductsRepository {
   Future<List<Product>> search() async {
     final DataResponseModel rawData = await dataProvider.get('discover');
 
-    final List<dynamic> _products =
+    final List<dynamic> _rawProducts =
         rawData.data['products'] as List<dynamic> ?? <dynamic>[];
 
+    final List<dynamic> _products = _rawProducts + _rawProducts + _rawProducts;
     // return null;
     return _products
         .map<Product>(
@@ -58,8 +59,10 @@ class ProductsRepository {
     /// Just make the call with the given ID and server takes care
     final DataResponseModel rawData = await dataProvider.get('discover');
 
-    final List<dynamic> _products =
-        rawData.data['data'] as List<dynamic> ?? <dynamic>[];
+    final List<dynamic> _rawProducts =
+        rawData.data['products'] as List<dynamic> ?? <dynamic>[];
+
+    final List<dynamic> _products = _rawProducts + _rawProducts + _rawProducts;
 
     /// Shuffle it to simulate network activity for now! ;-)
     /// Because anyway it will be handled by the API server!
