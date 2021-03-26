@@ -78,7 +78,7 @@ class IntroMain extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Text(
-                              "Continue wih Mobile Number",
+                              "Continue with Mobile Number",
                               style: Theme.of(context)
                                   .textTheme
                                   .caption
