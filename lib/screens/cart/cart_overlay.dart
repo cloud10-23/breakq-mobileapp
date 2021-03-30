@@ -6,7 +6,6 @@ import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:flutter_badged/flutter_badge.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HybridFAB extends StatelessWidget {
@@ -30,35 +29,6 @@ class HybridFAB extends StatelessWidget {
           }
           return ScanFloatingButtonExtended();
         });
-  }
-}
-
-class CartFloatingButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FloatingActionButton(
-          heroTag: null,
-          backgroundColor: kWhite,
-          onPressed: () =>
-              Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart),
-          child: BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              if (state is CartLoaded)
-                return Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: FlutterBadge(
-                    icon: CartIconPlane(),
-                    itemCount: state?.cart?.noOfProducts ?? 0,
-                  ),
-                );
-              return FlutterBadge(
-                icon: CartIconPlane(),
-                itemCount: 0,
-              );
-            },
-          )),
-    );
   }
 }
 

@@ -1,7 +1,6 @@
-import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/cart/cart_overlay.dart';
+import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step2.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step1.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_success_dialog.dart';
