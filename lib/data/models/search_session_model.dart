@@ -12,6 +12,7 @@ class SearchSessionModel {
     this.currentPage = 1,
     this.selectedDateRange = 0,
     this.activeSearchTab = 0,
+    this.activeBrandTab = 0,
     this.isLoading = false,
     this.searchType = SearchType.full,
   });
@@ -24,6 +25,7 @@ class SearchSessionModel {
     ToolbarOptionModel currentListType,
     ToolbarOptionModel currentGenderFilter,
     int activeSearchTab,
+    int activeBrandTab,
     bool isLoading,
     List<Product> products,
     SearchType searchType,
@@ -35,6 +37,7 @@ class SearchSessionModel {
       currentSort: currentSort ?? this.currentSort,
       currentListType: currentListType ?? this.currentListType,
       activeSearchTab: activeSearchTab ?? this.activeSearchTab,
+      activeBrandTab: activeBrandTab ?? this.activeBrandTab,
       q: q ?? this.q,
       isLoading: isLoading ?? this.isLoading,
       searchType: searchType ?? this.searchType,
@@ -47,6 +50,7 @@ class SearchSessionModel {
   final ToolbarOptionModel currentSort;
   final ToolbarOptionModel currentListType;
   final int activeSearchTab;
+  final int activeBrandTab;
   final bool isLoading;
   final SearchType searchType;
 

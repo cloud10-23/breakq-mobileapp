@@ -76,7 +76,7 @@ class _FilterButtonState extends State<FilterButton>
         _showModal(context);
       },
       child: Card(
-        color: _isOpened ? kBlue : Theme.of(context).cardColor,
+        color: !_isOpened ? kBlue : Theme.of(context).cardColor,
         margin: const EdgeInsets.only(right: kPaddingS / 2),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kRoundedButtonRadius)),
@@ -92,7 +92,7 @@ class _FilterButtonState extends State<FilterButton>
               Text(
                 widget.label,
                 style: Theme.of(context).textTheme.subtitle2.w600.copyWith(
-                    color: _isOpened
+                    color: !_isOpened
                         ? kWhite
                         : Theme.of(context).textTheme.subtitle2.color),
               ),
@@ -104,9 +104,9 @@ class _FilterButtonState extends State<FilterButton>
                   ),
                 ),
                 child: Icon(
-                  Icons.keyboard_arrow_up,
+                  Icons.keyboard_arrow_down,
                   key: keyIcon,
-                  color: _isOpened
+                  color: !_isOpened
                       ? kWhite
                       : Theme.of(context).textTheme.subtitle2.color,
                 ),

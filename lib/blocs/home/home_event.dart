@@ -26,6 +26,12 @@ class CategoryFilteredHomeEvent extends HomeEvent {
   final int activeSearchTab;
 }
 
+class BrandFilteredHomeEvent extends HomeEvent {
+  BrandFilteredHomeEvent({this.activeBrandTab});
+
+  final int activeBrandTab;
+}
+
 class ListTypeChangedHomeEvent extends HomeEvent {
   ListTypeChangedHomeEvent(this.newListType);
 

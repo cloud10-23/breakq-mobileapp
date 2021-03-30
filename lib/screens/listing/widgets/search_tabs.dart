@@ -36,6 +36,7 @@ class SearchTabsState extends State<SearchTabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: kBlue,
       color: Theme.of(context).appBarTheme.color,
       height: kToolbarHeight,
       child: ScrollablePositionedList.builder(
@@ -96,6 +97,79 @@ class SearchTabsState extends State<SearchTabs> {
                     ),
                   ],
                 ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class BrandTabs extends StatefulWidget {
+  const BrandTabs({
+    Key key,
+    this.brandTabs,
+    this.activeBrandTab = 0,
+  }) : super(key: key);
+
+  final List<SearchTabModel> brandTabs;
+  final int activeBrandTab;
+
+  @override
+  BranchTabsState createState() => BranchTabsState();
+}
+
+class BranchTabsState extends State<BrandTabs> {
+  final ItemScrollController itemScrollController = ItemScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kBlue,
+      // color: Theme.of(context).appBarTheme.color,
+      padding: const EdgeInsets.symmetric(vertical: kPaddingM),
+      height: 45,
+      child: ScrollablePositionedList.builder(
+        padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+        itemCount: widget.brandTabs.length,
+        itemScrollController: itemScrollController,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (BuildContext context, int index) {
+          final SearchTabModel item = widget.brandTabs[index];
+          final bool isActive = item.id == widget.activeBrandTab;
+          return Container(
+            key: item.globalKey,
+            margin: EdgeInsets.symmetric(horizontal: kPaddingS),
+            child: InputChip(
+              onPressed: () {
+                BlocProvider.of<HomeBloc>(context)
+                    .add(BrandFilteredHomeEvent(activeBrandTab: item.id));
+              },
+              selected: isActive,
+              showCheckmark: false,
+              selectedColor: kWhite,
+              backgroundColor: kBlue200.withOpacity(0.7),
+              label: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    item.label,
+                    style: isActive
+                        ? Theme.of(context).textTheme.caption.fs12.bold
+                        : Theme.of(context).textTheme.caption.fs12.bold,
+                  ),
+                ],
               ),
             ),
           );

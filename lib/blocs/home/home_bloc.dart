@@ -22,6 +22,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield* _mapFilteredHomeEventToState(event);
     } else if (event is CategoryFilteredHomeEvent) {
       yield* _mapCategoryFilteredHomeEventToState(event);
+    } else if (event is BrandFilteredHomeEvent) {
+      yield* _mapBrandFilteredHomeEventToState(event);
     } else if (event is ListTypeChangedHomeEvent) {
       yield* _mapListTypeHomeEventToState(event);
     } else if (event is SortOrderChangedHomeEvent) {
@@ -96,6 +98,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       yield RefreshSuccessHomeState(session.rebuild(
         activeSearchTab: event.activeSearchTab,
+        searchType: SearchType.full,
+        isLoading: true,
+      ));
+
+      add(FilteredListRequestedHomeEvent());
+    }
+  }
+
+  Stream<HomeState> _mapBrandFilteredHomeEventToState(
+      BrandFilteredHomeEvent event) async* {
+    if (state is RefreshSuccessHomeState) {
+      final SearchSessionModel session =
+          (state as RefreshSuccessHomeState).session;
+
+      yield RefreshSuccessHomeState(session.rebuild(
+        activeBrandTab: event.activeBrandTab,
         searchType: SearchType.full,
         isLoading: true,
       ));

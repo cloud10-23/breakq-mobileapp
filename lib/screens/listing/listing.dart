@@ -42,6 +42,8 @@ class ListingState extends State<Listing> {
 
   List<SearchTabModel> categoryTabs = <SearchTabModel>[];
 
+  List<SearchTabModel> brandTabs = <SearchTabModel>[];
+
   HomeBloc _homeBloc;
 
   /// Search sort types.
@@ -117,6 +119,19 @@ class ListingState extends State<Listing> {
               'globalKey': GlobalKey(debugLabel: 'subCat-$index'),
               'label': "Sub Category",
             })));
+
+    brandTabs.add(SearchTabModel.fromJson(<String, dynamic>{
+      'id': 10,
+      'globalKey': GlobalKey(debugLabel: 'brand-all'),
+      'label': "All",
+    }));
+    brandTabs.addAll(List.generate(
+        8,
+        (index) => SearchTabModel.fromJson(<String, dynamic>{
+              'id': index,
+              'globalKey': GlobalKey(debugLabel: 'brand-$index'),
+              'label': "Brand",
+            })));
   }
 
   bool _initglobal = true;
@@ -176,16 +191,30 @@ class ListingState extends State<Listing> {
                         style: Theme.of(context).textTheme.headline6.fs16.w600),
                     automaticallyImplyLeading: true,
                     leading: BackButtonCircle(),
-                    expandedHeight: kToolbarHeight * 2,
+                    expandedHeight: kToolbarHeight + 35,
                     snap: true,
                     flexibleSpace: Stack(
                       children: [
                         Column(
                           children: [
                             Spacer(),
-                            SearchTabs(
-                              activeSearchTab: session.activeSearchTab,
-                              searchTabs: categoryTabs,
+                            SearchListToolbar(
+                              searchSortTypes: searchSortTypes,
+                              currentSort: session.currentSort,
+                              onFilterTap: () {
+                                _scaffoldKey.currentState.openEndDrawer();
+                              },
+                              onSortChange: (ToolbarOptionModel newSort) {
+                                _homeBloc
+                                    .add(SortOrderChangedHomeEvent(newSort));
+                              },
+                              products: session.products,
+                              currentListType: session.currentListType,
+                              searchListTypes: searchListTypes,
+                              onListTypeChange: (ToolbarOptionModel
+                                      newListType) =>
+                                  _homeBloc.add(
+                                      ListTypeChangedHomeEvent(newListType)),
                             ),
                           ],
                         ),
@@ -205,32 +234,24 @@ class ListingState extends State<Listing> {
                     ],
                     floating: true,
                   ),
-                  // SliverPersistentHeader(
-                  //   pinned: true,
-                  //   // floating: true,
-                  //   delegate: SearchHeader(
-                  //     expandedHeight: 60,
-                  //   ),
-                  // ),
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: SearchHeader(
+                      expandedHeight: kToolbarHeight,
+                      child: SearchTabs(
+                        activeSearchTab: session.activeSearchTab,
+                        searchTabs: categoryTabs,
+                      ),
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    // floating: true,
+                    delegate: SearchHeader(
                       expandedHeight: 45,
-                      child: SearchListToolbar(
-                        searchSortTypes: searchSortTypes,
-                        currentSort: session.currentSort,
-                        onFilterTap: () {
-                          _scaffoldKey.currentState.openEndDrawer();
-                        },
-                        onSortChange: (ToolbarOptionModel newSort) {
-                          _homeBloc.add(SortOrderChangedHomeEvent(newSort));
-                        },
-                        products: session.products,
-                        currentListType: session.currentListType,
-                        searchListTypes: searchListTypes,
-                        onListTypeChange: (ToolbarOptionModel newListType) =>
-                            _homeBloc
-                                .add(ListTypeChangedHomeEvent(newListType)),
+                      child: BrandTabs(
+                        activeBrandTab: session.activeBrandTab,
+                        brandTabs: brandTabs,
                       ),
                     ),
                   ),

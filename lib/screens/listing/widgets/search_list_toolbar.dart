@@ -56,9 +56,32 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
           left: kPaddingM, top: kPaddingS, bottom: kPaddingS),
       color: getIt.get<AppGlobals>().isPlatformBrightnessDark
           ? Theme.of(context).scaffoldBackgroundColor
-          : kBlue,
+          // : kBlue,
+          : kWhite,
+      height: 35,
       child: Row(
         children: <Widget>[
+          IconButton(
+            padding: const EdgeInsets.only(right: kPaddingM),
+            onPressed: () {
+              _switchListTypeSelection(context);
+            },
+            icon: Icon(
+              widget.currentListType.icon,
+              // color: kWhite,
+            ),
+            tooltip: L10n.of(context).searchTooltipView,
+          ),
+          IconButton(
+            padding: const EdgeInsets.only(right: kPaddingM),
+            onPressed: widget.onFilterTap,
+            icon: const Icon(
+              Icons.filter_list,
+              // color: kWhite,
+            ),
+            tooltip: L10n.of(context).searchTooltipFilters,
+          ),
+          const Spacer(),
           FilterButton(
             label: widget.currentSort.label,
             modalTitle: L10n.of(context).searchTitleSortOrder,
@@ -69,27 +92,6 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
             ),
             onSelection: (ToolbarOptionModel sortModel) =>
                 widget.onSortChange(sortModel),
-          ),
-          const Spacer(),
-          IconButton(
-            padding: const EdgeInsets.only(right: kPaddingM),
-            onPressed: () {
-              _switchListTypeSelection(context);
-            },
-            icon: Icon(
-              widget.currentListType.icon,
-              color: kWhite,
-            ),
-            tooltip: L10n.of(context).searchTooltipView,
-          ),
-          IconButton(
-            padding: const EdgeInsets.only(right: kPaddingM),
-            onPressed: widget.onFilterTap,
-            icon: const Icon(
-              Icons.filter_list,
-              color: kWhite,
-            ),
-            tooltip: L10n.of(context).searchTooltipFilters,
           ),
         ],
       ),
