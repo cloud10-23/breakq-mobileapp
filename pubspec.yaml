@@ -71,6 +71,8 @@ dependencies:
   # flutter_slidable: ^0.5.7
   # A Markdown renderer for Flutter.
   flutter_markdown: ^0.6.0
+  # URL Launcher to launch Gmail or Phone
+  url_launcher: ^6.0.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0

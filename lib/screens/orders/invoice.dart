@@ -1,7 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/screens/orders/widgets/invoice_widgets.dart';
+import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class Invoice extends StatelessWidget {
   @override
@@ -10,11 +10,7 @@ class Invoice extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Invoice"),
-          leading: IconButton(
-              icon: Icon(Feather.arrow_left_circle),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
+          leading: BackButtonCircle(),
         ),
         backgroundColor: kWhite,
         body: SingleChildScrollView(

@@ -9,6 +9,7 @@ import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart'
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class OrderDetails extends StatefulWidget {
   @override
@@ -93,22 +94,36 @@ class _OrderDetailsState extends State<OrderDetails> {
       ),
       bottomNavigationBar: Container(
         color: kWhite,
-        child: ButtonBar(
-          alignment: MainAxisAlignment.spaceEvenly,
+        child: Row(
           children: [
-            OutlineButton(
-              onPressed: () {},
-              child: Text('Need Help?'),
-              textColor: kBlack,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(kPaddingM),
+                child: OutlinedButton.icon(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, Routes.need_help),
+                  icon: Icon(Feather.life_buoy),
+                  label: Text('Need Help?'),
+                  style: OutlinedButton.styleFrom(primary: kBlack),
+                ),
+              ),
             ),
-            RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(Routes.order_invoice);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: kPaddingL),
-                  child: Text('Show Invoice'),
-                )),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(kPaddingM),
+                child: ElevatedButton.icon(
+                    icon: Icon(Feather.file),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(Routes.order_invoice);
+                    },
+                    style: ElevatedButton.styleFrom(primary: kBlue),
+                    label: Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: kPaddingL),
+                      child: Text('Show Invoice'),
+                    )),
+              ),
+            ),
           ],
         ),
       ),
