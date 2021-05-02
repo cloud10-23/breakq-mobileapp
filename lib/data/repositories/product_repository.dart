@@ -1,8 +1,11 @@
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/data/data_provider.dart';
+import 'package:breakq/data/models/brand_tab_model.dart';
 import 'package:breakq/data/models/category_model.dart';
-import 'package:breakq/data/models/data_response_model.dart';
+import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/search_history_model.dart';
+import 'package:flutter/cupertino.dart';
 
 class ProductsRepository {
   const ProductsRepository({
@@ -12,10 +15,9 @@ class ProductsRepository {
   final DataProvider dataProvider;
 
   Future<List<CategoryModel>> getCategories() async {
-    final DataResponseModel rawData = await dataProvider.get('categories_new');
+    final Uri uri = Uri.http(apiBase, apiCategory);
 
-    final List<dynamic> _categories =
-        rawData.data['data'] as List<dynamic> ?? <dynamic>[];
+    final List<dynamic> _categories = await dataProvider.get(uri);
 
     return _categories
         .map<CategoryModel>((dynamic json) =>
@@ -23,17 +25,76 @@ class ProductsRepository {
         .toList();
   }
 
-  Future<Product> getProduct({int id}) async {
-    final DataResponseModel rawData = await dataProvider.get('location_new');
-    // return null;
-    return Product.fromJson(rawData.data['data'] as Map<String, dynamic>);
+  Future<List<CategoryTabModel>> getSubCategoryTabs(String category) async {
+    final Uri uri =
+        Uri.http(apiBase, apiCategory, {apiCategoryQuery: category});
+
+    final List<dynamic> _rawList = await dataProvider.get(uri);
+
+    /// 1. Populate all the sub categories
+    List<CategoryModel> _subCategories = _rawList
+        .map<CategoryModel>((dynamic json) =>
+            CategoryModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+
+    /// 2. Map all sub categories to their tabs
+    return _subCategories
+        .map<CategoryTabModel>((category) =>
+            CategoryTabModel(category, GlobalKey(debugLabel: category.title)))
+        .toList();
+  }
+
+  Future<List<BrandTabModel>> getBrandTabs(String subCategory) async {
+    final Uri uri =
+        Uri.http(apiBase, apiBrand, {apiCategoryQuery: subCategory});
+
+    final List<dynamic> _rawList = await dataProvider.get(uri);
+
+    /// 1. Populate all the sub categories
+    List<BrandModel> _brands = _rawList
+        .map<BrandModel>(
+            (dynamic json) => BrandModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+
+    /// 2. Map all sub categories to their tabs
+    return _brands
+        .map<BrandTabModel>(
+            (brand) => BrandTabModel(brand, GlobalKey(debugLabel: brand.title)))
+        .toList();
+  }
+
+  Future<List<Product>> getProducts(
+      {String category,
+      String product,
+      String brandCode,
+      String sortBy,
+      String filterBy,
+      String filterByValue,
+      String pageNumber}) async {
+    final Uri uri = Uri.http(apiBase, apiProducts, {
+      apiCategoryQuery: category,
+      apiProductQuery: product,
+      apiBrandCode: brandCode,
+      apiSortBy: sortBy,
+      apiFilterBy: filterBy,
+      apiFilterByValue: filterByValue,
+      apiPageNumber: pageNumber,
+    });
+    final List<dynamic> _rawList = await dataProvider.get(uri);
+
+    /// 1. Populate all the sub categories
+    return _rawList
+        .map<Product>(
+            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<SearchHistoryModel>> getSearchHistory() async {
-    final DataResponseModel rawData = await dataProvider.get('search_history');
+    final rawData = [];
+    // await dataProvider.get('search_history');
 
-    final List<dynamic> _history =
-        rawData.data['search_queries'] as List<dynamic> ?? <dynamic>[];
+    final List<dynamic> _history = [];
+    // rawData as List<dynamic> ?? <dynamic>[];
 
     return _history
         .map<SearchHistoryModel>((dynamic json) =>
@@ -42,31 +103,12 @@ class ProductsRepository {
   }
 
   Future<List<Product>> search() async {
-    final DataResponseModel rawData = await dataProvider.get('discover');
+    // final DataResponseModel rawData = await dataProvider.get('discover');
 
-    final List<dynamic> _rawProducts =
-        rawData.data['products'] as List<dynamic> ?? <dynamic>[];
-
-    final List<dynamic> _products = _rawProducts + _rawProducts + _rawProducts;
-    // return null;
-    return _products
-        .map<Product>(
-            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
-        .toList();
-  }
-
-  Future<List<Product>> searchCategory({int id}) async {
-    /// Just make the call with the given ID and server takes care
-    final DataResponseModel rawData = await dataProvider.get('discover');
-
-    final List<dynamic> _rawProducts =
-        rawData.data['products'] as List<dynamic> ?? <dynamic>[];
+    final List<dynamic> _rawProducts = [];
+    //     rawData.data['products'] as List<dynamic> ?? <dynamic>[];
 
     final List<dynamic> _products = _rawProducts + _rawProducts + _rawProducts;
-
-    /// Shuffle it to simulate network activity for now! ;-)
-    /// Because anyway it will be handled by the API server!
-    _products.shuffle();
     return _products
         .map<Product>(
             (dynamic json) => Product.fromJson(json as Map<String, dynamic>))

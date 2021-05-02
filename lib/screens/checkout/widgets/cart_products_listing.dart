@@ -110,7 +110,7 @@ class ProductItemReadOnly extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "₹ " + product.price.toString(),
+                                "₹ " + product.maxPrice.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
@@ -119,7 +119,7 @@ class ProductItemReadOnly extends StatelessWidget {
                               ),
                               SizedBox(width: 2),
                               Text(
-                                "₹ " + product.oldPrice.toString(),
+                                "₹ " + product.salePrice.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption
@@ -142,12 +142,12 @@ class ProductItemReadOnly extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            "₹ ${product.price}",
+                            "₹ ${product.maxPrice}",
                             style: Theme.of(context).textTheme.bodyText1.bold,
                           ),
                           SizedBox(width: 5),
                           Text(
-                            "₹ ${product.oldPrice}",
+                            "₹ ${product.salePrice}",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2

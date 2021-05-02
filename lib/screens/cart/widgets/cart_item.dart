@@ -99,7 +99,7 @@ class CartListItem extends StatelessWidget {
                                       ),
                                       SizedBox(width: kPaddingM),
                                       Text(
-                                        "₹ " + product.price.toString(),
+                                        "₹ " + product.maxPrice.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2
@@ -108,7 +108,7 @@ class CartListItem extends StatelessWidget {
                                       ),
                                       SizedBox(width: 2),
                                       Text(
-                                        "₹ " + product.oldPrice.toString(),
+                                        "₹ " + product.salePrice.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .caption
@@ -138,7 +138,7 @@ class CartListItem extends StatelessWidget {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    "₹ ${product.price * qty}",
+                                    "₹ ${product.maxPrice * qty}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1
@@ -146,7 +146,7 @@ class CartListItem extends StatelessWidget {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    "₹ ${product.oldPrice * qty}",
+                                    "₹ ${product.salePrice * qty}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText2

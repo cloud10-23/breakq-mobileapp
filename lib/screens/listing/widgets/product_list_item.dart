@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
@@ -44,6 +45,14 @@ class ProductListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Getting the Image:
+    ImageProvider _image;
+    // try {
+    // _image = AssetImage(product.image);
+    // _image = NetworkImage(apiBaseFull + product.image);
+    // } catch (_) {
+    _image = AssetImage(AssetImages.productPlaceholder);
+    // }
     switch (viewType) {
       case ProductListItemViewType.grid:
         return Card(
@@ -85,8 +94,7 @@ class ProductListItem extends StatelessWidget {
                                   height: 80,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                      image: AssetImage(product.image),
-                                      // image: NetworkImage(product.image),
+                                      image: _image,
                                       fit: BoxFit.fill,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -142,7 +150,7 @@ class ProductListItem extends StatelessWidget {
                                 children: <Widget>[
                                   Spacer(),
                                   Text(
-                                    "₹ " + product.price.toString(),
+                                    "₹ " + product.maxPrice.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText2
@@ -150,7 +158,7 @@ class ProductListItem extends StatelessWidget {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    "₹ " + product.oldPrice.toString(),
+                                    "₹ " + product.salePrice.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .caption
@@ -216,8 +224,7 @@ class ProductListItem extends StatelessWidget {
                             viewType == ProductListItemViewType.map ? 160 : 200,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(product.image),
-                            // image: NetworkImage(product.image),
+                            image: _image,
                             fit: BoxFit.cover,
                           ),
                           borderRadius: const BorderRadius.only(
@@ -273,12 +280,12 @@ class ProductListItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          "₹ " + product.price.toString(),
+                          "₹ " + product.maxPrice.toString(),
                           style: Theme.of(context).textTheme.bodyText2.bold,
                         ),
                         SizedBox(width: 5),
                         Text(
-                          "₹ " + product.oldPrice.toString(),
+                          "₹ " + product.salePrice.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .caption
@@ -328,8 +335,7 @@ class ProductListItem extends StatelessWidget {
                                   height: 75,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                      image: AssetImage(product.image),
-                                      // image: NetworkImage(product.image),
+                                      image: _image,
                                       fit: BoxFit.cover,
                                     ),
                                     borderRadius: const BorderRadius.only(
@@ -386,7 +392,7 @@ class ProductListItem extends StatelessWidget {
                                     child: Row(
                                       children: <Widget>[
                                         Text(
-                                          "₹ " + product.price.toString(),
+                                          "₹ " + product.maxPrice.toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText2
@@ -394,7 +400,7 @@ class ProductListItem extends StatelessWidget {
                                         ),
                                         SizedBox(width: 5),
                                         Text(
-                                          "₹ " + product.oldPrice.toString(),
+                                          "₹ " + product.salePrice.toString(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .caption

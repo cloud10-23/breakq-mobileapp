@@ -1,10 +1,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:breakq/data/models/brand_tab_model.dart';
+import 'package:breakq/screens/listing/widgets/product_list_item.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:meta/meta.dart';
-import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/data/models/search_session_model.dart';
+import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
 
@@ -28,24 +33,92 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield* _mapListTypeHomeEventToState(event);
     } else if (event is SortOrderChangedHomeEvent) {
       yield* _mapSortOrderHomeEventToState(event);
-    } else if (event is GenderFilterChangedHomeEvent) {
-      yield* _mapGenderFilterHomeEventToState(event);
-    } else if (event is NewDateRangeSelectedHomeEvent) {
-      yield* _mapNewDateRangeHomeEventToState(event);
-    } else if (event is KeywordChangedHomeEvent) {
-      yield* _mapKeywordHomeEventToState(event);
-    } else if (event is QuickSearchRequestedHomeEvent) {
-      yield* _mapQuickHomeEventToState(event);
     }
   }
 
   Stream<HomeState> _mapInitSessionHomeEventToState(
       SessionInitedHomeEvent event) async* {
+    List<BrandTabModel> categoryTabs = <BrandTabModel>[];
+    List<BrandTabModel> brandTabs = <BrandTabModel>[];
+    List<ToolbarOptionModel> searchSortTypes;
+    List<ToolbarOptionModel> searchListTypes;
+    searchSortTypes = <dynamic>[
+      <String, dynamic>{
+        'code': 'rating',
+        'label': "Top Rated",
+        'icon': Icons.star,
+      },
+      <String, dynamic>{
+        'code': 'popularity',
+        'label': "Most Popular",
+        'icon': Icons.remove_red_eye,
+      },
+      <String, dynamic>{
+        'code': 'htl',
+        'label': "Price:  High-Low",
+        'icon': Icons.attach_money,
+      },
+      <String, dynamic>{
+        'code': 'lth',
+        'label': "Price:  Low-High",
+        'icon': Icons.attach_money,
+      },
+    ]
+        .map((dynamic item) =>
+            ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
+        .toList();
+
+    searchListTypes = <dynamic>[
+      <String, dynamic>{
+        'code': describeEnum(ProductListItemViewType.grid),
+        'label': '',
+        'icon': Ionicons.ios_list,
+      },
+      <String, dynamic>{
+        'code': describeEnum(ProductListItemViewType.list),
+        'label': '',
+        'icon': Icons.view_comfy,
+      },
+      // <String, dynamic>{
+      //   'code': describeEnum(ProductListItemViewType.block),
+      //   'label': '',
+      //   'icon': Icons.view_array,
+      // },
+    ]
+        .map((dynamic item) =>
+            ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
+        .toList();
+
+    /// The tabs are for Sub categories
+    categoryTabs.addAll(List.generate(
+        5,
+        (index) => BrandTabModel.fromJson(<String, dynamic>{
+              'id': index,
+              'globalKey': GlobalKey(debugLabel: 'subCat-$index'),
+              'label': "Sub Category",
+            })));
+
+    brandTabs.add(BrandTabModel.fromJson(<String, dynamic>{
+      'id': 10,
+      'globalKey': GlobalKey(debugLabel: 'brand-all'),
+      'label': "All",
+    }));
+    brandTabs.addAll(List.generate(
+        8,
+        (index) => BrandTabModel.fromJson(<String, dynamic>{
+              'id': index,
+              'globalKey': GlobalKey(debugLabel: 'brand-$index'),
+              'label': "Brand",
+            })));
     yield RefreshSuccessHomeState(
-      SearchSessionModel(
-        currentSort: event.currentSort,
-        currentListType: event.currentListType,
-        activeSearchTab: event.activeSearchTab,
+      ProductSessionModel(
+        // categoryTabs: categoryTabs,
+        brandTabs: brandTabs,
+        searchSortTypes: searchSortTypes,
+        searchListTypes: searchListTypes,
+        // activeCategoryTab: categoryTabs.first.id,
+        currentSort: searchSortTypes.first, // default is the first one
+        currentListType: searchListTypes.first, // default is the first one
         searchType: SearchType.full,
       ),
     );
@@ -55,7 +128,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapFilteredHomeEventToState(
       FilteredListRequestedHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
+      final ProductSessionModel session =
           (state as RefreshSuccessHomeState).session;
 
       yield RefreshSuccessHomeState(session.rebuild(
@@ -68,11 +141,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       List<Product> _products;
 
       /// This is where the tab related query for products is done
-      if (session.activeSearchTab == 0) {
+      if (session.activeCategoryTab == 0) {
         _products = await productRepository.search();
       } else {
-        _products =
-            await productRepository.searchCategory(id: session.activeSearchTab);
+        String subCategory = 'GROCERIES';
+        // String subCategory = subCategories[session.activeSearchTab];
+        _products = [];
+        // await productRepository.searchCategory(subCategory: subCategory);
       }
 
       if (_products.isNotEmpty && session.q.isNotEmpty) {
@@ -93,7 +168,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapCategoryFilteredHomeEventToState(
       CategoryFilteredHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
+      final ProductSessionModel session =
           (state as RefreshSuccessHomeState).session;
 
       yield RefreshSuccessHomeState(session.rebuild(
@@ -109,11 +184,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapBrandFilteredHomeEventToState(
       BrandFilteredHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
+      final ProductSessionModel session =
           (state as RefreshSuccessHomeState).session;
 
       yield RefreshSuccessHomeState(session.rebuild(
-        activeBrandTab: event.activeBrandTab,
+        // activeBrandTab: event.activeBrandTab,
         searchType: SearchType.full,
         isLoading: true,
       ));
@@ -125,7 +200,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapListTypeHomeEventToState(
       ListTypeChangedHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
+      final ProductSessionModel session =
           (state as RefreshSuccessHomeState).session;
 
       yield RefreshSuccessHomeState(session.rebuild(
@@ -138,7 +213,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapSortOrderHomeEventToState(
       SortOrderChangedHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
+      final ProductSessionModel session =
           (state as RefreshSuccessHomeState).session;
 
       yield RefreshSuccessHomeState(session.rebuild(
@@ -150,87 +225,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       add(FilteredListRequestedHomeEvent());
     }
   }
+  // Stream<HomeState> _mapQuickHomeEventToState(
+  //     QuickSearchRequestedHomeEvent event) async* {
+  //   if (state is RefreshSuccessHomeState) {
+  //     if (event.q.length >= kMinimalNameQueryLength) {
+  //       final SearchSessionModel session =
+  //           (state as RefreshSuccessHomeState).session;
 
-  Stream<HomeState> _mapGenderFilterHomeEventToState(
-      GenderFilterChangedHomeEvent event) async* {
-    if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
-          (state as RefreshSuccessHomeState).session;
+  //       yield RefreshSuccessHomeState(session.rebuild(
+  //         isLoading: true,
+  //         products: null,
+  //         searchType: SearchType.quick,
+  //       ));
 
-      yield RefreshSuccessHomeState(session.rebuild(
-        currentGenderFilter: event.genderFilter,
-        searchType: SearchType.full,
-        isLoading: true,
-      ));
+  //       const ProductsRepository productRepository = ProductsRepository();
 
-      add(FilteredListRequestedHomeEvent());
-    }
-  }
+  //       List<Product> _products;
 
-  Stream<HomeState> _mapNewDateRangeHomeEventToState(
-      NewDateRangeSelectedHomeEvent event) async* {
-    if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
-          (state as RefreshSuccessHomeState).session;
+  //       _products = await productRepository.search();
 
-      yield RefreshSuccessHomeState(session.rebuild(
-        selectedDateRange: event.dateRange,
-        searchType: SearchType.full,
-        isLoading: true,
-      ));
+  //       if (_products.isNotEmpty) {
+  //         _products = _products
+  //             .where((Product product) =>
+  //                 product.title.toLowerCase().contains(event.q.toLowerCase()))
+  //             .toList();
+  //       }
 
-      add(FilteredListRequestedHomeEvent());
-    }
-  }
-
-  Stream<HomeState> _mapKeywordHomeEventToState(
-      KeywordChangedHomeEvent event) async* {
-    if (state is RefreshSuccessHomeState) {
-      final SearchSessionModel session =
-          (state as RefreshSuccessHomeState).session;
-
-      yield RefreshSuccessHomeState(session.rebuild(
-        q: event.q,
-        searchType: SearchType.full,
-        isLoading: true,
-      ));
-
-      add(FilteredListRequestedHomeEvent());
-    }
-  }
-
-  Stream<HomeState> _mapQuickHomeEventToState(
-      QuickSearchRequestedHomeEvent event) async* {
-    if (state is RefreshSuccessHomeState) {
-      if (event.q.length >= kMinimalNameQueryLength) {
-        final SearchSessionModel session =
-            (state as RefreshSuccessHomeState).session;
-
-        yield RefreshSuccessHomeState(session.rebuild(
-          isLoading: true,
-          products: null,
-          searchType: SearchType.quick,
-        ));
-
-        const ProductsRepository productRepository = ProductsRepository();
-
-        List<Product> _products;
-
-        _products = await productRepository.search();
-
-        if (_products.isNotEmpty) {
-          _products = _products
-              .where((Product product) =>
-                  product.title.toLowerCase().contains(event.q.toLowerCase()))
-              .toList();
-        }
-
-        yield RefreshSuccessHomeState(session.rebuild(
-          products: _products,
-          isLoading: false,
-          searchType: SearchType.quick,
-        ));
-      }
-    }
-  }
+  //       yield RefreshSuccessHomeState(session.rebuild(
+  //         products: _products,
+  //         isLoading: false,
+  //         searchType: SearchType.quick,
+  //       ));
+  //     }
+  //   }
+  // }
 }

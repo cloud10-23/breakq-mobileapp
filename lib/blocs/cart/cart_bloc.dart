@@ -43,8 +43,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     double _orgCartValue = 0.0;
     event.cartItems.cartItems.keys.forEach((item) {
       _noOfProducts += event.cartItems.cartItems[item];
-      _cartValue += event.cartItems.cartItems[item] * item.price;
-      _orgCartValue += event.cartItems.cartItems[item] * item.oldPrice;
+      _cartValue += event.cartItems.cartItems[item] * item.maxPrice;
+      _orgCartValue += event.cartItems.cartItems[item] * item.salePrice;
     });
 
     event.cartItems.setNoOfProducts = _noOfProducts;

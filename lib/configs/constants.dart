@@ -1,6 +1,8 @@
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/screens/listing/widgets/product_list_item.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -234,6 +236,9 @@ class AssetImages {
 
   static const String cat = 'assets/images/categories/cat';
 
+  static const String productPlaceholder =
+      'assets/images/products/product-image-placeholder.jpg';
+
   static const String shop = 'assets/images/icons/store_icon.jpeg';
 
   // static const String cartIcon = 'assets/images/icons/quick_shopping_3_c.png';
@@ -283,29 +288,67 @@ class AssetImages {
   static String ads(int index) => 'assets/images/ads/ad$index.jpeg';
 }
 
+/// Sort Types
+const List<dynamic> sortTypes = <dynamic>[
+  <String, dynamic>{
+    'code': 'rating',
+    'label': "Top Rated",
+    'icon': Icons.star,
+  },
+  <String, dynamic>{
+    'code': 'popularity',
+    'label': "Most Popular",
+    'icon': Icons.remove_red_eye,
+  },
+  <String, dynamic>{
+    'code': 'htl',
+    'label': "Price:  High-Low",
+    'icon': Icons.attach_money,
+  },
+  <String, dynamic>{
+    'code': 'lth',
+    'label': "Price:  Low-High",
+    'icon': Icons.attach_money,
+  },
+];
+
+/// GLOBAL non-constant variable List Types
+List<dynamic> listTypes = <dynamic>[
+  <String, dynamic>{
+    'code': describeEnum(ProductListItemViewType.grid),
+    'label': '',
+    'icon': Ionicons.ios_list,
+  },
+  <String, dynamic>{
+    'code': describeEnum(ProductListItemViewType.list),
+    'label': '',
+    'icon': Icons.view_comfy,
+  },
+];
+
 /// Sample Products for display
 Map<Product, int> generateSampleProducts() => {
       Product(
         id: 100,
         image: AssetImages.maggi,
-        oldPrice: 60,
-        price: 40,
+        salePrice: 60,
+        maxPrice: 40,
         quantity: '500 gm',
         title: 'Maggi',
       ): 2,
       Product(
         id: 101,
         image: AssetImages.dove,
-        oldPrice: 100,
-        price: 70,
+        salePrice: 100,
+        maxPrice: 70,
         quantity: '500 ml',
         title: 'Dove',
       ): 4,
       Product(
         id: 102,
         image: AssetImages.wheat,
-        oldPrice: 500,
-        price: 490,
+        salePrice: 500,
+        maxPrice: 490,
         quantity: '5 kg',
         title: 'Aashirvad Atta',
       ): 1,

@@ -114,8 +114,8 @@ class BarcodeScanner {
         available: 10,
         categoryId: 12,
         image: AssetImages.maggi,
-        oldPrice: 50,
-        price: 40,
+        salePrice: 50,
+        maxPrice: 40,
         title: "Maggi Scanned",
         quantity: "500 gm",
       );

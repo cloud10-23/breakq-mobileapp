@@ -260,14 +260,14 @@ class InvoiceBillItems extends StatelessWidget {
         ),
         TableCell(
           child: Text(
-            "₹ ${product.price.toStringAsFixed(2)}",
+            "₹ ${product.maxPrice.toStringAsFixed(2)}",
             style: Theme.of(context).textTheme.bodyText1.bold.number,
             textAlign: TextAlign.right,
           ),
         ),
         TableCell(
           child: Text(
-            "₹ ${(product.price * qty).toStringAsFixed(2)}",
+            "₹ ${(product.maxPrice * qty).toStringAsFixed(2)}",
             style: Theme.of(context).textTheme.bodyText1.bold.number,
             textAlign: TextAlign.right,
           ),

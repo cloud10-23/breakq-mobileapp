@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
@@ -73,30 +74,33 @@ class Routes {
       /// Onboarding Routes:
 
       case o_home:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<IntroMain>(
           builder: (BuildContext context) => IntroMain(),
         );
       case o_mobileLogin:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<SignInWidget>(
           builder: (BuildContext context) => SignInWidget(
             title: routeSettings?.arguments ?? null,
           ),
         );
       case o_otp:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<SignInOTPWidget>(
           builder: (BuildContext context) => SignInOTPWidget(),
         );
       case o_profile:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<SignUpWidget>(
           builder: (BuildContext context) => SignUpWidget(),
         );
 
       /// Product Listing
 
       case listing:
-        return MaterialPageRoute<CheckoutScreen>(
-          builder: (BuildContext context) => Listing(
-            title: routeSettings?.arguments ?? null,
+        return MaterialPageRoute<Listing>(
+          builder: (BuildContext context) => BlocProvider<ProductBloc>(
+            create: (_) => ProductBloc()..add(SessionInitedProductEvent()),
+            child: Listing(
+              title: routeSettings?.arguments ?? null,
+            ),
           ),
         );
 
@@ -111,7 +115,7 @@ class Routes {
 
       /// Quick Shopping
       case quickShopping:
-        return MaterialPageRoute<ProductScreen>(
+        return MaterialPageRoute<QShoppingScreen>(
           builder: (BuildContext context) {
             return QShoppingScreen();
           },
@@ -140,7 +144,7 @@ class Routes {
         );
       case cart:
         // return SlideRoute(widget: CartPage());
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<CartPage>(
           builder: (BuildContext context) => CartPage(),
         );
       case add_address:
@@ -148,19 +152,19 @@ class Routes {
 
       /// My Orders
       case orders:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<MyOrders>(
           builder: (BuildContext context) => MyOrders(),
         );
       case order_detail:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<OrderDetails>(
           builder: (BuildContext context) => OrderDetails(),
         );
       case need_help:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<NeedHelp>(
           builder: (BuildContext context) => NeedHelp(),
         );
       case order_invoice:
-        return MaterialPageRoute<CheckoutScreen>(
+        return MaterialPageRoute<Invoice>(
           builder: (BuildContext context) => Invoice(),
         );
 

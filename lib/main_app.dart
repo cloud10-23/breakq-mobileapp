@@ -2,7 +2,6 @@ import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
-import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/onboarding/onboarding.dart';
 import 'package:breakq/screens/splash.dart';
@@ -29,7 +28,7 @@ final RouteObserver<PageRoute<dynamic>> routeObserver =
 
 ApplicationBloc _applicationBloc;
 AuthBloc _authBloc;
-HomeBloc _searchBloc;
+// HomeBloc _searchBloc;
 LanguageBloc _languageBloc;
 ThemeBloc _themeBloc;
 BudgetBloc _budgetBloc;
@@ -61,7 +60,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
   /// Init all [Bloc]s here.
   void _initBlocs() async {
     _authBloc = AuthBloc(userRepository: UserRepository());
-    _searchBloc = HomeBloc();
+    // _searchBloc = HomeBloc();
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
     _budgetBloc = BudgetBloc();
@@ -79,7 +78,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     // WidgetsBinding.instance.removeObserver(this);
 
     _authBloc.close();
-    _searchBloc.close();
+    // _searchBloc.close();
     _languageBloc.close();
     _themeBloc.close();
     _cartBloc.close();
@@ -108,7 +107,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         BlocProvider<ApplicationBloc>(
             create: (BuildContext context) => _applicationBloc),
         BlocProvider<AuthBloc>(create: (BuildContext context) => _authBloc),
-        BlocProvider<HomeBloc>(create: (BuildContext context) => _searchBloc),
+        // BlocProvider<HomeBloc>(create: (BuildContext context) => _searchBloc),
         // BlocProvider<LanguageBloc>(
         //     create: (BuildContext context) => _languageBloc),
         BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),

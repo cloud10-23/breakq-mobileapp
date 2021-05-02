@@ -188,7 +188,7 @@ class _QSStep2State extends State<QSStep2> {
                             child: Row(
                               children: <Widget>[
                                 Text(
-                                  "₹ " + product.price.toString(),
+                                  "₹ " + product.maxPrice.toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText2
@@ -196,7 +196,7 @@ class _QSStep2State extends State<QSStep2> {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  "₹ " + product.oldPrice.toString(),
+                                  "₹ " + product.salePrice.toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption

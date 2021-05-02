@@ -29,8 +29,9 @@ class AppObserver extends BlocObserver {
 
   /// Called whenever an [error] is thrown in any [Bloc] or [Cubit].
   @override
-  void onError(Cubit<dynamic> cubit, Object error, StackTrace stackTrace) {
-    super.onError(cubit, error, stackTrace);
+  void onError(
+      BlocBase<dynamic> blocBase, Object error, StackTrace stackTrace) {
+    super.onError(blocBase, error, stackTrace);
     Console.log('BLOC ERROR', error.toString(), error: error);
     if (stackTrace != null) {
       Console.log('STACKTRACE', stackTrace.toString(), error: stackTrace);

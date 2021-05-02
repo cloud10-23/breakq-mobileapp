@@ -19,7 +19,8 @@ class GridImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.listing),
+      onTap: () =>
+          Navigator.pushNamed(context, Routes.listing, arguments: "OFFER"),
       child: Card(
         margin: EdgeInsets.all(1.0),
         child: Image(
@@ -42,8 +43,8 @@ class ExclProductsCard extends StatelessWidget {
     return Product(
       id: index + 10,
       image: AssetImages.maggi,
-      oldPrice: 60,
-      price: 40,
+      salePrice: 60,
+      maxPrice: 40,
       quantity: '500 gm',
       title: 'Product ${index + 1}',
     );
@@ -59,8 +60,8 @@ class ExclProductsCard extends StatelessWidget {
         product: Product(
           id: index + 10,
           image: AssetImages.maggi,
-          oldPrice: 60,
-          price: 40,
+          salePrice: 60,
+          maxPrice: 40,
           quantity: '500 gm',
           title: 'Product ${index + 1}',
         ),

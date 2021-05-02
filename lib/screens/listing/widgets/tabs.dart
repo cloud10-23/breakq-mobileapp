@@ -1,26 +1,27 @@
+import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/search_tab_model.dart';
+import 'package:breakq/data/models/brand_tab_model.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class SearchTabs extends StatefulWidget {
-  const SearchTabs({
+class CategoryTabs extends StatefulWidget {
+  const CategoryTabs({
     Key key,
-    this.searchTabs,
-    this.activeSearchTab = 0,
+    this.categoryTabs,
+    this.activeCategoryTab = 0,
   }) : super(key: key);
 
-  final List<SearchTabModel> searchTabs;
-  final int activeSearchTab;
+  final List<CategoryTabModel> categoryTabs;
+  final int activeCategoryTab;
 
   @override
-  SearchTabsState createState() => SearchTabsState();
+  CategoryTabsState createState() => CategoryTabsState();
 }
 
-class SearchTabsState extends State<SearchTabs> {
+class CategoryTabsState extends State<CategoryTabs> {
   final ItemScrollController itemScrollController = ItemScrollController();
 
   @override
@@ -41,12 +42,12 @@ class SearchTabsState extends State<SearchTabs> {
       height: kToolbarHeight,
       child: ScrollablePositionedList.builder(
         padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-        itemCount: widget.searchTabs.length,
+        itemCount: widget.categoryTabs.length,
         itemScrollController: itemScrollController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          final SearchTabModel item = widget.searchTabs[index];
-          final bool isActive = item.id == widget.activeSearchTab;
+          final CategoryTabModel item = widget.categoryTabs[index];
+          final bool isActive = item.id == widget.activeCategoryTab;
           return Container(
             width: 120,
             child: Card(
@@ -63,8 +64,8 @@ class SearchTabsState extends State<SearchTabs> {
               child: InkWell(
                 key: item.globalKey,
                 onTap: () {
-                  BlocProvider.of<HomeBloc>(context)
-                      .add(CategoryFilteredHomeEvent(activeSearchTab: item.id));
+                  BlocProvider.of<ProductBloc>(context).add(
+                      CategoryFilteredProductEvent(activeSearchTab: item.id));
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,7 +80,7 @@ class SearchTabsState extends State<SearchTabs> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(item.label,
+                          Text(item.category.title,
                               style: isActive
                                   ? Theme.of(context)
                                       .textTheme
@@ -110,11 +111,11 @@ class BrandTabs extends StatefulWidget {
   const BrandTabs({
     Key key,
     this.brandTabs,
-    this.activeBrandTab = 0,
+    this.activeBrandTab = '0',
   }) : super(key: key);
 
-  final List<SearchTabModel> brandTabs;
-  final int activeBrandTab;
+  final List<BrandTabModel> brandTabs;
+  final String activeBrandTab;
 
   @override
   BranchTabsState createState() => BranchTabsState();
@@ -146,15 +147,15 @@ class BranchTabsState extends State<BrandTabs> {
         itemScrollController: itemScrollController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
-          final SearchTabModel item = widget.brandTabs[index];
+          final BrandTabModel item = widget.brandTabs[index];
           final bool isActive = item.id == widget.activeBrandTab;
           return Container(
             key: item.globalKey,
             margin: EdgeInsets.symmetric(horizontal: kPaddingS),
             child: InputChip(
               onPressed: () {
-                BlocProvider.of<HomeBloc>(context)
-                    .add(BrandFilteredHomeEvent(activeBrandTab: item.id));
+                BlocProvider.of<ProductBloc>(context)
+                    .add(BrandFilteredProductEvent(activeBrandTab: item.id));
               },
               selected: isActive,
               showCheckmark: false,
@@ -164,7 +165,7 @@ class BranchTabsState extends State<BrandTabs> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    item.label,
+                    item.brand.title,
                     style: isActive
                         ? Theme.of(context).textTheme.caption.fs12.bold
                         : Theme.of(context).textTheme.caption.fs12.bold,

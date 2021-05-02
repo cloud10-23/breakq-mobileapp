@@ -1,9 +1,10 @@
+import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/data/models/search_session_model.dart';
+import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
@@ -22,13 +23,13 @@ class SearchLocationsDelegateResultList extends StatefulWidget {
 
 class _SearchLocationsDelegateResultListState
     extends State<SearchLocationsDelegateResultList> {
-  HomeBloc _homeBloc;
+  ProductBloc _homeBloc;
 
   List<Product> _locations;
 
   @override
   void initState() {
-    _homeBloc = BlocProvider.of<HomeBloc>(context);
+    _homeBloc = BlocProvider.of<ProductBloc>(context);
 
     super.initState();
   }
@@ -37,11 +38,11 @@ class _SearchLocationsDelegateResultListState
   Widget build(BuildContext context) {
     final String q = widget.query.trim();
 
-    _homeBloc.add(QuickSearchRequestedHomeEvent(q));
+    // _homeBloc.add(QuickSearchRequestedProductEvent(q));
 
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (BuildContext context, HomeState state) {
-        if (state is RefreshSuccessHomeState &&
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (BuildContext context, ProductState state) {
+        if (state is RefreshSuccessProductState &&
             state.session.searchType == SearchType.quick) {
           if (state.session.isLoading) {
             return const Center(

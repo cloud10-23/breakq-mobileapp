@@ -96,7 +96,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       trailing: Row(
                         children: <Widget>[
                           Text(
-                            "₹ " + widget.product.price.toString(),
+                            "₹ " + widget.product.maxPrice.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1
@@ -105,7 +105,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            "₹ " + widget.product.oldPrice.toString(),
+                            "₹ " + widget.product.salePrice.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2
@@ -195,7 +195,7 @@ class _ProductScreenState extends State<ProductScreen> {
             fw: FontWeight.w500,
           ),
           CustomTitle(
-              title: "₹ ${(widget.product.price * qty).toStringAsFixed(2)}"),
+              title: "₹ ${(widget.product.maxPrice * qty).toStringAsFixed(2)}"),
         ],
       ),
     );

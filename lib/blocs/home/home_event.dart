@@ -43,27 +43,3 @@ class SortOrderChangedHomeEvent extends HomeEvent {
 
   final ToolbarOptionModel newSort;
 }
-
-class GenderFilterChangedHomeEvent extends HomeEvent {
-  GenderFilterChangedHomeEvent(this.genderFilter);
-
-  final ToolbarOptionModel genderFilter;
-}
-
-class NewDateRangeSelectedHomeEvent extends HomeEvent {
-  NewDateRangeSelectedHomeEvent(this.dateRange);
-
-  final int dateRange;
-}
-
-class KeywordChangedHomeEvent extends HomeEvent {
-  KeywordChangedHomeEvent(this.q);
-
-  final String q;
-}
-
-class QuickSearchRequestedHomeEvent extends HomeEvent {
-  QuickSearchRequestedHomeEvent(this.q);
-
-  final String q;
-}

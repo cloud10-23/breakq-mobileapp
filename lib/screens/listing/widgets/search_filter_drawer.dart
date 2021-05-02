@@ -1,3 +1,4 @@
+import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
@@ -148,8 +149,8 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                 child: ThemeButton(
                   text: L10n.of(context).commonBtnApply,
                   onPressed: () {
-                    BlocProvider.of<HomeBloc>(context)
-                        .add(FilteredListRequestedHomeEvent());
+                    BlocProvider.of<ProductBloc>(context)
+                        .add(FilteredListRequestedProductEvent());
 
                     Navigator.pop(context);
                   },

@@ -15,6 +15,7 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +35,7 @@ class _SearchBarState extends State<SearchBar> {
             Expanded(
               child: TextField(
                   autofocus: true,
+                  controller: _controller,
                   style: Theme.of(context).textTheme.headline6.w600,
                   decoration: InputDecoration(
                     hintText: L10n.of(context).homePlaceholderSearch,
@@ -48,7 +50,7 @@ class _SearchBarState extends State<SearchBar> {
                   onSubmitted: (value) {
                     Navigator.pop(context);
                     Navigator.of(context, rootNavigator: true)
-                        .pushNamed(Routes.listing);
+                        .pushNamed(Routes.listing, arguments: _controller.text);
                   }),
             ),
             IconButton(
@@ -75,7 +77,7 @@ class _SearchBarState extends State<SearchBar> {
             onPressed: () {
               Navigator.pop(context);
               Navigator.of(context, rootNavigator: true)
-                  .pushNamed(Routes.listing);
+                  .pushNamed(Routes.listing, arguments: _controller.text);
             },
             leading: SizedBox(
                 width:

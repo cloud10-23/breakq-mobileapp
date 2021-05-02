@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/services.dart';
-import 'package:breakq/data/models/data_response_model.dart';
+import 'package:http/http.dart' as http;
 import 'package:breakq/utils/console.dart';
 
 /// Provides a generic mechanism for loading model data from JSON files
@@ -10,21 +9,18 @@ import 'package:breakq/utils/console.dart';
 class DataProvider {
   const DataProvider();
 
-  Future<DataResponseModel> get(String file) async {
-    // Wait for some random time. Simulate net activity ;)
-    await Future<int>.delayed(Duration(seconds: Random().nextInt(1)));
-
-    String content = '';
-
+  Future<List<dynamic>> get(uri) async {
     try {
-      content = await rootBundle.loadString('assets/data/$file.json');
-      print('Loading asset : assets/data/$file.json');
+      final rawData = await http.get(uri);
+      if (rawData.statusCode >= 200 && rawData.statusCode < 300) {
+        return rawData.body.isNotEmpty
+            ? jsonDecode(rawData.body) as List<dynamic>
+            : [];
+      }
     } catch (_) {
       Console.log('DataProvider::get', _.toString(), error: _);
+      return [];
     }
-
-    return DataResponseModel.fromJson(content.isNotEmpty
-        ? jsonDecode(content) as Map<String, dynamic>
-        : <String, dynamic>{});
+    return [];
   }
 }
