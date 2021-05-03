@@ -15,6 +15,14 @@ class CartListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Getting the Image:
+    ImageProvider _image;
+    // try {
+    // _image = AssetImage(product.image);
+    // _image = NetworkImage(apiBaseFull + product.image);
+    // } catch (_) {
+    _image = AssetImage(AssetImages.productPlaceholder);
+    // }
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBoxDecorationRadius),
@@ -48,7 +56,7 @@ class CartListItem extends StatelessWidget {
                               height: 65,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage(product.image),
+                                  image: _image,
                                   // image: NetworkImage(product.image),
                                   fit: BoxFit.cover,
                                 ),
@@ -80,7 +88,11 @@ class CartListItem extends StatelessWidget {
                                             .w600,
                                       ),
                                       SizedBox(width: kPaddingL),
-                                      OfferTextGreen(),
+                                      Visibility(
+                                          visible:
+                                              product.discountPercent ?? 0 > 0,
+                                          child: OfferTextGreen(
+                                              product.discountPercent)),
                                     ],
                                   ),
                                   const SizedBox(height: 5),
@@ -99,24 +111,33 @@ class CartListItem extends StatelessWidget {
                                       ),
                                       SizedBox(width: kPaddingM),
                                       Text(
-                                        "₹ " + product.maxPrice.toString(),
+                                        "₹ " +
+                                            product.maxPrice.toStringAsFixed(2),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2
                                             .fs10
+                                            .number
                                             .bold,
                                       ),
                                       SizedBox(width: 2),
-                                      Text(
-                                        "₹ " + product.salePrice.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .caption
-                                            .fs10
-                                            .w300
-                                            .copyWith(
-                                                decoration:
-                                                    TextDecoration.lineThrough),
+                                      Visibility(
+                                        visible: product.maxPrice !=
+                                            product.salePrice,
+                                        child: Text(
+                                          "₹ " +
+                                              product.salePrice
+                                                  .toStringAsFixed(2),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .fs10
+                                              .w300
+                                              .number
+                                              .copyWith(
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -138,22 +159,14 @@ class CartListItem extends StatelessWidget {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    "₹ ${product.maxPrice * qty}",
+                                    "₹ " +
+                                        (product.maxPrice * qty)
+                                            .toStringAsFixed(2),
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1
+                                        .number
                                         .bold,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "₹ ${product.salePrice * qty}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .w300
-                                        .copyWith(
-                                            decoration:
-                                                TextDecoration.lineThrough),
                                   ),
                                 ],
                               ),

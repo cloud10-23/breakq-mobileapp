@@ -88,7 +88,7 @@ class ProductItemReadOnly extends StatelessWidget {
                                     Theme.of(context).textTheme.bodyText2.w600,
                               ),
                               SizedBox(width: kPaddingL),
-                              OfferTextGreen(),
+                              OfferTextGreen(product.discountPercent),
                             ],
                           ),
                           const SizedBox(height: 5),

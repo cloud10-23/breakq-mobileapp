@@ -121,9 +121,12 @@ class ProductListItem extends StatelessWidget {
                                   right: kPaddingS),
                               child: Text(
                                 product.title,
-                                maxLines: 1,
-                                style:
-                                    Theme.of(context).textTheme.subtitle2.bold,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .black
+                                    .fs12
+                                    .w600,
                               ),
                             ),
                             Padding(
@@ -140,41 +143,46 @@ class ProductListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            SizedBox(height: kPaddingS),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: kPaddingS,
                                   right: kPaddingS,
                                   bottom: kPaddingS,
                                   top: 2),
-                              child: Row(
-                                children: <Widget>[
-                                  Spacer(),
-                                  Text(
-                                    "₹ " + product.maxPrice.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .bold,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "₹ " + product.salePrice.toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption
-                                        .w300
-                                        .copyWith(
-                                            decoration:
-                                                TextDecoration.lineThrough),
-                                  ),
-                                  Spacer(),
-                                ],
+                              child: Text(
+                                "₹ " + product.maxPrice.toStringAsFixed(2),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .bold
+                                    .number,
+                              ),
+                            ),
+                            Visibility(
+                              visible: product.maxPrice != product.salePrice,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: kPaddingS,
+                                    right: kPaddingS,
+                                    bottom: kPaddingS,
+                                    top: kPaddingS),
+                                child: Text(
+                                  "₹ " + product.salePrice.toStringAsFixed(2),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .w500
+                                      .number
+                                      .copyWith(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: kPaddingM),
                       if (qty <= 0)
                         GridAddButton(onProductAdd: onProductAdd)
                       else
@@ -251,7 +259,6 @@ class ProductListItem extends StatelessWidget {
                         bottom: kPaddingS / 2),
                     child: Text(
                       product.title,
-                      maxLines: 1,
                       style: Theme.of(context).textTheme.subtitle1.fs18.w600,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -366,10 +373,11 @@ class ProductListItem extends StatelessWidget {
                                 children: <Widget>[
                                   Text(
                                     product.title,
-                                    maxLines: 1,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle2
+                                        .caption
+                                        .black
+                                        .fs12
                                         .w600,
                                   ),
                                   const Padding(
@@ -392,22 +400,31 @@ class ProductListItem extends StatelessWidget {
                                     child: Row(
                                       children: <Widget>[
                                         Text(
-                                          "₹ " + product.maxPrice.toString(),
+                                          "₹ " +
+                                              product.maxPrice
+                                                  .toStringAsFixed(2),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyText2
+                                              .number
                                               .bold,
                                         ),
                                         SizedBox(width: 5),
-                                        Text(
-                                          "₹ " + product.salePrice.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .caption
-                                              .w300
-                                              .copyWith(
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
+                                        Visibility(
+                                          visible: product.maxPrice !=
+                                              product.salePrice,
+                                          child: Text(
+                                            "₹ " +
+                                                product.salePrice
+                                                    .toStringAsFixed(2),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption
+                                                .w300
+                                                .copyWith(
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -470,7 +487,6 @@ class ProductListItem extends StatelessWidget {
                             Text(
                               product.title,
                               style: Theme.of(context).textTheme.subtitle1,
-                              maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             )
                           else

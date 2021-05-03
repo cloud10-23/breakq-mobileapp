@@ -5,11 +5,9 @@ import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/list_item.dart';
-import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/generated/l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -37,6 +35,14 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /// Getting the Image:
+    ImageProvider _image;
+    // try {
+    // _image = AssetImage(product.image);
+    // _image = NetworkImage(apiBaseFull + product.image);
+    // } catch (_) {
+    _image = AssetImage(AssetImages.productPlaceholder);
+    // }
     if (widget.product != null) {
       return BlocBuilder<CartBloc, CartState>(
           buildWhen: (previous, current) => current is CartLoaded,
@@ -75,10 +81,13 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     SizedBox(height: 20.0),
                     Flexible(
-                      child: Image(
-                          image: AssetImage(widget.product.image), height: 150),
+                      child: Image(image: _image, height: 150),
                     ),
                     CustomTitle(title: widget.product.title),
+                    BoldTitle(
+                      title: widget.product.description,
+                      fw: FontWeight.w500,
+                    ),
                     ListItem(
                       title: "Quantity: ",
                       trailing: Text(
@@ -90,35 +99,40 @@ class _ProductScreenState extends State<ProductScreen> {
                             .copyWith(color: Theme.of(context).hintColor),
                       ),
                     ),
-                    SizedBox(height: kPaddingL),
                     ListItem(
                       title: "Price / Unit: ",
                       trailing: Row(
                         children: <Widget>[
                           Text(
-                            "₹ " + widget.product.maxPrice.toString(),
+                            "₹ " + widget.product.maxPrice.toStringAsFixed(2),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1
                                 .bold
+                                .number
                                 .copyWith(color: Theme.of(context).hintColor),
                           ),
                           SizedBox(width: 5),
-                          Text(
-                            "₹ " + widget.product.salePrice.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                .w300
-                                .copyWith(
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Theme.of(context).hintColor,
-                                ),
+                          Visibility(
+                            visible: widget.product.maxPrice !=
+                                widget.product.salePrice,
+                            child: Text(
+                              "₹ " +
+                                  widget.product.salePrice.toStringAsFixed(2),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .w300
+                                  .number
+                                  .copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: kPaddingL),
                     if (qty <= 0)
                       ListItem(
                         showBorder: false,

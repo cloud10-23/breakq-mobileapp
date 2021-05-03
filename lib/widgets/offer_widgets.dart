@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class OfferTextGreen extends StatelessWidget {
+  OfferTextGreen(this.offerPercent);
+  final int offerPercent;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +13,7 @@ class OfferTextGreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(25.0),
           border: Border.all(color: Colors.green.withOpacity(0.5), width: 1.0)),
       child: Text(
-        "35% OFF",
+        "$offerPercent% OFF",
         style: Theme.of(context).textTheme.caption.fs8.green.w800,
       ),
     );
