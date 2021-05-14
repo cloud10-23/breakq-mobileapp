@@ -49,7 +49,7 @@ class CategoryTabsState extends State<CategoryTabs> {
           final CategoryTabModel item = widget.categoryTabs[index];
           final bool isActive = item.id == widget.activeCategoryTab;
           return Container(
-            width: 120,
+            width: 140,
             child: Card(
               margin: const EdgeInsets.all(kPaddingM),
               clipBehavior: Clip.antiAlias,
@@ -65,7 +65,7 @@ class CategoryTabsState extends State<CategoryTabs> {
                 key: item.globalKey,
                 onTap: () {
                   BlocProvider.of<ProductBloc>(context).add(
-                      CategoryFilteredProductEvent(activeSearchTab: item.id));
+                      CategoryFilteredProductEvent(activeCategoryTab: item.id));
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -6,14 +6,18 @@ abstract class ProductEvent {
   String toString() => '$runtimeType';
 }
 
-class SessionInitedProductEvent extends ProductEvent {}
+class SessionInitedProductEvent extends ProductEvent {
+  SessionInitedProductEvent({this.category});
+
+  final CategoryModel category;
+}
 
 class FilteredListRequestedProductEvent extends ProductEvent {}
 
 class CategoryFilteredProductEvent extends ProductEvent {
-  CategoryFilteredProductEvent({this.activeSearchTab});
+  CategoryFilteredProductEvent({this.activeCategoryTab});
 
-  final int activeSearchTab;
+  final int activeCategoryTab;
 }
 
 class BrandFilteredProductEvent extends ProductEvent {

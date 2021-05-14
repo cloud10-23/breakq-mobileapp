@@ -14,20 +14,27 @@ class ProductsRepository {
 
   final DataProvider dataProvider;
 
-  Future<List<CategoryModel>> getCategories() async {
+  Future<List<CategoryTabModel>> getCategoryTabs() async {
     final Uri uri = Uri.http(apiBase, apiCategory);
 
-    final List<dynamic> _categories = await dataProvider.get(uri);
+    final List<dynamic> _rawList = await dataProvider.get(uri);
 
-    return _categories
+    /// 1. Populate all the sub categories
+    List<CategoryModel> _categories = _rawList
         .map<CategoryModel>((dynamic json) =>
             CategoryModel.fromJson(json as Map<String, dynamic>))
         .toList();
+
+    /// 2. Map all sub categories to their tabs
+    return _categories
+        .map<CategoryTabModel>((category) =>
+            CategoryTabModel(category, GlobalKey(debugLabel: category.title)))
+        .toList();
   }
 
-  Future<List<CategoryTabModel>> getSubCategoryTabs(String category) async {
+  Future<List<CategoryTabModel>> getSubCategoryTabs(int category) async {
     final Uri uri =
-        Uri.http(apiBase, apiCategory, {apiCategoryQuery: category});
+        Uri.http(apiBase, apiCategory, {apiCategoryQuery: category.toString()});
 
     final List<dynamic> _rawList = await dataProvider.get(uri);
 
@@ -44,9 +51,9 @@ class ProductsRepository {
         .toList();
   }
 
-  Future<List<BrandTabModel>> getBrandTabs(String subCategory) async {
+  Future<List<BrandTabModel>> getBrandTabs(int subCategory) async {
     final Uri uri =
-        Uri.http(apiBase, apiBrand, {apiCategoryQuery: subCategory});
+        Uri.http(apiBase, apiBrand, {apiCategoryQuery: subCategory.toString()});
 
     final List<dynamic> _rawList = await dataProvider.get(uri);
 

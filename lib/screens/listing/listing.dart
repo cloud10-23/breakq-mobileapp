@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/search_header.dart';
@@ -22,9 +23,9 @@ import 'package:breakq/utils/list.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class Listing extends StatefulWidget {
-  const Listing({Key key, this.title}) : super(key: key);
+  const Listing({Key key, this.category}) : super(key: key);
 
-  final String title;
+  final CategoryModel category;
   @override
   ListingState createState() => ListingState();
 }
@@ -84,7 +85,7 @@ class ListingState extends State<Listing> {
                   SliverAppBar(
                     backgroundColor: kWhite,
                     primary: true,
-                    title: Text(widget.title ?? "Category Name",
+                    title: Text(widget.category?.title ?? "Category Name",
                         style: Theme.of(context).textTheme.headline6.fs16.w600),
                     automaticallyImplyLeading: true,
                     leading: BackButtonCircle(),
@@ -137,7 +138,7 @@ class ListingState extends State<Listing> {
                       expandedHeight: kToolbarHeight,
                       child: CategoryTabs(
                         activeCategoryTab: session.activeCategoryTab,
-                        categoryTabs: session.categoryTabs,
+                        categoryTabs: session.subCategoryTabs,
                       ),
                     ),
                   ),

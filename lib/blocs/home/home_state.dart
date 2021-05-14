@@ -11,7 +11,7 @@ class InitialHomeState extends HomeState {}
 class RefreshSuccessHomeState extends HomeState {
   RefreshSuccessHomeState(this.session);
 
-  final ProductSessionModel session;
+  final HomeSessionModel session;
 }
 
 class RefreshFailureHomeState extends HomeState {}

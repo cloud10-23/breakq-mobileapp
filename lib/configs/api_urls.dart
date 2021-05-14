@@ -11,7 +11,7 @@ const String apiBrand = '/api/Brand';
 const String apiProducts = '/api/Products';
 
 /// Query Parameters
-const String apiCategoryQuery = 'categoryName';
+const String apiCategoryQuery = 'categoryCode';
 const String apiProductQuery = 'productName';
 const String apiBrandCode = 'brandCode';
 const String apiSortBy = 'sortBy';

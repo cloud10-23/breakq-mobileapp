@@ -17,7 +17,7 @@ class ProductSessionModel {
     this.activeBrandTab = '0',
     this.isLoading = false,
     this.searchType = SearchType.full,
-    this.categoryTabs,
+    this.subCategoryTabs,
     this.brandTabs,
     this.searchSortTypes,
     this.searchListTypes,
@@ -34,6 +34,7 @@ class ProductSessionModel {
     String activeBrandTab,
     bool isLoading,
     List<Product> products,
+    List<BrandTabModel> brandTabs,
     SearchType searchType,
   }) {
     return ProductSessionModel(
@@ -47,8 +48,8 @@ class ProductSessionModel {
       q: q ?? this.q,
       isLoading: isLoading ?? this.isLoading,
       searchType: searchType ?? this.searchType,
-      categoryTabs: this.categoryTabs,
-      brandTabs: this.brandTabs,
+      subCategoryTabs: this.subCategoryTabs,
+      brandTabs: brandTabs ?? this.brandTabs,
       searchSortTypes: this.searchSortTypes,
       searchListTypes: this.searchListTypes,
     );
@@ -64,7 +65,7 @@ class ProductSessionModel {
   final bool isLoading;
   final SearchType searchType;
 
-  final List<CategoryTabModel> categoryTabs;
+  final List<CategoryTabModel> subCategoryTabs;
   final List<BrandTabModel> brandTabs;
   final List<ToolbarOptionModel> searchSortTypes;
   final List<ToolbarOptionModel> searchListTypes;

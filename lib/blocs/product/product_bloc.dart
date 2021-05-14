@@ -40,7 +40,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   Stream<ProductState> _mapInitSessionEventToState(
       SessionInitedProductEvent event) async* {
-    List<CategoryTabModel> categoryTabs;
+    List<CategoryTabModel> subCategoryTabs;
     List<BrandTabModel> brandTabs = <BrandTabModel>[];
     List<ToolbarOptionModel> searchSortTypes;
     List<ToolbarOptionModel> searchListTypes;
@@ -54,8 +54,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
         .toList();
 
-    /// The tabs are for Sub categories for now only GROCERIES category works
-    categoryTabs = await _productRepository.getSubCategoryTabs('GROCERIES');
+    /// The tabs are for Sub categories
+    subCategoryTabs =
+        await _productRepository.getSubCategoryTabs(event.category.id);
 
     /// The tabs are for brands.. for now only GROCERIES sub-category works
     /// We add an ALL brand tab option which selects all products
@@ -63,15 +64,16 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       'brand': BrandModel(id: '0', title: 'All'),
       'globalKey': GlobalKey(debugLabel: 'brand-all'),
     }));
-    brandTabs.addAll(await _productRepository.getBrandTabs('GROCERIES'));
+    brandTabs
+        .addAll(await _productRepository.getBrandTabs(subCategoryTabs[0].id));
 
     yield RefreshSuccessProductState(
       ProductSessionModel(
-        categoryTabs: categoryTabs,
+        subCategoryTabs: subCategoryTabs,
         brandTabs: brandTabs,
         searchSortTypes: searchSortTypes,
         searchListTypes: searchListTypes,
-        activeCategoryTab: categoryTabs.first.category.id,
+        activeCategoryTab: subCategoryTabs.first.category.id,
         currentSort: searchSortTypes.first, // default is the first one
         currentListType: searchListTypes.first, // default is the first one
         searchType: SearchType.full,
@@ -93,8 +95,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       List<Product> _products;
 
-      String subCategory = 'GROCERIES';
-      // String subCategory = subCategories[session.activeSearchTab];
+      String subCategory = session.activeCategoryTab.toString();
       _products = await _productRepository.getProducts(
         category: subCategory,
         brandCode:
@@ -121,10 +122,22 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (state is RefreshSuccessProductState) {
       final ProductSessionModel session =
           (state as RefreshSuccessProductState).session;
+      List<BrandTabModel> brandTabs = <BrandTabModel>[];
+
+      /// The tabs are for brands.. for now only GROCERIES sub-category works
+      /// We add an ALL brand tab option which selects all products
+      brandTabs.add(BrandTabModel.fromJson(<String, dynamic>{
+        'brand': BrandModel(id: '0', title: 'All'),
+        'globalKey': GlobalKey(debugLabel: 'brand-all'),
+      }));
+      brandTabs.addAll(
+          await _productRepository.getBrandTabs(event.activeCategoryTab));
 
       yield RefreshSuccessProductState(session.rebuild(
-        activeSearchTab: event.activeSearchTab,
+        activeSearchTab: event.activeCategoryTab,
         searchType: SearchType.full,
+        brandTabs: brandTabs,
+        activeBrandTab: '0',
         isLoading: true,
       ));
 

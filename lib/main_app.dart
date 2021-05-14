@@ -28,7 +28,7 @@ final RouteObserver<PageRoute<dynamic>> routeObserver =
 
 ApplicationBloc _applicationBloc;
 AuthBloc _authBloc;
-// HomeBloc _searchBloc;
+HomeBloc _homeBloc;
 LanguageBloc _languageBloc;
 ThemeBloc _themeBloc;
 BudgetBloc _budgetBloc;
@@ -60,7 +60,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
   /// Init all [Bloc]s here.
   void _initBlocs() async {
     _authBloc = AuthBloc(userRepository: UserRepository());
-    // _searchBloc = HomeBloc();
+    _homeBloc = HomeBloc();
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
     _budgetBloc = BudgetBloc();
@@ -78,7 +78,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     // WidgetsBinding.instance.removeObserver(this);
 
     _authBloc.close();
-    // _searchBloc.close();
+    _homeBloc.close();
     _languageBloc.close();
     _themeBloc.close();
     _cartBloc.close();
@@ -107,7 +107,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         BlocProvider<ApplicationBloc>(
             create: (BuildContext context) => _applicationBloc),
         BlocProvider<AuthBloc>(create: (BuildContext context) => _authBloc),
-        // BlocProvider<HomeBloc>(create: (BuildContext context) => _searchBloc),
+        BlocProvider<HomeBloc>(create: (BuildContext context) => _homeBloc),
         // BlocProvider<LanguageBloc>(
         //     create: (BuildContext context) => _languageBloc),
         BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),
@@ -125,6 +125,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           if (appState is SetupSuccessApplicationState) {
+            _homeBloc.add(SessionInitedHomeEvent());
             homeWidget = HomeScreen();
           } else if (appState is OnboardingInProgressApplicationState) {
             homeWidget = const OnboardingScreen();

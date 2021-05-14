@@ -97,9 +97,11 @@ class Routes {
       case listing:
         return MaterialPageRoute<Listing>(
           builder: (BuildContext context) => BlocProvider<ProductBloc>(
-            create: (_) => ProductBloc()..add(SessionInitedProductEvent()),
+            create: (_) => ProductBloc()
+              ..add(SessionInitedProductEvent(
+                  category: routeSettings?.arguments)),
             child: Listing(
-              title: routeSettings?.arguments ?? null,
+              category: routeSettings?.arguments ?? null,
             ),
           ),
         );

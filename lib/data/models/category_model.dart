@@ -1,6 +1,7 @@
 class CategoryModel {
   CategoryModel({
     this.id,
+    this.parentId,
     this.title,
     this.image,
   });
@@ -10,11 +11,14 @@ class CategoryModel {
     return CategoryModel(
       id: int.tryParse((json['category_Code'])?.toString() ?? '0') ?? 0,
       title: json['category_Name'] as String ?? '',
+      parentId:
+          int.tryParse((json['parent_Category_Code'])?.toString() ?? '0') ?? 0,
       image: _image,
     );
   }
 
   final int id;
+  final int parentId;
   final String title;
   final String image;
 }
