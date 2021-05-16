@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/blocs/search/search_bloc.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
@@ -127,9 +128,15 @@ class Routes {
       /// Search
       case search:
         return MaterialPageRoute<SearchBar>(
-          builder: (BuildContext context) {
-            return SearchBar();
-          },
+          builder: (BuildContext context) => BlocProvider<SearchBloc>(
+            create: (_) => SearchBloc()
+              ..add(
+                SessionInitedSearchEvent(),
+              ),
+            child: SearchBar(
+              initialQuery: routeSettings.arguments,
+            ),
+          ),
         );
 
       /// Cart and Checkout

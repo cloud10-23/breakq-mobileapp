@@ -51,8 +51,7 @@ class ListingState extends State<Listing> {
         /// Return true/false to determine whether or not to rebuild the widget
         /// with state.
         return currentState is InitialProductState ||
-            (currentState is RefreshSuccessProductState &&
-                currentState.session.searchType == SearchType.full);
+            (currentState is RefreshSuccessProductState);
       },
       builder: (BuildContext context, ProductState state) {
         // While the screen state is initializing we shall show a full screen
@@ -153,31 +152,6 @@ class ListingState extends State<Listing> {
                       ),
                     ),
                   ),
-                  // SliverAppBar(
-                  //   primary: false,
-                  //   // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  //   toolbarHeight: 45,
-                  //   floating: true,
-                  //   titleSpacing: 0.0,
-                  //   leadingWidth: 0.0,
-                  //   title: SearchListToolbar(
-                  //     searchSortTypes: searchSortTypes,
-                  //     currentSort: session.currentSort,
-                  //     onFilterTap: () {
-                  //       _scaffoldKey.currentState.openEndDrawer();
-                  //     },
-                  //     onSortChange: (ToolbarOptionModel newSort) {
-                  //       _homeBloc.add(SortOrderChangedProductEvent(newSort));
-                  //     },
-                  //     products: session.products,
-                  //     currentListType: session.currentListType,
-                  //     searchListTypes: searchListTypes,
-                  //     onListTypeChange: (ToolbarOptionModel newListType) =>
-                  //         _homeBloc.add(ListTypeChangedProductEvent(newListType)),
-                  //   ),
-                  //   actions: <Widget>[Container()], // remove the hamburger menu
-                  //   leading: Container(), // remove back button
-                  // ),
                   SliverList(
                     delegate: SliverChildListDelegate(<Widget>[
                       if (session.products.isNotNullOrEmpty)
@@ -198,21 +172,4 @@ class ListingState extends State<Listing> {
       },
     );
   }
-
-  // Future<String> _quickSearch(SearchSessionModel session) async {
-  //   final String queryString = await showSearch(
-  //     context: context,
-  //     delegate: SearchLocationsDelegate(
-  //         hintText: L10n.of(context).searchPlaceholderQuickSearchLocations),
-  //     query: session.q,
-  //   );
-
-  //   if (queryString == null) {
-  //     _homeBloc.add(FilteredListRequestedProductEvent());
-  //   } else {
-  //     _homeBloc.add(KeywordChangedProductEvent(queryString));
-  //   }
-
-  //   return queryString;
-  // }
 }

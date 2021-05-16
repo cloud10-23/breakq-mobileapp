@@ -8,29 +8,6 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class SearchAppBar extends StatelessWidget {
-  Future<void> _quickSearch(BuildContext context) async {
-    // String queryString;
-    // if (BlocProvider.of<HomeBloc>(context).state is RefreshSuccessHomeState)
-    //   queryString = await showSearch(
-    //     context: context,
-    //     delegate: SearchProductsDelegate(hintText: 'Search for a product'),
-    //     query: (BlocProvider.of<HomeBloc>(context).state
-    //             as RefreshSuccessHomeState)
-    //         .session
-    //         .q,
-    //   );
-
-    // if (queryString == null) {
-    //   BlocProvider.of<HomeBloc>(context).add(FilteredListRequestedHomeEvent());
-    // } else {
-    //   BlocProvider.of<HomeBloc>(context)
-    //       .add(KeywordChangedHomeEvent(queryString));
-    // }
-    // return queryString;
-    Navigator.pushNamed(context, Routes.search);
-    // showDialog(context: context, builder: (_) => SearchBar());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,10 +34,7 @@ class SearchAppBar extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(kBoxDecorationRadius / 2)),
           ),
-          onPressed: () {
-            // Switch to Search Tab
-            _quickSearch(context);
-          },
+          onPressed: () => Navigator.pushNamed(context, Routes.search),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[

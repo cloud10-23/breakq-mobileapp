@@ -76,7 +76,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         activeCategoryTab: subCategoryTabs.first.category.id,
         currentSort: searchSortTypes.first, // default is the first one
         currentListType: searchListTypes.first, // default is the first one
-        searchType: SearchType.full,
       ),
     );
     add(FilteredListRequestedProductEvent());
@@ -90,7 +89,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       yield RefreshSuccessProductState(session.rebuild(
         isLoading: true,
-        searchType: SearchType.full,
       ));
 
       List<Product> _products;
@@ -102,17 +100,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             (session.activeBrandTab == "0") ? null : session.activeBrandTab,
       );
 
-      if (_products.isNotEmpty && session.q.isNotEmpty) {
-        _products = _products
-            .where((Product product) =>
-                product.title.toLowerCase().contains(session.q.toLowerCase()))
-            .toList();
-      }
-
       yield RefreshSuccessProductState(session.rebuild(
         products: _products,
         isLoading: false,
-        searchType: SearchType.full,
       ));
     }
   }
@@ -135,7 +125,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       yield RefreshSuccessProductState(session.rebuild(
         activeSearchTab: event.activeCategoryTab,
-        searchType: SearchType.full,
         brandTabs: brandTabs,
         activeBrandTab: '0',
         isLoading: true,
@@ -153,7 +142,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       yield RefreshSuccessProductState(session.rebuild(
         activeBrandTab: event.activeBrandTab,
-        searchType: SearchType.full,
         isLoading: true,
       ));
 
@@ -168,7 +156,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           (state as RefreshSuccessProductState).session;
 
       yield RefreshSuccessProductState(session.rebuild(
-        searchType: SearchType.full,
         currentListType: event.newListType,
       ));
     }
@@ -182,45 +169,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       yield RefreshSuccessProductState(session.rebuild(
         currentSort: event.newSort,
-        searchType: SearchType.full,
         isLoading: true,
       ));
 
       add(FilteredListRequestedProductEvent());
     }
   }
-  // Stream<State> _mapQuickEventToState(
-  //     QuickSearchRequestedEvent event) async* {
-  //   if (state is RefreshSuccessState) {
-  //     if (event.q.length >= kMinimalNameQueryLength) {
-  //       final SearchSessionModel session =
-  //           (state as RefreshSuccessState).session;
-
-  //       yield RefreshSuccessState(session.rebuild(
-  //         isLoading: true,
-  //         products: null,
-  //         searchType: SearchType.quick,
-  //       ));
-
-  //       const ProductsRepository productRepository = ProductsRepository();
-
-  //       List<Product> _products;
-
-  //       _products = await productRepository.search();
-
-  //       if (_products.isNotEmpty) {
-  //         _products = _products
-  //             .where((Product product) =>
-  //                 product.title.toLowerCase().contains(event.q.toLowerCase()))
-  //             .toList();
-  //       }
-
-  //       yield RefreshSuccessState(session.rebuild(
-  //         products: _products,
-  //         isLoading: false,
-  //         searchType: SearchType.quick,
-  //       ));
-  //     }
-  //   }
-  // }
 }

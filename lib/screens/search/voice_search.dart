@@ -180,9 +180,7 @@ class _VoiceSearchState extends State<VoiceSearch> {
     setState(() {
       _status = result.recognizedWords;
     });
-    Navigator.pop(context);
-    Navigator.of(context, rootNavigator: true)
-        .pushNamed(Routes.listing, arguments: result.recognizedWords);
+    Navigator.pop(context, result.recognizedWords);
   }
 
   void soundLevelListener(double level) {

@@ -1,7 +1,6 @@
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/main.dart';
+import 'package:breakq/screens/search/voice_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -35,6 +34,14 @@ class VoiceIconButton extends StatelessWidget {
             size: 20,
           ),
         ),
-        onTap: () => getIt.get<AppGlobals>().showVoiceScreen(context));
+        onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => Dialog(child: VoiceSearch()),
+                    useRootNavigator: true)
+                .then((query) {
+              if (query != null)
+                Navigator.of(context)
+                    .pushNamed(Routes.search, arguments: query);
+            }));
   }
 }

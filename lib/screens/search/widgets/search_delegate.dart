@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/data/models/search_history_model.dart';
-import 'package:breakq/screens/listing/widgets/search_locations_delegate_history.dart';
-import 'package:breakq/screens/listing/widgets/search_locations_delegate_result_list.dart';
+import 'package:breakq/screens/search/widgets/search_history_delegate_history.dart';
+import 'package:breakq/screens/search/widgets/search_delegate_result_list.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class SearchProductsDelegate extends SearchDelegate<String> {
@@ -47,17 +47,17 @@ class SearchProductsDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return SearchLocationsDelegateResultList(query: query);
+    return SearchDelegateResultList(query: query);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     ///show suggested queries based on past queries or the current context.
     if (query.isNotEmpty) {
-      return SearchLocationsDelegateResultList(query: query);
+      return SearchDelegateResultList(query: query);
     }
 
-    return SearchLocationsDelegateHistory(
+    return SearchDelegateHistory(
       onQuerySelected: (SearchHistoryModel model) => query = model.query,
     );
   }

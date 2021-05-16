@@ -9,19 +9,17 @@ import 'package:breakq/widgets/uppercase_title.dart';
 /// Signature for when a tap on search history query has occurred.
 typedef SearchHistoryTapCallback = void Function(SearchHistoryModel model);
 
-class SearchLocationsDelegateHistory extends StatefulWidget {
-  const SearchLocationsDelegateHistory({Key key, this.onQuerySelected})
+class SearchDelegateHistory extends StatefulWidget {
+  const SearchDelegateHistory({Key key, this.onQuerySelected})
       : super(key: key);
 
   final SearchHistoryTapCallback onQuerySelected;
 
   @override
-  _SearchLocationsDelegateHistoryState createState() =>
-      _SearchLocationsDelegateHistoryState();
+  _SearchDelegateHistoryState createState() => _SearchDelegateHistoryState();
 }
 
-class _SearchLocationsDelegateHistoryState
-    extends State<SearchLocationsDelegateHistory> {
+class _SearchDelegateHistoryState extends State<SearchDelegateHistory> {
   List<SearchHistoryModel> _searchHistory;
 
   @override

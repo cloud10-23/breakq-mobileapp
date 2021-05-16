@@ -1,37 +1,39 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/blocs/search/search_bloc.dart';
+import 'package:breakq/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/data/models/product_session_model.dart';
-import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 
-class SearchLocationsDelegateResultList extends StatefulWidget {
-  const SearchLocationsDelegateResultList({Key key, this.query})
-      : super(key: key);
+class SearchDelegateResultList extends StatefulWidget {
+  const SearchDelegateResultList({Key key, this.query}) : super(key: key);
 
   final String query;
 
   @override
-  _SearchLocationsDelegateResultListState createState() {
-    return _SearchLocationsDelegateResultListState();
+  _SearchDelegateResultListState createState() {
+    return _SearchDelegateResultListState();
   }
 }
 
-class _SearchLocationsDelegateResultListState
-    extends State<SearchLocationsDelegateResultList> {
-  ProductBloc _homeBloc;
+class _SearchDelegateResultListState extends State<SearchDelegateResultList> {
+  SearchBloc _searchBloc;
 
   List<Product> _locations;
 
   @override
   void initState() {
-    _homeBloc = BlocProvider.of<ProductBloc>(context);
-
+    _searchBloc = BlocProvider.of<SearchBloc>(context);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchBloc.close();
+    super.dispose();
   }
 
   @override
@@ -42,8 +44,7 @@ class _SearchLocationsDelegateResultListState
 
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (BuildContext context, ProductState state) {
-        if (state is RefreshSuccessProductState &&
-            state.session.searchType == SearchType.quick) {
+        if (state is RefreshSuccessProductState) {
           if (state.session.isLoading) {
             return const Center(
               child: SizedBox(

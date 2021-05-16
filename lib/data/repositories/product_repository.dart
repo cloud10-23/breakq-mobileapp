@@ -108,17 +108,4 @@ class ProductsRepository {
             SearchHistoryModel.fromJson(json as Map<String, dynamic>))
         .toList();
   }
-
-  Future<List<Product>> search() async {
-    // final DataResponseModel rawData = await dataProvider.get('discover');
-
-    final List<dynamic> _rawProducts = [];
-    //     rawData.data['products'] as List<dynamic> ?? <dynamic>[];
-
-    final List<dynamic> _products = _rawProducts + _rawProducts + _rawProducts;
-    return _products
-        .map<Product>(
-            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
-        .toList();
-  }
 }
