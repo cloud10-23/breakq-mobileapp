@@ -196,7 +196,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
           yield LoginFailureAuthState('Invalid OTP!');
         else {
           yield LoginFailureAuthState(
-              "Sorry! Couldn't link your social account" +
+              "Sorry! Couldn't link your social account " +
                   "with phone! Please try again later! " +
                   "Contact the store if this persists.");
         }

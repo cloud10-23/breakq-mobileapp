@@ -66,7 +66,7 @@ class _SearchBarState extends State<SearchBar> {
             builder: (context) => Dialog(child: VoiceSearch()),
             useRootNavigator: true)
         .then((query) {
-      if (query.isNotNullOrEmpty) {
+      if (query?.isNotEmpty ?? false) {
         _controller.text = query;
       }
     });
