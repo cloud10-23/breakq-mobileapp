@@ -5,6 +5,7 @@ import 'package:breakq/data/models/home_session_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
+import 'package:breakq/screens/home/widgets/errorPage.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
@@ -194,7 +195,11 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           );
         }
-      }
+      } else if (state is RefreshFailureHomeState)
+        return HomeErrorPage(
+          tryAgain: () =>
+              BlocProvider.of<HomeBloc>(context).add(SessionInitedHomeEvent()),
+        );
 
       return FullScreenIndicator(
         color: Theme.of(context).cardColor,

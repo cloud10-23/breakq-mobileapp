@@ -1,3 +1,4 @@
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -146,6 +147,7 @@ const String kDemoPassword = 'Password1';
 
 /// Currency used in the application.
 const String kCurrency = 'INR';
+const String kCurrencySymbol = '₹';
 
 /// My separate constants, for later adding to .arb file
 const String allServices = "All Services";
@@ -218,6 +220,15 @@ class AssetImages {
       'assets/images/illustrations/orders-illustration.jpg';
   static const String martIllustration =
       'assets/images/illustrations/shopping_mart_illustration.jpeg';
+
+  static const List<String> errors = [
+    'assets/images/illustrations/error.png',
+    'assets/images/illustrations/no_data.png',
+    'assets/images/illustrations/noInternet.jpg',
+    // 'assets/images/illustrations/no_result.png',
+    // 'assets/images/illustrations/noData.png',
+  ];
+
   static const String cartEmpty = 'assets/images/empty_cart.jpeg';
   static const String mapMarker = 'assets/images/map-marker.png';
   static const String icon = 'assets/images/icon_new.jpeg';
@@ -290,23 +301,23 @@ class AssetImages {
 
 /// Sort Types
 const List<dynamic> sortTypes = <dynamic>[
+  // <String, dynamic>{
+  //   'code': 'rating',
+  //   'label': "Top Rated",
+  //   'icon': Icons.star,
+  // },
+  // <String, dynamic>{
+  //   'code': 'popularity',
+  //   'label': "Most Popular",
+  //   'icon': Icons.remove_red_eye,
+  // },
   <String, dynamic>{
-    'code': 'rating',
-    'label': "Top Rated",
-    'icon': Icons.star,
-  },
-  <String, dynamic>{
-    'code': 'popularity',
-    'label': "Most Popular",
-    'icon': Icons.remove_red_eye,
-  },
-  <String, dynamic>{
-    'code': 'htl',
+    'code': apiSortHTL,
     'label': "Price:  High-Low",
     'icon': Icons.attach_money,
   },
   <String, dynamic>{
-    'code': 'lth',
+    'code': apiSortLTH,
     'label': "Price:  Low-High",
     'icon': Icons.attach_money,
   },

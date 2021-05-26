@@ -84,14 +84,14 @@ class _ThemeButtonGroupState extends State<ThemeButtonGroup> {
               if (widget.onChange != null) {
                 widget.onChange(button);
               }
-              setState(() {
-                if (widget.isUnselectable &&
-                    _currentSelectedButton == widget.buttonValues[index]) {
-                  _currentSelectedButton = null;
-                } else {
-                  _currentSelectedButton = widget.buttonValues[index];
-                }
-              });
+              // setState(() {
+              //   if (widget.isUnselectable &&
+              //       _currentSelectedButton == widget.buttonValues[index]) {
+              //     _currentSelectedButton = null;
+              //   } else {
+              //     _currentSelectedButton = widget.buttonValues[index];
+              //   }
+              // });
             },
             child: Text(
               widget.buttonValues[index].label,

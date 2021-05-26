@@ -1,7 +1,7 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/data/models/minmax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/button_group_model.dart';
 import 'package:breakq/generated/l10n.dart';
@@ -15,26 +15,46 @@ class SearchFilterDrawer extends StatefulWidget {
 }
 
 class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
-  RangeValues _rangeValues = const RangeValues(0, 1000);
+  RangeValues _rangeValues = const RangeValues(0, 5000);
   final List<ButtonGroupModel> priceRanges = [
     ButtonGroupModel(
-      id: '1',
+      min: '0',
+      max: '100',
       label: '₹0 - ₹100',
     ),
     ButtonGroupModel(
-      id: '2',
+      min: '100',
+      max: '500',
       label: '₹100 - ₹500',
     ),
     ButtonGroupModel(
-      id: '3',
-      label: '₹500 - ₹1,000',
+      min: '500',
+      max: '1000',
+      label: '₹500 - ₹1000',
     ),
     ButtonGroupModel(
-      id: '4',
-      label: '₹1,000 - ₹5,000',
+      min: '1000',
+      max: '2000',
+      label: '₹1000 - ₹2000',
     ),
     ButtonGroupModel(
-      id: '5',
+      min: '2000',
+      max: '3000',
+      label: '₹2000 - ₹3000',
+    ),
+    ButtonGroupModel(
+      min: '3000',
+      max: '4000',
+      label: '₹3000 - ₹4000',
+    ),
+    ButtonGroupModel(
+      min: '4000',
+      max: '5000',
+      label: '₹4000 - ₹5000',
+    ),
+    ButtonGroupModel(
+      min: '5000',
+      max: '5000',
       label: 'Above ₹5,000',
     ),
   ];
@@ -89,10 +109,11 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                         Padding(
                           padding: const EdgeInsets.only(
                               top: kPaddingL, bottom: kPaddingS),
-                          child: Text(L10n.of(context)
-                              .searchDrawerDistanceRange(
+                          child: Text((_rangeValues.start == _rangeValues.end)
+                              ? L10n.of(context).searchDrawerDistanceRange(
                                   _rangeValues.start.round().toString(),
-                                  _rangeValues.end.round().toString())),
+                                  _rangeValues.end.round().toString())
+                              : "Above $kCurrencySymbol${_rangeValues.end.round()}"),
                         ),
                       ],
                     ),
@@ -100,8 +121,8 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                       children: <Widget>[
                         RangeSlider(
                           min: 0,
-                          max: 1000,
-                          divisions: 10,
+                          max: 5000,
+                          divisions: 20,
                           values: _rangeValues,
                           activeColor: kBlue,
                           inactiveColor: Theme.of(context).highlightColor,
@@ -137,8 +158,14 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                     ),
                     ThemeButtonGroup(
                       buttonValues: priceRanges,
-                      isUnselectable: true,
-                      onChange: (ButtonGroupModel selectedButton) {},
+                      isUnselectable: false,
+                      onChange: (ButtonGroupModel selectedButton) {
+                        setState(() {
+                          _rangeValues = RangeValues(
+                              double.tryParse(selectedButton.min),
+                              double.tryParse(selectedButton.max));
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -149,9 +176,11 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                 child: ThemeButton(
                   text: L10n.of(context).commonBtnApply,
                   onPressed: () {
-                    BlocProvider.of<ProductBloc>(context)
-                        .add(FilteredListRequestedProductEvent());
-
+                    BlocProvider.of<ProductBloc>(context).add(
+                        PriceFilterProductEvent(
+                            minMax: MinMax(
+                                min: _rangeValues.start.round().toString(),
+                                max: _rangeValues.end.round().toString())));
                     Navigator.pop(context);
                   },
                 ),

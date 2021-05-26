@@ -96,6 +96,21 @@ class ProductsRepository {
         .toList();
   }
 
+  Future<Product> getScanProduct({
+    String productId,
+  }) async {
+    final Uri uri = Uri.http(apiBase, apiProducts, {
+      apiProductQuery: productId,
+    });
+    final List<dynamic> _rawList = await dataProvider.get(uri);
+
+    /// 1. Populate all the sub categories
+    return _rawList
+        .map<Product>(
+            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList()[0];
+  }
+
   Future<List<SearchHistoryModel>> getSearchHistory() async {
     final rawData = [];
     // await dataProvider.get('search_history');

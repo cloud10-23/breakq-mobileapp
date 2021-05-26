@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
+import 'package:breakq/data/models/minmax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +100,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         category: subCategory,
         brandCode:
             (session.activeBrandTab == "0") ? null : session.activeBrandTab,
+        filterBy: (session.minMax != null)
+            ? (session.minMax.min == session.minMax.max)
+                ? apiFilterByGT
+                : apiFilterByMM
+            : null,
+        filterByValue: (session.minMax != null)
+            ? (session.minMax.min == session.minMax.max)
+                ? session.minMax.max
+                : "${session.minMax.min},${session.minMax.max}"
+            : null,
+        sortBy: session.currentSort?.code,
       );
 
       yield RefreshSuccessProductState(session.rebuild(
@@ -169,6 +182,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       yield RefreshSuccessProductState(session.rebuild(
         currentSort: event.newSort,
+        isLoading: true,
+      ));
+
+      add(FilteredListRequestedProductEvent());
+    }
+  }
+
+  Stream<ProductState> _mapPriceFilterEventToState(
+      PriceFilterProductEvent event) async* {
+    if (state is RefreshSuccessProductState) {
+      final ProductSessionModel session =
+          (state as RefreshSuccessProductState).session;
+
+      yield RefreshSuccessProductState(session.rebuild(
+        minMax: event.minMax,
         isLoading: true,
       ));
 

@@ -37,3 +37,9 @@ class SortOrderChangedProductEvent extends ProductEvent {
 
   final ToolbarOptionModel newSort;
 }
+
+class PriceFilterProductEvent extends ProductEvent {
+  PriceFilterProductEvent({this.minMax});
+
+  final MinMax minMax;
+}

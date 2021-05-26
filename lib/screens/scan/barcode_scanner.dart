@@ -1,6 +1,7 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -108,20 +109,24 @@ class BarcodeScanner {
       //     }),
       //     useRootNavigator: true);
 
+      // Make a call to repository to get the product details:
+      Product _product =
+          await ProductsRepository().getScanProduct(productId: scanText);
+
       // Get the Product to display over here
-      Product maggi = Product(
-        id: 101,
-        available: 10,
-        categoryId: 12,
-        image: AssetImages.maggi,
-        salePrice: 50,
-        maxPrice: 40,
-        title: "Maggi Scanned",
-        quantity: "500 gm",
-      );
+      // Product maggi = Product(
+      //   id: 101,
+      //   available: 10,
+      //   categoryId: 12,
+      //   image: AssetImages.maggi,
+      //   salePrice: 50,
+      //   maxPrice: 40,
+      //   title: "Maggi Scanned",
+      //   quantity: "500 gm",
+      // );
       getIt
           .get<AppGlobals>()
-          .onProductPressed(maggi, context, then: () => this.scan(context));
+          .onProductPressed(_product, context, then: () => this.scan(context));
     }
   }
 }

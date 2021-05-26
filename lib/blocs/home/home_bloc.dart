@@ -29,11 +29,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     List<CategoryTabModel> categoryTabs =
         await _productRepository.getCategoryTabs();
 
-    yield RefreshSuccessHomeState(
-      HomeSessionModel(
-        categoryTabs: categoryTabs,
-        isLoading: false,
-      ),
-    );
+    if (categoryTabs?.isEmpty ?? true)
+      yield RefreshFailureHomeState();
+    else
+      yield RefreshSuccessHomeState(
+        HomeSessionModel(
+          categoryTabs: categoryTabs,
+          isLoading: false,
+        ),
+      );
   }
 }
