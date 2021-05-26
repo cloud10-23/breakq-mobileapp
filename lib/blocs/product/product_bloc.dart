@@ -6,7 +6,6 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
-import 'package:breakq/data/models/minmax.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +36,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield* _mapListTypeEventToState(event);
     } else if (event is SortOrderChangedProductEvent) {
       yield* _mapSortOrderEventToState(event);
+    } else if (event is PriceFilterProductEvent) {
+      yield* _mapPriceFilterEventToState(event);
     }
   }
 
@@ -100,15 +101,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         category: subCategory,
         brandCode:
             (session.activeBrandTab == "0") ? null : session.activeBrandTab,
-        filterBy: (session.minMax != null)
-            ? (session.minMax.min == session.minMax.max)
+        filterBy: (session.range != null)
+            ? (session.range.start == session.range.end)
                 ? apiFilterByGT
                 : apiFilterByMM
             : null,
-        filterByValue: (session.minMax != null)
-            ? (session.minMax.min == session.minMax.max)
-                ? session.minMax.max
-                : "${session.minMax.min},${session.minMax.max}"
+        filterByValue: (session.range != null)
+            ? (session.range.start == session.range.end)
+                ? session.range.end
+                : "${session.range.start},${session.range.end}"
             : null,
         sortBy: session.currentSort?.code,
       );
@@ -196,7 +197,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           (state as RefreshSuccessProductState).session;
 
       yield RefreshSuccessProductState(session.rebuild(
-        minMax: event.minMax,
+        range: event.range,
         isLoading: true,
       ));
 

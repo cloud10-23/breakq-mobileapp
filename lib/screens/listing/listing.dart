@@ -71,7 +71,9 @@ class ListingState extends State<Listing> {
         return Scaffold(
           key: _scaffoldKey,
           endDrawerEnableOpenDragGesture: false,
-          endDrawer: SearchFilterDrawer(),
+          endDrawer: SearchFilterDrawer(
+            initialValue: session.range,
+          ),
           floatingActionButton: ScanFloatingButtonExtended(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

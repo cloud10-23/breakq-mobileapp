@@ -1,5 +1,4 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
-import 'package:breakq/data/models/minmax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -10,6 +9,9 @@ import 'package:breakq/widgets/theme_button_group.dart';
 import 'package:breakq/widgets/uppercase_title.dart';
 
 class SearchFilterDrawer extends StatefulWidget {
+  SearchFilterDrawer({this.initialValue});
+
+  final RangeValues initialValue;
   @override
   _SearchFilterDrawerState createState() => _SearchFilterDrawerState();
 }
@@ -58,6 +60,12 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
       label: 'Above ₹5,000',
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _rangeValues = widget.initialValue ?? const RangeValues(0, 5000);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +117,7 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                         Padding(
                           padding: const EdgeInsets.only(
                               top: kPaddingL, bottom: kPaddingS),
-                          child: Text((_rangeValues.start == _rangeValues.end)
+                          child: Text((_rangeValues.start != _rangeValues.end)
                               ? L10n.of(context).searchDrawerDistanceRange(
                                   _rangeValues.start.round().toString(),
                                   _rangeValues.end.round().toString())
@@ -176,11 +184,8 @@ class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
                 child: ThemeButton(
                   text: L10n.of(context).commonBtnApply,
                   onPressed: () {
-                    BlocProvider.of<ProductBloc>(context).add(
-                        PriceFilterProductEvent(
-                            minMax: MinMax(
-                                min: _rangeValues.start.round().toString(),
-                                max: _rangeValues.end.round().toString())));
+                    BlocProvider.of<ProductBloc>(context)
+                        .add(PriceFilterProductEvent(range: _rangeValues));
                     Navigator.pop(context);
                   },
                 ),

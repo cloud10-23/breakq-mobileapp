@@ -39,7 +39,7 @@ class SortOrderChangedProductEvent extends ProductEvent {
 }
 
 class PriceFilterProductEvent extends ProductEvent {
-  PriceFilterProductEvent({this.minMax});
+  PriceFilterProductEvent({this.range});
 
-  final MinMax minMax;
+  final RangeValues range;
 }

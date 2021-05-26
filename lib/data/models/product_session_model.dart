@@ -1,8 +1,8 @@
 import 'package:breakq/data/models/category_tab_model.dart';
-import 'package:breakq/data/models/minmax.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
+import 'package:flutter/material.dart';
 
 class ProductSessionModel {
   ProductSessionModel({
@@ -13,7 +13,7 @@ class ProductSessionModel {
     this.selectedDateRange = 0,
     this.activeCategoryTab = 0,
     this.activeBrandTab = '0',
-    this.minMax,
+    this.range,
     this.isLoading = false,
     this.subCategoryTabs,
     this.brandTabs,
@@ -29,7 +29,7 @@ class ProductSessionModel {
     ToolbarOptionModel currentGenderFilter,
     int activeSearchTab,
     String activeBrandTab,
-    MinMax minMax,
+    RangeValues range,
     bool isLoading,
     List<Product> products,
     List<BrandTabModel> brandTabs,
@@ -42,7 +42,7 @@ class ProductSessionModel {
       currentListType: currentListType ?? this.currentListType,
       activeCategoryTab: activeSearchTab ?? this.activeCategoryTab,
       activeBrandTab: activeBrandTab ?? this.activeBrandTab,
-      minMax: minMax ?? this.minMax,
+      range: range ?? this.range,
       isLoading: isLoading ?? this.isLoading,
       subCategoryTabs: this.subCategoryTabs,
       brandTabs: brandTabs ?? this.brandTabs,
@@ -63,7 +63,7 @@ class ProductSessionModel {
   final List<BrandTabModel> brandTabs;
   final List<ToolbarOptionModel> searchSortTypes;
   final List<ToolbarOptionModel> searchListTypes;
-  final MinMax minMax;
+  final RangeValues range;
 
   final List<Product> products;
 }
