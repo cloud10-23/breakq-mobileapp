@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'product_model.g.dart';
+
+@JsonSerializable(createToJson: false)
 class Product extends Equatable {
   const Product({
     this.id,
@@ -16,34 +20,26 @@ class Product extends Equatable {
     this.discountPercent,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'] as int ?? 0,
-      title: json['title'] as String ?? '',
-      categoryId: json['category_Id'] as int ?? 0,
-      brandCode: json['brand_Code'] as String ?? '',
-      categoryName: json['category_Name'] as String ?? '',
-      description: json['description'] as String ?? '',
-      quantity: json['quantity'] as String ?? '',
-      image: json['image'] as String ?? '',
-      salePrice: json['sale_Price'] as double ?? 0,
-      maxPrice: json['max_Price'] as double ?? null,
-      available: json['available'] as double ?? 0,
-      discountPercent: json['discount_Percent'] as int ?? 0,
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
 
   final int id;
   final String title;
+  @JsonKey(name: 'category_Id')
   final int categoryId;
+  @JsonKey(name: 'brand_Code')
   final String brandCode;
+  @JsonKey(name: 'category_Name')
   final String categoryName;
   final String quantity;
   final String description;
   final String image;
   final double available;
+  @JsonKey(name: 'sale_Price')
   final double salePrice;
+  @JsonKey(name: 'max_Price')
   final double maxPrice;
+  @JsonKey(name: 'discount_Percent')
   final int discountPercent;
 
   /// Schema:
