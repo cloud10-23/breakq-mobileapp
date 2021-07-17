@@ -133,7 +133,7 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       final List<Bill> _bills = session.bills
           .where((bill) => session.selectedBillIds.contains(bill.billNo))
           .toList();
-      List<Product> _products = List();
+      List<Product> _products = [];
       for (final Bill bill in _bills) {
         _products.addAll(bill.products.cartItems.keys);
       }

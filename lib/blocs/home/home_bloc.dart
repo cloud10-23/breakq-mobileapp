@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:breakq/data/models/category_tab_model.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/home_session_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -26,15 +26,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       SessionInitedHomeEvent event) async* {
     yield RefreshSuccessHomeState(HomeSessionModel(isLoading: true));
 
-    List<CategoryTabModel> categoryTabs =
-        await _productRepository.getCategoryTabs();
+    Map<homeSections, dynamic> _homeDetails =
+        await _productRepository.getHomeDetails();
 
-    if (categoryTabs?.isEmpty ?? true)
+    if (_homeDetails?.isEmpty ?? true)
       yield RefreshFailureHomeState();
     else
       yield RefreshSuccessHomeState(
         HomeSessionModel(
-          categoryTabs: categoryTabs,
+          topDeals: _homeDetails[homeSections.topDeals],
+          topOffers: _homeDetails[homeSections.topOffers],
+          categoryTabs: _homeDetails[homeSections.categories],
           isLoading: false,
         ),
       );

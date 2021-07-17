@@ -1,6 +1,8 @@
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
+import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/base.dart';
@@ -40,7 +42,9 @@ class HomeScreenState extends State<HomeScreen> {
       if (state is RefreshSuccessHomeState) {
         if (!(state?.session?.isLoading ?? true)) {
           HomeSessionModel _session = state.session;
-          List<CategoryTabModel> _categoryTabs = _session.categoryTabs;
+          final List<DealsModel> _topDeals = _session.topDeals;
+          final List<DealsModel> _topOffers = _session.topOffers;
+          final List<CategoryTabModel> _categoryTabs = _session.categoryTabs;
           return Base(
             body: CustomScrollView(
               controller: _customScrollViewController,
@@ -152,7 +156,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         isBlue: true,
                         children: [
-                          _showGridOfImages(2, 4),
+                          _showGridOfImages(_topDeals),
                         ]),
                     SizedBox(height: kPaddingBtwnStrips),
                     HomeBoldHeading(
@@ -161,7 +165,7 @@ class HomeScreenState extends State<HomeScreen> {
                           Entypo.price_tag,
                         ),
                         children: [
-                          _showHorizontalScrollImages(),
+                          _showHorizontalScrollImages(_topOffers),
                         ]),
                     SizedBox(height: kPaddingBtwnStrips),
                     HomeBoldHeading(
@@ -226,44 +230,64 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _showGridOfImages(int columns, int rows) {
+  Widget _showGridOfImages(List<DealsModel> deals) {
     return Container(
       margin: const EdgeInsets.all(kPaddingM),
       color: kWhite,
-      child: Column(
+      child: Wrap(
         children: List.generate(
-          columns,
-          (colIndex) => Padding(
-            padding: EdgeInsets.zero, //.symmetric(horizontal: kPaddingM),
-            child: Row(
-              children: List.generate(
-                rows,
-                (rowIndex) => Expanded(
-                  child: GridImage(
-                    colIndex: colIndex,
-                    rowIndex: rowIndex,
-                    height: 100,
-                  ),
-                ),
-              ),
-            ),
+          deals.length,
+          (colIndex) => GridImage(
+            image: deals[colIndex].image,
+            height: 100,
+            width: 100,
+            onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
+                arguments: deals[colIndex]),
           ),
         ),
       ),
     );
   }
+  // Widget _showGridOfImages(int columns, int rows) {
+  //   return Container(
+  //     margin: const EdgeInsets.all(kPaddingM),
+  //     color: kWhite,
+  //     child: Column(
+  //       children: List.generate(
+  //         columns,
+  //         (colIndex) => Padding(
+  //           padding: EdgeInsets.zero, //.symmetric(horizontal: kPaddingM),
+  //           child: Row(
+  //             children: List.generate(
+  //               rows,
+  //               (rowIndex) => Expanded(
+  //                 child: GridImage(
+  //                   colIndex: colIndex,
+  //                   rowIndex: rowIndex,
+  //                   height: 100,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget _showHorizontalScrollImages() {
+  Widget _showHorizontalScrollImages(List<DealsModel> topOffers) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
       scrollDirection: Axis.horizontal,
       child: Row(
         children: List.generate(
-          6,
+          topOffers.length,
           (index) => GridImage(
-            rowIndex: index,
+            image: topOffers[index].image,
             height: 100,
             width: 100,
+            onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
+                arguments: topOffers[index]),
           ),
         ),
       ),

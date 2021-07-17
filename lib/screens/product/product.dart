@@ -85,7 +85,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     CustomTitle(title: widget.product.title),
                     BoldTitle(
-                      title: widget.product.description,
+                      title: widget.product.description ?? "",
                       fw: FontWeight.w500,
                     ),
                     ListItem(

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/theme_button.dart';
 import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -145,7 +144,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                 controller: _otpController,
                 // onChanged: (value) {},
                 onCompleted: (code) {
-                  _submitOTP(code);
+                  _submitOTP(_code);
                 },
                 onChanged: (value) {
                   // print(value);

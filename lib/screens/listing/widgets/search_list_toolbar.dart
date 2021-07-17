@@ -1,4 +1,3 @@
-import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
@@ -15,13 +14,11 @@ class SearchListToolbar extends StatefulWidget {
     @required this.currentSort,
     @required this.onSortChange,
     this.onFilterTap,
-    @required this.products,
     @required this.searchListTypes,
     @required this.currentListType,
     @required this.onListTypeChange,
   }) : super(key: key);
 
-  final List<Product> products;
   final List<ToolbarOptionModel> searchListTypes;
   final ToolbarOptionModel currentListType;
   final ToolbarOptionModelCallback onListTypeChange;

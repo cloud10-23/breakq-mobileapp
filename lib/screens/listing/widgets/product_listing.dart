@@ -44,7 +44,7 @@ class ProductListing extends StatelessWidget {
               icon: Icons.info_outline,
             ),
             Text(
-              L10n.of(context).locationNoResults,
+              L10n.of(context).productNoResults,
               style: Theme.of(context)
                   .textTheme
                   .subtitle1
@@ -56,9 +56,11 @@ class ProductListing extends StatelessWidget {
       );
     }
 
+    final defaultListType = ToolbarOptionModel.fromJson(listTypes[0]);
+
     final ProductListItemViewType _viewType = ProductListItemViewType.values
         .firstWhere((ProductListItemViewType e) =>
-            describeEnum(e) == currentListType.code);
+            describeEnum(e) == (currentListType?.code ?? defaultListType.code));
 
     return Container(
       padding: const EdgeInsets.symmetric(

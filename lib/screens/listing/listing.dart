@@ -107,7 +107,6 @@ class ListingState extends State<Listing> {
                                 _productBloc
                                     .add(SortOrderChangedProductEvent(newSort));
                               },
-                              products: session.products,
                               currentListType: session.currentListType,
                               searchListTypes: session.searchListTypes,
                               onListTypeChange: (ToolbarOptionModel

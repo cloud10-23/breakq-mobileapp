@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:breakq/utils/console.dart';
 
@@ -22,5 +20,20 @@ class DataProvider {
       return [];
     }
     return [];
+  }
+
+  Future<Map<String, dynamic>> getAsMap(uri) async {
+    try {
+      final rawData = await http.get(uri);
+      if (rawData.statusCode >= 200 && rawData.statusCode < 300) {
+        return rawData.body.isNotEmpty
+            ? jsonDecode(rawData.body) as Map<String, dynamic>
+            : {};
+      }
+    } catch (_) {
+      Console.log('DataProvider::get', _.toString(), error: _);
+      return {};
+    }
+    return {};
   }
 }

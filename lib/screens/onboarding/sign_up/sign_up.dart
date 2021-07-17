@@ -1,4 +1,3 @@
-import 'package:breakq/blocs/application/application_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/edit_profile/profile_image_editor.dart';

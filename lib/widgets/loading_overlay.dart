@@ -48,14 +48,10 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         vsync: this, duration: const Duration(milliseconds: 300));
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((AnimationStatus status) {
-      // ignore: unnecessary_statements
-      status == AnimationStatus.forward
-          ? setState(() => <bool>{_overlayVisible = true})
-          : null;
-      // ignore: unnecessary_statements
-      status == AnimationStatus.dismissed
-          ? setState(() => <bool>{_overlayVisible = false})
-          : null;
+      if (status == AnimationStatus.forward)
+        setState(() => <bool>{_overlayVisible = true});
+      else if (status == AnimationStatus.dismissed)
+        setState(() => <bool>{_overlayVisible = false});
     });
     if (widget.isLoading) {
       _controller.forward();

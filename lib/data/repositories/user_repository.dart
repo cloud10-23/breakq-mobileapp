@@ -2,7 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:breakq/utils/form_utils.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth;

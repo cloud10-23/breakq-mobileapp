@@ -14,22 +14,23 @@ import 'intl/messages_all.dart';
 
 class L10n {
   L10n();
-  
+
   static L10n current;
-  
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<L10n> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       L10n.current = L10n();
-      
+
       return L10n.current;
     });
-  } 
+  }
 
   static L10n of(BuildContext context) {
     return Localizations.of<L10n>(context, L10n);
@@ -236,7 +237,7 @@ class L10n {
   }
 
   /// `No Products found! Check back later!`
-  String get locationNoResults {
+  String get productNoResults {
     return Intl.message(
       'No Products found! Check back later!',
       name: 'locationNoResults',

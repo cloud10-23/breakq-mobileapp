@@ -85,34 +85,34 @@ class _BaseBlocWrapperState extends State<BaseBlocWrapper> {
     return exit;
   }
 
-  void _apiCall({String message, VoidCallback userNew, VoidCallback userOld}) {
-    showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text("<<API CALL>>"),
-              content: Text(
-                message,
-              ),
-              actions: <Widget>[
-                OutlinedButton(
-                  onPressed: userOld,
-                  child: Text("User exists",
-                      style: Theme.of(context)
-                          .textTheme
-                          .button
-                          .copyWith(color: kBlack)),
-                ),
-                OutlinedButton(
-                  child: Text('User is new',
-                      style: Theme.of(context)
-                          .textTheme
-                          .button
-                          .copyWith(color: kBlack)),
-                  onPressed: userNew,
-                )
-              ],
-            ));
-  }
+  // void _apiCall({String message, VoidCallback userNew, VoidCallback userOld}) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //             title: Text("<<API CALL>>"),
+  //             content: Text(
+  //               message,
+  //             ),
+  //             actions: <Widget>[
+  //               OutlinedButton(
+  //                 onPressed: userOld,
+  //                 child: Text("User exists",
+  //                     style: Theme.of(context)
+  //                         .textTheme
+  //                         .button
+  //                         .copyWith(color: kBlack)),
+  //               ),
+  //               OutlinedButton(
+  //                 child: Text('User is new',
+  //                     style: Theme.of(context)
+  //                         .textTheme
+  //                         .button
+  //                         .copyWith(color: kBlack)),
+  //                 onPressed: userNew,
+  //               )
+  //             ],
+  //           ));
+  // }
 
   @override
   Widget build(BuildContext context) {

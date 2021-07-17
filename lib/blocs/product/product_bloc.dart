@@ -6,6 +6,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
+import 'package:breakq/data/models/home_models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +26,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
     if (event is SessionInitedProductEvent) {
-      yield* _mapInitSessionEventToState(event);
+      yield* mapInitSessionEventToState(event);
     } else if (event is FilteredListRequestedProductEvent) {
-      yield* _mapFilteredEventToState(event);
+      yield* mapFilteredEventToState(event);
     } else if (event is CategoryFilteredProductEvent) {
       yield* _mapCategoryFilteredEventToState(event);
     } else if (event is BrandFilteredProductEvent) {
@@ -41,7 +42,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
   }
 
-  Stream<ProductState> _mapInitSessionEventToState(
+  Stream<ProductState> mapInitSessionEventToState(
       SessionInitedProductEvent event) async* {
     List<CategoryTabModel> subCategoryTabs;
     List<BrandTabModel> brandTabs = <BrandTabModel>[];
@@ -84,7 +85,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     add(FilteredListRequestedProductEvent());
   }
 
-  Stream<ProductState> _mapFilteredEventToState(
+  Stream<ProductState> mapFilteredEventToState(
       FilteredListRequestedProductEvent event) async* {
     if (state is RefreshSuccessProductState) {
       final ProductSessionModel session =

@@ -266,9 +266,10 @@ class AssetImages {
   static const String scan = 'assets/images/Scan.png';
 
   //Product Images
-  static const String maggi = 'assets/images/products/maggi.jpeg';
-  static const String dove = 'assets/images/products/dove.jpeg';
-  static const String wheat = 'assets/images/products/wheat.jpeg';
+  static const String ariel = 'assets/images/products/ariel.jpg';
+  static const String tide = 'assets/images/products/tide.jpg';
+  static const String surfexcel = 'assets/images/products/surf_excel.jpg';
+  static const String henko = 'assets/images/products/henko.jpg';
 
   /// Banners
   // static const String banner_qs = 'assets/images/banners/B1.png';
@@ -297,6 +298,14 @@ class AssetImages {
   static const String paid_image = 'assets/images/icons/paid_green.png';
 
   static String ads(int index) => 'assets/images/ads/ad$index.jpeg';
+}
+
+enum homeSections {
+  topOffers,
+  topDeals,
+  offersForYou,
+  exclProducts,
+  categories
 }
 
 /// Sort Types
@@ -341,27 +350,35 @@ List<dynamic> listTypes = <dynamic>[
 Map<Product, int> generateSampleProducts() => {
       Product(
         id: 100,
-        image: AssetImages.maggi,
+        image: AssetImages.ariel,
         salePrice: 60,
         maxPrice: 40,
         quantity: '500 gm',
-        title: 'Maggi',
+        title: 'Ariel',
       ): 2,
       Product(
         id: 101,
-        image: AssetImages.dove,
+        image: AssetImages.tide,
         salePrice: 100,
         maxPrice: 70,
         quantity: '500 ml',
-        title: 'Dove',
+        title: 'Tide',
       ): 4,
       Product(
         id: 102,
-        image: AssetImages.wheat,
+        image: AssetImages.surfexcel,
         salePrice: 500,
         maxPrice: 490,
         quantity: '5 kg',
-        title: 'Aashirvad Atta',
+        title: 'Surf Excel',
+      ): 1,
+      Product(
+        id: 102,
+        image: AssetImages.henko,
+        salePrice: 500,
+        maxPrice: 490,
+        quantity: '5 kg',
+        title: 'Henko',
       ): 1,
     };
 

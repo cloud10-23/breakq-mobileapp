@@ -1,5 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/blocs/product/offer_bloc.dart';
 import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/blocs/search/search_bloc.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
@@ -15,6 +16,7 @@ import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_show_qr.dart
 import 'package:breakq/screens/checkout/widgets/ch_walkin/ch_walkin_success.dart';
 import 'package:breakq/screens/edit_profile/take_picture.dart';
 import 'package:breakq/screens/listing/listing.dart';
+import 'package:breakq/screens/listing/offer_listing.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_main.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_mobile_num.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_otp.dart';
@@ -42,6 +44,9 @@ class Routes {
 
   /// Product Listing
   static const String listing = '/listing';
+
+  /// Offer Listing
+  static const String offerListing = '/offer_listing';
 
   /// Product Details
   static const String product = '/product';
@@ -81,7 +86,7 @@ class Routes {
       case o_mobileLogin:
         return MaterialPageRoute<SignInWidget>(
           builder: (BuildContext context) => SignInWidget(
-            title: routeSettings?.arguments ?? null,
+            title: routeSettings?.arguments,
           ),
         );
       case o_otp:
@@ -102,7 +107,19 @@ class Routes {
               ..add(SessionInitedProductEvent(
                   category: routeSettings?.arguments)),
             child: Listing(
-              category: routeSettings?.arguments ?? null,
+              category: routeSettings?.arguments,
+            ),
+          ),
+        );
+
+      /// Offer Listing
+      case offerListing:
+        return MaterialPageRoute<OfferListing>(
+          builder: (BuildContext context) => BlocProvider<OfferBloc>(
+            create: (_) => OfferBloc()
+              ..add(SessionInitedProductEvent(offer: routeSettings?.arguments)),
+            child: OfferListing(
+              offer: routeSettings?.arguments,
             ),
           ),
         );

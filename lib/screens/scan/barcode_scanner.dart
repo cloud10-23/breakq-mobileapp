@@ -1,5 +1,4 @@
 import 'package:breakq/configs/app_globals.dart';
-import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/main.dart';

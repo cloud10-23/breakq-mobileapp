@@ -165,7 +165,6 @@ class _SearchBarState extends State<SearchBar> {
                               _searchBloc
                                   .add(SortOrderChangedSearchEvent(newSort));
                             },
-                            products: session.products,
                             currentListType: session.currentListType,
                             searchListTypes: session.searchListTypes,
                             onListTypeChange: (ToolbarOptionModel

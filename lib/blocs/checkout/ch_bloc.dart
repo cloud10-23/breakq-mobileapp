@@ -342,8 +342,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
   Stream<CheckoutState> _mapAddressAddedChEventToState() async* {
     if (state is SessionRefreshSuccessChState) {
-      final CheckoutSession session =
-          (state as SessionRefreshSuccessChState).session;
+      // final CheckoutSession session =
+      //     (state as SessionRefreshSuccessChState).session;
 
       /// Load all the bills:
       // final List<Bill> _bills = session.bills

@@ -1,4 +1,5 @@
 import 'package:breakq/data/models/category_tab_model.dart';
+import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
@@ -19,6 +20,7 @@ class ProductSessionModel {
     this.brandTabs,
     this.searchSortTypes,
     this.searchListTypes,
+    this.offer,
   });
 
   ProductSessionModel rebuild({
@@ -33,6 +35,7 @@ class ProductSessionModel {
     bool isLoading,
     List<Product> products,
     List<BrandTabModel> brandTabs,
+    DealsModel offer,
   }) {
     return ProductSessionModel(
       products: products ?? this.products,
@@ -48,6 +51,7 @@ class ProductSessionModel {
       brandTabs: brandTabs ?? this.brandTabs,
       searchSortTypes: this.searchSortTypes,
       searchListTypes: this.searchListTypes,
+      offer: offer ?? this.offer,
     );
   }
 
@@ -64,6 +68,8 @@ class ProductSessionModel {
   final List<ToolbarOptionModel> searchSortTypes;
   final List<ToolbarOptionModel> searchListTypes;
   final RangeValues range;
+
+  final DealsModel offer;
 
   final List<Product> products;
 }

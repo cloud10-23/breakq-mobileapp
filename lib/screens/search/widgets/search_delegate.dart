@@ -84,7 +84,9 @@ class SearchProductsDelegate extends SearchDelegate<String> {
       primaryColorBrightness: Brightness.dark,
       primaryTextTheme:
           theme.textTheme.copyWith(headline6: theme.textTheme.headline6.white),
-      cursorColor: Colors.white,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white,
+      ),
       textTheme:
           theme.textTheme.copyWith(headline6: theme.textTheme.headline6.white),
       inputDecorationTheme: theme.inputDecorationTheme.copyWith(

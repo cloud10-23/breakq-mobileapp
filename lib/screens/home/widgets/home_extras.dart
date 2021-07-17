@@ -1,34 +1,42 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
-import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class GridImage extends StatelessWidget {
-  GridImage({this.colIndex, this.rowIndex, this.height, this.width});
+  GridImage(
+      {this.image,
+      this.colIndex,
+      this.rowIndex,
+      this.height,
+      this.width,
+      this.onPressed});
+  final String image;
   final int colIndex;
   final int rowIndex;
   final double height;
   final double width;
+  final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.pushNamed(context, Routes.listing, arguments: "OFFER"),
+      onTap: onPressed,
       child: Card(
         margin: EdgeInsets.all(1.0),
         child: Image(
             height: height,
             width: width,
-            image: AssetImage((colIndex == null)
-                ? AssetImages.topDeals(rowIndex)
-                : AssetImages.topOffers(colIndex, rowIndex)),
+            image: (image != null)
+                ? AssetImage(AssetImages.productPlaceholder)
+                // ? NetworkImage(image)
+                : AssetImage((colIndex == null)
+                    ? AssetImages.topDeals(rowIndex)
+                    : AssetImages.topOffers(colIndex, rowIndex)),
             fit: BoxFit.fill),
       ),
     );
@@ -40,14 +48,7 @@ class ExclProductsCard extends StatelessWidget {
   final int index;
 
   Product getProduct(int index) {
-    return Product(
-      id: index + 10,
-      image: AssetImages.maggi,
-      salePrice: 60,
-      maxPrice: 40,
-      quantity: '500 gm',
-      title: 'Product ${index + 1}',
-    );
+    return generateSampleProducts().keys.toList()[index % 3];
   }
 
   @override
@@ -57,14 +58,7 @@ class ExclProductsCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 2.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
-        product: Product(
-          id: index + 10,
-          image: AssetImages.maggi,
-          salePrice: 60,
-          maxPrice: 40,
-          quantity: '500 gm',
-          title: 'Product ${index + 1}',
-        ),
+        product: generateSampleProducts().keys.toList()[index % 3],
         onProductAdd: () =>
             getIt.get<AppGlobals>().onProductAdd(getProduct(index), context),
         onProductRem: () =>

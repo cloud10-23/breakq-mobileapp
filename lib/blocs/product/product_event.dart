@@ -7,9 +7,10 @@ abstract class ProductEvent {
 }
 
 class SessionInitedProductEvent extends ProductEvent {
-  SessionInitedProductEvent({this.category});
+  SessionInitedProductEvent({this.category, this.offer});
 
   final CategoryModel category;
+  final DealsModel offer;
 }
 
 class FilteredListRequestedProductEvent extends ProductEvent {}
