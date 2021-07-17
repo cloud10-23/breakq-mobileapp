@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'category_model.g.dart';
+
+@JsonSerializable(createToJson: false)
 class CategoryModel {
   CategoryModel({
     this.id,
@@ -6,23 +11,19 @@ class CategoryModel {
     this.image,
   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    final String _image = json['image'] as String ?? '';
-    return CategoryModel(
-      id: int.tryParse((json['category_Code'])?.toString() ?? '0') ?? 0,
-      title: json['category_Name'] as String ?? '',
-      parentId:
-          int.tryParse((json['parent_Category_Code'])?.toString() ?? '0') ?? 0,
-      image: _image,
-    );
-  }
+  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoryModelFromJson(json);
 
+  @JsonKey(name: 'category_Code')
   final int id;
+  @JsonKey(name: 'parent_Category_Code')
   final int parentId;
+  @JsonKey(name: 'category_Name')
   final String title;
   final String image;
 }
 
+@JsonSerializable(createToJson: false)
 class BrandModel {
   BrandModel({
     this.id,
@@ -30,16 +31,12 @@ class BrandModel {
     this.image,
   });
 
-  factory BrandModel.fromJson(Map<String, dynamic> json) {
-    final String _image = json['image'] as String ?? '';
-    return BrandModel(
-      id: json['brand_Code']?.toString() ?? '0',
-      title: json['brand_Name'] as String ?? '',
-      image: _image,
-    );
-  }
+  factory BrandModel.fromJson(Map<String, dynamic> json) =>
+      _$BrandModelFromJson(json);
 
+  @JsonKey(name: 'brand_Code')
   final String id;
+  @JsonKey(name: 'brand_Name')
   final String title;
   final String image;
 }

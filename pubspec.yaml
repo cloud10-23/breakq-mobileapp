@@ -106,10 +106,17 @@ dependencies:
   # Phone Number codes
   intl_phone_field: ^1.4.4
 
+  #Json Annotation:
+  json_annotation: #^4.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.9.0
+
+  #Json Serialization:
+  build_runner: #^2.0.0
+  json_serializable: #^5.0.0
 
 # To run the Flutter Launcher Icons:
 # flutter pub run flutter_launcher_icons:main

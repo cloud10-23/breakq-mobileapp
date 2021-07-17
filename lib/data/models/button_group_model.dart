@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'button_group_model.g.dart';
+
+@JsonSerializable(createToJson: false)
 class ButtonGroupModel extends Equatable {
   const ButtonGroupModel({
     this.min,
@@ -7,13 +11,8 @@ class ButtonGroupModel extends Equatable {
     this.label,
   });
 
-  factory ButtonGroupModel.fromJson(Map<String, dynamic> json) {
-    return ButtonGroupModel(
-      min: json['min'] as String ?? '',
-      max: json['max'] as String ?? '',
-      label: json['label'] as String ?? '',
-    );
-  }
+  factory ButtonGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$ButtonGroupModelFromJson(json);
 
   final String min;
   final String max;
