@@ -12,6 +12,9 @@ const String apiOfferProducts =
 const String apiCategory = '/api/Category';
 const String apiBrand = '/api/Brand';
 const String apiProducts = '/api/Products';
+const String apiCartAddOrUpdate = '/api/Cart/AddOrUpdateCart';
+const String apiCartDelete = '/api/Cart/DeleteCart';
+const String apiCartGet = '/api/Cart/GetCart';
 
 /// Query Parameters
 const String apiCategoryQuery = 'categoryCode';
@@ -28,6 +31,10 @@ const String apiStoreId = 'StoreId';
 const String apiName = 'Name';
 const String apiValue = 'value';
 const String apiDescription = 'description';
+
+/// Cart Parameters
+const String apistoreId = 'storeId';
+const String apiMobileNo = 'mobileNo';
 
 /// Filter Values
 /// <param name="categoryCode"></param>

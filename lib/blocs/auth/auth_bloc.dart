@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:breakq/blocs/base_bloc.dart';
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
@@ -16,13 +17,14 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
-  AuthBloc({@required UserRepository userRepository})
+  AuthBloc({@required UserRepository userRepository, @required this.cartBloc})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(InitialAuthState());
   // AuthBloc() : super(InitialAuthState());
 
   final UserRepository _userRepository;
+  final CartBloc cartBloc;
   String _verID = '';
 
   StreamSubscription subscription;
@@ -286,6 +288,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       // );
 
       add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
+      cartBloc.add(InitCartFromAPIEvent());
     } else {
       yield AuthenticationFailureAuthState();
     }

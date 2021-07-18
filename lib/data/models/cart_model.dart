@@ -1,3 +1,4 @@
+import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/foundation.dart';
@@ -20,27 +21,53 @@ class Cart {
     );
   }
 
+  factory Cart.fromCartApi(List<CartProduct> cartProducts) {
+    int _noOfProducts = 0;
+    double _cartValue = 0.0;
+    double _orgCartValue = 0.0;
+    if (cartProducts == null && cartProducts.isEmpty) {
+      return Cart(cartItems: {}, noOfProducts: _noOfProducts);
+    }
+
+    return Cart(
+      cartItems: cartProducts.map((cartProduct) {
+        _noOfProducts += cartProduct.qty;
+        _cartValue += cartProduct.qty * cartProduct.product.maxPrice;
+        _orgCartValue += cartProduct.qty * cartProduct.product.salePrice;
+        return {cartProduct.product: cartProduct.qty};
+      }).reduce((value, element) {
+        value.addAll(element);
+        return value;
+      }),
+      noOfProducts: _noOfProducts,
+      cartValue: Price.calc(_orgCartValue, _cartValue),
+    );
+  }
+
   set setNoOfProducts(_noOfP) => noOfProducts = _noOfP;
 
   void setCartValue(_orgPrice, _price) =>
       cartValue = Price.calc(_orgPrice, _price);
 
-  void addProduct({@required Product product, int quantity = 1}) {
+  int addProduct({@required Product product, int quantity = 1}) {
     if (cartItems.containsKey(product)) {
       cartItems[product] += quantity;
     } else
       cartItems[product] = quantity;
+    return cartItems[product];
   }
 
   void bulkAddProducts({@required Map<Product, int> newCartItems}) {
     this.cartItems.addAll(newCartItems);
   }
 
-  void reduceQOfProduct({@required Product product, int quantity = 1}) {
-    if (this.cartItems[product] <= 1 || this.cartItems[product] < quantity)
+  int reduceQOfProduct({@required Product product, int quantity = 1}) {
+    if (this.cartItems[product] <= 1 || this.cartItems[product] < quantity) {
       this.cartItems.remove(product);
-    else
-      this.cartItems[product] -= quantity;
+      return 0;
+    }
+    this.cartItems[product] -= quantity;
+    return this.cartItems[product];
   }
 
   void removeProduct({@required Product product}) {

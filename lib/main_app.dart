@@ -59,12 +59,15 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
 
   /// Init all [Bloc]s here.
   void _initBlocs() async {
-    _authBloc = AuthBloc(userRepository: UserRepository());
     _homeBloc = HomeBloc();
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
     _budgetBloc = BudgetBloc();
     _cartBloc = CartBloc(budgetBloc: _budgetBloc)..add(InitCartEvent());
+    _authBloc = AuthBloc(
+      userRepository: UserRepository(),
+      cartBloc: _cartBloc,
+    );
     _qsBloc = QSBloc(cartBloc: _cartBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,

@@ -90,7 +90,8 @@ class CartListItem extends StatelessWidget {
                                       SizedBox(width: kPaddingL),
                                       Visibility(
                                           visible:
-                                              product.discountPercent ?? 0 > 0,
+                                              (product.discountPercent ?? 0) >
+                                                  0,
                                           child: OfferTextGreen(
                                               product.discountPercent)),
                                     ],
@@ -99,7 +100,7 @@ class CartListItem extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        product.quantity,
+                                        product.quantity ?? "",
                                         maxLines: 1,
                                         style: Theme.of(context)
                                             .textTheme
