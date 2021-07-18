@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/blocs/budget/budget_bloc.dart';
+import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/data/repositories/cart_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'cart_event.dart';
@@ -11,12 +14,16 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final BudgetBloc budgetBloc;
-  CartBloc({this.budgetBloc}) : super(CartInitial());
+  final AuthBloc authBloc;
+  final CartRepository _cartRepo = CartRepository();
+  CartBloc({this.budgetBloc, this.authBloc}) : super(CartInitial());
 
   @override
   Stream<CartState> mapEventToState(CartEvent event) async* {
     if (event is InitCartEvent) {
       yield* _mapInitCartEventToState(event);
+    } else if (event is InitCartFromAPIEvent) {
+      yield* _mapInitCartFromAPIEventToState(event);
     } else if (event is LoadCartEvent) {
       yield* _mapLoadCartEventToState(event);
     } else if (event is AddPToCartEvent) {
@@ -36,27 +43,33 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoaded(cart: Cart(cartItems: Map<Product, int>()));
   }
 
-  Stream<CartState> _mapLoadCartEventToState(LoadCartEvent event) async* {
-    //Total items:
-    int _noOfProducts = 0;
-    double _cartValue = 0.0;
-    double _orgCartValue = 0.0;
-    event.cartItems.cartItems.keys.forEach((item) {
-      _noOfProducts += event.cartItems.cartItems[item];
-      _cartValue += event.cartItems.cartItems[item] * item.maxPrice;
-      _orgCartValue += event.cartItems.cartItems[item] * item.salePrice;
-    });
+  Stream<CartState> _mapInitCartFromAPIEventToState(
+      InitCartFromAPIEvent event) async* {
+    yield CartLoaded(cart: Cart.fromCartApi(await _cartRepo.getCart()));
+  }
 
-    event.cartItems.setNoOfProducts = _noOfProducts;
-    event.cartItems.setCartValue(_orgCartValue, _cartValue);
+  Stream<CartState> _mapLoadCartEventToState(LoadCartEvent event) async* {
+    /// Update the UI first
+    yield CartLoaded(cart: event.cartItems);
+
+    /// ======== UPDATE THE API HERE ======== ///
+    for (final item in event.newCartItems.keys)
+      await _cartRepo.addOrUpdateCart(AddCartModel(
+        itemCode: item.id,
+        qty: event.newCartItems[item],
+      ));
+
+    /// ======== Get the new CART from API ======= ///
+
+    final newCartProducts = await _cartRepo.getCart();
+    final newCart = Cart.fromCartApi(newCartProducts);
 
     if (event.isAdded) {
       /// Notifying the BudgetBLoc of addition
-      budgetBloc.add(BudgetProductAddedEvent(
-          cartValue: event.cartItems.cartValue.totalAmnt));
+      budgetBloc
+          .add(BudgetProductAddedEvent(cartValue: newCart.cartValue.totalAmnt));
     }
-
-    yield CartLoaded(cart: event.cartItems);
+    yield CartLoaded(cart: newCart);
   }
 
   Stream<CartState> _mapAddEventToState(AddPToCartEvent event) async* {
@@ -65,9 +78,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     // Add the product to cart here
-    cartItems.addProduct(product: event.product, quantity: event.qty);
+    final qty =
+        cartItems.addProduct(product: event.product, quantity: event.qty);
 
-    add(LoadCartEvent(cartItems: cartItems, isAdded: true));
+    add(LoadCartEvent(
+        cartItems: cartItems,
+        newCartItems: {event.product: qty},
+        isAdded: true));
   }
 
   Stream<CartState> _mapBulkAddEventToState(BulkAddPToCartEvent event) async* {
@@ -78,7 +95,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // Add all the products to cart here
     cartItems.bulkAddProducts(newCartItems: event.cartItems);
 
-    add(LoadCartEvent(cartItems: cartItems, isAdded: true));
+    add(LoadCartEvent(
+        cartItems: cartItems, newCartItems: event.cartItems, isAdded: true));
   }
 
   Stream<CartState> _mapReduceQEventToState(ReduceQOfPCartEvent event) async* {
@@ -87,9 +105,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     // Remove the product from cart here
-    cartItems.reduceQOfProduct(product: event.product);
+    final qty = cartItems.reduceQOfProduct(product: event.product);
 
-    add(LoadCartEvent(cartItems: cartItems));
+    add(LoadCartEvent(
+      cartItems: cartItems,
+      newCartItems: {event.product: qty},
+    ));
   }
 
   Stream<CartState> _mapRemoveEventToState(RemovePFromCartEvent event) async* {
@@ -100,12 +121,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // Remove the product from cart here
     cartItems.removeProduct(product: event.product);
 
-    add(LoadCartEvent(cartItems: cartItems));
+    add(LoadCartEvent(
+      cartItems: cartItems,
+      newCartItems: {event.product: 0},
+    ));
   }
 
   Stream<CartState> _mapResetCartEventToState(ResetCartEvent event) async* {
+    Cart cart;
+    if (state is CartLoaded) cart = (state as CartLoaded).cart;
     yield CartLoading();
 
-    add(LoadCartEvent(cartItems: Cart(cartItems: Map<Product, int>())));
+    if (await _cartRepo.deleteCart())
+      yield CartLoaded(cart: Cart(cartItems: Map<Product, int>()));
+    else {
+      /// ERROR
+      print("Error clearing cart!");
+      yield CartLoaded(cart: cart);
+    }
   }
 }

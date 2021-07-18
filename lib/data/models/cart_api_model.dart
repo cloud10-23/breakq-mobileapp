@@ -1,3 +1,5 @@
+import 'package:breakq/data/models/product_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'cart_api_model.g.dart';
@@ -23,65 +25,34 @@ part 'cart_api_model.g.dart';
     "max_Price": 13,
     "available": 1
 */
-@JsonSerializable(createToJson: false)
-class CartResponse {
-  @JsonKey(name: 'cartDetId')
+class CartProduct extends Equatable {
   final int cartDetId;
-  @JsonKey(name: 'store_ID')
   final int storeId;
-  @JsonKey(name: 'mobile_No')
   final String mobileNo;
-  @JsonKey(name: 'item_Code')
-  final int itemCode;
   final int qty;
   final double rate;
-  @JsonKey(name: 'discount_Percent')
-  final double discountPercent;
-  @JsonKey(name: 'tax_Code')
   final String taxCode;
   final double weight;
   final String status;
-  final String title;
-  @JsonKey(name: 'category_Id')
-  final int categoryId;
-  @JsonKey(name: 'brand_Code')
-  final String brandCode;
-  @JsonKey(name: 'category_Name')
-  final String categoryName;
-  final description;
-  final quantity;
-  final image;
-  @JsonKey(name: 'sale_Price')
-  final salePrice;
-  @JsonKey(name: 'maxPrice')
-  final double maxPrice;
-  final double available;
+  final Product product;
 
-  CartResponse({
+  CartProduct({
     this.cartDetId,
     this.storeId,
     this.mobileNo,
-    this.itemCode,
     this.qty,
     this.rate,
-    this.discountPercent,
     this.taxCode,
     this.weight,
     this.status,
-    this.title,
-    this.categoryId,
-    this.available,
-    this.brandCode,
-    this.categoryName,
-    this.description,
-    this.image,
-    this.maxPrice,
-    this.quantity,
-    this.salePrice,
+    this.product,
   });
 
-  factory CartResponse.fromJson(Map<String, dynamic> json) =>
-      _$CartResponseFromJson(json);
+  factory CartProduct.fromJson(Map<String, dynamic> json) =>
+      _$CartProductFromJson(json);
+
+  @override
+  List<Object> get props => [this.product];
 }
 
 @JsonSerializable()
@@ -100,4 +71,38 @@ class AddCartModel {
       _$AddCartModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AddCartModelToJson(this);
+
+  AddCartModel rebuild({storeID, mobileNo}) => AddCartModel(
+        itemCode: this.itemCode,
+        qty: this.qty,
+        storeID: storeID,
+        mobileNo: mobileNo,
+      );
+}
+
+CartProduct _$CartProductFromJson(Map<String, dynamic> json) {
+  return CartProduct(
+    cartDetId: json['cartDetId'] as int,
+    storeId: json['store_ID'] as int,
+    mobileNo: json['mobile_No'] as String,
+    qty: json['qty'] as int,
+    rate: (json['rate'] as num)?.toDouble(),
+    taxCode: json['tax_Code'] as String,
+    weight: (json['weight'] as num)?.toDouble(),
+    status: json['status'] as String,
+    product: Product(
+      id: json['item_Code'] as int,
+      discountPercent: json['discount_Percent'] as int,
+      title: json['title'] as String,
+      categoryId: json['category_Id'] as int,
+      available: (json['available'] as num)?.toDouble(),
+      brandCode: json['brand_Code'] as String,
+      categoryName: json['category_Name'] as String,
+      description: json['description'],
+      image: json['image'],
+      maxPrice: (json['max_Price'] as num)?.toDouble(),
+      quantity: json['quantity'],
+      salePrice: json['sale_Price'],
+    ),
+  );
 }
