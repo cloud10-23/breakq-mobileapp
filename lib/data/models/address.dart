@@ -1,25 +1,50 @@
-class DeliveryAddress {
-  final String name;
-  final String addLine1;
-  final String addLine2;
-  final String cityDistTown;
-  final String state;
-  final String landmark;
-  final String phone;
-  final String pinCode;
+import 'package:json_annotation/json_annotation.dart';
 
-  DeliveryAddress({
-    this.name,
-    this.addLine1,
-    this.addLine2,
-    this.cityDistTown,
+part 'address.g.dart';
+/*{
+  "addressId": 0,
+  "mobile_No": "string",
+  "fullName": "string",
+  "pinCode": "string",
+  "houseNo": "string",
+  "street": "string",
+  "landMark": "string",
+  "state": "string",
+  "city": "string"
+}*/
+
+@JsonSerializable()
+class Address {
+  final String addressId;
+  @JsonKey(name: 'mobile_No')
+  final String phone;
+  final String fullName;
+  final String pinCode;
+  final String houseNo;
+  final String street;
+  @JsonKey(name: 'landMark')
+  final String landmark;
+  final String state;
+  final String city;
+
+  Address({
+    this.addressId,
+    this.fullName,
+    this.houseNo,
+    this.street,
+    this.city,
     this.state,
     this.landmark,
     this.phone,
     this.pinCode,
   });
 
-  DeliveryAddress rebuild({
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
+
+  Address rebuild({
     String name,
     String addLine1,
     String addLine2,
@@ -29,11 +54,11 @@ class DeliveryAddress {
     String phone,
     String pinCode,
   }) {
-    return DeliveryAddress(
-      name: name ?? this.name,
-      addLine1: addLine1 ?? this.addLine1,
-      addLine2: addLine2 ?? this.addLine2,
-      cityDistTown: cityDistTown ?? this.cityDistTown,
+    return Address(
+      fullName: name ?? this.fullName,
+      houseNo: addLine1 ?? this.houseNo,
+      street: addLine2 ?? this.street,
+      city: cityDistTown ?? this.city,
       state: state ?? this.state,
       landmark: landmark ?? this.landmark,
       phone: phone ?? this.phone,
@@ -42,11 +67,11 @@ class DeliveryAddress {
   }
 
   String getFullAddress() {
-    return this.addLine1 +
+    return this.houseNo +
         ", " +
-        this.addLine2 +
+        this.street +
         ", " +
-        this.cityDistTown +
+        this.city +
         ", " +
         this.pinCode +
         ", " +

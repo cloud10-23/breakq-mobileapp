@@ -53,7 +53,7 @@ class CheckoutSession {
     bool isCompleted,
     bool isLoading,
     String apiError,
-    List<DeliveryAddress> address,
+    List<Address> address,
     int selectedAddress,
     List<TimeSlot> timetables,
     int selectedDateRange,
@@ -81,7 +81,7 @@ class CheckoutSession {
   final bool isCompleted, isLoading;
   final String orderNo, billNo, transactionNo;
   final String apiError;
-  final List<DeliveryAddress> address;
+  final List<Address> address;
   final int selectedAddress;
   final List<TimeSlot> timetables;
   final int selectedDateRange;
