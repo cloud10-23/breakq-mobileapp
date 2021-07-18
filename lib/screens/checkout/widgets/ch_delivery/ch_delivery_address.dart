@@ -21,7 +21,7 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
   Widget build(BuildContext context) {
     final List<Widget> _listItems = <Widget>[];
 
-    final List<DeliveryAddress> _address = widget.session.address;
+    final List<Address> _address = widget.session.address;
 
     _listItems.add(_addAddress());
 
@@ -36,7 +36,7 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
   Widget _addressItem(int index, CheckoutSession session) {
     int _selectedIndex =
         session.selectedAddress ?? 0; //Get the selected address
-    final DeliveryAddress _address = session.address[index];
+    final Address _address = session.address[index];
 
     final Widget _child = Padding(
       padding: const EdgeInsets.symmetric(
@@ -47,7 +47,7 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
           Row(
             children: [
               Text(
-                _address.name,
+                _address.fullName,
                 style: Theme.of(context).textTheme.bodyText2.w600,
               ),
               Spacer(),
@@ -145,7 +145,7 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
 class DisplaySelectedAddress extends StatelessWidget {
   DisplaySelectedAddress({@required this.address});
 
-  final DeliveryAddress address;
+  final Address address;
   @override
   Widget build(BuildContext context) {
     final Widget _child = Padding(
@@ -155,7 +155,7 @@ class DisplaySelectedAddress extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            address.name,
+            address.fullName,
             style: Theme.of(context).textTheme.bodyText2.w600,
           ),
           SizedBox(height: kPaddingM),

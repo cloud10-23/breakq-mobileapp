@@ -56,11 +56,11 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     _listItems.add(SliverToBoxAdapter(
         child: DisplaySelectedAddress(
-      address: DeliveryAddress(
-        name: "Jon Doe",
-        addLine1: "No. 5, 5th Lane",
-        addLine2: "Church Street",
-        cityDistTown: "Riverdale",
+      address: Address(
+        fullName: "Jon Doe",
+        houseNo: "No. 5, 5th Lane",
+        street: "Church Street",
+        city: "Riverdale",
         state: "California",
         pinCode: "610032",
         landmark: "DineOut Restraunt",

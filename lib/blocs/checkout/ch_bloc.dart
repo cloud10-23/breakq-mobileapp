@@ -310,22 +310,22 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       CheckoutSession newSession = session;
 
-      List<DeliveryAddress> address = [
-        DeliveryAddress(
-          name: "Jon Doe",
-          addLine1: "No. 5, 5th Lane",
-          addLine2: "Church Street",
-          cityDistTown: "Riverdale",
+      List<Address> address = [
+        Address(
+          fullName: "Jon Doe",
+          houseNo: "No. 5, 5th Lane",
+          street: "Church Street",
+          city: "Riverdale",
           state: "California",
           pinCode: "610032",
           landmark: "DineOut Restraunt",
           phone: "1234567890",
         ),
-        DeliveryAddress(
-          name: "Katherine Doe",
-          addLine1: "No. 5, 5th Lane ",
-          addLine2: "Church Street",
-          cityDistTown: "Riverdale",
+        Address(
+          fullName: "Katherine Doe",
+          houseNo: "No. 5, 5th Lane ",
+          street: "Church Street",
+          city: "Riverdale",
           state: "California",
           pinCode: "610032",
           landmark: "DineOut Restraunt",
