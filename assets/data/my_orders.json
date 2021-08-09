@@ -1,0 +1,72 @@
+[
+    {
+        "store_ID": 0,
+        "firebase_id": "string",
+        "bill_no": "123456789",
+        "cart_det_id (optional)": 0,
+        "bill_amnt": 900.00,
+        "bill_date": "date",
+        "checkout_type": "string",
+        "payment_mode": "string",
+        "qty": 3,
+        "weight": 0,
+        "tax_Code": "string",
+        "status": "string",
+        "time_slot": {
+            "date": "Jan 1, 2021",
+            "time": "1:00 PM - 2:00 PM"
+        },
+        "products": [
+            {
+                "id": 1,
+                "title": "Maggi",
+                "category_id": 1,
+                "brand_Code": "string",
+                "category_Name": "string",
+                "description": "An instant noodles which will be ready in 2 minutes",
+                "quantity": "500 gm",
+                "discount_percent": 20,
+                "image": "assets/images/products/maggi.jpeg",
+                "qty": 1,
+                "sale_Price": 100,
+                "max_Price": 110,
+                "item_total": 100
+            },
+            {
+                "id": 2,
+                "title": "Dove",
+                "category_id": 1,
+                "brand_Code": "string",
+                "category_Name": "string",
+                "description": "string",
+                "quantity": "1 kg",
+                "discount_percent": 20,
+                "image": "assets/images/products/maggi.jpeg",
+                "qty": 2,
+                "sale_Price": 200,
+                "max_Price": 210,
+                "item_total": 400
+            }
+        ],
+        "price_details (discuss with sir as to what all to include in app, add or remove fields here)": {
+            "price": 660,
+            "discount": 50,
+            "extra_offer (optional)": 10,
+            "delivery_charges": 50,
+            "tax (or GST)": 50,
+            "final_amount": 650,
+            "savings (list price - final price)": 10
+        },
+        "address (only if deliver to home)": {
+            "addressId": 0,
+            "mobile_No": "string",
+            "fullName": "string",
+            "pinCode": "string",
+            "houseNo": "string",
+            "street": "string",
+            "landMark": "string",
+            "state": "string",
+            "city": "string"
+        }
+    }
+]

@@ -213,7 +213,8 @@ class AssetImages {
   static const String qsIllustration =
       'assets/images/illustrations/qs_illustration.svg';
   static const String checkoutIllustration =
-      'assets/images/illustrations/checkout-illustration.png';
+      'assets/images/illustrations/checkout_3.jpg';
+  // 'assets/images/illustrations/checkout-illustration.png';
   static const String addressIllustration =
       'assets/images/illustrations/address_illustration.svg';
   static const String orderIllustration =
@@ -243,7 +244,8 @@ class AssetImages {
   static const String cardDiscover = 'assets/images/cc/discover.png';
   static const String cardMastercard = 'assets/images/cc/mastercard.png';
   static const String profileDefault = 'assets/images/icons/profile.png';
-  static const String homeOffers = 'assets/images/offers/main_offer.png';
+  // static const String homeOffers = 'assets/images/offers/main_offer.png';
+  static const String homeOffers = 'assets/images/offers/banner.png';
 
   static const String cat = 'assets/images/categories/cat';
 
@@ -283,8 +285,7 @@ class AssetImages {
   // static const String banner = 'assets/images/banners/banner-4.jpg';
 
   /// TopOffer Stock Images
-  static String topOffers(int colIndex, int rowIndex) =>
-      'assets/images/offers/Offer($colIndex,$rowIndex).png';
+  static String topOffers(int index) => 'assets/images/offers/${index + 1}.png';
 
   static String checkoutImages(int index) =>
       'assets/images/checkout/checkout-$index.png';

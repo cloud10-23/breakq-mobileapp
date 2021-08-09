@@ -72,7 +72,7 @@ class PriceDetails extends StatelessWidget {
               fw: FontWeight.w600,
             ),
             BoldTitle(
-              title: '- ₹ ' + (price.extraOffer).toStringAsFixed(2),
+              title: '- ₹ ' + (price?.extraOffer ?? 0).toStringAsFixed(2),
               padding: EdgeInsets.symmetric(horizontal: kPaddingM),
               color: kGreen,
               isNum: true,
@@ -116,7 +116,7 @@ class PriceDetails extends StatelessWidget {
               fw: FontWeight.w800,
             ),
             CustomTitle(
-              title: '₹ ' + (price.totalAmnt).toStringAsFixed(2),
+              title: '₹ ' + (price?.totalAmnt ?? 0).toStringAsFixed(2),
               fw: FontWeight.w700,
               isNum: true,
             ),
@@ -131,7 +131,7 @@ class PriceDetails extends StatelessWidget {
         padding: const EdgeInsets.all(kPaddingS),
         child: BoldTitle(
           title: 'You have saved ₹ ' +
-              ((price.savings ?? 0)?.toStringAsFixed(2) ?? "00.00") +
+              ((price?.savings ?? 0)?.toStringAsFixed(2) ?? "00.00") +
               ' on this order',
           fw: FontWeight.w800,
           color: kGreen,

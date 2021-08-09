@@ -25,7 +25,7 @@ class Cart {
     int _noOfProducts = 0;
     double _cartValue = 0.0;
     double _orgCartValue = 0.0;
-    if (cartProducts == null && cartProducts.isEmpty) {
+    if (cartProducts == null || cartProducts.isEmpty) {
       return Cart(cartItems: {}, noOfProducts: _noOfProducts);
     }
 

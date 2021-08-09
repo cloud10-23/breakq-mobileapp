@@ -14,7 +14,7 @@ class CartRepository {
   Future<List<CartProduct>> getCart() async {
     final Uri uri = Uri.http(apiBase, apiCartGet, {
       apistoreId: '1',
-      apiMobileNo: getIt.get<AppGlobals>().user.phoneNumber,
+      apiFirebaseId: getIt.get<AppGlobals>().user.uid,
     });
 
     final List<dynamic> _rawList = await dataProvider.get(uri);
@@ -30,7 +30,7 @@ class CartRepository {
   Future<bool> deleteCart() async {
     final Uri uri = Uri.http(apiBase, apiCartDelete, {
       apistoreId: '1',
-      apiMobileNo: getIt.get<AppGlobals>().user.phoneNumber,
+      apiFirebaseId: getIt.get<AppGlobals>().user.uid,
     });
 
     return await dataProvider.delete(uri);
