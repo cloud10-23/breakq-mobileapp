@@ -274,8 +274,9 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
   Stream<AuthState> _mapGetProfileAuthEventToState() async* {
     yield LoadingAuthState();
 
-    final bool hasToken =
-        await getIt.get<AppPreferences>().containsKey(PreferenceKey.phoneID);
+    final bool hasToken = await getIt
+        .get<AppPreferences>()
+        .containsKey(PreferenceKey.isOnboarded);
 
     if (hasToken) {
       getIt.get<AppGlobals>().user = _userRepository.getUser();

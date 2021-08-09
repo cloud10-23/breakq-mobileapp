@@ -119,7 +119,7 @@ class HomeScreenState extends State<HomeScreen> {
                         children: [
                       Container(
                         margin: EdgeInsets.only(top: kPaddingS),
-                        height: 120,
+                        height: MediaQuery.of(context).size.width * 100 / 320,
                         child: Swiper(
                           pagination: SwiperPagination(
                             alignment: Alignment.bottomCenter,
@@ -236,11 +236,16 @@ class HomeScreenState extends State<HomeScreen> {
       color: kWhite,
       child: Wrap(
         children: List.generate(
-          deals.length,
+          6,
           (colIndex) => GridImage(
-            image: deals[colIndex].image,
-            height: 100,
-            width: 100,
+            // image: deals[colIndex].image,
+            colIndex: colIndex % 2,
+            // colIndex: (colIndex < 4) ? colIndex % 2 : (colIndex - 1) % 2,
+            // height: 100,
+            width: (MediaQuery.of(context).size.width -
+                    kPaddingM * 4 -
+                    kPaddingS) /
+                3,
             onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
                 arguments: deals[colIndex]),
           ),
@@ -284,6 +289,7 @@ class HomeScreenState extends State<HomeScreen> {
           topOffers.length,
           (index) => GridImage(
             image: topOffers[index].image,
+            rowIndex: index,
             height: 100,
             width: 100,
             onPressed: () => Navigator.pushNamed(context, Routes.offerListing,

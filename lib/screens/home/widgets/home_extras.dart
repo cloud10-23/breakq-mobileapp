@@ -31,12 +31,13 @@ class GridImage extends StatelessWidget {
         child: Image(
             height: height,
             width: width,
-            image: (image != null)
-                ? AssetImage(AssetImages.productPlaceholder)
-                // ? NetworkImage(image)
-                : AssetImage((colIndex == null)
-                    ? AssetImages.topDeals(rowIndex)
-                    : AssetImages.topOffers(colIndex, rowIndex)),
+            // image: (image != null)
+            //     ? AssetImage(AssetImages.productPlaceholder)
+            // ? NetworkImage(image)
+            // :
+            image: AssetImage((colIndex == null)
+                ? AssetImages.topDeals(rowIndex)
+                : AssetImages.topOffers(colIndex)),
             fit: BoxFit.fill),
       ),
     );

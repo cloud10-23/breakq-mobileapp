@@ -34,7 +34,7 @@ const String apiDescription = 'description';
 
 /// Cart Parameters
 const String apistoreId = 'storeId';
-const String apiMobileNo = 'mobileNo';
+const String apiFirebaseId = 'fireBaseID';
 
 /// Filter Values
 /// <param name="categoryCode"></param>
