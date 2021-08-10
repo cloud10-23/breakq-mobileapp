@@ -68,4 +68,19 @@ class DataProvider {
     }
     return {};
   }
+
+  Future<String> postByString(uri, Map<String, dynamic> json) async {
+    try {
+      final rawData = await http.post(uri,
+          body: jsonEncode(json),
+          headers: {'Content-Type': 'application/json'});
+      if (rawData.statusCode >= 200 && rawData.statusCode < 300) {
+        return rawData.body;
+      }
+    } catch (_) {
+      Console.log('DataProvider::get', _.toString(), error: _);
+      return "";
+    }
+    return "";
+  }
 }

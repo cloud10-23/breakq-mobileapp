@@ -47,9 +47,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
     if (keyPhoneInput.currentState.validate()) {
       BlocProvider.of<AuthBloc>(context).add(UserRegisteredAuthEvent(
-          displayName: _textNameController.text,
-          email: _textEmailController.text,
-          photoUrl: "TODO"));
+          name: _textNameController.text, email: _textEmailController.text));
     }
   }
 

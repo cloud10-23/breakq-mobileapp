@@ -110,41 +110,33 @@ class HomeScreenState extends State<HomeScreen> {
                   child: _showQuickStart(),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(height: kPaddingBtwnStrips),
-                ),
-                SliverToBoxAdapter(
-                    child: HomeBoldHeading(
-                        title: "Top Offers",
-                        icon: Icon(MaterialCommunityIcons.brightness_percent),
-                        children: [
-                      Container(
-                        margin: EdgeInsets.only(top: kPaddingS),
-                        height: MediaQuery.of(context).size.width * 100 / 320,
-                        child: Swiper(
-                          pagination: SwiperPagination(
-                            alignment: Alignment.bottomCenter,
-                            builder: DotSwiperPaginationBuilder(
-                              activeColor: kBlue,
-                            ),
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          autoplay: true,
-                          duration: 500,
-                          autoplayDelay: 4000,
-                          viewportFraction: 1.0,
-                          itemBuilder: (context, index) => Card(
-                            margin: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0.0)),
-                            child: Image(
-                              image: AssetImage(AssetImages.homeOffers),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.width * 100 / 320,
+                    child: Swiper(
+                      pagination: SwiperPagination(
+                        alignment: Alignment.bottomCenter,
+                        builder: DotSwiperPaginationBuilder(
+                          activeColor: kBlue,
                         ),
                       ),
-                    ])),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      autoplay: true,
+                      duration: 500,
+                      autoplayDelay: 4000,
+                      viewportFraction: 1.0,
+                      itemBuilder: (context, index) => Card(
+                        margin: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0)),
+                        child: Image(
+                          image: AssetImage(AssetImages.homeOffers),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 SliverList(
                   delegate: SliverChildListDelegate(<Widget>[
                     SizedBox(height: kPaddingBtwnStrips),
@@ -159,15 +151,15 @@ class HomeScreenState extends State<HomeScreen> {
                           _showGridOfImages(_topDeals),
                         ]),
                     SizedBox(height: kPaddingBtwnStrips),
-                    HomeBoldHeading(
-                        title: "Offers for you!",
-                        icon: Icon(
-                          Entypo.price_tag,
-                        ),
-                        children: [
-                          _showHorizontalScrollImages(_topOffers),
-                        ]),
-                    SizedBox(height: kPaddingBtwnStrips),
+                    // HomeBoldHeading(
+                    //     title: "Offers for you!",
+                    //     icon: Icon(
+                    //       Entypo.price_tag,
+                    //     ),
+                    //     children: [
+                    //       _showHorizontalScrollImages(_topOffers),
+                    //     ]),
+                    // SizedBox(height: kPaddingBtwnStrips),
                     HomeBoldHeading(
                       title: "Exclusive Products",
                       icon: Icon(

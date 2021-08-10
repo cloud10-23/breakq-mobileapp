@@ -31,11 +31,10 @@ class OTPVerificationAuthEvent extends AuthEvent {
 }
 
 class UserRegisteredAuthEvent extends AuthEvent {
-  UserRegisteredAuthEvent({this.displayName, this.email, this.photoUrl});
+  UserRegisteredAuthEvent({this.name, this.email});
 
-  final String displayName;
+  final String name;
   final String email;
-  final String photoUrl;
 }
 
 class UserSavedAuthEvent extends AuthEvent {

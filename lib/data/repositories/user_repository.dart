@@ -1,4 +1,7 @@
 // import 'package:breakq/data/data_provider.dart';
+import 'package:breakq/configs/api_urls.dart';
+import 'package:breakq/data/data_provider.dart';
+import 'package:breakq/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -41,12 +44,10 @@ class UserRepository {
   Future<UserCredential> signInCredential(AuthCredential authCred) =>
       _firebaseAuth.signInWithCredential(authCred);
 
-  Future<void> updateProfile(
-      String displayName, String email, String photoURL) async {
+  Future<void> updateProfile(String displayName, String email) async {
     /// Update DisplayName and photoURL
     await _firebaseAuth.currentUser.updateProfile(
       displayName: displayName,
-      photoURL: photoURL,
     );
 
     if ((email?.isNotEmpty ?? false) &&
@@ -131,5 +132,26 @@ class UserRepository {
 
   Future<void> signOutFacebook() async {
     await FacebookAuth.instance.logOut();
+  }
+
+  /// API Server calls:
+  /// 1. Register User
+  /// 2. Login/Check user is signed in
+
+  Future<String> registerUser(UserModel user) async {
+    final Uri uri = Uri.http(apiBase, apiUserRegister);
+
+    final String _result =
+        await DataProvider().postByString(uri, user.toJson());
+    return _result;
+  }
+
+  Future<UserModel> loginUser(String firebaseID) async {
+    final Uri uri =
+        Uri.http(apiBase, apiUserLogin, {apiFirebaseId: firebaseID});
+
+    final Map<String, dynamic> _rawUser = await DataProvider().getAsMap(uri);
+
+    return UserModel.fromJson(_rawUser);
   }
 }

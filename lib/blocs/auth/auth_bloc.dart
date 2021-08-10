@@ -5,6 +5,7 @@ import 'package:breakq/blocs/base_bloc.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/user_model.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_cache_manager.dart';
@@ -64,15 +65,6 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     super.close();
   }
 
-  Future<bool> updateProfile(displayName, email, photoUrl) async {
-    try {
-      await _userRepository.updateProfile(displayName, email, photoUrl);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   Stream<AuthState> _mapLoginFailureAuthEventToState(
       LoginFailureAuthEvent event) async* {
     // Go back to Initial State
@@ -84,24 +76,31 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
     ///Notify loading to UI
     yield LoadingAuthState();
 
-    String displayName = event.displayName;
-    String email = event.email;
-    String photoUrl = getIt.get<AppGlobals>().user.photoURL;
-
     /// Post the name, email, photo to the Server API
     print("<<API CALL>>");
-    print("Name: $displayName\n" +
-        "Email: $email\n" +
-        "PhotoUrl: ${event.photoUrl}");
+
+    User user = getIt.get<AppGlobals>().user;
+
+    String result = await _userRepository.registerUser(UserModel(
+      name: event.name,
+      email: event.email,
+      mobileNo: user.phoneNumber,
+      firebaseId: user.uid,
+    ));
+
+    print(result);
 
     /// Update the details of the current user with Firebase
     // if (getIt.get<AppGlobals>().user.displayName == null) {
     /// User registered through only mobile login
     // }
-    if (await updateProfile(displayName, email, photoUrl)) {
+    try {
+      await _userRepository.updateProfile(event.name, event.email);
       getIt.get<AppGlobals>().user = _userRepository.getUser();
       yield OnboardingCompleteAuthState();
-    } else {
+    } catch (e) {
+      // TODO: Handle this case
+      print(e);
       yield OnboardingCompleteAuthState();
     }
   }

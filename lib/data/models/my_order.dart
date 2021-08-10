@@ -8,8 +8,11 @@ part 'my_order.g.dart';
 
 @JsonSerializable(createToJson: false)
 class Order extends Equatable {
+  @JsonKey(name: "store_ID")
   final int storeId;
+  @JsonKey(name: "firebase_ID")
   final int firebaseId;
+  @JsonKey(name: "mobile_No")
   final String mobileNo;
   @JsonKey(name: "bill_No")
   final int billNo;
