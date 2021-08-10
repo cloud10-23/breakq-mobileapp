@@ -27,3 +27,14 @@ class TimeSchedules {
   factory TimeSchedules.fromJson(Map<String, dynamic> json) =>
       _$TimeSchedulesFromJson(json);
 }
+
+@JsonSerializable(createToJson: false)
+class OrderTimeSlot {
+  String date;
+  String time;
+
+  OrderTimeSlot({this.time, this.date});
+
+  factory OrderTimeSlot.fromJson(Map<String, dynamic> json) =>
+      _$OrderTimeSlotFromJson(json);
+}

@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'price_model.g.dart';
+
+@JsonSerializable(createToJson: false)
 class Price {
   Price({
     this.price,
@@ -38,10 +42,17 @@ class Price {
   //   );
   // }
 
+  factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
+
   final double price;
+  @JsonKey(name: "discount")
   final double discount;
+  @JsonKey(name: "extra_Offer")
   final double extraOffer;
+  @JsonKey(name: "delivery_Charges")
   final double delivery;
+  @JsonKey(name: "final_Amount")
   final double totalAmnt;
+  @JsonKey(name: "savings")
   final double savings;
 }

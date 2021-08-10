@@ -5,16 +5,34 @@
 const String apiBase = 'breakq.api.magratechs.com';
 const String apiBaseFull = 'http://breakq.api.magratechs.com';
 
-/// ENDPOINT URLs
+/// User URLs
+const String apiUserRegister = '/api/User/RegisterUser';
+const String apiUserLogin = '/api/User/Login';
+
+/// Main URLs
 const String apiHome = '/api/HomePageData/GetHomePageDataforMenus';
 const String apiOfferProducts =
     '/api/HomePageData/GetProductsForDealsAndOffers';
 const String apiCategory = '/api/Category';
 const String apiBrand = '/api/Brand';
 const String apiProducts = '/api/Products';
+
+/// Cart APIs
 const String apiCartAddOrUpdate = '/api/Cart/AddOrUpdateCart';
 const String apiCartDelete = '/api/Cart/DeleteCart';
 const String apiCartGet = '/api/Cart/GetCart';
+
+/// Checkout
+const String apiCheckoutWalkin = '/api/Checkout/CheckoutWalkin';
+const String apiCheckoutWithTime = '/api/Checkout/CheckoutWithTime';
+const String apiCheckoutGetSlots = '/api/Checkout/GetCheckoutSlots';
+
+/// My Orders
+const String apiMyOrders = '/api/Order/Order';
+
+/// Address APIs
+const String apiPostAddress = '/api/Address/AddOrUpdateAddress';
+const String apiGetAddress = '/api/Address/GetAddress';
 
 /// Query Parameters
 const String apiCategoryQuery = 'categoryCode';
@@ -35,6 +53,12 @@ const String apiDescription = 'description';
 /// Cart Parameters
 const String apistoreId = 'storeId';
 const String apiFirebaseId = 'fireBaseID';
+
+/// Cart Parameters
+const String apiDeliveryDate = 'deliveryDate';
+const String apiStartTime = 'startTime';
+const String apiEndTime = 'endTime';
+const String apiCheckoutType = 'checkoutType';
 
 /// Filter Values
 /// <param name="categoryCode"></param>

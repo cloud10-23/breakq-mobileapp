@@ -26,3 +26,10 @@ TimeSchedules _$TimeSchedulesFromJson(Map<String, dynamic> json) {
     enabled: json['enabled'] as bool,
   );
 }
+
+OrderTimeSlot _$OrderTimeSlotFromJson(Map<String, dynamic> json) {
+  return OrderTimeSlot(
+    time: json['time'] as String,
+    date: json['date'] as String,
+  );
+}

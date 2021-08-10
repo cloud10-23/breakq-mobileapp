@@ -1,38 +1,44 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class UserModel {
   UserModel({
-    this.phoneId,
-    this.googleId,
-    this.facebookId,
-    this.displayName,
+    this.userId,
+    this.mobileNo,
+    this.name,
+    this.firebaseId,
     this.email,
-    this.photoURL,
-    this.phoneNumber,
   });
 
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
   UserModel copyWith(
-      {String phoneId,
-      String googleId,
+      {String userId,
+      String firebaseId,
       String facebookId,
-      String fullName,
+      String name,
       String email,
       String profilePhoto,
-      String phone}) {
+      String mobileNo}) {
     return UserModel(
-      phoneId: phoneId ?? this.phoneId,
-      googleId: googleId ?? this.googleId,
-      facebookId: facebookId ?? this.facebookId,
-      displayName: fullName ?? this.displayName,
+      userId: userId ?? this.userId,
+      mobileNo: mobileNo ?? this.mobileNo,
+      firebaseId: firebaseId ?? this.firebaseId,
+      name: name ?? this.name,
       email: email ?? this.email,
-      photoURL: profilePhoto ?? this.photoURL,
-      phoneNumber: phone ?? this.phoneNumber,
     );
   }
 
-  final String phoneId;
-  final String googleId;
-  final String facebookId;
-  final String displayName;
+  @JsonKey(name: 'userID')
+  final int userId;
+  @JsonKey(name: 'mobile_No')
+  final String mobileNo;
+  final String name;
+  @JsonKey(name: 'fireBaseID')
+  final String firebaseId;
   final String email;
-  final String photoURL;
-  final String phoneNumber;
 }
