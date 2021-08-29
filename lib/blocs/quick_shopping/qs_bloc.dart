@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/repositories/bill_repository.dart';
+import 'package:breakq/data/repositories/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
 import 'package:breakq/data/models/qs_session_model.dart';
@@ -46,15 +48,15 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
 
   Stream<QSState> _mapLoadBillsEventToState(LoadBillsQSEvent event) async* {
     /// Load all the bills:
-    final List<Bill> _bills = await BillsRepository().getBills();
+    final List<Order> _orders = await MyOrderRepository().getSampleOrders();
 
     // BillsRepo.getBills();
 
-    if (_bills == null) {
+    if (_orders == null) {
       yield LoadFailureQSState();
     } else {
       yield SessionRefreshSuccessQSState(QSSessionModel(
-        bills: _bills,
+        orders: _orders,
         selectedBillIds: <String>[],
       ));
     }
@@ -66,7 +68,7 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       final QSSessionModel session =
           (state as SessionRefreshSuccessQSState).session;
 
-      session.selectedBillIds.add(event.bill.billNo);
+      session.selectedBillIds.add(event.order.billNo.toString());
 
       final QSSessionModel newSession = session.rebuild(
         selectedBillIds: session.selectedBillIds,
@@ -81,7 +83,7 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
     if (state is SessionRefreshSuccessQSState) {
       final QSSessionModel session =
           (state as SessionRefreshSuccessQSState).session;
-      session.selectedBillIds.remove(event.bill.billNo);
+      session.selectedBillIds.remove(event.order.billNo);
 
       final QSSessionModel newSession = session.rebuild(
         selectedBillIds: session.selectedBillIds,
@@ -98,8 +100,8 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
           (state as SessionRefreshSuccessQSState).session;
 
       session.selectedBillIds.clear();
-      session.bills.forEach((bill) {
-        session.selectedBillIds.add(bill.billNo);
+      session.orders.forEach((bill) {
+        session.selectedBillIds.add(bill.billNo.toString());
       });
 
       final QSSessionModel newSession = session.rebuild(
@@ -130,16 +132,14 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
           (state as SessionRefreshSuccessQSState).session;
 
       /// Load all the bills:
-      final List<Bill> _bills = session.bills
-          .where((bill) => session.selectedBillIds.contains(bill.billNo))
+      final List<Order> _orders = session.orders
+          .where((order) =>
+              session.selectedBillIds.contains(order.billNo.toString()))
           .toList();
       List<Product> _products = [];
-      for (final Bill bill in _bills) {
-        _products.addAll(bill.products.cartItems.keys);
+      for (final Order order in _orders) {
+        _products.addAll(order.products.map((p) => p.product));
       }
-
-      // Any other way to eliminate duplicate products if this does not work
-      _products = _products.toSet().toList();
 
       if (_products?.isEmpty ?? true) {
         yield LoadFailureQSState();

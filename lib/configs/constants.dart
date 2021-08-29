@@ -287,6 +287,8 @@ class AssetImages {
   /// TopOffer Stock Images
   static String topOffers(int index) => 'assets/images/offers/${index + 1}.png';
 
+  static String banner(int index) => 'assets/images/offers/banner$index.png';
+
   static String checkoutImages(int index) =>
       'assets/images/checkout/checkout-$index.png';
 

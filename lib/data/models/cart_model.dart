@@ -21,7 +21,8 @@ class Cart {
     );
   }
 
-  factory Cart.fromCartApi(List<CartProduct> cartProducts) {
+  factory Cart.fromCartApi(CartAPI api) {
+    List<CartProduct> cartProducts = api.products;
     int _noOfProducts = 0;
     double _cartValue = 0.0;
     double _orgCartValue = 0.0;
@@ -40,7 +41,7 @@ class Cart {
         return value;
       }),
       noOfProducts: _noOfProducts,
-      cartValue: Price.calc(_orgCartValue, _cartValue),
+      cartValue: Price.addPrice(api.priceDetails, _cartValue),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,11 +12,11 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/list_title.dart';
-import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class DrawerScreen extends StatelessWidget {
-  const DrawerScreen({Key key}) : super(key: key);
+  const DrawerScreen({Key key, @required this.categories}) : super(key: key);
+  final List<CategoryTabModel> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class DrawerScreen extends StatelessWidget {
                     child: ListView(
                       children: <Widget>[
                         ListTitle(title: L10n.of(context).categoriesTitle),
-                        AllCategoriesListItems(),
+                        AllCategoriesListItems(categories: categories),
                         SizedBox(height: kPaddingM),
                         ListTitle(title: L10n.of(context).orderTitle),
                         SizedBox(height: kPaddingM),
@@ -308,32 +309,29 @@ class DrawerScreen extends StatelessWidget {
 }
 
 class AllCategoriesListItems extends StatelessWidget {
+  AllCategoriesListItems({this.categories});
+  final List<CategoryTabModel> categories;
   @override
   Widget build(BuildContext context) {
     return Column(
         children: categories
             .map(
-              (category) => ExpansionTile(
-                title: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(category['image']),
-                      radius: 15,
-                    ),
-                    SizedBox(width: kPaddingL),
-                    Text(category['name']),
-                  ],
-                ),
-                tilePadding: EdgeInsets.zero,
-                children: List.generate(
-                    5,
-                    (index) => ListItem(
-                          title: 'Sub-Category ${index + 1}',
-                          titleTextStyle:
-                              Theme.of(context).textTheme.caption.black.w600,
-                          trailing: const ArrowRightIcon(),
-                          onPressed: () {},
-                        )),
+              (category) => ListItem(
+                title: category.category.title,
+                onPressed: () => Navigator.pushNamed(context, Routes.listing,
+                    arguments: category.category),
+                // (category) => ExpansionTile(
+                //   title: Text(category.category.title),
+                //   tilePadding: EdgeInsets.zero,
+                //   children: List.generate(
+                //       5,
+                //       (index) => ListItem(
+                //             title: category.sub_category,
+                //             titleTextStyle:
+                //                 Theme.of(context).textTheme.caption.black.w600,
+                //             trailing: const ArrowRightIcon(),
+                //             onPressed: () {},
+                //           )),
               ),
             )
             .toList());

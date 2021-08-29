@@ -178,7 +178,7 @@ class _ChBottomBarWithButtonState extends State<ChBottomBarWithButton> {
                     (widget.session?.cartProducts?.cartValue?.totalAmnt
                             ?.toStringAsFixed(2) ??
                         "00.00"),
-                style: Theme.of(context).textTheme.headline6.w700,
+                style: Theme.of(context).textTheme.headline6.w700.number,
               ),
               SizedBox(height: 15),
             ],

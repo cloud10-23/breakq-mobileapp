@@ -1,16 +1,14 @@
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/qs_session_model.dart';
-import 'package:breakq/data/models/bill_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/quick_links/widgets/service_header_delegate.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/widgets/list_item.dart';
-import 'package:sprintf/sprintf.dart';
-import 'package:breakq/utils/datetime.dart';
 
 class QSStep1 extends StatefulWidget {
   const QSStep1({
@@ -61,7 +59,7 @@ class _QSStep1State extends State<QSStep1> {
         final QSSessionModel session =
             (state as SessionRefreshSuccessQSState).session;
 
-        if (session.bills.isEmpty) {
+        if (session.orders.isEmpty) {
           return Container(
             alignment: AlignmentDirectional.center,
             child: Jumbotron(
@@ -120,8 +118,8 @@ class _QSStep1State extends State<QSStep1> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:
-                      List<Widget>.generate(session.bills.length, (int index) {
-                    return _billItem(session.bills[index], session);
+                      List<Widget>.generate(session.orders.length, (int index) {
+                    return _billItem(session.orders[index], session);
                   }),
                 ),
               ),
@@ -134,27 +132,28 @@ class _QSStep1State extends State<QSStep1> {
     );
   }
 
-  Widget _billItem(Bill bill, QSSessionModel session) {
-    return Padding(
+  Widget _billItem(Order order, QSSessionModel session) {
+    return Container(
+      color: kWhite,
       padding: const EdgeInsets.all(kPaddingS),
       child: ListItem(
         leading: Checkbox(
-          value: session.selectedBillIds.contains(bill.billNo),
+          value: session.selectedBillIds.contains(order.billNo.toString()),
           onChanged: (bool isChecked) {
             setState(() {
               if (isChecked) {
                 BlocProvider.of<QSBloc>(context)
-                    .add(BillSelectedQSEvent(bill: bill));
+                    .add(BillSelectedQSEvent(order: order));
               } else {
                 BlocProvider.of<QSBloc>(context)
-                    .add(BillUnselectedQSEvent(bill: bill));
+                    .add(BillUnselectedQSEvent(order: order));
               }
             });
           },
         ),
-        title: "Bill Date: " + bill.billDate.toLocalDateString,
+        title: "Bill Date: " + order.billDate,
         titleTextStyle: Theme.of(context).textTheme.subtitle2.w500,
-        subtitle: "No.: " + bill.billNo,
+        subtitle: "No.: ${order.billNo}",
         subtitleTextStyle: Theme.of(context)
             .textTheme
             .bodyText2
@@ -166,13 +165,12 @@ class _QSStep1State extends State<QSStep1> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
-                L10n.of(context).commonCurrencyFormat(
-                    sprintf('%.2f', <double>[bill.billAmnt])),
+                order.billAmnt,
                 style: Theme.of(context).textTheme.subtitle2.w500,
               ),
               SizedBox(height: kPaddingM),
               Text(
-                "No of Products: ${bill.products.noOfProducts}",
+                "No of Products: ${order.products.length}",
                 style: Theme.of(context)
                     .textTheme
                     .caption
@@ -184,12 +182,12 @@ class _QSStep1State extends State<QSStep1> {
         ),
         onPressed: () {
           setState(() {
-            if (session.selectedBillIds.contains(bill.billNo)) {
+            if (session.selectedBillIds.contains(order.billNo)) {
               BlocProvider.of<QSBloc>(context)
-                  .add(BillUnselectedQSEvent(bill: bill));
+                  .add(BillUnselectedQSEvent(order: order));
             } else {
               BlocProvider.of<QSBloc>(context)
-                  .add(BillSelectedQSEvent(bill: bill));
+                  .add(BillSelectedQSEvent(order: order));
             }
           });
         },

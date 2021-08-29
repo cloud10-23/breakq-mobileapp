@@ -11,7 +11,8 @@ class OrderItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kPaddingM),
       child: InkWell(
-        onTap: () => Navigator.of(context).pushNamed(Routes.order_detail),
+        onTap: () => Navigator.of(context)
+            .pushNamed(Routes.order_detail, arguments: CheckoutType.walkIn),
         child: CartHeading(
           isCaps: false,
           title: 'Bill Generated On:   20 Feb, 2021',
@@ -154,8 +155,9 @@ class OrderItem extends StatelessWidget {
                 elevation: 0.0,
                 padding: EdgeInsets.zero,
                 child: Text('View Details'),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(Routes.order_detail),
+                onPressed: () => Navigator.of(context).pushNamed(
+                    Routes.order_detail,
+                    arguments: CheckoutType.pickUp),
               ),
             ),
             SizedBox(height: 10),

@@ -12,8 +12,20 @@ class CartInitial extends CartState {}
 class CartLoading extends CartState {}
 
 class CartLoaded extends CartState {
-  CartLoaded({this.cart});
+  CartLoaded({this.cart, this.recentlyScanned});
   final Cart cart;
+  final List<Product> recentlyScanned;
+
+  factory CartLoaded.rebuild({
+    CartLoaded cartLoaded,
+    Cart cart,
+    List<Product> recentlyScanned,
+  }) {
+    return CartLoaded(
+      recentlyScanned: recentlyScanned ?? cartLoaded.recentlyScanned,
+      cart: cart,
+    );
+  }
 
   @override
   List<Object> get props => [cart];

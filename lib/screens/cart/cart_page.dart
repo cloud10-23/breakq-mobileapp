@@ -103,7 +103,8 @@ class _CartPageState extends State<CartPage> {
                           qty: (state as CartLoaded).cart.noOfProducts),
                       CartScannerOption(),
                       _cartItemsBuilder(context, state),
-                      CartFooter(),
+                      CartFooter(
+                          products: (state as CartLoaded).recentlyScanned),
                       PriceDetails(price: (state as CartLoaded).cart.cartValue),
                       EndPadding(),
                     ],
@@ -164,6 +165,7 @@ class _CartPageState extends State<CartPage> {
                             "00.00",
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                         fw: FontWeight.w700,
+                        isNum: true,
                       ),
                     ],
                   ),

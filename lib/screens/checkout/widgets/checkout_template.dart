@@ -10,7 +10,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 class CheckoutTemplate extends StatelessWidget {
   CheckoutTemplate({
     @required this.slivers,
-    @required this.bottomBar,
+    this.bottomBar,
     this.title = 'Checkout',
     this.subTitle,
     this.showBackButton = true,

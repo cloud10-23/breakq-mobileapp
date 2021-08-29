@@ -12,15 +12,15 @@ class SelectAllBillsQSEvent extends QSEvent {}
 class DeSelectAllBillsQSEvent extends QSEvent {}
 
 class BillSelectedQSEvent extends QSEvent {
-  BillSelectedQSEvent({this.bill});
+  BillSelectedQSEvent({this.order});
 
-  final Bill bill;
+  final Order order;
 }
 
 class BillUnselectedQSEvent extends QSEvent {
-  BillUnselectedQSEvent({this.bill});
+  BillUnselectedQSEvent({this.order});
 
-  final Bill bill;
+  final Order order;
 }
 
 class LoadProductsQSEvent extends QSEvent {}

@@ -15,9 +15,11 @@ part 'address.g.dart';
 
 @JsonSerializable()
 class Address {
-  final String addressId;
+  final int addressId;
   @JsonKey(name: 'mobile_No')
   final String phone;
+  @JsonKey(name: 'fireBaseID')
+  final String firebaseID;
   final String fullName;
   final String pinCode;
   final String houseNo;
@@ -29,6 +31,7 @@ class Address {
 
   Address({
     this.addressId,
+    this.firebaseID,
     this.fullName,
     this.houseNo,
     this.street,
@@ -46,22 +49,24 @@ class Address {
 
   Address rebuild({
     String name,
-    String addLine1,
-    String addLine2,
+    String houseNo,
+    String street,
     String cityDistTown,
     String state,
     String landmark,
     String phone,
+    String firebaseID,
     String pinCode,
   }) {
     return Address(
       fullName: name ?? this.fullName,
-      houseNo: addLine1 ?? this.houseNo,
-      street: addLine2 ?? this.street,
+      houseNo: houseNo ?? this.houseNo,
+      street: street ?? this.street,
       city: cityDistTown ?? this.city,
       state: state ?? this.state,
       landmark: landmark ?? this.landmark,
       phone: phone ?? this.phone,
+      firebaseID: firebaseID ?? this.firebaseID,
       pinCode: pinCode ?? this.pinCode,
     );
   }

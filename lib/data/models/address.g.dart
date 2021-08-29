@@ -8,7 +8,8 @@ part of 'address.dart';
 
 Address _$AddressFromJson(Map<String, dynamic> json) {
   return Address(
-    addressId: json['addressId'] as String,
+    addressId: json['addressId'] as int,
+    firebaseID: json['fireBaseID'] as String,
     fullName: json['fullName'] as String,
     houseNo: json['houseNo'] as String,
     street: json['street'] as String,
@@ -23,6 +24,7 @@ Address _$AddressFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
       'addressId': instance.addressId,
       'mobile_No': instance.phone,
+      'fireBaseID': instance.firebaseID,
       'fullName': instance.fullName,
       'pinCode': instance.pinCode,
       'houseNo': instance.houseNo,

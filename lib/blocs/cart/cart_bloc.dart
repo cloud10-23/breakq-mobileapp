@@ -7,6 +7,7 @@ import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/repositories/cart_repository.dart';
+import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'cart_event.dart';
@@ -16,6 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final BudgetBloc budgetBloc;
   final AuthBloc authBloc;
   final CartRepository _cartRepo = CartRepository();
+  List<Product> recentlyScanned;
   CartBloc({this.budgetBloc, this.authBloc}) : super(CartInitial());
 
   @override
@@ -45,12 +47,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapInitCartFromAPIEventToState(
       InitCartFromAPIEvent event) async* {
-    yield CartLoaded(cart: Cart.fromCartApi(await _cartRepo.getCart()));
+    recentlyScanned = await ProductsRepository().getExclusiveProduct();
+    yield CartLoaded(
+        recentlyScanned: recentlyScanned,
+        cart: Cart.fromCartApi(await _cartRepo.getCart()));
   }
 
   Stream<CartState> _mapLoadCartEventToState(LoadCartEvent event) async* {
     /// Update the UI first
-    yield CartLoaded(cart: event.cartItems);
+    yield CartLoaded(recentlyScanned: recentlyScanned, cart: event.cartItems);
 
     /// ======== UPDATE THE API HERE ======== ///
     for (final item in event.newCartItems.keys)
@@ -69,7 +74,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       budgetBloc
           .add(BudgetProductAddedEvent(cartValue: newCart.cartValue.totalAmnt));
     }
-    yield CartLoaded(cart: newCart);
+    yield CartLoaded(recentlyScanned: recentlyScanned, cart: newCart);
   }
 
   Stream<CartState> _mapAddEventToState(AddPToCartEvent event) async* {
@@ -133,11 +138,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     yield CartLoading();
 
     if (await _cartRepo.deleteCart())
-      yield CartLoaded(cart: Cart(cartItems: Map<Product, int>()));
+      yield CartLoaded(
+          recentlyScanned: recentlyScanned,
+          cart: Cart(cartItems: Map<Product, int>()));
     else {
       /// ERROR
       print("Error clearing cart!");
-      yield CartLoaded(cart: cart);
+      yield CartLoaded(recentlyScanned: recentlyScanned, cart: cart);
     }
   }
 }

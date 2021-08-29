@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
@@ -44,14 +45,6 @@ class ProductListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Getting the Image:
-    ImageProvider _image;
-    // try {
-    // _image = AssetImage(product.image);
-    // _image = NetworkImage(apiBaseFull + product.image);
-    // } catch (_) {
-    _image = AssetImage(AssetImages.productPlaceholder);
-    // }
     switch (viewType) {
       case ProductListItemViewType.grid:
         return Card(
@@ -89,19 +82,15 @@ class ProductListItem extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                Container(
+                                Image.network(
+                                  apiBaseFull + product.image,
                                   height: 80,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: _image,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft:
-                                          Radius.circular(kBoxDecorationRadius),
-                                      topRight:
-                                          Radius.circular(kBoxDecorationRadius),
-                                    ),
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Image.asset(
+                                    AssetImages.productPlaceholder,
+                                    height: 80,
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                                 if (qty > 0)
@@ -113,19 +102,30 @@ class ProductListItem extends StatelessWidget {
                                   ),
                               ],
                             ),
-                            Padding(
+                            Container(
                               padding: const EdgeInsets.only(
                                   top: kPaddingS,
                                   left: kPaddingS,
                                   right: kPaddingS),
-                              child: Text(
-                                product.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption
-                                    .black
-                                    .fs12
-                                    .w600,
+                              height: 20,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      product.title,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption
+                                          .black
+                                          .fs12
+                                          .w600,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Padding(
@@ -150,7 +150,7 @@ class ProductListItem extends StatelessWidget {
                                   bottom: kPaddingS,
                                   top: 2),
                               child: Text(
-                                "₹ " + product.maxPrice.toStringAsFixed(2),
+                                "₹ " + product.salePrice.toStringAsFixed(2),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -158,25 +158,22 @@ class ProductListItem extends StatelessWidget {
                                     .number,
                               ),
                             ),
-                            Visibility(
-                              visible: product.maxPrice != product.salePrice,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: kPaddingS,
-                                    right: kPaddingS,
-                                    bottom: kPaddingS,
-                                    top: kPaddingS),
-                                child: Text(
-                                  "₹ " + product.salePrice.toStringAsFixed(2),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .w500
-                                      .number
-                                      .copyWith(
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: kPaddingS,
+                                  right: kPaddingS,
+                                  top: kPaddingS),
+                              child: Text(
+                                (product.maxPrice != product.salePrice)
+                                    ? "₹ " + product.maxPrice.toStringAsFixed(2)
+                                    : '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .w500
+                                    .number
+                                    .copyWith(
+                                        decoration: TextDecoration.lineThrough),
                               ),
                             ),
                           ],
@@ -226,18 +223,18 @@ class ProductListItem extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: <Widget>[
-                      Container(
+                      Image.network(
+                        apiBaseFull + product.image,
                         height:
                             viewType == ProductListItemViewType.map ? 160 : 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: _image,
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(kBoxDecorationRadius),
-                            topRight: Radius.circular(kBoxDecorationRadius),
-                          ),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          AssetImages.productPlaceholder,
+                          height: viewType == ProductListItemViewType.map
+                              ? 160
+                              : 200,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       if (showFavoriteButton)
@@ -336,20 +333,17 @@ class ProductListItem extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                Container(
+                                Image.network(
+                                  apiBaseFull + product.image,
                                   width: 75,
                                   height: 75,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: _image,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft:
-                                          Radius.circular(kBoxDecorationRadius),
-                                      bottomLeft:
-                                          Radius.circular(kBoxDecorationRadius),
-                                    ),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Image.asset(
+                                    AssetImages.productPlaceholder,
+                                    width: 75,
+                                    height: 75,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 if (qty > 0)
@@ -420,6 +414,7 @@ class ProductListItem extends StatelessWidget {
                                                 .textTheme
                                                 .caption
                                                 .w300
+                                                .number
                                                 .copyWith(
                                                     decoration: TextDecoration
                                                         .lineThrough),

@@ -9,23 +9,27 @@ class TimelineDate extends StatelessWidget {
   const TimelineDate({
     Key key,
     this.isSelected = false,
-    this.dateRange = 0,
-    this.onTap,
+    @required this.day,
+    @required this.date,
+    @required this.month,
+    @required this.onTap,
   }) : super(key: key);
 
   /// Is selected?
   final bool isSelected;
 
   /// Date range: number of days from today.
-  final int dateRange;
+  final String day;
+
+  final String date;
+
+  final String month;
 
   /// Ontap function call.
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = DateTime.now().add(Duration(days: dateRange));
-
     return InkWell(
       child: Container(
         width: kTimelineDateSize,
@@ -42,17 +46,14 @@ class TimelineDate extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                dateRange > 0
-                    ? L10n.of(context)
-                        .commonWeekdayShort(DOW.values[date.weekday - 1])
-                    : L10n.of(context).commonWeekdayToday.toUpperCase(),
+                day,
                 style: Theme.of(context).textTheme.bodyText2.fs10.w700.copyWith(
                     color: isSelected
                         ? kWhite
                         : Theme.of(context).textTheme.bodyText2.color),
               ),
               Text(
-                date.day.toString(),
+                date,
                 style: Theme.of(context).textTheme.headline6.copyWith(
                     fontFamily: kNumberFontFamily,
                     color: isSelected
@@ -60,9 +61,7 @@ class TimelineDate extends StatelessWidget {
                         : Theme.of(context).textTheme.headline6.color),
               ),
               Text(
-                L10n.of(context)
-                    .commonMonthShort(Month.values[date.month - 1])
-                    .toUpperCase(),
+                month.toUpperCase(),
                 style: Theme.of(context).textTheme.bodyText2.fs10.copyWith(
                     color: isSelected
                         ? kWhite

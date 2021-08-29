@@ -1,3 +1,4 @@
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
@@ -59,15 +60,16 @@ class ProductItemReadOnly extends StatelessWidget {
                       width: 65,
                       height: 65,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(product.image),
-                          // image: NetworkImage(product.image),
-                          fit: BoxFit.cover,
-                        ),
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(kBoxDecorationRadius),
                           bottomLeft: Radius.circular(kBoxDecorationRadius),
                         ),
+                      ),
+                      child: Image.network(
+                        apiBaseFull + product.image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(AssetImages.productPlaceholder),
                       ),
                     ),
                     Padding(
@@ -87,15 +89,17 @@ class ProductItemReadOnly extends StatelessWidget {
                                 style:
                                     Theme.of(context).textTheme.bodyText2.w600,
                               ),
-                              SizedBox(width: kPaddingL),
-                              OfferTextGreen(product.discountPercent),
+                              if ((product?.discountPercent ?? 0) > 0)
+                                SizedBox(width: kPaddingL),
+                              if ((product?.discountPercent ?? 0) > 0)
+                                OfferTextGreen(product.discountPercent),
                             ],
                           ),
                           const SizedBox(height: 5),
                           Row(
                             children: [
                               Text(
-                                product.quantity,
+                                product.quantity ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
@@ -110,24 +114,28 @@ class ProductItemReadOnly extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "₹ " + product.maxPrice.toString(),
+                                "₹ " + product.salePrice.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText2
                                     .fs10
+                                    .number
                                     .bold,
                               ),
                               SizedBox(width: 2),
-                              Text(
-                                "₹ " + product.salePrice.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption
-                                    .fs10
-                                    .w300
-                                    .copyWith(
-                                        decoration: TextDecoration.lineThrough),
-                              ),
+                              if (product.salePrice < product.maxPrice)
+                                Text(
+                                  "₹ " + product.maxPrice.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .fs10
+                                      .w300
+                                      .number
+                                      .copyWith(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
                             ],
                           ),
                         ],
@@ -142,19 +150,25 @@ class ProductItemReadOnly extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            "₹ ${product.maxPrice}",
-                            style: Theme.of(context).textTheme.bodyText1.bold,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
                             "₹ ${product.salePrice}",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
-                                .w300
-                                .copyWith(
-                                    decoration: TextDecoration.lineThrough),
+                                .bodyText1
+                                .bold
+                                .number,
                           ),
+                          SizedBox(width: 5),
+                          if (product.salePrice < product.maxPrice)
+                            Text(
+                              "₹ ${product.maxPrice}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .w300
+                                  .number
+                                  .copyWith(
+                                      decoration: TextDecoration.lineThrough),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 10),

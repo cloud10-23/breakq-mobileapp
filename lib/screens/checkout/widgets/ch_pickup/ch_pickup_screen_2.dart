@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:breakq/screens/checkout/widgets/payment.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart';
@@ -75,10 +76,12 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
           isReadOnly: true,
         )));
 
+        final date = session.timetables[session.selectedDateIndex];
         _listItems.add(SliverToBoxAdapter(
             child: DisplaySelectedTimeSlot(
-                time: DateTime.fromMillisecondsSinceEpoch(
-                    session.selectedTimestamp))));
+          time: date.timeSchedules[session.selectedTimeIndex].time,
+          date: date.scheduleDate,
+        )));
 
         _listItems.add(SliverToBoxAdapter(
           child: CartProductsModule(products: session.cartProducts.cartItems),
@@ -97,11 +100,15 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
         return CheckoutTemplate(
           controller: controller,
           slivers: _listItems,
-          subTitle: 'Summary',
+          subTitle: 'Confirm & Pay',
           bottomBar: ChBottomBarWithButton(
             controller: controller,
             session: session,
-            buttonText: 'Confirm',
+            buttonText: 'Pay',
+            onTap: () => showPayment(
+                context,
+                () => BlocProvider.of<CheckoutBloc>(context)
+                    .add(PaymentDoneChEvent())),
           ),
         );
       },

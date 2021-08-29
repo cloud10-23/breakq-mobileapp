@@ -4,6 +4,7 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
@@ -43,9 +44,11 @@ class HomeScreenState extends State<HomeScreen> {
         if (!(state?.session?.isLoading ?? true)) {
           HomeSessionModel _session = state.session;
           final List<DealsModel> _topDeals = _session.topDeals;
-          final List<DealsModel> _topOffers = _session.topOffers;
-          final List<CategoryTabModel> _categoryTabs = _session.categoryTabs;
+          // final List<DealsModel> _topOffers = _session.topOffers;
+          final List<CategoryTabModel> categoryTabs = _session.categoryTabs;
+          final List<Product> _exclProducts = _session.exclusiveProducts;
           return Base(
+            categoryTabs: categoryTabs,
             body: CustomScrollView(
               controller: _customScrollViewController,
               slivers: <Widget>[
@@ -120,7 +123,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5,
+                      itemCount: 6,
                       autoplay: true,
                       duration: 500,
                       autoplayDelay: 4000,
@@ -130,7 +133,7 @@ class HomeScreenState extends State<HomeScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0.0)),
                         child: Image(
-                          image: AssetImage(AssetImages.homeOffers),
+                          image: AssetImage(AssetImages.banner(index)),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -171,7 +174,7 @@ class HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        ProductsHorizontalView(),
+                        ProductsHorizontalView(products: _exclProducts),
                         SizedBox(
                           height: 10,
                         ),
@@ -182,7 +185,7 @@ class HomeScreenState extends State<HomeScreen> {
                         title: "Categories",
                         icon: Icon(Icons.category_rounded),
                         children: [
-                          _showCategories(_categoryTabs),
+                          _showCategories(categoryTabs),
                         ]),
                   ]),
                 ),
@@ -228,18 +231,15 @@ class HomeScreenState extends State<HomeScreen> {
       color: kWhite,
       child: Wrap(
         children: List.generate(
-          6,
-          (colIndex) => GridImage(
-            // image: deals[colIndex].image,
-            colIndex: colIndex % 2,
-            // colIndex: (colIndex < 4) ? colIndex % 2 : (colIndex - 1) % 2,
-            // height: 100,
+          deals.length,
+          (index) => GridImage(
+            image: deals[index].image,
             width: (MediaQuery.of(context).size.width -
                     kPaddingM * 4 -
                     kPaddingS) /
                 3,
             onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
-                arguments: deals[colIndex]),
+                arguments: deals[index]),
           ),
         ),
       ),
@@ -272,26 +272,6 @@ class HomeScreenState extends State<HomeScreen> {
   //   );
   // }
 
-  Widget _showHorizontalScrollImages(List<DealsModel> topOffers) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(
-          topOffers.length,
-          (index) => GridImage(
-            image: topOffers[index].image,
-            rowIndex: index,
-            height: 100,
-            width: 100,
-            onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
-                arguments: topOffers[index]),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _showCategories(List<CategoryTabModel> categoryTabs) {
     return Padding(
       padding: EdgeInsets.only(bottom: kPaddingM),
@@ -299,7 +279,7 @@ class HomeScreenState extends State<HomeScreen> {
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 0.0,
           mainAxisSpacing: 0.0,
         ),

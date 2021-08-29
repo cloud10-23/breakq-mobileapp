@@ -1,9 +1,9 @@
-import 'package:breakq/data/models/bill_model.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/models/product_model.dart';
 
 class QSSessionModel {
   QSSessionModel({
-    this.bills,
+    this.orders,
     this.products,
     this.selectedBillIds,
     this.selectedProductIds,
@@ -13,7 +13,7 @@ class QSSessionModel {
   });
 
   QSSessionModel rebuild({
-    List<Bill> bills,
+    List<Order> orders,
     List<Product> products,
     List<String> selectedBillIds,
     Map<int, int> selectedProductIds,
@@ -22,7 +22,7 @@ class QSSessionModel {
     String apiError,
   }) {
     return QSSessionModel(
-      bills: bills ?? this.bills,
+      orders: orders ?? this.orders,
       products: products ?? this.products,
       selectedBillIds: selectedBillIds ?? this.selectedBillIds,
       selectedProductIds: selectedProductIds ?? this.selectedProductIds,
@@ -32,7 +32,7 @@ class QSSessionModel {
     );
   }
 
-  final List<Bill> bills;
+  final List<Order> orders;
   final List<Product> products;
   final List<String> selectedBillIds;
   final Map<int, int> selectedProductIds;

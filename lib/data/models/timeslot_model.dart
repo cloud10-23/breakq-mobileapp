@@ -20,9 +20,11 @@ class TimeslotModel {
 @JsonSerializable(createToJson: false)
 class TimeSchedules {
   String time;
+  String startTime;
+  String endTime;
   bool enabled;
 
-  TimeSchedules({this.time, this.enabled});
+  TimeSchedules({this.time, this.startTime, this.endTime, this.enabled});
 
   factory TimeSchedules.fromJson(Map<String, dynamic> json) =>
       _$TimeSchedulesFromJson(json);

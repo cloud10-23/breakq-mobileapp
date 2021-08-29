@@ -1,12 +1,11 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/timeslot_model.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/timetable_model.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:breakq/utils/datetime.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/timeline_date.dart';
@@ -23,15 +22,9 @@ class TimeSlotModule extends StatefulWidget {
 class _TimeSlotModuleState extends State<TimeSlotModule> {
   @override
   Widget build(BuildContext context) {
-    final DateTime selectedDate =
-        DateTime.now().add(Duration(days: widget.session.selectedDateRange));
-    final TimeSlot timetableModel = widget.session.timetables != null
-        ? widget.session.timetables.firstWhere((TimeSlot t) {
-            return t.date.day == selectedDate.day &&
-                t.date.month == selectedDate.month &&
-                t.date.year == selectedDate.year;
-          }, orElse: () => null)
-        : null;
+    int selectedDateIndex = widget.session.selectedDateIndex;
+    int selectedTimeIndex = widget.session.selectedTimeIndex;
+    TimeslotModel selectedDate = widget.session.timetables[selectedDateIndex];
 
     return CartHeading(
       title: "Select Time Slot",
@@ -41,14 +34,16 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
             height: kTimelineDateSize,
             child: ListView.builder(
               padding: const EdgeInsets.only(left: kPaddingM),
-              itemCount: kReservationsDateRange,
+              itemCount: widget.session.timetables.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 return TimelineDate(
-                  dateRange: index,
-                  isSelected: widget.session.selectedDateRange == index,
+                  day: widget.session.timetables[index].day,
+                  date: widget.session.timetables[index].date,
+                  month: widget.session.timetables[index].month,
+                  isSelected: selectedDateIndex == index,
                   onTap: () {
-                    if (widget.session.selectedDateRange != index) {
+                    if (selectedDateIndex != index) {
                       BlocProvider.of<CheckoutBloc>(context)
                           .add(DateRangeSetChEvent(index));
                     }
@@ -65,15 +60,17 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
             style: Theme.of(context).textTheme.caption.fs16.w600,
           ),
         ),
-        if (timetableModel != null && timetableModel.timestamps.isNotEmpty)
+        if (selectedDate != null && selectedDate.timeSchedules.isNotEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: List<ListItem>.generate(
-                  timetableModel.timestamps.length, (int index) {
-                return _timetableItem(timetableModel.timestamps[index],
-                    widget.session.selectedTimestamp);
+              children:
+                  List.generate(selectedDate.timeSchedules.length, (index) {
+                final time = selectedDate.timeSchedules[index];
+                if (time.enabled)
+                  return _timetableItem(index, selectedTimeIndex, time.time);
+                return Container();
               }),
             ),
           )
@@ -91,49 +88,46 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
     );
   }
 
-  ListItem _timetableItem(int timestamp, int selectedTimestamp) {
-    final DateTime range1Date = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    final DateTime range2Date = range1Date.add(Duration(hours: 1));
-
+  Widget _timetableItem(int index, int selectedTime, String title) {
     return ListItem(
       leading: Padding(
         padding: const EdgeInsets.only(top: kPaddingS / 2),
         child: Radio<int>(
           activeColor: kBlue900,
-          value: timestamp,
-          groupValue: selectedTimestamp,
-          onChanged: (int selected) {
-            selectTimestampEvent(timestamp);
+          value: index,
+          groupValue: selectedTime,
+          onChanged: (int index) {
+            selectTimestampEvent(index);
           },
         ),
       ),
-      title:
-          "${range1Date.toLocalTimeString} - ${range2Date.toLocalTimeString}",
+      title: title,
       onPressed: () {
-        selectTimestampEvent(timestamp);
+        selectTimestampEvent(index);
       },
     );
   }
 
-  void selectTimestampEvent(int timestamp) {
+  void selectTimestampEvent(int timeRange) {
     BlocProvider.of<CheckoutBloc>(context)
-        .add(TimestampSelectedChEvent(timestamp));
+        .add(TimestampSelectedChEvent(timeRange));
   }
 }
 
 class DisplaySelectedTimeSlot extends StatelessWidget {
-  DisplaySelectedTimeSlot({@required this.time});
+  DisplaySelectedTimeSlot({@required this.date, @required this.time});
 
-  final DateTime time;
+  final String date;
+  final String time;
   @override
   Widget build(BuildContext context) {
     return CartHeading(title: "Time Slot", children: [
       Padding(
         padding: const EdgeInsets.only(left: kPaddingL),
         child: ListItem(
-          title: time.toLocalDateTimeString,
+          title: time,
           titleTextStyle: Theme.of(context).textTheme.subtitle1.fs16.w500,
-          subtitle: time.toLocalTimeString,
+          subtitle: date,
           subtitleTextStyle: Theme.of(context).textTheme.caption.fs14.w700,
           showBorder: false,
         ),

@@ -43,6 +43,19 @@ class _ChPickupState extends State<ChPickup> {
           );
         }
 
+        if (session.isLoading)
+          return CheckoutTemplate(
+            slivers: [
+              SliverFillRemaining(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            ],
+            subTitle: 'Loading Time slots...',
+            showBackButton: false,
+          );
+
         final List<Widget> _listItems = <Widget>[];
 
         _listItems.add(SliverToBoxAdapter(
@@ -66,7 +79,7 @@ class _ChPickupState extends State<ChPickup> {
                     style: Theme.of(context).textTheme.caption.fs8.w700),
                 content: Container()),
             Step(
-                title: Text("Confirm",
+                title: Text("Confirm & Pay",
                     style: Theme.of(context).textTheme.caption.fs8.w700),
                 content: Container()),
           ],
@@ -86,8 +99,8 @@ class _ChPickupState extends State<ChPickup> {
           bottomBar: ChBottomBarWithButton(
             session: session,
             onTap: () {
-              if (session.selectedTimestamp > 0 &&
-                  session.selectedDateRange >= 0)
+              if (session.selectedTimeIndex >= 0 &&
+                  session.selectedDateIndex >= 0)
                 BlocProvider.of<CheckoutBloc>(context)
                     .add(NextPressedChEvent());
               else

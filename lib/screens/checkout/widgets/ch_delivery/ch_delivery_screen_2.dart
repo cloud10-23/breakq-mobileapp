@@ -90,8 +90,8 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
           bottomBar: ChBottomBarWithButton(
             session: session,
             onTap: () {
-              if (session.selectedTimestamp > 0 &&
-                  session.selectedDateRange >= 0)
+              if (session.selectedTimeIndex >= 0 &&
+                  session.selectedDateIndex >= 0)
                 BlocProvider.of<CheckoutBloc>(context)
                     .add(NextPressedChEvent());
               else

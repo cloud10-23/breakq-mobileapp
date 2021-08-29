@@ -12,6 +12,16 @@ class Price {
     this.savings,
   });
 
+  factory Price.addPrice(Price oldPrice, double price) {
+    return Price(
+      price: price,
+      discount: oldPrice.discount,
+      extraOffer: oldPrice.extraOffer,
+      totalAmnt: oldPrice.totalAmnt,
+      savings: oldPrice.savings,
+    );
+  }
+
   factory Price.calc(double orgPrice, double price, {double extraOffer = 10}) {
     return Price(
       price: orgPrice,

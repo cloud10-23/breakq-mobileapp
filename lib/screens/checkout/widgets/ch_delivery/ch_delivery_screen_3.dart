@@ -85,9 +85,11 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
             child: DisplaySelectedAddress(
                 address: session.address[session.selectedAddress ?? 0])));
 
+        final date = session.timetables[session.selectedDateIndex];
         _listItems.add(SliverToBoxAdapter(
             child: DisplaySelectedTimeSlot(
-          time: DateTime.fromMillisecondsSinceEpoch(session.selectedTimestamp),
+          time: date.timeSchedules[session.selectedTimeIndex].time,
+          date: date.scheduleDate,
         )));
 
         _listItems.add(SliverToBoxAdapter(

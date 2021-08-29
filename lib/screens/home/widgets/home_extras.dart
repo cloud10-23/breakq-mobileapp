@@ -9,17 +9,8 @@ import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class GridImage extends StatelessWidget {
-  GridImage(
-      {this.image,
-      this.colIndex,
-      this.rowIndex,
-      this.height,
-      this.width,
-      this.onPressed});
+  GridImage({this.image, this.width, this.onPressed});
   final String image;
-  final int colIndex;
-  final int rowIndex;
-  final double height;
   final double width;
   final VoidCallback onPressed;
   @override
@@ -28,16 +19,14 @@ class GridImage extends StatelessWidget {
       onTap: onPressed,
       child: Card(
         margin: EdgeInsets.all(1.0),
-        child: Image(
-            height: height,
+        child: Image.network(image,
+            height: width,
             width: width,
-            // image: (image != null)
-            //     ? AssetImage(AssetImages.productPlaceholder)
-            // ? NetworkImage(image)
-            // :
-            image: AssetImage((colIndex == null)
-                ? AssetImages.topDeals(rowIndex)
-                : AssetImages.topOffers(colIndex)),
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+                AssetImages.productPlaceholder,
+                height: width,
+                width: width,
+                fit: BoxFit.fill),
             fit: BoxFit.fill),
       ),
     );
@@ -45,12 +34,8 @@ class GridImage extends StatelessWidget {
 }
 
 class ExclProductsCard extends StatelessWidget {
-  ExclProductsCard({this.index});
-  final int index;
-
-  Product getProduct(int index) {
-    return generateSampleProducts().keys.toList()[index % 3];
-  }
+  ExclProductsCard({@required this.product});
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -59,16 +44,15 @@ class ExclProductsCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 2.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
-        product: generateSampleProducts().keys.toList()[index % 3],
+        product: product,
         onProductAdd: () =>
-            getIt.get<AppGlobals>().onProductAdd(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductAdd(product, context),
         onProductRem: () =>
-            getIt.get<AppGlobals>().onProductRed(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductRed(product, context),
         onProductDel: () =>
-            getIt.get<AppGlobals>().onProductDel(getProduct(index), context),
-        onProductPressed: () => getIt
-            .get<AppGlobals>()
-            .onProductPressed(getProduct(index), context),
+            getIt.get<AppGlobals>().onProductDel(product, context),
+        onProductPressed: () =>
+            getIt.get<AppGlobals>().onProductPressed(product, context),
       ),
     );
   }

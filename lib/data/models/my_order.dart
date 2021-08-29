@@ -11,7 +11,7 @@ class Order extends Equatable {
   @JsonKey(name: "store_ID")
   final int storeId;
   @JsonKey(name: "firebase_ID")
-  final int firebaseId;
+  final String firebaseId;
   @JsonKey(name: "mobile_No")
   final String mobileNo;
   @JsonKey(name: "bill_No")
@@ -25,13 +25,13 @@ class Order extends Equatable {
   @JsonKey(name: "payment_Mode")
   final String paymentMode;
   final int qty;
-  final String weight;
-  final String cgst;
-  final String sgst;
+  final double weight;
+  final double cgst;
+  final double sgst;
   final String status;
 
   final OrderTimeSlot timeSlot;
-  final List<CartProduct> product;
+  final List<CartProduct> products;
   final Price price;
   final Address address;
 
@@ -50,7 +50,7 @@ class Order extends Equatable {
     this.sgst,
     this.status,
     this.timeSlot,
-    this.product,
+    this.products,
     this.price,
     this.address,
   });

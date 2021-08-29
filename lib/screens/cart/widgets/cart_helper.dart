@@ -1,4 +1,5 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/scan/barcode_scanner.dart';
 import 'package:breakq/widgets/back_button.dart';
@@ -103,12 +104,15 @@ class CartEmptyScreen extends StatelessWidget {
 }
 
 class CartFooter extends StatelessWidget {
+  CartFooter({this.products});
+  final List<Product> products;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CartSuggestionsBuilder(),
-        CartRecentlyScanned(),
+        // CartSuggestionsBuilder(),
+        if (products?.isNotEmpty ?? false)
+          CartRecentlyScanned(products: products),
       ],
     );
   }
@@ -220,19 +224,23 @@ class CartQtyDisplay extends StatelessWidget {
 }
 
 class CartSuggestionsBuilder extends StatelessWidget {
+  CartSuggestionsBuilder({this.products});
+  final List<Product> products;
   @override
   Widget build(BuildContext context) {
     return CartHeading(title: "Suggested For You", children: [
-      ProductsHorizontalView(),
+      ProductsHorizontalView(products: products),
     ]);
   }
 }
 
 class CartRecentlyScanned extends StatelessWidget {
+  CartRecentlyScanned({this.products});
+  final List<Product> products;
   @override
   Widget build(BuildContext context) {
     return CartHeading(title: "Recently Scanned", children: [
-      ProductsHorizontalView(),
+      ProductsHorizontalView(products: products),
     ]);
   }
 }

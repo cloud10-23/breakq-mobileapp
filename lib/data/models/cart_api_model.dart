@@ -1,4 +1,6 @@
+import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/widgets/price_details.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -25,6 +27,28 @@ part 'cart_api_model.g.dart';
     "max_Price": 13,
     "available": 1
 */
+
+class CartAPI extends Equatable {
+  CartAPI({this.products, this.priceDetails});
+
+  final List<CartProduct> products;
+  final Price priceDetails;
+
+  factory CartAPI.fromJson(Map<String, dynamic> json) {
+    return CartAPI(
+      products: json['cartItems']
+          .map<CartProduct>((dynamic json) =>
+              CartProduct.fromJson(json as Map<String, dynamic>))
+          .toList(),
+      priceDetails:
+          Price.fromJson(json['price_Details'] as Map<String, dynamic>),
+    );
+  }
+
+  @override
+  List<Object> get props => [this.products, this.priceDetails];
+}
+
 class CartProduct extends Equatable {
   final int cartDetId;
   final int storeId;
@@ -59,24 +83,24 @@ class CartProduct extends Equatable {
 class AddCartModel {
   @JsonKey(name: 'store_ID')
   final int storeID;
-  @JsonKey(name: 'mobile_No')
-  final String mobileNo;
+  @JsonKey(name: 'fireBaseID')
+  final String firebaseID;
   @JsonKey(name: 'item_Code')
   final int itemCode;
   final int qty;
 
-  AddCartModel({this.storeID, this.mobileNo, this.itemCode, this.qty});
+  AddCartModel({this.storeID, this.firebaseID, this.itemCode, this.qty});
 
   factory AddCartModel.fromJson(Map<String, dynamic> json) =>
       _$AddCartModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AddCartModelToJson(this);
 
-  AddCartModel rebuild({storeID, mobileNo}) => AddCartModel(
+  AddCartModel rebuild({storeID, firebaseID}) => AddCartModel(
         itemCode: this.itemCode,
         qty: this.qty,
         storeID: storeID,
-        mobileNo: mobileNo,
+        firebaseID: firebaseID,
       );
 }
 
@@ -102,7 +126,7 @@ CartProduct _$CartProductFromJson(Map<String, dynamic> json) {
       image: json['image'],
       maxPrice: (json['max_Price'] as num)?.toDouble(),
       quantity: json['quantity'],
-      salePrice: json['sale_Price'],
+      salePrice: (json['sale_Price'] as num)?.toDouble(),
     ),
   );
 }

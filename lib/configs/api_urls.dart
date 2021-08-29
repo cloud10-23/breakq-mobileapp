@@ -1,5 +1,8 @@
+import 'package:breakq/configs/constants.dart';
+
 /// ALL THE API ENDPOINT URLs for BreakQ Application
 /// For more information visit: `http://breakq.api.magratechs.com/swagger/index.html`
+/// Firebase UID: `hgv7ElNZQwfxYK8ZL4GcrlXwEJw1`
 
 /// BASE URL
 const String apiBase = 'breakq.api.magratechs.com';
@@ -16,6 +19,7 @@ const String apiOfferProducts =
 const String apiCategory = '/api/Category';
 const String apiBrand = '/api/Brand';
 const String apiProducts = '/api/Products';
+const String apiExclusiveProducts = '/api/Products/ExclusiveProducts';
 
 /// Cart APIs
 const String apiCartAddOrUpdate = '/api/Cart/AddOrUpdateCart';
@@ -74,3 +78,10 @@ const String apiSortLTH = 'lowtohigh';
 const String apiFilterByGT = 'greaterthan';
 const String apiFilterByLT = 'lessthan';
 const String apiFilterByMM = 'minmax';
+
+const Map<CheckoutType, String> apiCheckoutTypes = {
+  CheckoutType.pickUp: 'SP',
+  CheckoutType.delivery: 'DTH'
+};
+// const String apiCheckoutTypeSelfPickup = 'SP';
+// const String apiCheckoutTypeDelivery = 'DTH';

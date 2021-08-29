@@ -49,7 +49,7 @@ class CategoryTabsState extends State<CategoryTabs> {
           final CategoryTabModel item = widget.categoryTabs[index];
           final bool isActive = item.id == widget.activeCategoryTab;
           return Container(
-            width: 140,
+            width: 120,
             child: Card(
               margin: const EdgeInsets.all(kPaddingM),
               clipBehavior: Clip.antiAlias,
@@ -67,35 +67,18 @@ class CategoryTabsState extends State<CategoryTabs> {
                   BlocProvider.of<ProductBloc>(context).add(
                       CategoryFilteredProductEvent(activeCategoryTab: item.id));
                 },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Flexible(
-                      child: Image.asset(
-                        categories[index]['image'],
-                      ),
-                    ),
-                    SizedBox(width: kPaddingM),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(item.category.title,
-                              style: isActive
-                                  ? Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .fs10
-                                      .bold
-                                      .white
-                                  : Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .bold
-                                      .fs10),
-                        ],
-                      ),
-                    ),
+                    Text(item.category.title,
+                        style: isActive
+                            ? Theme.of(context)
+                                .textTheme
+                                .caption
+                                .fs10
+                                .bold
+                                .white
+                            : Theme.of(context).textTheme.caption.bold.fs10),
                   ],
                 ),
               ),

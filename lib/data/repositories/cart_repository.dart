@@ -11,20 +11,15 @@ class CartRepository {
 
   final DataProvider dataProvider;
 
-  Future<List<CartProduct>> getCart() async {
+  Future<CartAPI> getCart() async {
     final Uri uri = Uri.http(apiBase, apiCartGet, {
       apistoreId: '1',
       apiFirebaseId: getIt.get<AppGlobals>().user.uid,
     });
 
-    final List<dynamic> _rawList = await dataProvider.get(uri);
+    final Map<String, dynamic> _rawMap = await dataProvider.getAsMap(uri);
 
-    List<CartProduct> _cartItems = _rawList
-        .map<CartProduct>((dynamic json) =>
-            CartProduct.fromJson(json as Map<String, dynamic>))
-        .toList();
-
-    return _cartItems;
+    return CartAPI.fromJson(_rawMap);
   }
 
   Future<bool> deleteCart() async {
@@ -40,7 +35,7 @@ class CartRepository {
     final Uri uri = Uri.http(apiBase, apiCartAddOrUpdate);
     final _item = item.rebuild(
       storeID: 1,
-      mobileNo: getIt.get<AppGlobals>().user.phoneNumber,
+      firebaseID: getIt.get<AppGlobals>().user.uid,
     );
 
     final _rawResponse = await dataProvider.post(uri, _item.toJson());

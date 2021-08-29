@@ -1,4 +1,6 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/address.dart';
+import 'package:breakq/data/repositories/address_repository.dart';
 import 'package:breakq/widgets/edit_text_widgets.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,15 +18,13 @@ class AddEditAddress extends StatefulWidget {
 }
 
 class AddEditAddressState extends State<AddEditAddress> {
-  bool passwordVisible = false;
-  bool isRemember = false;
   final GlobalKey<FormState> formKey =
       GlobalKey(debugLabel: "Form for add address");
+  final address = Address();
 
   @override
   void initState() {
     super.initState();
-    passwordVisible = false;
   }
 
   @override
@@ -63,13 +63,13 @@ class AddEditAddressState extends State<AddEditAddress> {
                     FilledEditText(
                       hint: "Full Name",
                       isFirstField: true,
-                      onSaved: (newValue) {},
+                      onSaved: (name) => address.rebuild(name: name),
                       error: "Please enter your name!",
                     ),
                     FilledEditText(
                       hint: "Phone Number",
                       inputTpe: TextInputType.phone,
-                      onSaved: (newValue) {},
+                      onSaved: (phone) => address.rebuild(phone: phone),
                       error: "Please enter your mobile number!",
                     ),
                     Row(
@@ -79,7 +79,8 @@ class AddEditAddressState extends State<AddEditAddress> {
                           child: FilledEditText(
                             hint: "Pin Code",
                             inputTpe: TextInputType.number,
-                            onSaved: (newValue) {},
+                            onSaved: (pinCode) =>
+                                address.rebuild(pinCode: pinCode),
                             error: "Please fill the pin code!",
                           ),
                         ),
@@ -88,7 +89,8 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 10,
                           child: FilledEditText(
                             hint: "House No/Building",
-                            onSaved: (newValue) {},
+                            onSaved: (houseNo) =>
+                                address.rebuild(houseNo: houseNo),
                             inputTpe: TextInputType.streetAddress,
                             error: "Please fill the house no!",
                           ),
@@ -97,13 +99,14 @@ class AddEditAddressState extends State<AddEditAddress> {
                     ),
                     FilledEditText(
                       hint: "Street, Colony, Locality, Area",
-                      onSaved: (newValue) {},
+                      onSaved: (street) => address.rebuild(street: street),
                       inputTpe: TextInputType.streetAddress,
                       error: "Please fill the address line!",
                     ),
                     FilledEditText(
                       hint: "Landmark (optional)",
-                      onSaved: (newValue) {},
+                      onSaved: (landmark) =>
+                          address.rebuild(landmark: landmark),
                     ),
                     Row(
                       children: [
@@ -111,7 +114,7 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 5,
                           child: FilledEditText(
                             hint: "State",
-                            onSaved: (newValue) {},
+                            onSaved: (state) => address.rebuild(state: state),
                             error: "Please fill the state!",
                           ),
                         ),
@@ -120,7 +123,8 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 5,
                           child: FilledEditText(
                             hint: "City",
-                            onSaved: (newValue) {},
+                            onSaved: (city) =>
+                                address.rebuild(cityDistTown: city),
                             error: "Please fill the city!",
                             isLastField: true,
                           ),
@@ -130,8 +134,12 @@ class AddEditAddressState extends State<AddEditAddress> {
                     SizedBox(height: 10),
                     ThemeButton(
                       text: "Add Address",
-                      onPressed: () {
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        if (formKey.currentState.validate()) {
+                          formKey.currentState.save();
+                          await AddressRepository().addOrUpdate(address);
+                          Navigator.of(context).pop();
+                        }
                       },
                     ),
                   ],

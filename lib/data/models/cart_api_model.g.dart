@@ -9,7 +9,7 @@ part of 'cart_api_model.dart';
 AddCartModel _$AddCartModelFromJson(Map<String, dynamic> json) {
   return AddCartModel(
     storeID: json['store_ID'] as int,
-    mobileNo: json['mobile_No'] as String,
+    firebaseID: json['fireBaseID'] as String,
     itemCode: json['item_Code'] as int,
     qty: json['qty'] as int,
   );
@@ -18,7 +18,7 @@ AddCartModel _$AddCartModelFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$AddCartModelToJson(AddCartModel instance) =>
     <String, dynamic>{
       'store_ID': instance.storeID,
-      'mobile_No': instance.mobileNo,
+      'fireBaseID': instance.firebaseID,
       'item_Code': instance.itemCode,
       'qty': instance.qty,
     };

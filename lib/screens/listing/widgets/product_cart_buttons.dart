@@ -205,11 +205,11 @@ class ResetCartButtonCircleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: kWhite,
+      backgroundColor: kBlue,
       radius: 18,
       child: IconButton(
         icon: Icon(Icons.delete),
-        color: kBlack,
+        color: kWhite,
         iconSize: 18,
         onPressed: onProductDel ?? () {},
       ),

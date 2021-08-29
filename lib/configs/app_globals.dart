@@ -134,20 +134,23 @@ class AppGlobals {
           .add(RemovePFromCartEvent(product: product));
 
   /// Show Set budget bottom sheet
-  final Function(BuildContext) showSetBudget =
-      (context) => showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            useRootNavigator: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0)),
-            ),
-            clipBehavior: Clip.antiAlias,
-            isDismissible: true,
-            builder: (context) => SetBudgetBottomSheet(),
-          );
+  final Function(BuildContext) showSetBudget = (context) =>
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        useRootNavigator: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        isDismissible: true,
+        builder: (context) => Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: SetBudgetBottomSheet(),
+        ),
+      );
 
   /// Show search screen
   // final Function(BuildContext) showSearchScreen = (context) =>

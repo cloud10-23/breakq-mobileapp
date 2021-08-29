@@ -1,11 +1,13 @@
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/home_models.dart';
+import 'package:breakq/data/models/product_model.dart';
 
 class HomeSessionModel {
   HomeSessionModel({
     this.topDeals,
     this.topOffers,
     this.categoryTabs,
+    this.exclusiveProducts,
     this.isLoading,
   });
 
@@ -13,12 +15,14 @@ class HomeSessionModel {
     List<DealsModel> topDeals,
     List<DealsModel> topOffers,
     List<CategoryTabModel> categoryTabs,
+    List<Product> exclusiveProducts,
     bool isLoading,
   }) {
     return HomeSessionModel(
       categoryTabs: categoryTabs ?? this.categoryTabs,
       topDeals: topDeals ?? this.topDeals,
       topOffers: topOffers ?? this.topOffers,
+      exclusiveProducts: exclusiveProducts ?? this.exclusiveProducts,
       isLoading: isLoading ?? this.isLoading,
     );
   }
@@ -26,5 +30,6 @@ class HomeSessionModel {
   final List<DealsModel> topDeals;
   final List<DealsModel> topOffers;
   final List<CategoryTabModel> categoryTabs;
+  final List<Product> exclusiveProducts;
   final bool isLoading;
 }

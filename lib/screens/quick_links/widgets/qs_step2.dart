@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
@@ -137,81 +138,88 @@ class _QSStep2State extends State<QSStep2> {
           ],
           title: Row(
             children: <Widget>[
-              Container(
+              Image.network(
+                apiBaseFull + product.image,
                 width: 75,
                 height: 75,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(product.image),
-                    // image: NetworkImage(product.image),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(kBoxDecorationRadius),
-                    bottomLeft: Radius.circular(kBoxDecorationRadius),
-                  ),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  AssetImages.productPlaceholder,
+                  width: 75,
+                  height: 75,
+                  fit: BoxFit.cover,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      sprintf('%s', <String>[product.title]),
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.subtitle1.fs18.w500,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: kPaddingS,
-                          bottom: kPaddingS,
-                          left: kPaddingS,
-                          right: kPaddingS),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            sprintf('%s', <String>[product.quantity]),
-                            maxLines: 1,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption
-                                .copyWith(color: Theme.of(context).hintColor),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: kPaddingS,
-                                right: kPaddingS,
-                                bottom: kPaddingS,
-                                top: 2),
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  "₹ " + product.maxPrice.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2
-                                      .bold,
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  "₹ " + product.salePrice.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .w300
-                                      .copyWith(
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        sprintf('%s', <String>[product.title]),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style:
+                            Theme.of(context).textTheme.caption.black.fs12.w600,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: kPaddingS,
+                            bottom: kPaddingS,
+                            left: kPaddingS,
+                            right: kPaddingS),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              sprintf('%s', <String>[product.description]),
+                              maxLines: 1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .fs10
+                                  .copyWith(color: Theme.of(context).hintColor),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: kPaddingS,
+                                  right: kPaddingS,
+                                  bottom: kPaddingS,
+                                  top: 2),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    "₹ " + product.salePrice.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        .number
+                                        .bold,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    (product.maxPrice != product.salePrice)
+                                        ? "₹ " +
+                                            product.maxPrice.toStringAsFixed(2)
+                                        : '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .number
+                                        .w300
+                                        .copyWith(
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

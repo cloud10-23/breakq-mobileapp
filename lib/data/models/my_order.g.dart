@@ -9,7 +9,7 @@ part of 'my_order.dart';
 Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
     storeId: json['store_ID'] as int,
-    firebaseId: json['firebase_ID'] as int,
+    firebaseId: json['firebase_ID'] as String,
     mobileNo: json['mobile_No'] as String,
     billNo: json['bill_No'] as int,
     billAmnt: json['bill_Amnt'] as String,
@@ -17,14 +17,14 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     checkoutType: json['checkout_Type'] as String,
     paymentMode: json['payment_Mode'] as String,
     qty: json['qty'] as int,
-    weight: json['weight'] as String,
-    cgst: json['cgst'] as String,
-    sgst: json['sgst'] as String,
+    weight: json['weight'] as double,
+    cgst: json['cgst'] as double,
+    sgst: json['sgst'] as double,
     status: json['status'] as String,
     timeSlot: json['timeSlot'] == null
         ? null
         : OrderTimeSlot.fromJson(json['timeSlot'] as Map<String, dynamic>),
-    product: (json['product'] as List)
+    products: (json['products'] as List)
         ?.map((e) =>
             e == null ? null : CartProduct.fromJson(e as Map<String, dynamic>))
         ?.toList(),

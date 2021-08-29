@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/screens/profile/drawer.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,9 @@ import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Base extends StatelessWidget {
-  Base({this.body});
+  Base({@required this.body, @required this.categoryTabs});
   final Widget body;
+  final List<CategoryTabModel> categoryTabs;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class Base extends StatelessWidget {
           child: body,
         ),
         drawer: Drawer(
-          child: DrawerScreen(),
+          child: DrawerScreen(categories: categoryTabs),
         ),
         floatingActionButton: ScanFloatingButtonExtended(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

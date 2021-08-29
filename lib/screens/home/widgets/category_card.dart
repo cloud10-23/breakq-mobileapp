@@ -1,3 +1,4 @@
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:flutter/material.dart';
@@ -14,31 +15,32 @@ class CategoryCard extends StatelessWidget {
     return InkWell(
       onTap: () =>
           Navigator.pushNamed(context, Routes.listing, arguments: _category),
-      child: AspectRatio(
-        aspectRatio: 1.0,
-        child: Card(
-          margin: EdgeInsets.all(1.0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Image(
-                    // image: NetworkImage(_category.image),
-                    image: AssetImage(AssetImages.productPlaceholder),
-                    fit: BoxFit.fill),
+      child: Card(
+        margin: EdgeInsets.all(1.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Image.network(
+                apiBaseFull + _category.image,
+                fit: BoxFit.fitWidth,
+                errorBuilder: (context, _, e) => Image.asset(
+                  AssetImages.productPlaceholder,
+                  height: 100,
+                ),
               ),
-              SizedBox(
-                height: 5.0,
-              ),
-              Text(_category.title,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText2.bold),
-              SizedBox(
-                height: 5.0,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(_category.title,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1.bold),
+            SizedBox(
+              height: 5.0,
+            ),
+          ],
         ),
       ),
     );

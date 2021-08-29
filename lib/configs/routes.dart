@@ -183,7 +183,9 @@ class Routes {
         );
       case order_detail:
         return MaterialPageRoute<OrderDetails>(
-          builder: (BuildContext context) => OrderDetails(),
+          builder: (BuildContext context) => OrderDetails(
+            checkoutType: routeSettings.arguments,
+          ),
         );
       case need_help:
         return MaterialPageRoute<NeedHelp>(

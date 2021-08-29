@@ -12,6 +12,8 @@ import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class OrderDetails extends StatefulWidget {
+  OrderDetails({@required this.checkoutType});
+  final CheckoutType checkoutType;
   @override
   _OrderDetailsState createState() => _OrderDetailsState();
 }
@@ -23,7 +25,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     _listItems.add(SliverToBoxAdapter(
         child: CheckoutTypeModule(
-      index: 2,
+      index: widget.checkoutType.index,
       isReadOnly: true,
     )));
 
@@ -54,22 +56,28 @@ class _OrderDetailsState extends State<OrderDetails> {
               ),
             ))));
 
-    _listItems.add(SliverToBoxAdapter(
-        child: DisplaySelectedAddress(
-      address: Address(
-        fullName: "Jon Doe",
-        houseNo: "No. 5, 5th Lane",
-        street: "Church Street",
-        city: "Riverdale",
-        state: "California",
-        pinCode: "610032",
-        landmark: "DineOut Restraunt",
-        phone: "1234567890",
-      ),
-    )));
+    if (widget.checkoutType == CheckoutType.delivery) {
+      _listItems.add(SliverToBoxAdapter(
+          child: DisplaySelectedAddress(
+        address: Address(
+          fullName: "Jon Doe",
+          houseNo: "No. 5, 5th Lane",
+          street: "Church Street",
+          city: "Riverdale",
+          state: "California",
+          pinCode: "610032",
+          landmark: "DineOut Restraunt",
+          phone: "1234567890",
+        ),
+      )));
+    }
 
     _listItems.add(SliverToBoxAdapter(
-        child: DisplaySelectedTimeSlot(time: DateTime(2021, 1, 1, 13, 0))));
+        child: DisplaySelectedTimeSlot(
+      time: "12:00 PM - 1:00 PM",
+      date: "12/10/21",
+      // date: session.timetables[session.selectedDateRange].scheduleDate,
+    )));
 
     _listItems.add(SliverToBoxAdapter(
       child: CartProductsModule(products: generateSampleProducts()),
@@ -120,7 +128,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                     label: Padding(
                       padding:
                           const EdgeInsets.symmetric(horizontal: kPaddingL),
-                      child: Text('Show Invoice'),
+                      child: Text('Invoice'),
                     )),
               ),
             ),

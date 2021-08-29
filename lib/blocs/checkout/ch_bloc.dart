@@ -7,8 +7,9 @@ import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/data/models/price_model.dart';
-import 'package:breakq/data/models/timetable_model.dart';
-import 'package:breakq/data/repositories/timeslot_repository.dart';
+import 'package:breakq/data/models/timeslot_model.dart';
+import 'package:breakq/data/repositories/address_repository.dart';
+import 'package:breakq/data/repositories/checkout_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
@@ -20,6 +21,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   CheckoutBloc({@required this.cartBloc}) : super(InitialChState());
 
   final CartBloc cartBloc;
+  final CheckoutRepository _checkoutRepository = CheckoutRepository();
 
   @override
   Stream<CheckoutState> mapEventToState(CheckoutEvent event) async* {
@@ -52,16 +54,43 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     }
   }
 
+  Future<String> initWalkin() async {
+    // return await _checkoutRepository.checkoutWalkin();
+    return '100';
+  }
+
+  void initPickup() {
+    add(LoadTimeSlots(type: CheckoutType.pickUp));
+  }
+
+  void initDelivery() {
+    add(LoadAddressChEvent());
+  }
+
   Stream<CheckoutState> _mapLoadCartChEventToState(
       LoadCartAndTypeChEvent event) async* {
     try {
       Cart cartItems = (cartBloc.state as CartLoaded).cart;
       if (cartItems?.cartItems?.isNotEmpty ?? false) {
-        if (event.type == CheckoutType.pickUp)
-          add(LoadTimeSlots());
-        else if (event.type == CheckoutType.delivery) add(LoadAddressChEvent());
+        String billNo = "";
+        bool isLoading = true;
+        switch (event.type) {
+          case CheckoutType.walkIn:
+            billNo = await initWalkin();
+            isLoading = false;
+            break;
+          case CheckoutType.pickUp:
+            initPickup();
+            break;
+          case CheckoutType.delivery:
+            initDelivery();
+            break;
+        }
+
         yield SessionRefreshSuccessChState(CheckoutSession(
             cartProducts: cartItems,
+            billNo: billNo,
+            isLoading: isLoading,
             currentStep: ChCurrentStep(checkoutType: event.type)));
       } else
         yield LoadFailureChState();
@@ -77,16 +106,20 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           (state as SessionRefreshSuccessChState).session;
 
       String _routeName = CheckoutNavigatorRoutes.walkin_1;
+      String billNo = "";
+      bool isLoading = true;
       switch (event.type) {
         case CheckoutType.walkIn:
+          billNo = await initWalkin();
+          isLoading = false;
           _routeName = CheckoutNavigatorRoutes.walkin_1;
           break;
         case CheckoutType.pickUp:
-          add(LoadTimeSlots());
+          initPickup();
           _routeName = CheckoutNavigatorRoutes.pickup_1;
           break;
         case CheckoutType.delivery:
-          add(LoadAddressChEvent());
+          initDelivery();
           _routeName = CheckoutNavigatorRoutes.delivery_1;
           break;
       }
@@ -99,6 +132,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       final CheckoutSession newSession = CheckoutSession(
         cartProducts: session.cartProducts,
+        billNo: billNo,
+        isLoading: isLoading,
         currentStep: ChCurrentStep(checkoutType: event.type, step: 0),
       );
 
@@ -121,101 +156,128 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
           /// If the type is Walkin then this will be triggered through API when
           /// the counter scans the code
-          if (session.currentStep.step == 0) {
-            newSession = session.rebuild(
-              currentStep: session.currentStep.rebuild(step: 1),
-              billNo: "1234556678",
-            );
-            getIt
-                .get<AppGlobals>()
-                .globalKeyCheckoutNavigator
-                .currentState
-                .pushNamed(CheckoutNavigatorRoutes.walkin_1);
-            // _subtitle ;
-          } else if (session.currentStep.step == 1) {
-            // getIt
-            //     .get<AppGlobals>()
-            //     .globalKeyCheckoutNavigator
-            //     .currentState
-            //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
-            add(PaymentDoneChEvent());
-            // if (session.selectedProductIds == null ||
-            //     session.selectedProductIds.isEmpty) {
-            //   UI.showErrorDialog(context,
-            //       message: L10n.of(context).QSWarningProducts,
-            //       onPressed: () => Navigator.pop(context));
-            // }
+          switch (session.currentStep.step) {
+            case 0:
+              newSession = session.rebuild(
+                currentStep: session.currentStep.rebuild(step: 1),
+              );
+              getIt
+                  .get<AppGlobals>()
+                  .globalKeyCheckoutNavigator
+                  .currentState
+                  .pushNamed(CheckoutNavigatorRoutes.walkin_1);
+              break;
+            case 1:
+              // getIt
+              //     .get<AppGlobals>()
+              //     .globalKeyCheckoutNavigator
+              //     .currentState
+              //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
+              add(PaymentDoneChEvent());
+              // if (session.selectedProductIds == null ||
+              //     session.selectedProductIds.isEmpty) {
+              //   UI.showErrorDialog(context,
+              //       message: L10n.of(context).QSWarningProducts,
+              //       onPressed: () => Navigator.pop(context));
+              // }
+              break;
           }
+
           break;
         case CheckoutType.pickUp:
-          if (session.currentStep.step == 0) {
-            if (session.selectedDateRange < 0 ||
-                session.selectedTimestamp <= 0) {
-              /// Then the user did not select a time slot
-              /// Show an Error dialog
-              yield LoadFailureChState();
-            }
-            newSession = session.rebuild(
-              billNo: "1234556678",
-              currentStep: session.currentStep.rebuild(step: 1),
-            );
-            getIt
-                .get<AppGlobals>()
-                .globalKeyCheckoutNavigator
-                .currentState
-                .pushNamed(CheckoutNavigatorRoutes.pickup_2);
-          } else if (session.currentStep.step == 1) {
-            /// This is after the user confirms the self pick up
-            /// Make an API request and conform the order
-            newSession = session.rebuild(
-              isCompleted: true,
-            );
-            // getIt
-            //     .get<AppGlobals>()
-            //     .globalKeyCheckoutNavigator
-            //     .currentState
-            //     .pushNamed(CheckoutNavigatorRoutes.pickup_2);
-            add(ClearCartChEvent());
+          switch (session.currentStep.step) {
+            case 0:
+              if (session.selectedDateIndex < 0 ||
+                  session.selectedTimeIndex < 0) {
+                /// Then the user did not select a time slot
+                /// Show an Error dialog
+                yield LoadFailureChState();
+              }
+              newSession = session.rebuild(
+                currentStep: session.currentStep.rebuild(step: 1),
+              );
+              getIt
+                  .get<AppGlobals>()
+                  .globalKeyCheckoutNavigator
+                  .currentState
+                  .pushNamed(CheckoutNavigatorRoutes.pickup_2);
+              break;
+            case 1:
+
+              /// This is after the user confirms the self pick up
+              /// Make an API request and conform the order
+              ///
+              /// API CALL to checkout with Time slot and get the bill no,
+
+              final selectedDateRange = session.selectedDateIndex;
+              final selectedTimeSlot = session.selectedTimeIndex;
+              final selectedDate = session.timetables[selectedDateRange];
+              final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
+              final String billNo = await _checkoutRepository.checkoutWithTime(
+                  selectedDate.date,
+                  timeslots.startTime,
+                  timeslots.endTime,
+                  CheckoutType.pickUp);
+              newSession = session.rebuild(
+                isCompleted: true,
+                // billNo: billNo,
+              );
+              // getIt
+              //     .get<AppGlobals>()
+              //     .globalKeyCheckoutNavigator
+              //     .currentState
+              //     .pushNamed(CheckoutNavigatorRoutes.pickup_2);
+              add(ClearCartChEvent());
+              break;
           }
           break;
         case CheckoutType.delivery:
-          if (session.currentStep.step == 0) {
-            add(LoadTimeSlots());
-            Cart cartProducts = Cart(
-              cartValue:
-                  Price.addDelivery(session.cartProducts.cartValue, 10.0),
-              cartItems: session.cartProducts.cartItems,
-              noOfProducts: session.cartProducts.noOfProducts,
-            );
-            newSession = session.rebuild(
-              cartProducts: cartProducts,
-              currentStep: session.currentStep.rebuild(step: 1),
-            );
-            getIt
-                .get<AppGlobals>()
-                .globalKeyCheckoutNavigator
-                .currentState
-                .pushNamed(CheckoutNavigatorRoutes.delivery_2);
-          } else if (session.currentStep.step == 1) {
-            newSession = session.rebuild(
-              currentStep: session.currentStep.rebuild(step: 2),
-            );
-            getIt
-                .get<AppGlobals>()
-                .globalKeyCheckoutNavigator
-                .currentState
-                .pushNamed(CheckoutNavigatorRoutes.delivery_3);
-            // getIt
-            //     .get<AppGlobals>()
-            //     .globalKeyCheckoutNavigator
-            //     .currentState
-            //     .pushNamed(CheckoutNavigatorRoutes.deliver_1);
-          } else if (session.currentStep.step == 2) {
-            newSession = session.rebuild(
-              billNo: "1234556678",
-              isCompleted: true,
-            );
-            add(ClearCartChEvent());
+          switch (session.currentStep.step) {
+            case 0:
+              add(LoadTimeSlots(type: CheckoutType.delivery));
+              Cart cartProducts = Cart(
+                cartValue:
+                    Price.addDelivery(session.cartProducts.cartValue, 10.0),
+                cartItems: session.cartProducts.cartItems,
+                noOfProducts: session.cartProducts.noOfProducts,
+              );
+              newSession = session.rebuild(
+                cartProducts: cartProducts,
+                currentStep: session.currentStep.rebuild(step: 1),
+                isLoading: true,
+              );
+              getIt
+                  .get<AppGlobals>()
+                  .globalKeyCheckoutNavigator
+                  .currentState
+                  .pushNamed(CheckoutNavigatorRoutes.delivery_2);
+              break;
+            case 1:
+              newSession = session.rebuild(
+                currentStep: session.currentStep.rebuild(step: 2),
+              );
+              getIt
+                  .get<AppGlobals>()
+                  .globalKeyCheckoutNavigator
+                  .currentState
+                  .pushNamed(CheckoutNavigatorRoutes.delivery_3);
+              // getIt
+              //     .get<AppGlobals>()
+              //     .globalKeyCheckoutNavigator
+              //     .currentState
+              //     .pushNamed(CheckoutNavigatorRoutes.deliver_1);
+              break;
+            case 2:
+
+              /// API CALL to checkout with Time slot and get the bill no,
+              // final String billNo = await _checkoutRepository.checkoutWithTime(
+              //     session.selectedDateRange, sTime, eTime, type)();
+              newSession = session.rebuild(
+                billNo: "1234556678",
+                isCompleted: true,
+              );
+              add(ClearCartChEvent());
+              break;
           }
           break;
       }
@@ -259,12 +321,14 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   Stream<CheckoutState> _mapGetTimetablesCheckoutEventToState(
       LoadTimeSlots event) async* {
     if (state is SessionRefreshSuccessChState) {
-      final List<TimeSlot> _timetables =
-          await const TimeSlotRepository().getTimeSlots();
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
+      yield SessionRefreshSuccessChState(session.rebuild(isLoading: true));
+
+      final List<TimeslotModel> _timetables =
+          await _checkoutRepository.getTimeSlots(event.type);
       final CheckoutSession newSession =
-          session.rebuild(timetables: _timetables);
+          session.rebuild(timetables: _timetables, isLoading: false);
 
       yield SessionRefreshSuccessChState(newSession);
     }
@@ -275,10 +339,10 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
-      if (session.selectedDateRange != event.dateRange) {
+      if (session.selectedDateIndex != event.dateRange) {
         final CheckoutSession newSession = session.rebuild(
           selectedDateRange: event.dateRange,
-          selectedTimestamp: 0,
+          selectedTimeIndex: -1,
         );
 
         yield SessionRefreshSuccessChState(newSession);
@@ -291,9 +355,9 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
-      if (session.selectedTimestamp != event.timestamp) {
+      if (session.selectedTimeIndex != event.timeIndex) {
         final CheckoutSession newSession =
-            session.rebuild(selectedTimestamp: event.timestamp);
+            session.rebuild(selectedTimeIndex: event.timeIndex);
 
         yield SessionRefreshSuccessChState(newSession);
       }
@@ -305,33 +369,11 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
-
-      /// Do the API call for loading addresses
-
       CheckoutSession newSession = session;
 
-      List<Address> address = [
-        Address(
-          fullName: "Jon Doe",
-          houseNo: "No. 5, 5th Lane",
-          street: "Church Street",
-          city: "Riverdale",
-          state: "California",
-          pinCode: "610032",
-          landmark: "DineOut Restraunt",
-          phone: "1234567890",
-        ),
-        Address(
-          fullName: "Katherine Doe",
-          houseNo: "No. 5, 5th Lane ",
-          street: "Church Street",
-          city: "Riverdale",
-          state: "California",
-          pinCode: "610032",
-          landmark: "DineOut Restraunt",
-          phone: "0987654321",
-        ),
-      ];
+      /// Do the API call for loading addresses
+      List<Address> address = await AddressRepository().getAddress();
+
       newSession = session.rebuild(
         address: address,
       );
@@ -341,30 +383,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   }
 
   Stream<CheckoutState> _mapAddressAddedChEventToState() async* {
-    if (state is SessionRefreshSuccessChState) {
-      // final CheckoutSession session =
-      //     (state as SessionRefreshSuccessChState).session;
-
-      /// Load all the bills:
-      // final List<Bill> _bills = session.bills
-      //     .where((bill) => session.selectedBillIds.contains(bill.billNo))
-      //     .toList();
-      // List<Product> _products = List();
-      // for (final Bill bill in _bills) {
-      //   _products.addAll(bill.products.cartItems.keys);
-      // }
-
-      // // Any other way to eliminate duplicate products if this does not work
-      // _products = _products.toSet().toList();
-
-      // if (_products?.isEmpty ?? true) {
-      //   yield LoadFailureChState();
-      // } else {
-      //   final QSSessionModel newSession =
-      //       session.rebuild(products: _products, selectedProductIds: {});
-      //   yield SessionRefreshSuccessChState(newSession);
-      // }
-    }
+    /// Load addresses:
+    add(LoadAddressChEvent());
   }
 
   Stream<CheckoutState> _mapAddressSelectedChEventToState(

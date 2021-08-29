@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
@@ -35,14 +36,6 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    /// Getting the Image:
-    ImageProvider _image;
-    // try {
-    // _image = AssetImage(product.image);
-    // _image = NetworkImage(apiBaseFull + product.image);
-    // } catch (_) {
-    _image = AssetImage(AssetImages.productPlaceholder);
-    // }
     if (widget.product != null) {
       return BlocBuilder<CartBloc, CartState>(
           buildWhen: (previous, current) => current is CartLoaded,
@@ -81,7 +74,15 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     SizedBox(height: 20.0),
                     Flexible(
-                      child: Image(image: _image, height: 150),
+                      child: Image.network(
+                        apiBaseFull + widget.product.image,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          AssetImages.productPlaceholder,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
                     CustomTitle(title: widget.product.title),
                     BoldTitle(

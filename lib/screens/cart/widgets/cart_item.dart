@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -15,14 +16,6 @@ class CartListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Getting the Image:
-    ImageProvider _image;
-    // try {
-    // _image = AssetImage(product.image);
-    // _image = NetworkImage(apiBaseFull + product.image);
-    // } catch (_) {
-    _image = AssetImage(AssetImages.productPlaceholder);
-    // }
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kBoxDecorationRadius),
@@ -51,21 +44,17 @@ class CartListItem extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: [
-                            Container(
+                            Image.network(
+                              apiBaseFull + product.image,
                               width: 65,
                               height: 65,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: _image,
-                                  // image: NetworkImage(product.image),
-                                  fit: BoxFit.cover,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft:
-                                      Radius.circular(kBoxDecorationRadius),
-                                  bottomLeft:
-                                      Radius.circular(kBoxDecorationRadius),
-                                ),
+                              fit: BoxFit.fill,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                AssetImages.productPlaceholder,
+                                width: 65,
+                                height: 65,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             Padding(
@@ -113,7 +102,8 @@ class CartListItem extends StatelessWidget {
                                       SizedBox(width: kPaddingM),
                                       Text(
                                         "₹ " +
-                                            product.maxPrice.toStringAsFixed(2),
+                                            product.salePrice
+                                                .toStringAsFixed(2),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2
@@ -123,11 +113,11 @@ class CartListItem extends StatelessWidget {
                                       ),
                                       SizedBox(width: 2),
                                       Visibility(
-                                        visible: product.maxPrice !=
+                                        visible: product.maxPrice >
                                             product.salePrice,
                                         child: Text(
                                           "₹ " +
-                                              product.salePrice
+                                              product.maxPrice
                                                   .toStringAsFixed(2),
                                           style: Theme.of(context)
                                               .textTheme
@@ -161,7 +151,7 @@ class CartListItem extends StatelessWidget {
                                 children: <Widget>[
                                   Text(
                                     "₹ " +
-                                        (product.maxPrice * qty)
+                                        (product.salePrice * qty)
                                             .toStringAsFixed(2),
                                     style: Theme.of(context)
                                         .textTheme
