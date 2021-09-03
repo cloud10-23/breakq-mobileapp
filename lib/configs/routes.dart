@@ -1,8 +1,10 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/blocs/orders/orders_bloc.dart';
 import 'package:breakq/blocs/product/offer_bloc.dart';
 import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/blocs/search/search_bloc.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_screen_1.dart';
@@ -179,12 +181,18 @@ class Routes {
       /// My Orders
       case orders:
         return MaterialPageRoute<MyOrders>(
-          builder: (BuildContext context) => MyOrders(),
+          builder: (BuildContext context) => BlocProvider<OrdersBloc>(
+            create: (_) => OrdersBloc()
+              ..add(
+                LoadOrdersEvent(),
+              ),
+            child: MyOrders(),
+          ),
         );
       case order_detail:
         return MaterialPageRoute<OrderDetails>(
           builder: (BuildContext context) => OrderDetails(
-            checkoutType: routeSettings.arguments,
+            order: routeSettings.arguments,
           ),
         );
       case need_help:
@@ -193,8 +201,8 @@ class Routes {
         );
       case order_invoice:
         return MaterialPageRoute<Invoice>(
-          builder: (BuildContext context) => Invoice(),
-        );
+            builder: (BuildContext context) =>
+                Invoice(order: routeSettings.arguments as Order));
 
       /// Settings Page
       case locationGallery:

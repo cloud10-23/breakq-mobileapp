@@ -1,5 +1,4 @@
 import 'package:breakq/configs/api_urls.dart';
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/data_provider.dart';
 import 'package:breakq/data/models/brand_tab_model.dart';
@@ -8,7 +7,6 @@ import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/search_history_model.dart';
-import 'package:breakq/main.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductsRepository {
@@ -59,9 +57,7 @@ class ProductsRepository {
   }
 
   Future<List<Product>> getExclusiveProduct() async {
-    final Uri uri = Uri.http(apiBase, apiExclusiveProducts, {
-      apiFirebaseId: getIt.get<AppGlobals>().user.uid,
-    });
+    final Uri uri = Uri.http(apiBase, apiExclusiveProducts);
     final List<dynamic> _rawList = await dataProvider.get(uri);
 
     /// 1. Populate all the sub categories

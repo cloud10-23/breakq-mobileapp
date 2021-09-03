@@ -32,7 +32,8 @@ const String apiCheckoutWithTime = '/api/Checkout/CheckoutWithTime';
 const String apiCheckoutGetSlots = '/api/Checkout/GetCheckoutSlots';
 
 /// My Orders
-const String apiMyOrders = '/api/Order/Order';
+const String apiOrder = '/api/Order/Order';
+const String apiMyOrders = '/api/Order/MyOrders';
 
 /// Address APIs
 const String apiPostAddress = '/api/Address/AddOrUpdateAddress';
@@ -46,6 +47,7 @@ const String apiSortBy = 'sortBy';
 const String apiFilterBy = 'filterBy';
 const String apiFilterByValue = 'filterByValue';
 const String apiPageNumber = 'pageNumber';
+const String apiBillId = 'billId';
 
 /// Home product values
 /// http://breakq.api.magratechs.com/api/HomePageData/GetProductsForDealsAndOffers?StoreId=1&Name=TopDeals&value=50%25&description=FLAT&pageNumber=1

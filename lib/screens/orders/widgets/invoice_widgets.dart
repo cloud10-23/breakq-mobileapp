@@ -9,6 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class InvoiceHeader extends StatelessWidget {
+  InvoiceHeader({@required this.branch, @required this.address});
+  final String branch;
+  final String address;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +32,7 @@ class InvoiceHeader extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(kPaddingM),
                   child: BoldTitle(
-                    title: 'Vishal Super Mart, RT-Nagar Branch',
+                    title: branch,
                     padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                     color: Colors.black,
                     fw: FontWeight.w600,
@@ -39,7 +43,7 @@ class InvoiceHeader extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: kPaddingL, bottom: kPaddingM),
                   child: Text(
-                    'RT-Nagar, Church Street, Chennai, 430001',
+                    address,
                     style: Theme.of(context)
                         .textTheme
                         .caption
@@ -100,6 +104,10 @@ class InvoiceThanksForShopping extends StatelessWidget {
 }
 
 class InvoiceBillDetails extends StatelessWidget {
+  InvoiceBillDetails({@required this.billNo, @required this.paymentMode});
+  final String billNo;
+  final String paymentMode;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -107,12 +115,12 @@ class InvoiceBillDetails extends StatelessWidget {
       color: kWhite,
       child: Table(
         children: [
-          _tableRow(context, 'Bill No.', '1234567890'),
+          _tableRow(context, 'Bill No.', billNo),
           _tableRow(context, 'Name',
               getIt.get<AppGlobals>().user.displayName ?? '(Unavailable)'),
           _tableRow(context, 'Mobile No.',
               getIt.get<AppGlobals>().user.phoneNumber ?? '(Unavailable'),
-          _tableRow(context, 'Payment Mode', 'UPI'),
+          _tableRow(context, 'Payment Mode', paymentMode),
         ],
       ),
     );
@@ -242,9 +250,9 @@ class InvoiceBillItems extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.title,
+                Text('${product.title}',
                     style: Theme.of(context).textTheme.headline6.fs14.w700),
-                Text(product.quantity,
+                Text(product.quantity ?? '',
                     maxLines: 1,
                     style: Theme.of(context).textTheme.caption.w600.grey),
               ],
@@ -295,7 +303,7 @@ class InvoicePriceDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6.fs16.bold,
             ),
             Text(
-              '₹ ' + (price?.price?.toStringAsFixed(2) ?? "00.00"),
+              '₹ ' + ((price?.price ?? 0).toStringAsFixed(2) ?? "00.00"),
               style: Theme.of(context).textTheme.headline6.fs16.bold.number,
             ),
           ],
@@ -337,7 +345,7 @@ class InvoicePriceDetails extends StatelessWidget {
               fw: FontWeight.w600,
             ),
             BoldTitle(
-              title: '- ₹ ' + (price.extraOffer).toStringAsFixed(2),
+              title: '- ₹ ' + (price?.extraOffer ?? 0).toStringAsFixed(2),
               padding: EdgeInsets.symmetric(horizontal: kPaddingM),
               color: kGreen,
               isNum: true,
@@ -359,7 +367,7 @@ class InvoicePriceDetails extends StatelessWidget {
                 fw: FontWeight.w600,
               ),
               BoldTitle(
-                title: '₹ ' + (price.delivery.toStringAsFixed(2)),
+                title: '₹ ' + ((price?.delivery ?? 0).toStringAsFixed(2)),
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: Colors.black54,
                 fw: FontWeight.w500,
@@ -382,7 +390,7 @@ class InvoicePriceDetails extends StatelessWidget {
               color: kWhite,
             ),
             CustomTitle(
-              title: '₹ ' + (price.totalAmnt).toStringAsFixed(2),
+              title: '₹ ' + (price?.totalAmnt ?? 0).toStringAsFixed(2),
               fw: FontWeight.w600,
               isNum: true,
               color: kWhite,
@@ -394,7 +402,7 @@ class InvoicePriceDetails extends StatelessWidget {
         padding: const EdgeInsets.all(kPaddingM),
         child: Text(
           'You have saved ₹ ' +
-              ((price.savings ?? 0)?.toStringAsFixed(2) ?? "00.00") +
+              ((price?.savings ?? 0)?.toStringAsFixed(2) ?? "00.00") +
               ' on this order',
           style: Theme.of(context).textTheme.subtitle1.bold.green,
         ),

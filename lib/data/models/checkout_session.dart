@@ -1,6 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/models/timeslot_model.dart';
 
 class ChCurrentStep {
@@ -42,6 +43,7 @@ class CheckoutSession {
     this.timetables,
     this.selectedDateIndex = 0,
     this.selectedTimeIndex = -1,
+    this.order,
   });
 
   CheckoutSession rebuild({
@@ -58,6 +60,7 @@ class CheckoutSession {
     List<TimeslotModel> timetables,
     int selectedDateRange,
     int selectedTimeIndex,
+    Order order,
   }) {
     return CheckoutSession(
       currentStep: currentStep ?? this.currentStep,
@@ -73,6 +76,7 @@ class CheckoutSession {
       timetables: timetables ?? this.timetables,
       selectedDateIndex: selectedDateRange ?? this.selectedDateIndex,
       selectedTimeIndex: selectedTimeIndex ?? this.selectedTimeIndex,
+      order: order ?? this.order,
     );
   }
 
@@ -86,6 +90,7 @@ class CheckoutSession {
   final List<TimeslotModel> timetables;
   final int selectedDateIndex;
   final int selectedTimeIndex;
+  final Order order;
 
   @override
   String toString() {

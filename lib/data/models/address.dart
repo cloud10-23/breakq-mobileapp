@@ -72,15 +72,15 @@ class Address {
   }
 
   String getFullAddress() {
-    return this.houseNo +
+    return (this?.houseNo ?? '') +
         ", " +
-        this.street +
+        (this?.street ?? '') +
         ", " +
-        this.city +
+        (this?.city ?? '') +
         ", " +
-        this.pinCode +
+        (this?.pinCode ?? '') +
         ", " +
-        this.state;
+        (this?.state ?? '');
   }
 
   @override

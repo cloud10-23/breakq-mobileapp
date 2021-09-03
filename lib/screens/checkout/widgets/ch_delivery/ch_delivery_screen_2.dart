@@ -77,8 +77,10 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
           ],
         )));
 
-        _listItems
-            .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
+        if (session.timetables?.isNotEmpty ?? false) {
+          _listItems
+              .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
+        }
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 

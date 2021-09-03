@@ -75,6 +75,17 @@ class CartProduct extends Equatable {
   factory CartProduct.fromJson(Map<String, dynamic> json) =>
       _$CartProductFromJson(json);
 
+  static Map<Product, int> asMap(List<CartProduct> cartProducts) {
+    return cartProducts.map((cartProduct) {
+      return {cartProduct.product: cartProduct.qty};
+    }).reduce(
+      (value, element) {
+        value.addAll(element);
+        return value;
+      },
+    );
+  }
+
   @override
   List<Object> get props => [this.product];
 }

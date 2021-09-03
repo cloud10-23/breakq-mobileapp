@@ -11,8 +11,19 @@ class MyOrderRepository {
 
   final DataProvider dataProvider;
 
-  Future<List<Order>> getOrders() async {
-    final Uri uri = Uri.http(apiBase, apiCheckoutWalkin, {
+  Future<Order> getOrder(String billNo) async {
+    final Uri uri = Uri.http(apiBase, apiOrder, {
+      apistoreId: '1',
+      apiFirebaseId: getIt.get<AppGlobals>().user.uid,
+      apiBillId: billNo,
+    });
+
+    final Map<String, dynamic> _rawJson = await dataProvider.getAsMap(uri);
+    return Order.fromJson(_rawJson);
+  }
+
+  Future<List<Order>> getMyOrders() async {
+    final Uri uri = Uri.http(apiBase, apiMyOrders, {
       apistoreId: '1',
       apiFirebaseId: getIt.get<AppGlobals>().user.uid,
     });

@@ -1,6 +1,9 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
+import 'package:breakq/data/models/cart_api_model.dart';
+import 'package:breakq/data/models/cart_model.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/price_details.dart';
@@ -12,8 +15,8 @@ import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class OrderDetails extends StatefulWidget {
-  OrderDetails({@required this.checkoutType});
-  final CheckoutType checkoutType;
+  OrderDetails({@required this.order});
+  final Order order;
   @override
   _OrderDetailsState createState() => _OrderDetailsState();
 }
@@ -23,14 +26,17 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget build(BuildContext context) {
     final List<Widget> _listItems = <Widget>[];
 
+    CheckoutType checkoutType =
+        CheckoutTypes.fromAPItypeToEnum(widget.order.checkoutType);
+
     _listItems.add(SliverToBoxAdapter(
         child: CheckoutTypeModule(
-      index: widget.checkoutType.index,
+      index: checkoutType.index,
       isReadOnly: true,
     )));
 
-    _listItems
-        .add(SliverToBoxAdapter(child: ShowQRModule(billNo: '1234567890')));
+    _listItems.add(SliverToBoxAdapter(
+        child: ShowQRModule(billNo: '${widget.order.billNo}')));
 
     _listItems.add(SliverToBoxAdapter(
         child: CartHeading(
@@ -56,36 +62,39 @@ class _OrderDetailsState extends State<OrderDetails> {
               ),
             ))));
 
-    if (widget.checkoutType == CheckoutType.delivery) {
+    if (checkoutType == CheckoutType.delivery) {
       _listItems.add(SliverToBoxAdapter(
           child: DisplaySelectedAddress(
-        address: Address(
-          fullName: "Jon Doe",
-          houseNo: "No. 5, 5th Lane",
-          street: "Church Street",
-          city: "Riverdale",
-          state: "California",
-          pinCode: "610032",
-          landmark: "DineOut Restraunt",
-          phone: "1234567890",
-        ),
+        address: widget.order?.address ??
+            Address(
+              fullName: "Jon Doe",
+              houseNo: "No. 5, 5th Lane",
+              street: "Church Street",
+              city: "Riverdale",
+              state: "California",
+              pinCode: "610032",
+              landmark: "DineOut Restraunt",
+              phone: "1234567890",
+            ),
+      )));
+    }
+
+    if (checkoutType != CheckoutType.walkIn) {
+      _listItems.add(SliverToBoxAdapter(
+          child: DisplaySelectedTimeSlot(
+        time: widget.order?.timeSlot?.time ?? "",
+        date: widget.order?.timeSlot?.date ?? "",
       )));
     }
 
     _listItems.add(SliverToBoxAdapter(
-        child: DisplaySelectedTimeSlot(
-      time: "12:00 PM - 1:00 PM",
-      date: "12/10/21",
-      // date: session.timetables[session.selectedDateRange].scheduleDate,
+        child: CartProductsModule(
+      products: CartProduct.asMap(widget.order.products),
     )));
 
     _listItems.add(SliverToBoxAdapter(
-      child: CartProductsModule(products: generateSampleProducts()),
-    ));
-
-    _listItems.add(SliverToBoxAdapter(
       child: PriceDetails(
-        price: generateSamplePrice(),
+        price: widget.order.price,
       ),
     ));
 
@@ -93,7 +102,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details: #1234567890'),
+        title: Text('Order Details: #${widget.order.billNo}'),
         leading: BackButtonCircle(),
         backgroundColor: kWhite,
       ),
@@ -122,7 +131,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                 child: ElevatedButton.icon(
                     icon: Icon(Feather.file),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.order_invoice);
+                      Navigator.of(context).pushNamed(Routes.order_invoice,
+                          arguments: widget.order);
                     },
                     style: ElevatedButton.styleFrom(primary: kBlue),
                     label: Padding(

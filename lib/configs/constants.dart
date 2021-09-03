@@ -431,6 +431,38 @@ class CheckoutTypes {
     }
   }
 
+  static CheckoutType fromAPItypeToEnum(String type) {
+    switch (type) {
+      case 'W':
+        return CheckoutType.walkIn;
+        break;
+      case 'SP':
+        return CheckoutType.pickUp;
+        break;
+      case 'DTH':
+        return CheckoutType.delivery;
+        break;
+      default:
+        return CheckoutType.walkIn;
+    }
+  }
+
+  static String fromAPItypeToString(String type) {
+    switch (type) {
+      case 'W':
+        return "Walk - In";
+        break;
+      case 'SP':
+        return "Self - Pickup";
+        break;
+      case 'DTH':
+        return "Deliver To Home";
+        break;
+      default:
+        return "ERR";
+    }
+  }
+
   static String typeDescription(CheckoutType type) {
     switch (type) {
       case CheckoutType.walkIn:

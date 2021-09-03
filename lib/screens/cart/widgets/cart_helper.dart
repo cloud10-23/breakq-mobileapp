@@ -30,6 +30,8 @@ class CardTemplate extends StatelessWidget {
 }
 
 class CartEmptyScreen extends StatelessWidget {
+  CartEmptyScreen({this.products});
+  final List<Product> products;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +94,7 @@ class CartEmptyScreen extends StatelessWidget {
                   ),
                 ),
                 CartScannerOption(),
-                CartFooter(),
+                CartFooter(products: products),
                 EndPadding(),
               ],
             ),

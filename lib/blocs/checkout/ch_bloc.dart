@@ -6,10 +6,12 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/timeslot_model.dart';
 import 'package:breakq/data/repositories/address_repository.dart';
 import 'package:breakq/data/repositories/checkout_repository.dart';
+import 'package:breakq/data/repositories/order_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
@@ -55,8 +57,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   }
 
   Future<String> initWalkin() async {
-    // return await _checkoutRepository.checkoutWalkin();
-    return '100';
+    return await _checkoutRepository.checkoutWalkin();
   }
 
   void initPickup() {
@@ -218,9 +219,14 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
                   timeslots.startTime,
                   timeslots.endTime,
                   CheckoutType.pickUp);
+
+              /// Do the API call for checking the payment is done
+              final Order order = await MyOrderRepository().getOrder(billNo);
+
               newSession = session.rebuild(
                 isCompleted: true,
-                // billNo: billNo,
+                billNo: billNo,
+                order: order,
               );
               // getIt
               //     .get<AppGlobals>()
@@ -270,11 +276,24 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
             case 2:
 
               /// API CALL to checkout with Time slot and get the bill no,
-              // final String billNo = await _checkoutRepository.checkoutWithTime(
-              //     session.selectedDateRange, sTime, eTime, type)();
+              ///
+              final selectedDateRange = session.selectedDateIndex;
+              final selectedTimeSlot = session.selectedTimeIndex;
+              final selectedDate = session.timetables[selectedDateRange];
+              final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
+              final String billNo = await _checkoutRepository.checkoutWithTime(
+                  selectedDate.date,
+                  timeslots.startTime,
+                  timeslots.endTime,
+                  CheckoutType.delivery);
+
+              /// Do the API call for checking the payment is done
+              final Order order = await MyOrderRepository().getOrder(billNo);
+
               newSession = session.rebuild(
-                billNo: "1234556678",
                 isCompleted: true,
+                billNo: billNo,
+                order: order,
               );
               add(ClearCartChEvent());
               break;
@@ -308,9 +327,11 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           (state as SessionRefreshSuccessChState).session;
 
       /// Do the API call for checking the payment is done
+      final Order order = await MyOrderRepository().getOrder(session.billNo);
 
       final CheckoutSession newSession = session.rebuild(
         isCompleted: true,
+        order: order,
       );
       add(ClearCartChEvent());
 

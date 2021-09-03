@@ -42,13 +42,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapInitCartEventToState(InitCartEvent event) async* {
-    yield CartLoaded(cart: Cart(cartItems: Map<Product, int>()));
+    recentlyScanned = await ProductsRepository().getExclusiveProduct();
+    yield CartLoaded(
+        recentlyScanned: recentlyScanned,
+        cart: Cart(cartItems: Map<Product, int>()));
   }
 
   Stream<CartState> _mapInitCartFromAPIEventToState(
       InitCartFromAPIEvent event) async* {
-    recentlyScanned = await ProductsRepository().getExclusiveProduct();
-    yield CartLoaded(
+    yield CartLoaded.rebuild(
         recentlyScanned: recentlyScanned,
         cart: Cart.fromCartApi(await _cartRepo.getCart()));
   }

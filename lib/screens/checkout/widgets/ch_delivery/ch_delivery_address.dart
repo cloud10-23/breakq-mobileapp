@@ -47,7 +47,7 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
           Row(
             children: [
               Text(
-                _address.fullName,
+                _address?.fullName ?? '',
                 style: Theme.of(context).textTheme.bodyText2.w600,
               ),
               Spacer(),
@@ -71,10 +71,10 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
             ],
           ),
           SizedBox(height: kPaddingM),
-          Text(_address.getFullAddress(),
+          Text(_address?.getFullAddress() ?? '',
               style: Theme.of(context).textTheme.caption.w500),
           SizedBox(height: kPaddingS),
-          Text("Phone: " + _address.phone,
+          Text("Phone: ${_address.phone}",
               style: Theme.of(context).textTheme.caption.w700),
         ],
       ),

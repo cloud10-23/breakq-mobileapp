@@ -87,13 +87,13 @@ class _CheckoutScreenState extends State<CheckoutScreen>
         if (session.isCompleted) {
           switch (session.currentStep.checkoutType) {
             case CheckoutType.walkIn:
-              return WalkinCheckoutSuccess();
+              return WalkinCheckoutSuccess(order: session.order);
               break;
             case CheckoutType.pickUp:
-              return PickupCheckoutSuccessDialog();
+              return PickupCheckoutSuccessDialog(order: session.order);
               break;
             case CheckoutType.delivery:
-              return DeliveryCheckoutSuccessDialog();
+              return DeliveryCheckoutSuccessDialog(order: session.order);
               break;
           }
         }

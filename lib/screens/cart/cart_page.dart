@@ -39,7 +39,8 @@ class _CartPageState extends State<CartPage> {
             );
           }
           if ((state as CartLoaded).cart.cartItems?.isEmpty ?? true) {
-            return CartEmptyScreen();
+            return CartEmptyScreen(
+                products: (state as CartLoaded).recentlyScanned);
           }
 
           return Scaffold(

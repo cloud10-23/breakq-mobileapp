@@ -1,8 +1,11 @@
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/checkout/widgets/checkout_success_dialog.dart';
 import 'package:flutter/material.dart';
 
 class WalkinCheckoutSuccess extends StatefulWidget {
+  WalkinCheckoutSuccess({@required this.order});
+  final Order order;
   @override
   _WalkinCheckoutSuccessState createState() => _WalkinCheckoutSuccessState();
 }
@@ -16,7 +19,7 @@ class _WalkinCheckoutSuccessState extends State<WalkinCheckoutSuccess> {
     Future.delayed(durationBeforeClose).then((_) {
       if (mounted)
         Navigator.of(context, rootNavigator: true)
-            .popAndPushNamed(Routes.order_invoice);
+            .popAndPushNamed(Routes.order_invoice, arguments: widget.order);
     });
   }
 

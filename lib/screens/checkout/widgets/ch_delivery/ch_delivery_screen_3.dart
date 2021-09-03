@@ -81,9 +81,9 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
           isReadOnly: true,
         )));
 
-        _listItems.add(SliverToBoxAdapter(
-            child: DisplaySelectedAddress(
-                address: session.address[session.selectedAddress ?? 0])));
+        // _listItems.add(SliverToBoxAdapter(
+        //     child: DisplaySelectedAddress(
+        //         address: session.address[session.selectedAddress ?? 0])));
 
         final date = session.timetables[session.selectedDateIndex];
         _listItems.add(SliverToBoxAdapter(
