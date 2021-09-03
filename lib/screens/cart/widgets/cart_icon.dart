@@ -54,7 +54,7 @@ class CartIconWithBadge extends StatelessWidget {
             ),
             textStyle: Theme.of(context).textTheme.bodyText1.white.w600.number,
             textSize: 12.0,
-            itemCount: state?.cart?.noOfProducts ?? 0,
+            itemCount: state?.cart?.cartItems?.length ?? 0,
           );
         }
         return FlutterBadge(

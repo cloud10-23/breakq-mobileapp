@@ -95,8 +95,8 @@ class ProductListItem extends StatelessWidget {
                                 ),
                                 if (qty > 0)
                                   Positioned(
-                                    top: 5.0,
-                                    right: 5.0,
+                                    top: 0.0,
+                                    right: 0.0,
                                     child: ResetCartButtonCircleIcon(
                                         onProductDel: onProductDel),
                                   ),

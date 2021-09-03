@@ -40,16 +40,31 @@ class GridAddRemButtons extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: FlatButton(
-              onPressed: onAdd,
-              color: kBlue,
-              child: Text(
-                qty.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .fs16
-                    .copyWith(color: kWhite, fontFamily: kNumberFontFamily),
+            child: InkWell(
+              onTap: onAdd,
+              child: Container(
+                margin: const EdgeInsets.all(1),
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: kBlue,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      qty.toString(),
+                      maxLines: 1,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .fs12
+                          .copyWith(
+                              color: kWhite, fontFamily: kNumberFontFamily),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -122,6 +137,7 @@ class ListAddRemButtons extends StatelessWidget {
             child: Container(
                 child: Text(qty.toString(),
                     textAlign: TextAlign.center,
+                    maxLines: 1,
                     style: Theme.of(context).textTheme.headline6.fs16.copyWith(
                         color: kBlack, fontFamily: kNumberFontFamily))),
           ),
@@ -176,7 +192,7 @@ class ListAddRemButtonSmall extends StatelessWidget {
             child: Container(
                 child: Text(qty.toString(),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.caption.fs14.copyWith(
+                    style: Theme.of(context).textTheme.caption.fs10.copyWith(
                         color: kBlack, fontFamily: kNumberFontFamily))),
           ),
           Container(
@@ -205,12 +221,12 @@ class ResetCartButtonCircleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      backgroundColor: kBlue,
-      radius: 18,
+      backgroundColor: kWhite,
+      radius: 16,
       child: IconButton(
         icon: Icon(Icons.delete),
-        color: kWhite,
-        iconSize: 18,
+        color: kBlue,
+        iconSize: 16,
         onPressed: onProductDel ?? () {},
       ),
     );

@@ -125,6 +125,10 @@ class _SearchBarState extends State<SearchBar> {
                                 .bodyText1
                                 .w600
                                 .copyWith(color: Colors.black45),
+                            suffix: IconButton(
+                                iconSize: 18.0,
+                                onPressed: () => _controller.clear(),
+                                icon: Icon(Feather.x_circle)),
                             border: InputBorder.none,
                           ),
                           textInputAction: TextInputAction.search,
