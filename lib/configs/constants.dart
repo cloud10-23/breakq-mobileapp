@@ -226,7 +226,7 @@ class AssetImages {
     'assets/images/illustrations/error.png',
     'assets/images/illustrations/no_data.png',
     'assets/images/illustrations/noInternet.jpg',
-    // 'assets/images/illustrations/no_result.png',
+    'assets/images/illustrations/no_result.png',
     // 'assets/images/illustrations/noData.png',
   ];
 
@@ -388,9 +388,9 @@ Map<Product, int> generateSampleProducts() => {
 /// Sample price details
 
 Price generateSamplePrice() => Price(
-    price: 660,
+    totalAmount: 660,
     discount: 50,
-    totalAmnt: 650,
+    finalAmount: 650,
     extraOffer: 10,
     savings: 10,
     delivery: 50);

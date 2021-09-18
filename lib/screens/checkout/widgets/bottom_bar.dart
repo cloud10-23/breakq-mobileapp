@@ -75,7 +75,7 @@ class _ChBottomBarState extends State<ChBottomBar> {
                     SizedBox(height: 5.0),
                     Text(
                       '₹ ' +
-                          (widget.session?.cartProducts?.cartValue?.totalAmnt
+                          (widget.session?.cartProducts?.cartValue?.finalAmount
                                   ?.toStringAsFixed(2) ??
                               "00.00"),
                       style: Theme.of(context).textTheme.headline6.w700.number,
@@ -175,7 +175,7 @@ class _ChBottomBarWithButtonState extends State<ChBottomBarWithButton> {
             children: [
               Text(
                 '₹ ' +
-                    (widget.session?.cartProducts?.cartValue?.totalAmnt
+                    (widget.session?.cartProducts?.cartValue?.finalAmount
                             ?.toStringAsFixed(2) ??
                         "00.00"),
                 style: Theme.of(context).textTheme.headline6.w700.number,

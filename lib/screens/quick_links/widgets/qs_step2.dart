@@ -4,7 +4,9 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/jumbotron.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -138,17 +140,26 @@ class _QSStep2State extends State<QSStep2> {
           ],
           title: Row(
             children: <Widget>[
-              Image.network(
-                apiBaseFull + product.image,
-                width: 75,
-                height: 75,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Image.asset(
+              CachedNetworkImage(
+                cacheManager: AppCacheManager.instance,
+                imageUrl: apiBaseFull + product.image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(value: downloadProgress.progress)
+                  ],
+                ),
+                errorWidget: (context, url, error) => Image.asset(
                   AssetImages.productPlaceholder,
                   width: 75,
                   height: 75,
                   fit: BoxFit.cover,
                 ),
+                width: 75,
+                height: 75,
+                fit: BoxFit.cover,
               ),
               Expanded(
                 child: Padding(

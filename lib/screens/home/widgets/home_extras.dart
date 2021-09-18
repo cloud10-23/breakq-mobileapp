@@ -4,6 +4,8 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -19,15 +21,26 @@ class GridImage extends StatelessWidget {
       onTap: onPressed,
       child: Card(
         margin: EdgeInsets.all(1.0),
-        child: Image.network(image,
+        child: CachedNetworkImage(
+          cacheManager: AppCacheManager.instance,
+          imageUrl: image,
+          progressIndicatorBuilder: (context, url, downloadProgress) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(value: downloadProgress.progress)
+            ],
+          ),
+          errorWidget: (context, url, error) => Image.asset(
+            AssetImages.productPlaceholder,
             height: width,
             width: width,
-            errorBuilder: (context, error, stackTrace) => Image.asset(
-                AssetImages.productPlaceholder,
-                height: width,
-                width: width,
-                fit: BoxFit.fill),
-            fit: BoxFit.fill),
+            fit: BoxFit.fill,
+          ),
+          height: width,
+          width: width,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

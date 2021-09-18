@@ -42,6 +42,8 @@ const String apiGetAddress = '/api/Address/GetAddress';
 /// Query Parameters
 const String apiCategoryQuery = 'categoryCode';
 const String apiProductQuery = 'productName';
+const String apiProductCode = 'productCode';
+const String apiBarCode = 'barCode';
 const String apiBrandCode = 'brandCode';
 const String apiSortBy = 'sortBy';
 const String apiFilterBy = 'filterBy';
@@ -65,6 +67,7 @@ const String apiDeliveryDate = 'deliveryDate';
 const String apiStartTime = 'startTime';
 const String apiEndTime = 'endTime';
 const String apiCheckoutType = 'checkoutType';
+const String apiAddressID = 'addressId';
 
 /// Filter Values
 /// <param name="categoryCode"></param>

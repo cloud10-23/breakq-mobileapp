@@ -17,10 +17,11 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     checkoutType: json['checkout_Type'] as String,
     paymentMode: json['payment_Mode'] as String,
     qty: json['qty'] as int,
-    weight: (json['weight'] as num)?.toDouble() ?? 0,
-    cgst: (json['cgst'] as num)?.toDouble() ?? 0,
-    sgst: (json['sgst'] as num)?.toDouble() ?? 0,
+    weight: (json['weight'] as num)?.toDouble(),
+    cgst: (json['cgst'] as num)?.toDouble(),
+    sgst: (json['sgst'] as num)?.toDouble(),
     status: json['status'] as String,
+    paymentStatus: json['paymentStatus'] as String,
     timeSlot: json['timeSlot'] == null
         ? null
         : OrderTimeSlot.fromJson(json['timeSlot'] as Map<String, dynamic>),

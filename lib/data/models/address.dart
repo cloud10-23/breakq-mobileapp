@@ -15,19 +15,19 @@ part 'address.g.dart';
 
 @JsonSerializable()
 class Address {
-  final int addressId;
+  int addressId;
   @JsonKey(name: 'mobile_No')
-  final String phone;
+  String phone;
   @JsonKey(name: 'fireBaseID')
-  final String firebaseID;
-  final String fullName;
-  final String pinCode;
-  final String houseNo;
-  final String street;
+  String firebaseID;
+  String fullName;
+  String pinCode;
+  String houseNo;
+  String street;
   @JsonKey(name: 'landMark')
-  final String landmark;
-  final String state;
-  final String city;
+  String landmark;
+  String state;
+  String city;
 
   Address({
     this.addressId,
@@ -47,29 +47,15 @@ class Address {
 
   Map<String, dynamic> toJson() => _$AddressToJson(this);
 
-  Address rebuild({
-    String name,
-    String houseNo,
-    String street,
-    String cityDistTown,
-    String state,
-    String landmark,
-    String phone,
-    String firebaseID,
-    String pinCode,
-  }) {
-    return Address(
-      fullName: name ?? this.fullName,
-      houseNo: houseNo ?? this.houseNo,
-      street: street ?? this.street,
-      city: cityDistTown ?? this.city,
-      state: state ?? this.state,
-      landmark: landmark ?? this.landmark,
-      phone: phone ?? this.phone,
-      firebaseID: firebaseID ?? this.firebaseID,
-      pinCode: pinCode ?? this.pinCode,
-    );
-  }
+  set setName(String name) => this.fullName = name;
+  set setHouseNo(String no) => this.houseNo = no;
+  set setStreet(String street) => this.street = street;
+  set setCityTown(String city) => this.city = city;
+  set setState(String state) => this.state = state;
+  set setLandmark(landmark) => this.landmark = landmark;
+  set setPhone(String phno) => this.phone = phno;
+  set setFirebaseID(String fID) => this.firebaseID = fID;
+  set setPinCode(String pinCode) => this.pinCode = pinCode;
 
   String getFullAddress() {
     return (this?.houseNo ?? '') +

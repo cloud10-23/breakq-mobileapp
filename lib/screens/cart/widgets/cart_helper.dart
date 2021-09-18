@@ -112,9 +112,9 @@ class CartFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // CartSuggestionsBuilder(),
+        // CartRecentlyScanned(products: products),
         if (products?.isNotEmpty ?? false)
-          CartRecentlyScanned(products: products),
+          CartSuggestionsBuilder(products: products),
       ],
     );
   }

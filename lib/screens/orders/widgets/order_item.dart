@@ -146,7 +146,7 @@ class OrderItem extends StatelessWidget {
                     fw: FontWeight.w800,
                   ),
                   BoldTitle(
-                    title: '₹ ${order.price?.totalAmnt ?? 0.00}',
+                    title: '₹ ${order.price?.finalAmount ?? 0.00}',
                     fw: FontWeight.w800,
                     isNum: true,
                   ),

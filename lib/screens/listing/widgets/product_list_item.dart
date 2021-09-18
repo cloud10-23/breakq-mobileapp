@@ -1,6 +1,8 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -82,16 +84,28 @@ class ProductListItem extends StatelessWidget {
                             Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                Image.network(
-                                  apiBaseFull + product.image,
-                                  height: 80,
-                                  fit: BoxFit.fill,
-                                  errorBuilder: (context, error, stackTrace) =>
+                                CachedNetworkImage(
+                                  cacheManager: AppCacheManager.instance,
+                                  imageUrl: apiBaseFull + product.image,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                          value: downloadProgress.progress)
+                                    ],
+                                  ),
+                                  errorWidget: (context, url, error) =>
                                       Image.asset(
                                     AssetImages.productPlaceholder,
                                     height: 80,
                                     fit: BoxFit.fill,
                                   ),
+                                  height: 80,
+                                  fit: BoxFit.fill,
                                 ),
                                 if (qty > 0)
                                   Positioned(
@@ -223,19 +237,28 @@ class ProductListItem extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topRight,
                     children: <Widget>[
-                      Image.network(
-                        apiBaseFull + product.image,
-                        height:
-                            viewType == ProductListItemViewType.map ? 160 : 200,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Image.asset(
+                      CachedNetworkImage(
+                        cacheManager: AppCacheManager.instance,
+                        imageUrl: apiBaseFull + product.image,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress)
+                          ],
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
                           AssetImages.productPlaceholder,
                           height: viewType == ProductListItemViewType.map
                               ? 160
                               : 200,
                           fit: BoxFit.cover,
                         ),
+                        height:
+                            viewType == ProductListItemViewType.map ? 160 : 200,
+                        fit: BoxFit.cover,
                       ),
                       if (showFavoriteButton)
                         IconButton(
@@ -333,18 +356,30 @@ class ProductListItem extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                Image.network(
-                                  apiBaseFull + product.image,
-                                  width: 75,
-                                  height: 75,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
+                                CachedNetworkImage(
+                                  cacheManager: AppCacheManager.instance,
+                                  imageUrl: apiBaseFull + product.image,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                          value: downloadProgress.progress)
+                                    ],
+                                  ),
+                                  errorWidget: (context, url, error) =>
                                       Image.asset(
                                     AssetImages.productPlaceholder,
                                     width: 75,
                                     height: 75,
                                     fit: BoxFit.cover,
                                   ),
+                                  width: 75,
+                                  height: 75,
+                                  fit: BoxFit.cover,
                                 ),
                                 if (qty > 0)
                                   Positioned(

@@ -4,7 +4,9 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -44,18 +46,27 @@ class CartListItem extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: [
-                            Image.network(
-                              apiBaseFull + product.image,
-                              width: 65,
-                              height: 65,
-                              fit: BoxFit.fill,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(
+                            CachedNetworkImage(
+                              cacheManager: AppCacheManager.instance,
+                              imageUrl: apiBaseFull + product.image,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress)
+                                ],
+                              ),
+                              errorWidget: (context, url, error) => Image.asset(
                                 AssetImages.productPlaceholder,
                                 width: 65,
                                 height: 65,
                                 fit: BoxFit.fill,
                               ),
+                              width: 65,
+                              height: 65,
+                              fit: BoxFit.fill,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(

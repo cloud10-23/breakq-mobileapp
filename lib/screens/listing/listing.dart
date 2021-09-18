@@ -6,6 +6,8 @@ import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/search_header.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
+import 'package:breakq/widgets/no_products.dart';
+import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,60 +80,59 @@ class ListingState extends State<Listing> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           body: SafeArea(
-            child: LoadingOverlay(
-              isLoading: session.isLoading,
-              child: CustomScrollView(
-                controller: _customScrollViewController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    backgroundColor: kWhite,
-                    primary: true,
-                    title: Text(widget.category?.title ?? "Category Name",
-                        style: Theme.of(context).textTheme.headline6.fs16.w600),
-                    automaticallyImplyLeading: true,
-                    leading: BackButtonCircle(),
-                    expandedHeight: kToolbarHeight + 35,
-                    snap: true,
-                    flexibleSpace: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Spacer(),
-                            SearchListToolbar(
-                              searchSortTypes: session.searchSortTypes,
-                              currentSort: session.currentSort,
-                              onFilterTap: () {
-                                _scaffoldKey.currentState.openEndDrawer();
-                              },
-                              onSortChange: (ToolbarOptionModel newSort) {
-                                _productBloc
-                                    .add(SortOrderChangedProductEvent(newSort));
-                              },
-                              currentListType: session.currentListType,
-                              searchListTypes: session.searchListTypes,
-                              onListTypeChange: (ToolbarOptionModel
-                                      newListType) =>
-                                  _productBloc.add(
-                                      ListTypeChangedProductEvent(newListType)),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Container(color: kWhite, height: kToolbarHeight),
-                            Spacer(),
-                          ],
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      SearchIconButton(),
-                      VoiceIconButton(),
-                      CartIconButton(),
-                      SizedBox(width: 10.0),
+            child: CustomScrollView(
+              controller: _customScrollViewController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: kWhite,
+                  primary: true,
+                  title: Text(widget.category?.title ?? "Category Name",
+                      style: Theme.of(context).textTheme.headline6.fs16.w600),
+                  automaticallyImplyLeading: true,
+                  leading: BackButtonCircle(),
+                  expandedHeight: kToolbarHeight + 35,
+                  snap: true,
+                  flexibleSpace: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Spacer(),
+                          SearchListToolbar(
+                            searchSortTypes: session.searchSortTypes,
+                            currentSort: session.currentSort,
+                            onFilterTap: () {
+                              _scaffoldKey.currentState.openEndDrawer();
+                            },
+                            onSortChange: (ToolbarOptionModel newSort) {
+                              _productBloc
+                                  .add(SortOrderChangedProductEvent(newSort));
+                            },
+                            currentListType: session.currentListType,
+                            searchListTypes: session.searchListTypes,
+                            onListTypeChange: (ToolbarOptionModel
+                                    newListType) =>
+                                _productBloc.add(
+                                    ListTypeChangedProductEvent(newListType)),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(color: kWhite, height: kToolbarHeight),
+                          Spacer(),
+                        ],
+                      ),
                     ],
-                    floating: true,
                   ),
+                  actions: [
+                    SearchIconButton(),
+                    VoiceIconButton(),
+                    CartIconButton(),
+                    SizedBox(width: 10.0),
+                  ],
+                  floating: true,
+                ),
+                if (session.subCategoryTabs.isNotNullOrEmpty)
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: SearchHeader(
@@ -142,6 +143,7 @@ class ListingState extends State<Listing> {
                       ),
                     ),
                   ),
+                if (session.products.isNotNullOrEmpty)
                   SliverPersistentHeader(
                     pinned: true,
                     // floating: true,
@@ -153,20 +155,17 @@ class ListingState extends State<Listing> {
                       ),
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildListDelegate(<Widget>[
-                      if (session.products.isNotNullOrEmpty)
-                        ProductListing(
-                          products: session.products,
-                          currentListType: session.currentListType,
-                        ),
-                    ]),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: 120.0),
-                  ),
-                ],
-              ),
+                SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    ProductListing(
+                      products: session.products,
+                      currentListType: session.currentListType,
+                      isLoading: session.isLoading,
+                    ),
+                    SizedBox(height: 120.0),
+                  ]),
+                ),
+              ],
             ),
           ),
         );

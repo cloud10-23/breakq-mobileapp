@@ -12,6 +12,11 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
     parentId: json['parent_Category_Code'] as int,
     title: json['category_Name'] as String,
     image: json['image'] as String,
+    subCategories: (json['sub_Categories'] as List)
+        ?.map((e) => e == null
+            ? null
+            : CategoryModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 

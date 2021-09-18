@@ -1,6 +1,8 @@
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
@@ -13,8 +15,8 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     CategoryModel _category = categoryTab.category;
     return InkWell(
-      onTap: () =>
-          Navigator.pushNamed(context, Routes.listing, arguments: _category),
+      onTap: () => Navigator.pushNamed(context, Routes.listing,
+          arguments: <CategoryModel, int>{_category: 0}),
       child: Card(
         margin: EdgeInsets.all(1.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -22,13 +24,23 @@ class CategoryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Image.network(
-                apiBaseFull + _category.image,
-                fit: BoxFit.fitWidth,
-                errorBuilder: (context, _, e) => Image.asset(
+              child: CachedNetworkImage(
+                cacheManager: AppCacheManager.instance,
+                imageUrl: apiBaseFull + _category.image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(value: downloadProgress.progress)
+                  ],
+                ),
+                errorWidget: (context, url, error) => Image.asset(
                   AssetImages.productPlaceholder,
                   height: 100,
+                  fit: BoxFit.fitWidth,
                 ),
+                fit: BoxFit.fitWidth,
               ),
             ),
             SizedBox(

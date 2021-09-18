@@ -7,6 +7,7 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -76,7 +77,8 @@ class _ProfileImageEditorState extends State<ProfileImageEditor> {
     if (getIt.get<AppGlobals>().user?.photoURL == null)
       _defaultImage = AssetImage(AssetImages.profileDefault);
     else
-      _defaultImage = NetworkImage(getIt.get<AppGlobals>().user.photoURL);
+      _defaultImage =
+          CachedNetworkImageProvider(getIt.get<AppGlobals>().user.photoURL);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

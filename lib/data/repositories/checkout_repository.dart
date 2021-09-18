@@ -23,7 +23,8 @@ class CheckoutRepository {
   }
 
   Future<String> checkoutWithTime(
-      String date, String sTime, String eTime, CheckoutType type) async {
+      String date, String sTime, String eTime, CheckoutType type,
+      {int addressID}) async {
     final Uri uri = Uri.http(apiBase, apiCheckoutWithTime, {
       apistoreId: '1',
       apiFirebaseId: getIt.get<AppGlobals>().user.uid,
@@ -31,6 +32,7 @@ class CheckoutRepository {
       apiStartTime: sTime,
       apiEndTime: eTime,
       apiCheckoutType: apiCheckoutTypes[type],
+      apiAddressID: addressID,
     });
 
     final String billNo = await dataProvider.getAsString(uri);

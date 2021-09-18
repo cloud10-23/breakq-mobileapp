@@ -1,12 +1,12 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/widgets/no_products.dart';
+import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
-import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
 
 class ProductListing extends StatelessWidget {
@@ -14,53 +14,50 @@ class ProductListing extends StatelessWidget {
     Key key,
     this.products,
     this.currentListType,
-    // onProductPressed,
-    // onProductAdd,
-    // onProductRed,
-    // onProductDel,
-    // })  : this.onProductPressed =
-    //           onProductPressed ?? getIt.get<AppGlobals>().onProductPressed,
-    //       this.onProductAdd = onProductAdd ?? getIt.get<AppGlobals>().onProductAdd,
-    //       this.onProductRed = onProductRed ?? getIt.get<AppGlobals>().onProductRed,
-    //       this.onProductDel = onProductDel ?? getIt.get<AppGlobals>().onProductDel,
+    this.isLoading = false,
   }) : super(key: key);
 
   final List<Product> products;
   final ToolbarOptionModel currentListType;
-  // final Function(Product, BuildContext) onProductPressed;
-  // final Function(Product, BuildContext) onProductAdd;
-  // final Function(Product, BuildContext) onProductRed;
-  // final Function(Product, BuildContext) onProductDel;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    if (products?.isEmpty ?? true) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 3 * kPaddingM),
-        child: Column(
-          children: <Widget>[
-            Jumbotron(
-              title: L10n.of(context).searchTitleNoResults.toUpperCase(),
-              icon: Icons.info_outline,
-            ),
-            Text(
-              L10n.of(context).productNoResults,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(color: Theme.of(context).disabledColor),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      );
-    }
-
     final defaultListType = ToolbarOptionModel.fromJson(listTypes[0]);
 
     final ProductListItemViewType _viewType = ProductListItemViewType.values
         .firstWhere((ProductListItemViewType e) =>
             describeEnum(e) == (currentListType?.code ?? defaultListType.code));
+
+    /// If the state is loading state
+    if (isLoading)
+      return Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: kPaddingM, vertical: kPaddingM),
+        child: Wrap(
+          runSpacing: 1.0,
+          alignment: WrapAlignment.start,
+          children: List.generate(12, (index) {
+            switch (_viewType) {
+              case ProductListItemViewType.grid:
+                return FractionallySizedBox(
+                  widthFactor: 0.25,
+                  child: ShimmerBox(height: 200),
+                );
+                break;
+              default:
+                return Padding(
+                  padding: const EdgeInsets.all(kPaddingS),
+                  child: ShimmerBox(height: 70),
+                );
+            }
+          }),
+        ),
+      );
+
+    if (products?.isEmpty ?? true) {
+      return NoProducts();
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(

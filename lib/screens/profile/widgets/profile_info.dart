@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
@@ -13,7 +14,7 @@ class ProfileInfo extends StatelessWidget {
     if (_photoURL == null)
       _image = AssetImage(AssetImages.profileDefault);
     else
-      _image = NetworkImage(_photoURL);
+      _image = CachedNetworkImageProvider(_photoURL);
 
     final List<Widget> profileColumn = [
       Row(

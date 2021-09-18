@@ -73,8 +73,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     if (event.isAdded) {
       /// Notifying the BudgetBLoc of addition
-      budgetBloc
-          .add(BudgetProductAddedEvent(cartValue: newCart.cartValue.totalAmnt));
+      budgetBloc.add(
+          BudgetProductAddedEvent(cartValue: newCart.cartValue.finalAmount));
     }
     yield CartLoaded(recentlyScanned: recentlyScanned, cart: newCart);
   }

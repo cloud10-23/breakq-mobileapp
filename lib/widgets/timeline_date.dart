@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/generated/l10n.dart';
-import 'package:breakq/utils/datetime.dart';
 import 'package:breakq/utils/text_style.dart';
 
 /// Vertically scrollable timeline date item.

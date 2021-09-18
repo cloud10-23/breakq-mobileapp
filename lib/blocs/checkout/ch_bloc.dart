@@ -215,10 +215,11 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               final selectedDate = session.timetables[selectedDateRange];
               final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
               final String billNo = await _checkoutRepository.checkoutWithTime(
-                  selectedDate.date,
-                  timeslots.startTime,
-                  timeslots.endTime,
-                  CheckoutType.pickUp);
+                selectedDate.date,
+                timeslots.startTime,
+                timeslots.endTime,
+                CheckoutType.pickUp,
+              );
 
               /// Do the API call for checking the payment is done
               final Order order = await MyOrderRepository().getOrder(billNo);
@@ -281,11 +282,15 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               final selectedTimeSlot = session.selectedTimeIndex;
               final selectedDate = session.timetables[selectedDateRange];
               final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
+
+              /// TODO Address ID
               final String billNo = await _checkoutRepository.checkoutWithTime(
-                  selectedDate.date,
-                  timeslots.startTime,
-                  timeslots.endTime,
-                  CheckoutType.delivery);
+                selectedDate.date,
+                timeslots.startTime,
+                timeslots.endTime,
+                CheckoutType.delivery,
+                addressID: 3,
+              );
 
               /// Do the API call for checking the payment is done
               final Order order = await MyOrderRepository().getOrder(billNo);

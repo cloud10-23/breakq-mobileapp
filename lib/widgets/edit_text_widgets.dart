@@ -145,6 +145,7 @@ class FilledEditText extends StatefulWidget {
   final bool isLastField;
   final EdgeInsetsGeometry padding;
   final TextCapitalization capitalization;
+  final Iterable<String> autoFillHints;
 
   FilledEditText({
     this.fontSize = 20.0,
@@ -160,6 +161,7 @@ class FilledEditText extends StatefulWidget {
     this.isLastField = false,
     this.padding = const EdgeInsets.symmetric(vertical: kPaddingM),
     this.capitalization,
+    this.autoFillHints = const [],
   });
 
   @override
@@ -171,10 +173,11 @@ class FilledEditText extends StatefulWidget {
 class FilledEditTextState extends State<FilledEditText> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding,
+    return Container(
+      margin: widget.padding,
+      color: kWhite,
       child: TextFormField(
-        autofillHints: [AutofillHints.name],
+        autofillHints: widget.autoFillHints,
         autofocus: widget.isFirstField,
         onChanged: widget.onchanged,
         obscureText: widget.isPassword,
@@ -190,10 +193,11 @@ class FilledEditTextState extends State<FilledEditText> {
         },
         // onFieldSubmitted: widget.onSaved,
         onSaved: widget.onSaved,
+        style: Theme.of(context).textTheme.bodyText1.fs14.number,
         decoration: InputDecoration(
           // contentPadding: EdgeInsets.fromLTRB(14, 4, 14, 4),
           hintText: widget.hint,
-          hintStyle: TextStyle(fontSize: 12),
+          hintStyle: TextStyle(fontSize: 14),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
             borderSide: const BorderSide(color: kBlackAccent, width: 2.0),

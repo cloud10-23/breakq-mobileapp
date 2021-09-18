@@ -4,8 +4,10 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/list_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
@@ -74,14 +76,23 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                     SizedBox(height: 20.0),
                     Flexible(
-                      child: Image.network(
-                        apiBaseFull + widget.product.image,
-                        fit: BoxFit.contain,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Image.asset(
+                      child: CachedNetworkImage(
+                        cacheManager: AppCacheManager.instance,
+                        imageUrl: apiBaseFull + widget.product.image,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress)
+                          ],
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
                           AssetImages.productPlaceholder,
                           fit: BoxFit.contain,
                         ),
+                        fit: BoxFit.contain,
                       ),
                     ),
                     CustomTitle(title: widget.product.title),

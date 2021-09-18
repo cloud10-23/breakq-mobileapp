@@ -23,6 +23,8 @@ TimeslotModel _$TimeslotModelFromJson(Map<String, dynamic> json) {
 TimeSchedules _$TimeSchedulesFromJson(Map<String, dynamic> json) {
   return TimeSchedules(
     time: json['time'] as String,
+    startTime: json['startTime'] as String,
+    endTime: json['endTime'] as String,
     enabled: json['enabled'] as bool,
   );
 }

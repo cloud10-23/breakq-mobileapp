@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (getIt.get<AppGlobals>().user?.photoURL == null)
       _defaultImage = AssetImage(AssetImages.profileDefault);
     else
-      _defaultImage = NetworkImage(getIt.get<AppGlobals>().user.photoURL);
+      _defaultImage =
+          CachedNetworkImageProvider(getIt.get<AppGlobals>().user.photoURL);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

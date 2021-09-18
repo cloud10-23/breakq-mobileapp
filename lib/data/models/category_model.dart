@@ -9,6 +9,7 @@ class CategoryModel {
     this.parentId,
     this.title,
     this.image,
+    this.subCategories,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
@@ -21,6 +22,8 @@ class CategoryModel {
   @JsonKey(name: 'category_Name')
   final String title;
   final String image;
+  @JsonKey(name: 'sub_Categories')
+  final List<CategoryModel> subCategories;
 }
 
 @JsonSerializable(createToJson: false)

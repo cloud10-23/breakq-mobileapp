@@ -58,7 +58,7 @@ dependencies:
   # The best swiper(carousel) for flutter, with multiple layouts, infinite loop. Compatible with Android & iOS.
   flutter_swiper: ^1.1.6
   # Flutter library to load and cache network images. Can also be used with placeholder and error widgets.
-  cached_network_image: ^2.3.2+1
+  cached_network_image: ^3.1.0
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   # share: ^0.6.5+2
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.

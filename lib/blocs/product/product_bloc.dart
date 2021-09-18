@@ -59,8 +59,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         .toList();
 
     /// The tabs are for Sub categories
-    subCategoryTabs =
-        await _productRepository.getSubCategoryTabs(event.category.id);
+    /// The Map<CatergoryModel,int> indicates the category with subCategories
+    /// and also the selection.
+    final selectedSubCategory = event.categoryWithSelection.values.first;
+    subCategoryTabs = event.categoryWithSelection.keys.first.subCategories
+        .map<CategoryTabModel>((category) =>
+            CategoryTabModel(category, GlobalKey(debugLabel: category.title)))
+        .toList();
+
+    /// Removed the call that fetches the sub categories for every main category
+    // subCategoryTabs =
+    //     await _productRepository.getSubCategoryTabs(event.categoryWithSelection.id);
 
     /// The tabs are for brands.. for now only GROCERIES sub-category works
     /// We add an ALL brand tab option which selects all products
@@ -68,8 +77,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       'brand': BrandModel(id: '0', title: 'All'),
       'globalKey': GlobalKey(debugLabel: 'brand-all'),
     }));
-    brandTabs
-        .addAll(await _productRepository.getBrandTabs(subCategoryTabs[0].id));
+    if (subCategoryTabs.length > 0)
+      brandTabs
+          .addAll(await _productRepository.getBrandTabs(subCategoryTabs[0].id));
 
     yield RefreshSuccessProductState(
       ProductSessionModel(
@@ -77,7 +87,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         brandTabs: brandTabs,
         searchSortTypes: searchSortTypes,
         searchListTypes: searchListTypes,
-        activeCategoryTab: subCategoryTabs.first.category.id,
+        activeCategoryTab: (subCategoryTabs.isNotEmpty)
+            ? (subCategoryTabs[selectedSubCategory]?.category?.id ??
+                subCategoryTabs.first.category.id)
+            : 0,
         currentSort: searchSortTypes.first, // default is the first one
         currentListType: searchListTypes.first, // default is the first one
       ),
@@ -127,6 +140,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     if (state is RefreshSuccessProductState) {
       final ProductSessionModel session =
           (state as RefreshSuccessProductState).session;
+      yield RefreshSuccessProductState(session.rebuild(
+        isLoading: true,
+      ));
       List<BrandTabModel> brandTabs = <BrandTabModel>[];
 
       /// The tabs are for brands.. for now only GROCERIES sub-category works
@@ -142,7 +158,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         activeSearchTab: event.activeCategoryTab,
         brandTabs: brandTabs,
         activeBrandTab: '0',
-        isLoading: true,
       ));
 
       add(FilteredListRequestedProductEvent());

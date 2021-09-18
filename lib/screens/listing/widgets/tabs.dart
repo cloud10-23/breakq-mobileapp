@@ -70,15 +70,13 @@ class CategoryTabsState extends State<CategoryTabs> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(item.category.title,
-                        style: isActive
-                            ? Theme.of(context)
-                                .textTheme
-                                .caption
-                                .fs10
-                                .bold
-                                .white
-                            : Theme.of(context).textTheme.caption.bold.fs10),
+                    Text(
+                      item.category.title,
+                      style: isActive
+                          ? Theme.of(context).textTheme.caption.fs10.bold.white
+                          : Theme.of(context).textTheme.caption.bold.fs10,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),

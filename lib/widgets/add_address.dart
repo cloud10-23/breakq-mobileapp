@@ -11,8 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class AddEditAddress extends StatefulWidget {
-  static var tag = "/T2SignUp";
-
   @override
   AddEditAddressState createState() => AddEditAddressState();
 }
@@ -20,7 +18,7 @@ class AddEditAddress extends StatefulWidget {
 class AddEditAddressState extends State<AddEditAddress> {
   final GlobalKey<FormState> formKey =
       GlobalKey(debugLabel: "Form for add address");
-  final address = Address();
+  var address = Address();
 
   @override
   void initState() {
@@ -63,14 +61,16 @@ class AddEditAddressState extends State<AddEditAddress> {
                     FilledEditText(
                       hint: "Full Name",
                       isFirstField: true,
-                      onSaved: (name) => address.rebuild(name: name),
+                      onSaved: (name) => address.setName = name,
                       error: "Please enter your name!",
+                      autoFillHints: [AutofillHints.name],
                     ),
                     FilledEditText(
                       hint: "Phone Number",
                       inputTpe: TextInputType.phone,
-                      onSaved: (phone) => address.rebuild(phone: phone),
+                      onSaved: (phone) => address.setPhone = phone,
                       error: "Please enter your mobile number!",
+                      autoFillHints: [AutofillHints.telephoneNumber],
                     ),
                     Row(
                       children: [
@@ -79,9 +79,9 @@ class AddEditAddressState extends State<AddEditAddress> {
                           child: FilledEditText(
                             hint: "Pin Code",
                             inputTpe: TextInputType.number,
-                            onSaved: (pinCode) =>
-                                address.rebuild(pinCode: pinCode),
+                            onSaved: (pinCode) => address.setPinCode = pinCode,
                             error: "Please fill the pin code!",
+                            autoFillHints: [AutofillHints.postalCode],
                           ),
                         ),
                         Spacer(),
@@ -89,24 +89,25 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 10,
                           child: FilledEditText(
                             hint: "House No/Building",
-                            onSaved: (houseNo) =>
-                                address.rebuild(houseNo: houseNo),
+                            onSaved: (houseNo) => address.setHouseNo = houseNo,
                             inputTpe: TextInputType.streetAddress,
                             error: "Please fill the house no!",
+                            autoFillHints: [AutofillHints.streetAddressLevel1],
                           ),
                         ),
                       ],
                     ),
                     FilledEditText(
                       hint: "Street, Colony, Locality, Area",
-                      onSaved: (street) => address.rebuild(street: street),
+                      onSaved: (street) => address.setStreet = street,
                       inputTpe: TextInputType.streetAddress,
                       error: "Please fill the address line!",
+                      autoFillHints: [AutofillHints.streetAddressLevel2],
                     ),
                     FilledEditText(
                       hint: "Landmark (optional)",
-                      onSaved: (landmark) =>
-                          address.rebuild(landmark: landmark),
+                      onSaved: (landmark) => address.setLandmark = landmark,
+                      autoFillHints: [AutofillHints.streetAddressLevel3],
                     ),
                     Row(
                       children: [
@@ -114,8 +115,9 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 5,
                           child: FilledEditText(
                             hint: "State",
-                            onSaved: (state) => address.rebuild(state: state),
+                            onSaved: (state) => address.setState = state,
                             error: "Please fill the state!",
+                            autoFillHints: [AutofillHints.addressState],
                           ),
                         ),
                         Spacer(),
@@ -123,10 +125,10 @@ class AddEditAddressState extends State<AddEditAddress> {
                           flex: 5,
                           child: FilledEditText(
                             hint: "City",
-                            onSaved: (city) =>
-                                address.rebuild(cityDistTown: city),
+                            onSaved: (city) => address.setCityTown = city,
                             error: "Please fill the city!",
                             isLastField: true,
+                            autoFillHints: [AutofillHints.addressCity],
                           ),
                         ),
                       ],

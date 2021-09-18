@@ -4,41 +4,41 @@ part 'price_model.g.dart';
 @JsonSerializable(createToJson: false)
 class Price {
   Price({
-    this.price,
+    this.totalAmount,
     this.discount,
     this.extraOffer,
     this.delivery,
-    this.totalAmnt,
+    this.finalAmount,
     this.savings,
   });
 
   factory Price.addPrice(Price oldPrice, double price) {
     return Price(
-      price: price,
+      totalAmount: price,
       discount: oldPrice.discount,
       extraOffer: oldPrice.extraOffer,
-      totalAmnt: oldPrice.totalAmnt,
+      finalAmount: oldPrice.finalAmount,
       savings: oldPrice.savings,
     );
   }
 
   factory Price.calc(double orgPrice, double price, {double extraOffer = 10}) {
     return Price(
-      price: orgPrice,
+      totalAmount: orgPrice,
       discount: orgPrice - price,
       extraOffer: extraOffer,
-      totalAmnt: price - extraOffer,
+      finalAmount: price - extraOffer,
       savings: orgPrice - price + extraOffer,
     );
   }
 
   factory Price.addDelivery(Price oldPrice, double delivery) {
     return Price(
-      price: oldPrice.price,
+      totalAmount: oldPrice.totalAmount,
       discount: oldPrice.discount,
       extraOffer: oldPrice.extraOffer,
       delivery: delivery,
-      totalAmnt: oldPrice.totalAmnt + delivery,
+      finalAmount: oldPrice.finalAmount + delivery,
       savings: oldPrice.savings - delivery,
     );
   }
@@ -54,7 +54,8 @@ class Price {
 
   factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
 
-  final double price;
+  @JsonKey(name: "totalAmount")
+  final double totalAmount;
   @JsonKey(name: "discount")
   final double discount;
   @JsonKey(name: "extra_Offer")
@@ -62,7 +63,7 @@ class Price {
   @JsonKey(name: "delivery_Charges")
   final double delivery;
   @JsonKey(name: "final_Amount")
-  final double totalAmnt;
+  final double finalAmount;
   @JsonKey(name: "savings")
   final double savings;
 }

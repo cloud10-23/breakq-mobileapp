@@ -30,7 +30,7 @@ class PriceDetails extends StatelessWidget {
               fw: FontWeight.w600,
             ),
             BoldTitle(
-              title: '₹ ' + (price?.price?.toStringAsFixed(2) ?? "00.00"),
+              title: '₹ ' + (price?.totalAmount?.toStringAsFixed(2) ?? "00.00"),
               padding: EdgeInsets.symmetric(horizontal: kPaddingM),
               color: Colors.black87,
               fw: FontWeight.w500,
@@ -116,7 +116,7 @@ class PriceDetails extends StatelessWidget {
               fw: FontWeight.w800,
             ),
             CustomTitle(
-              title: '₹ ' + (price?.totalAmnt ?? 0).toStringAsFixed(2),
+              title: '₹ ' + (price?.finalAmount ?? 0).toStringAsFixed(2),
               fw: FontWeight.w700,
               isNum: true,
             ),

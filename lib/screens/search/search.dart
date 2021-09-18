@@ -15,6 +15,7 @@ import 'package:breakq/screens/search/voice_search.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/jumbotron.dart';
+import 'package:breakq/widgets/no_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -204,11 +205,7 @@ class _SearchBarState extends State<SearchBar> {
                         currentListType: session.currentListType,
                       )
                     else
-                      Jumbotron(
-                        icon: FontAwesome5Solid.search,
-                        padding: EdgeInsets.all(kToolbarHeight),
-                        title: 'No products found!',
-                      ),
+                      NoProducts(),
                   ]),
                 ),
                 SliverToBoxAdapter(

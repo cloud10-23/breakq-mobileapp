@@ -4,6 +4,7 @@ import 'package:breakq/blocs/orders/orders_bloc.dart';
 import 'package:breakq/blocs/product/offer_bloc.dart';
 import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/blocs/search/search_bloc.dart';
+import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/checkout/checkout.dart';
@@ -103,13 +104,13 @@ class Routes {
       /// Product Listing
 
       case listing:
+        final category = routeSettings?.arguments as Map<CategoryModel, int>;
         return MaterialPageRoute<Listing>(
           builder: (BuildContext context) => BlocProvider<ProductBloc>(
             create: (_) => ProductBloc()
-              ..add(SessionInitedProductEvent(
-                  category: routeSettings?.arguments)),
+              ..add(SessionInitedProductEvent(categoryWithSelection: category)),
             child: Listing(
-              category: routeSettings?.arguments,
+              category: category.keys.first,
             ),
           ),
         );

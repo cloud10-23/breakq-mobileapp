@@ -29,6 +29,8 @@ class Order extends Equatable {
   final double cgst;
   final double sgst;
   final String status;
+  @JsonKey(name: "paymentStatus")
+  final String paymentStatus;
 
   final OrderTimeSlot timeSlot;
   final List<CartProduct> products;
@@ -49,6 +51,7 @@ class Order extends Equatable {
     this.cgst,
     this.sgst,
     this.status,
+    this.paymentStatus,
     this.timeSlot,
     this.products,
     this.price,

@@ -161,7 +161,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       CustomTitle(
                         title: '₹ ' +
-                                (state.cart.cartValue?.totalAmnt ?? 0)
+                                (state.cart.cartValue?.finalAmount ?? 0)
                                     .toStringAsFixed(2) ??
                             "00.00",
                         padding: EdgeInsets.symmetric(horizontal: kPaddingM),

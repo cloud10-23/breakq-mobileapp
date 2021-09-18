@@ -1,7 +1,9 @@
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -65,11 +67,23 @@ class ProductItemReadOnly extends StatelessWidget {
                           bottomLeft: Radius.circular(kBoxDecorationRadius),
                         ),
                       ),
-                      child: Image.network(
-                        apiBaseFull + product.image,
+                      child: CachedNetworkImage(
+                        cacheManager: AppCacheManager.instance,
+                        imageUrl: apiBaseFull + product.image,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress)
+                          ],
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
+                          AssetImages.productPlaceholder,
+                          fit: BoxFit.cover,
+                        ),
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Image.asset(AssetImages.productPlaceholder),
                       ),
                     ),
                     Padding(

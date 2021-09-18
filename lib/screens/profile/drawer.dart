@@ -1,3 +1,4 @@
+import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/arrow_right_icon.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:breakq/widgets/list_title.dart';
+import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -316,22 +318,26 @@ class AllCategoriesListItems extends StatelessWidget {
     return Column(
         children: categories
             .map(
-              (category) => ListItem(
-                title: category.category.title,
-                onPressed: () => Navigator.pushNamed(context, Routes.listing,
-                    arguments: category.category),
-                // (category) => ExpansionTile(
-                //   title: Text(category.category.title),
-                //   tilePadding: EdgeInsets.zero,
-                //   children: List.generate(
-                //       5,
-                //       (index) => ListItem(
-                //             title: category.sub_category,
-                //             titleTextStyle:
-                //                 Theme.of(context).textTheme.caption.black.w600,
-                //             trailing: const ArrowRightIcon(),
-                //             onPressed: () {},
-                //           )),
+              // (category) => ListItem(
+              //   title: category.category.title,
+              //   onPressed: () => Navigator.pushNamed(context, Routes.listing,
+              //       arguments: category.category),
+              (category) => ExpansionTile(
+                title: Text(category.category.title),
+                tilePadding: EdgeInsets.zero,
+                children: List.generate(
+                    category.category.subCategories.length,
+                    (index) => ListItem(
+                          title: category.category.subCategories[index].title,
+                          titleTextStyle:
+                              Theme.of(context).textTheme.caption.black.w600,
+                          trailing: const ArrowRightIcon(),
+                          onPressed: () => Navigator.pushNamed(
+                              context, Routes.listing,
+                              arguments: <CategoryModel, int>{
+                                category.category: index
+                              }),
+                        )),
               ),
             )
             .toList());

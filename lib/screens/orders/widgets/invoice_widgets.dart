@@ -303,7 +303,7 @@ class InvoicePriceDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6.fs16.bold,
             ),
             Text(
-              '₹ ' + ((price?.price ?? 0).toStringAsFixed(2) ?? "00.00"),
+              '₹ ' + ((price?.totalAmount ?? 0).toStringAsFixed(2) ?? "00.00"),
               style: Theme.of(context).textTheme.headline6.fs16.bold.number,
             ),
           ],
@@ -390,7 +390,7 @@ class InvoicePriceDetails extends StatelessWidget {
               color: kWhite,
             ),
             CustomTitle(
-              title: '₹ ' + (price?.totalAmnt ?? 0).toStringAsFixed(2),
+              title: '₹ ' + (price?.finalAmount ?? 0).toStringAsFixed(2),
               fw: FontWeight.w600,
               isNum: true,
               color: kWhite,

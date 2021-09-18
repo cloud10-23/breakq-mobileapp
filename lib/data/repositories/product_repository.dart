@@ -126,6 +126,8 @@ class ProductsRepository {
   Future<List<Product>> getProducts(
       {String category,
       String product,
+      String productCode,
+      String barCode,
       String brandCode,
       String sortBy,
       String filterBy,
@@ -134,6 +136,8 @@ class ProductsRepository {
     final Uri uri = Uri.http(apiBase, apiProducts, {
       apiCategoryQuery: category,
       apiProductQuery: product,
+      apiProductCode: productCode,
+      apiBarCode: barCode,
       apiBrandCode: brandCode,
       apiSortBy: sortBy,
       apiFilterBy: filterBy,

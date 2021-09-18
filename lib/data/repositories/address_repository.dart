@@ -28,7 +28,7 @@ class AddressRepository {
 
   Future<String> addOrUpdate(Address address) async {
     final Uri uri = Uri.http(apiBase, apiPostAddress);
-    address = address.rebuild(firebaseID: getIt.get<AppGlobals>().user.uid);
+    address.setFirebaseID = getIt.get<AppGlobals>().user.uid;
 
     return await dataProvider.postByString(uri, address.toJson());
   }
