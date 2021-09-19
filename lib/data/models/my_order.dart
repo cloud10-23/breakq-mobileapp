@@ -31,9 +31,10 @@ class Order extends Equatable {
   final String status;
   @JsonKey(name: "paymentStatus")
   final String paymentStatus;
-
+  @JsonKey(name: "time_Slot")
   final OrderTimeSlot timeSlot;
   final List<CartProduct> products;
+  @JsonKey(name: "price_Details")
   final Price price;
   final Address address;
 

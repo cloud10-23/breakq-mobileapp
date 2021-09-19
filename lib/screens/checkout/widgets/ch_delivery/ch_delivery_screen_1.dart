@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
@@ -6,6 +7,7 @@ import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.
 import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/widgets/jumbotron.dart';
+import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -74,9 +76,15 @@ class _ChDeliveryState extends State<ChDelivery> {
                 content: Container()),
           ],
         )));
-
-        _listItems.add(
-            SliverToBoxAdapter(child: DeliveryAddressModule(session: session)));
+        if (!session.isLoading)
+          _listItems.add(SliverToBoxAdapter(
+              child: DeliveryAddressModule(session: session)));
+        else
+          _listItems.add(SliverToBoxAdapter(
+              child: Padding(
+            padding: const EdgeInsets.all(kPaddingL),
+            child: ShimmerBox(height: 400),
+          )));
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
@@ -85,7 +93,9 @@ class _ChDeliveryState extends State<ChDelivery> {
         return CheckoutTemplate(
           slivers: _listItems,
           showBackButton: false,
-          subTitle: 'Select delivery address',
+          subTitle: (!session.isLoading)
+              ? 'Select delivery address'
+              : 'Loading your address...',
           bottomBar: ChBottomBarWithButton(
             session: session,
             onTap: () {

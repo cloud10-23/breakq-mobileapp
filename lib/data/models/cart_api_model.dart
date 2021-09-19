@@ -76,9 +76,9 @@ class CartProduct extends Equatable {
       _$CartProductFromJson(json);
 
   static Map<Product, int> asMap(List<CartProduct> cartProducts) {
-    return cartProducts.map((cartProduct) {
+    return cartProducts?.map((cartProduct) {
       return {cartProduct.product: cartProduct.qty};
-    }).reduce(
+    })?.reduce(
       (value, element) {
         value.addAll(element);
         return value;

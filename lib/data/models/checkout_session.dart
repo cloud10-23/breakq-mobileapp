@@ -37,6 +37,7 @@ class CheckoutSession {
     this.transactionNo,
     this.isCompleted = false,
     this.isLoading = false,
+    this.isPaying = false,
     this.apiError = '',
     this.address,
     this.selectedAddress,
@@ -54,6 +55,7 @@ class CheckoutSession {
     String transactionNo,
     bool isCompleted,
     bool isLoading,
+    bool isPaying,
     String apiError,
     List<Address> address,
     int selectedAddress,
@@ -70,6 +72,7 @@ class CheckoutSession {
       transactionNo: transactionNo ?? this.transactionNo,
       isCompleted: isCompleted ?? this.isCompleted,
       isLoading: isLoading ?? this.isLoading,
+      isPaying: isPaying ?? this.isPaying,
       apiError: apiError ?? '',
       address: address ?? this.address,
       selectedAddress: selectedAddress ?? this.selectedAddress,
@@ -82,7 +85,7 @@ class CheckoutSession {
 
   final ChCurrentStep currentStep;
   final Cart cartProducts;
-  final bool isCompleted, isLoading;
+  final bool isCompleted, isLoading, isPaying;
   final String orderNo, billNo, transactionNo;
   final String apiError;
   final List<Address> address;

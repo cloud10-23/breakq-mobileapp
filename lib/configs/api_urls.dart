@@ -30,6 +30,7 @@ const String apiCartGet = '/api/Cart/GetCart';
 const String apiCheckoutWalkin = '/api/Checkout/CheckoutWalkin';
 const String apiCheckoutWithTime = '/api/Checkout/CheckoutWithTime';
 const String apiCheckoutGetSlots = '/api/Checkout/GetCheckoutSlots';
+const String apiCheckoutPay = '/api/Checkout/Pay';
 
 /// My Orders
 const String apiOrder = '/api/Order/Order';

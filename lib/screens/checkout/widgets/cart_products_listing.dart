@@ -68,7 +68,7 @@ class ProductItemReadOnly extends StatelessWidget {
                         ),
                       ),
                       child: CachedNetworkImage(
-                        cacheManager: AppCacheManager.instance,
+                        // cacheManager: AppCacheManager.instance,
                         imageUrl: apiBaseFull + product.image,
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) => Column(

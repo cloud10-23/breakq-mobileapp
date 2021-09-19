@@ -25,7 +25,7 @@ class CategoryCard extends StatelessWidget {
           children: [
             Expanded(
               child: CachedNetworkImage(
-                cacheManager: AppCacheManager.instance,
+                // cacheManager: AppCacheManager.instance,
                 imageUrl: apiBaseFull + _category.image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     Column(

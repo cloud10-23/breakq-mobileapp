@@ -77,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     SizedBox(height: 20.0),
                     Flexible(
                       child: CachedNetworkImage(
-                        cacheManager: AppCacheManager.instance,
+                        // cacheManager: AppCacheManager.instance,
                         imageUrl: apiBaseFull + widget.product.image,
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) => Column(

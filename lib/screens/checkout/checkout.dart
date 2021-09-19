@@ -96,6 +96,8 @@ class _CheckoutScreenState extends State<CheckoutScreen>
               return DeliveryCheckoutSuccessDialog(order: session.order);
               break;
           }
+        } else if (session.isPaying) {
+          return FullScreenIndicator();
         }
 
         return Scaffold(

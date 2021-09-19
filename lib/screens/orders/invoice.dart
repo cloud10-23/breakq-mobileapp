@@ -1,6 +1,7 @@
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/my_order.dart';
+import 'package:breakq/screens/orders/widgets/error.dart';
 import 'package:breakq/screens/orders/widgets/invoice_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,9 @@ class Invoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (order == null || order.billNo == null) {
+      return OrderError();
+    }
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

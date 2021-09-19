@@ -32,6 +32,7 @@ import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
 import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/add_address.dart';
+import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
@@ -177,7 +178,10 @@ class Routes {
           builder: (BuildContext context) => CartPage(),
         );
       case add_address:
-        return SlideRoute(widget: AddEditAddress());
+        return SlideRoute(
+            widget: AddEditAddress(
+          address: routeSettings.arguments,
+        ));
 
       /// My Orders
       case orders:
@@ -303,6 +307,7 @@ class CheckoutNavigatorRoutes {
   static const String walkin_success = '/success';
   static const String pickup_success = '/pickup/success';
   static const String delivery_success = '/delivery/success';
+  static const String loading = '/loading';
 }
 
 class CheckoutNavigator extends StatelessWidget {
@@ -327,13 +332,15 @@ class CheckoutNavigator extends StatelessWidget {
       CheckoutNavigatorRoutes.delivery_3: (context, settings) =>
           ChDeliveryConfirm(),
       CheckoutNavigatorRoutes.add_address: (context, settings) =>
-          AddEditAddress(),
+          AddEditAddress(address: settings.arguments),
       CheckoutNavigatorRoutes.walkin_success: (context, settings) =>
           WalkinCheckoutSuccess(),
       CheckoutNavigatorRoutes.pickup_success: (context, settings) =>
           PickupCheckoutSuccessDialog(),
       CheckoutNavigatorRoutes.delivery_success: (context, settings) =>
-          DeliveryCheckoutSuccessDialog()
+          DeliveryCheckoutSuccessDialog(),
+      CheckoutNavigatorRoutes.loading: (context, settings) =>
+          FullScreenIndicator()
     };
   }
 

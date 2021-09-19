@@ -4,6 +4,7 @@ import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/cart/widgets/cart_helper.dart';
 import 'package:breakq/screens/orders/widgets/order_item.dart';
 import 'package:breakq/widgets/back_button.dart';
+import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,20 +15,24 @@ class MyOrders extends StatelessWidget {
       builder: (BuildContext context, OrdersState state) {
         if (state is! OrdersLoadedState) {
           return Scaffold(
-            primary: true,
-            appBar: AppBar(
               primary: true,
-              backgroundColor: kWhite,
-              leading: BackButtonCircle(),
-              title: Text(
-                'My Orders',
+              appBar: AppBar(
+                primary: true,
+                backgroundColor: kWhite,
+                leading: BackButtonCircle(),
+                title: Text(
+                  'My Orders',
+                ),
+                actions: <Widget>[],
               ),
-              actions: <Widget>[],
-            ),
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+              body: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: kPaddingL, horizontal: kPaddingS),
+                  child: ShimmerBox(height: 350),
+                ),
+              ));
         }
 
         final List<Order> _orders = (state as OrdersLoadedState).orders;

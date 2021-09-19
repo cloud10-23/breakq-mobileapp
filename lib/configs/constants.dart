@@ -436,10 +436,10 @@ class CheckoutTypes {
       case 'W':
         return CheckoutType.walkIn;
         break;
-      case 'SP':
+      case 'S':
         return CheckoutType.pickUp;
         break;
-      case 'DTH':
+      case 'D':
         return CheckoutType.delivery;
         break;
       default:
@@ -452,10 +452,10 @@ class CheckoutTypes {
       case 'W':
         return "Walk - In";
         break;
-      case 'SP':
+      case 'S':
         return "Self - Pickup";
         break;
-      case 'DTH':
+      case 'D':
         return "Deliver To Home";
         break;
       default:

@@ -47,7 +47,7 @@ class CartListItem extends StatelessWidget {
                         Row(
                           children: [
                             CachedNetworkImage(
-                              cacheManager: AppCacheManager.instance,
+                              // cacheManager: AppCacheManager.instance,
                               imageUrl: apiBaseFull + product.image,
                               progressIndicatorBuilder:
                                   (context, url, downloadProgress) => Column(

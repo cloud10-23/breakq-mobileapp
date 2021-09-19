@@ -7,12 +7,14 @@ import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/data/models/my_order.dart';
+import 'package:breakq/data/models/payment.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/timeslot_model.dart';
 import 'package:breakq/data/repositories/address_repository.dart';
 import 'package:breakq/data/repositories/checkout_repository.dart';
 import 'package:breakq/data/repositories/order_repository.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
 
@@ -148,39 +150,33 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
 
-      /// Do the API call for generating the bill
+      yield SessionRefreshSuccessChState(session.rebuild(isLoading: true));
 
-      CheckoutSession newSession = session;
+      CheckoutSession newSession = session.rebuild(isLoading: false);
 
       switch (session.currentStep.checkoutType) {
         case CheckoutType.walkIn:
 
           /// If the type is Walkin then this will be triggered through API when
           /// the counter scans the code
+          yield SessionRefreshSuccessChState(session.rebuild(isPaying: true));
+
+          CheckoutSession newSession = session.rebuild(isPaying: false);
           switch (session.currentStep.step) {
             case 0:
-              newSession = session.rebuild(
-                currentStep: session.currentStep.rebuild(step: 1),
-              );
-              getIt
-                  .get<AppGlobals>()
-                  .globalKeyCheckoutNavigator
-                  .currentState
-                  .pushNamed(CheckoutNavigatorRoutes.walkin_1);
-              break;
-            case 1:
-              // getIt
-              //     .get<AppGlobals>()
-              //     .globalKeyCheckoutNavigator
-              //     .currentState
-              //     .pushNamed(CheckoutNavigatorRoutes.walkin_1);
-              add(PaymentDoneChEvent());
-              // if (session.selectedProductIds == null ||
-              //     session.selectedProductIds.isEmpty) {
-              //   UI.showErrorDialog(context,
-              //       message: L10n.of(context).QSWarningProducts,
-              //       onPressed: () => Navigator.pop(context));
-              // }
+              // PAY was clicked
+              newSession = session.rebuild(isLoading: false);
+              if (await CheckoutRepository().checkoutPay(
+                  billNo: session.billNo,
+                  amount: Amount(
+                    upi: UPI(
+                        no: '53464532',
+                        amount: session.cartProducts.cartValue.finalAmount),
+                  )))
+                add(PaymentDoneChEvent());
+              else
+                newSession =
+                    session.rebuild(apiError: "Unable to process payment!");
               break;
           }
 
@@ -209,32 +205,39 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               /// Make an API request and conform the order
               ///
               /// API CALL to checkout with Time slot and get the bill no,
+              yield SessionRefreshSuccessChState(
+                  session.rebuild(isPaying: true));
+
+              CheckoutSession newSession = session.rebuild(isPaying: false);
 
               final selectedDateRange = session.selectedDateIndex;
               final selectedTimeSlot = session.selectedTimeIndex;
               final selectedDate = session.timetables[selectedDateRange];
               final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
               final String billNo = await _checkoutRepository.checkoutWithTime(
-                selectedDate.date,
+                selectedDate.scheduleDate,
                 timeslots.startTime,
                 timeslots.endTime,
                 CheckoutType.pickUp,
               );
 
               /// Do the API call for checking the payment is done
-              final Order order = await MyOrderRepository().getOrder(billNo);
-
-              newSession = session.rebuild(
-                isCompleted: true,
-                billNo: billNo,
-                order: order,
-              );
-              // getIt
-              //     .get<AppGlobals>()
-              //     .globalKeyCheckoutNavigator
-              //     .currentState
-              //     .pushNamed(CheckoutNavigatorRoutes.pickup_2);
-              add(ClearCartChEvent());
+              // PAYMENT
+              if (await CheckoutRepository().checkoutPay(
+                  billNo: billNo,
+                  amount: Amount(
+                    upi: UPI(
+                        no: '53464532',
+                        amount: session.cartProducts.cartValue.finalAmount),
+                  ))) {
+                add(PaymentDoneChEvent());
+                newSession = session.rebuild(
+                  isLoading: false,
+                  billNo: billNo,
+                );
+              } else
+                newSession =
+                    session.rebuild(apiError: "Unable to process payment!");
               break;
           }
           break;
@@ -251,7 +254,6 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               newSession = session.rebuild(
                 cartProducts: cartProducts,
                 currentStep: session.currentStep.rebuild(step: 1),
-                isLoading: true,
               );
               getIt
                   .get<AppGlobals>()
@@ -278,29 +280,39 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
               /// API CALL to checkout with Time slot and get the bill no,
               ///
+              yield SessionRefreshSuccessChState(
+                  session.rebuild(isPaying: true));
+
+              CheckoutSession newSession = session.rebuild(isPaying: false);
               final selectedDateRange = session.selectedDateIndex;
               final selectedTimeSlot = session.selectedTimeIndex;
               final selectedDate = session.timetables[selectedDateRange];
               final timeslots = selectedDate.timeSchedules[selectedTimeSlot];
 
-              /// TODO Address ID
               final String billNo = await _checkoutRepository.checkoutWithTime(
-                selectedDate.date,
+                selectedDate.scheduleDate,
                 timeslots.startTime,
                 timeslots.endTime,
                 CheckoutType.delivery,
-                addressID: 3,
+                addressID: session.address[session.selectedAddress].addressId,
               );
 
               /// Do the API call for checking the payment is done
-              final Order order = await MyOrderRepository().getOrder(billNo);
-
-              newSession = session.rebuild(
-                isCompleted: true,
-                billNo: billNo,
-                order: order,
-              );
-              add(ClearCartChEvent());
+              // PAYMENT
+              if (await CheckoutRepository().checkoutPay(
+                  billNo: billNo,
+                  amount: Amount(
+                    upi: UPI(
+                        no: '53464532',
+                        amount: session.cartProducts.cartValue.finalAmount),
+                  ))) {
+                add(PaymentDoneChEvent());
+                newSession = session.rebuild(
+                  billNo: billNo,
+                );
+              } else
+                newSession =
+                    session.rebuild(apiError: "Unable to process payment!");
               break;
           }
           break;
@@ -402,6 +414,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
 
       newSession = session.rebuild(
         address: address,
+        selectedAddress: (address?.isNotEmpty ?? false) ? 0 : -1,
+        isLoading: false,
       );
 
       yield SessionRefreshSuccessChState(newSession);

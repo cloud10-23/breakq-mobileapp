@@ -55,15 +55,17 @@ class UI {
       title: title,
       message: message,
       actions: <Widget>[
-        FlatButton(
-          color: kBlue,
-          child: Text(buttonText),
-          onPressed: () {
-            Navigator.of(context).pop();
-            if (onPressed != null) {
-              onPressed();
-            }
-          },
+        Builder(
+          builder: (context) => FlatButton(
+            color: kBlue,
+            child: Text(buttonText),
+            onPressed: () {
+              Navigator.of(context).pop();
+              if (onPressed != null) {
+                onPressed();
+              }
+            },
+          ),
         ),
       ],
     );

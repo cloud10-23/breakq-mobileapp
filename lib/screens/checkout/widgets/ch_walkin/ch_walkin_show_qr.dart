@@ -79,9 +79,11 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
           bottomBar: ChBottomBarWithButton(
             session: session,
             onTap: () => showPayment(
-                context,
-                () => BlocProvider.of<CheckoutBloc>(context)
-                    .add(PaymentDoneChEvent())),
+              context,
+              () => BlocProvider.of<CheckoutBloc>(context)
+                  .add(NextPressedChEvent()),
+              allowCash: false,
+            ),
             buttonText: 'Pay',
             controller: controller,
           ),

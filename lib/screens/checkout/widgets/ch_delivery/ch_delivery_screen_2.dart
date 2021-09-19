@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
@@ -7,6 +8,7 @@ import 'package:breakq/screens/checkout/widgets/checkout_template.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/jumbotron.dart';
+import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -77,7 +79,13 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
           ],
         )));
 
-        if (session.timetables?.isNotEmpty ?? false) {
+        if (session.isLoading) {
+          _listItems.add(SliverToBoxAdapter(
+              child: Padding(
+            padding: const EdgeInsets.all(kPaddingL),
+            child: ShimmerBox(height: 400),
+          )));
+        } else if (session.timetables?.isNotEmpty ?? false) {
           _listItems
               .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
         }
@@ -88,7 +96,9 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
 
         return CheckoutTemplate(
           slivers: _listItems,
-          subTitle: 'Select Time Slot',
+          subTitle: (!session.isLoading)
+              ? 'Select time slot'
+              : 'Loading time slots...',
           bottomBar: ChBottomBarWithButton(
             session: session,
             onTap: () {

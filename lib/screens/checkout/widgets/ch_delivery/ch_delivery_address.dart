@@ -54,8 +54,9 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
               if (_selectedIndex == index)
                 InkWell(
                   onTap: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .pushNamed(Routes.add_address);
+                    Navigator.of(context).pushNamed(
+                        CheckoutNavigatorRoutes.add_address,
+                        arguments: session.address[session.selectedAddress]);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -131,8 +132,8 @@ class _DeliveryAddressModuleState extends State<DeliveryAddressModule> {
             ),
           ),
           onTap: () {
-            Navigator.of(context, rootNavigator: true)
-                .pushNamed(Routes.add_address);
+            Navigator.of(context)
+                .pushNamed(CheckoutNavigatorRoutes.add_address);
             // BlocProvider.of<CheckoutBloc>(context)
             //     .add(CheckoutTypeSelectedChEvent(type: _type));
           },

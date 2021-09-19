@@ -22,16 +22,16 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     sgst: (json['sgst'] as num)?.toDouble(),
     status: json['status'] as String,
     paymentStatus: json['paymentStatus'] as String,
-    timeSlot: json['timeSlot'] == null
+    timeSlot: json['time_Slot'] == null
         ? null
-        : OrderTimeSlot.fromJson(json['timeSlot'] as Map<String, dynamic>),
+        : OrderTimeSlot.fromJson(json['time_Slot'] as Map<String, dynamic>),
     products: (json['products'] as List)
         ?.map((e) =>
             e == null ? null : CartProduct.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    price: json['price'] == null
+    price: json['price_Details'] == null
         ? null
-        : Price.fromJson(json['price'] as Map<String, dynamic>),
+        : Price.fromJson(json['price_Details'] as Map<String, dynamic>),
     address: json['address'] == null
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),

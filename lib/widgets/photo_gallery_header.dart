@@ -60,7 +60,7 @@ class _PhotoGalleryScreenHeaderState extends State<PhotoGalleryScreenHeader> {
                     _openPhotoGallery(context);
                   },
                   child: CachedNetworkImage(
-                    cacheManager: AppCacheManager.instance,
+                    // cacheManager: AppCacheManager.instance,
                     imageUrl: _photos[index].getImageURL(ImageSize.view),
                     imageBuilder:
                         (BuildContext context, ImageProvider imageProvider) =>

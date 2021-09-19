@@ -256,7 +256,7 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapSaveUserAuthEventToState(
       UserSavedAuthEvent event) async* {
-    AppCacheManager.instance.emptyCache();
+    // AppCacheManager.instance.emptyCache();
 
     ///Save to Storage phone
     final bool savePreferences = await getIt.get<AppPreferences>().setString(

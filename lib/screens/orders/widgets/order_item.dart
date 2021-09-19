@@ -9,6 +9,31 @@ import 'package:breakq/utils/text_style.dart';
 class OrderItem extends StatelessWidget {
   OrderItem({@required this.order});
   final Order order;
+
+  Widget rowEntry(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.all(kPaddingS),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          BoldTitle(
+            title: title,
+            padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+            color: kBlack,
+            fw: FontWeight.w500,
+          ),
+          BoldTitle(
+            title: '$value',
+            padding: EdgeInsets.symmetric(horizontal: kPaddingS),
+            color: Colors.black54,
+            fw: FontWeight.w700,
+            isNum: true,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,10 +79,11 @@ class OrderItem extends StatelessWidget {
                   ],
                 ),
                 Spacer(flex: 5),
-                Image(
-                  image: AssetImage(AssetImages.paid_image),
-                  height: 70,
-                ),
+                if (order.paymentStatus == "Paid")
+                  Image(
+                    image: AssetImage(AssetImages.paid_image),
+                    height: 70,
+                  ),
                 Spacer(),
               ],
             ),
@@ -67,70 +93,13 @@ class OrderItem extends StatelessWidget {
             //   height: 0.5,
             //   color: Colors.black12,
             // ),
-            Padding(
-              padding: const EdgeInsets.all(kPaddingS),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BoldTitle(
-                    title: 'Bill No: ',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: kBlack,
-                    fw: FontWeight.w500,
-                  ),
-                  BoldTitle(
-                    title: '${order.billNo}',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: Colors.black54,
-                    fw: FontWeight.w500,
-                    isNum: true,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(kPaddingS),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BoldTitle(
-                    title: 'Checkout Type: ',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: kBlack,
-                    fw: FontWeight.w500,
-                  ),
-                  BoldTitle(
-                    title:
-                        CheckoutTypes.fromAPItypeToString(order.checkoutType),
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: Colors.black54,
-                    fw: FontWeight.w500,
-                    isNum: true,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(kPaddingS),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BoldTitle(
-                    title: 'Payment Mode: ',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: kBlack,
-                    fw: FontWeight.w500,
-                  ),
-                  BoldTitle(
-                    title: '${order.paymentMode}',
-                    padding: EdgeInsets.symmetric(horizontal: kPaddingS),
-                    color: Colors.black54,
-                    fw: FontWeight.w700,
-                    isNum: true,
-                  ),
-                ],
-              ),
-            ),
+            rowEntry('Bill No: ', '${order.billNo}'),
+            rowEntry('Checkout Type: ',
+                CheckoutTypes.fromAPItypeToString(order.checkoutType)),
+            rowEntry('Quantity: ', '${order.qty}'),
+            rowEntry('Payment Mode: ', '${order.paymentMode}'),
+            rowEntry('Order Status: ', '${order.status}'),
+            rowEntry('Payment Status: ', '${order.paymentStatus}'),
             SizedBox(height: kPaddingL),
             Container(
               height: 0.8,

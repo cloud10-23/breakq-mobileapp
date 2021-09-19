@@ -16,11 +16,20 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
-      'firebaseID': instance.firebaseID,
-      'bill_No': instance.billNo,
-      'amount': instance.amount,
-    };
+Map<String, dynamic> _$PaymentToJson(Payment instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('firebaseID', instance.firebaseID);
+  writeNotNull('bill_No', instance.billNo);
+  writeNotNull('amount', instance.amount?.toJson());
+  return val;
+}
 
 Amount _$AmountFromJson(Map<String, dynamic> json) {
   return Amount(
@@ -37,12 +46,21 @@ Amount _$AmountFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$AmountToJson(Amount instance) => <String, dynamic>{
-      'cash': instance.cash,
-      'card': instance.card,
-      'upi': instance.upi,
-      'coupon': instance.coupon,
-    };
+Map<String, dynamic> _$AmountToJson(Amount instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('cash', instance.cash);
+  writeNotNull('card', instance.card?.toJson());
+  writeNotNull('upi', instance.upi?.toJson());
+  writeNotNull('coupon', instance.coupon?.toJson());
+  return val;
+}
 
 Card _$CardFromJson(Map<String, dynamic> json) {
   return Card(
@@ -51,10 +69,19 @@ Card _$CardFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
-      'card_No': instance.no,
-      'amount': instance.amount,
-    };
+Map<String, dynamic> _$CardToJson(Card instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('card_No', instance.no);
+  writeNotNull('amount', instance.amount);
+  return val;
+}
 
 UPI _$UPIFromJson(Map<String, dynamic> json) {
   return UPI(
@@ -63,10 +90,19 @@ UPI _$UPIFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$UPIToJson(UPI instance) => <String, dynamic>{
-      'upI_Id': instance.no,
-      'amount': instance.amount,
-    };
+Map<String, dynamic> _$UPIToJson(UPI instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('upI_Id', instance.no);
+  writeNotNull('amount', instance.amount);
+  return val;
+}
 
 Coupon _$CouponFromJson(Map<String, dynamic> json) {
   return Coupon(
@@ -75,7 +111,16 @@ Coupon _$CouponFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CouponToJson(Coupon instance) => <String, dynamic>{
-      'coupon_Code': instance.no,
-      'amount': instance.amount,
-    };
+Map<String, dynamic> _$CouponToJson(Coupon instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('coupon_Code', instance.no);
+  writeNotNull('amount', instance.amount);
+  return val;
+}

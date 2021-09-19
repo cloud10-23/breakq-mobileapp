@@ -137,6 +137,7 @@ class FilledEditText extends StatefulWidget {
   final double fontSize;
   final Color textColor;
   final String hint;
+  final String initialValue;
   final int maxLine;
   final String error;
   final TextInputType inputTpe;
@@ -153,6 +154,7 @@ class FilledEditText extends StatefulWidget {
     this.isPassword = false,
     this.onchanged,
     @required this.hint,
+    this.initialValue,
     this.error,
     this.maxLine = 1,
     this.onSaved,
@@ -177,6 +179,7 @@ class FilledEditTextState extends State<FilledEditText> {
       margin: widget.padding,
       color: kWhite,
       child: TextFormField(
+        initialValue: widget.initialValue,
         autofillHints: widget.autoFillHints,
         autofocus: widget.isFirstField,
         onChanged: widget.onchanged,
@@ -200,7 +203,8 @@ class FilledEditTextState extends State<FilledEditText> {
           hintStyle: TextStyle(fontSize: 14),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),
-            borderSide: const BorderSide(color: kBlackAccent, width: 2.0),
+            borderSide:
+                BorderSide(color: Theme.of(context).dividerColor, width: 2.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4),

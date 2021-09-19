@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'payment.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Payment {
   @JsonKey(name: 'firebaseID')
   final String firebaseID;
@@ -18,7 +18,7 @@ class Payment {
   Map<String, dynamic> toJson() => _$PaymentToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Amount {
   double cash;
   Card card;
@@ -37,7 +37,7 @@ abstract class PaymentMode {
   double amount;
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Card implements PaymentMode {
   @override
   @JsonKey(name: 'card_No')
@@ -52,7 +52,7 @@ class Card implements PaymentMode {
   Map<String, dynamic> toJson() => _$CardToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class UPI implements PaymentMode {
   @JsonKey(name: 'upI_Id')
   String no;
@@ -65,7 +65,7 @@ class UPI implements PaymentMode {
   Map<String, dynamic> toJson() => _$UPIToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Coupon implements PaymentMode {
   @JsonKey(name: 'coupon_Code')
   String no;

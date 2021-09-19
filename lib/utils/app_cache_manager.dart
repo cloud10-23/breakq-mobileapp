@@ -9,7 +9,7 @@ class AppCacheManager {
     Config(
       key,
       stalePeriod: const Duration(days: 7),
-      maxNrOfCacheObjects: 20,
+      // maxNrOfCacheObjects: 20,
       repo: JsonCacheInfoRepository(databaseName: key),
       fileSystem: IOFileSystem(key),
       fileService: HttpFileService(),

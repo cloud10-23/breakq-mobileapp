@@ -60,7 +60,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                   return GestureDetector(
                     onTap: () {},
                     child: CachedNetworkImage(
-                      cacheManager: AppCacheManager.instance,
+                      // cacheManager: AppCacheManager.instance,
                       imageUrl: _photos[index].getImageURL(ImageSize.view),
                       imageBuilder:
                           (BuildContext context, ImageProvider imageProvider) =>
@@ -123,7 +123,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                       width: 70,
                       margin: const EdgeInsets.only(left: kPaddingM),
                       child: CachedNetworkImage(
-                        cacheManager: AppCacheManager.instance,
+                        // cacheManager: AppCacheManager.instance,
                         imageUrl: _photos[index].getImageURL(ImageSize.view),
                         imageBuilder: (BuildContext context,
                                 ImageProvider imageProvider) =>

@@ -1,10 +1,12 @@
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
+import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-void showPayment(BuildContext context, VoidCallback onTap) {
+void showPayment(BuildContext context, VoidCallback onTap, {allowCash = true}) {
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,
@@ -27,8 +29,17 @@ void showPayment(BuildContext context, VoidCallback onTap) {
                   children: List.generate(
                     4,
                     (index) => PaymentModeCard(index, () {
-                      onTap();
-                      Navigator.pop(context);
+                      if (!allowCash && index == 0) {
+                        /// Cash mode, just say to go to the counter
+                        Navigator.pop(context);
+                        UI.showMessage(context,
+                            title: "Cash Payment",
+                            buttonText: "OK",
+                            message: "Please pay cash at the counter");
+                      } else {
+                        onTap();
+                        Navigator.pop(context);
+                      }
                     }),
                   ),
                 ),

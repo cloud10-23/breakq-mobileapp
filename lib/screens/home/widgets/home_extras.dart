@@ -22,7 +22,7 @@ class GridImage extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.all(1.0),
         child: CachedNetworkImage(
-          cacheManager: AppCacheManager.instance,
+          // cacheManager: AppCacheManager.instance,
           imageUrl: image,
           progressIndicatorBuilder: (context, url, downloadProgress) => Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
+import 'package:breakq/screens/checkout/widgets/payment.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
@@ -109,11 +110,15 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
         return CheckoutTemplate(
           slivers: _listItems,
           controller: controller,
-          subTitle: 'Summary',
+          subTitle: 'Confirm and Pay',
           bottomBar: ChBottomBarWithButton(
             session: session,
             controller: controller,
-            buttonText: 'Confirm',
+            buttonText: 'Pay',
+            onTap: () => showPayment(
+                context,
+                () => BlocProvider.of<CheckoutBloc>(context)
+                    .add(NextPressedChEvent())),
           ),
         );
       },

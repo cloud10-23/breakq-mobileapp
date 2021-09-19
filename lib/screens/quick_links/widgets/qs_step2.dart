@@ -141,7 +141,7 @@ class _QSStep2State extends State<QSStep2> {
           title: Row(
             children: <Widget>[
               CachedNetworkImage(
-                cacheManager: AppCacheManager.instance,
+                // cacheManager: AppCacheManager.instance,
                 imageUrl: apiBaseFull + product.image,
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     Column(

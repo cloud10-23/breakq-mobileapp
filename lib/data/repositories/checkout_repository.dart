@@ -2,8 +2,10 @@ import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/data_provider.dart';
+import 'package:breakq/data/models/payment.dart';
 import 'package:breakq/data/models/timeslot_model.dart';
 import 'package:breakq/main.dart';
+import 'package:flutter/cupertino.dart';
 
 class CheckoutRepository {
   const CheckoutRepository({
@@ -32,7 +34,7 @@ class CheckoutRepository {
       apiStartTime: sTime,
       apiEndTime: eTime,
       apiCheckoutType: apiCheckoutTypes[type],
-      apiAddressID: addressID,
+      apiAddressID: (addressID != null) ? '$addressID' : null,
     });
 
     final String billNo = await dataProvider.getAsString(uri);
@@ -49,5 +51,19 @@ class CheckoutRepository {
     return _rawList
         .map((json) => TimeslotModel.fromJson(json as Map<String, dynamic>))
         .toList();
+  }
+
+  Future<bool> checkoutPay(
+      {@required String billNo, @required Amount amount}) async {
+    final Uri uri = Uri.http(apiBase, apiCheckoutPay);
+    final Payment payment = Payment(
+      amount: amount,
+      billNo: billNo,
+      firebaseID: getIt.get<AppGlobals>().user.uid,
+    );
+    print(payment.toJson());
+    final String _result =
+        await dataProvider.postByString(uri, payment.toJson());
+    return _result == 'true';
   }
 }

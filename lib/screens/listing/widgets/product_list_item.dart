@@ -85,7 +85,7 @@ class ProductListItem extends StatelessWidget {
                               alignment: Alignment.topRight,
                               children: [
                                 CachedNetworkImage(
-                                  cacheManager: AppCacheManager.instance,
+                                  // cacheManager: AppCacheManager.instance,
                                   imageUrl: apiBaseFull + product.image,
                                   progressIndicatorBuilder:
                                       (context, url, downloadProgress) =>
@@ -238,7 +238,7 @@ class ProductListItem extends StatelessWidget {
                     alignment: Alignment.topRight,
                     children: <Widget>[
                       CachedNetworkImage(
-                        cacheManager: AppCacheManager.instance,
+                        // cacheManager: AppCacheManager.instance,
                         imageUrl: apiBaseFull + product.image,
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) => Column(
@@ -357,7 +357,7 @@ class ProductListItem extends StatelessWidget {
                             Stack(
                               children: [
                                 CachedNetworkImage(
-                                  cacheManager: AppCacheManager.instance,
+                                  // cacheManager: AppCacheManager.instance,
                                   imageUrl: apiBaseFull + product.image,
                                   progressIndicatorBuilder:
                                       (context, url, downloadProgress) =>

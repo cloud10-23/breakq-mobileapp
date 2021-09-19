@@ -2,8 +2,8 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
-import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/my_order.dart';
+import 'package:breakq/screens/orders/widgets/error.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/price_details.dart';
@@ -25,6 +25,10 @@ class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _listItems = <Widget>[];
+
+    if (widget.order == null || widget.order.billNo == null) {
+      return OrderError();
+    }
 
     CheckoutType checkoutType =
         CheckoutTypes.fromAPItypeToEnum(widget.order.checkoutType);
