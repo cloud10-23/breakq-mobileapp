@@ -5,7 +5,7 @@ flutter build apk --split-per-abi
 
 VERSION=`cat version.txt`
 VERSION=$(($VERSION+1))
-APK=BreakQ_Client_v$VERSION.apk
+APK=BreakQ_Beta_v$VERSION.apk
 
 echo $VERSION > version.txt
 

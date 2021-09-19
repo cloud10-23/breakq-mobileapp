@@ -46,11 +46,11 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
 
   Stream<QSState> _mapLoadBillsEventToState(LoadBillsQSEvent event) async* {
     /// Load all the bills:
-    final List<Order> _orders = await MyOrderRepository().getSampleOrders();
+    final List<Order> _orders = await MyOrderRepository().getMyOrders();
 
     // BillsRepo.getBills();
 
-    if (_orders == null) {
+    if (_orders == null || _orders.length <= 0) {
       yield LoadFailureQSState();
     } else {
       yield SessionRefreshSuccessQSState(QSSessionModel(

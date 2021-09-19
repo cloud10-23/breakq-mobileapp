@@ -6,6 +6,7 @@ import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
+import 'package:breakq/widgets/no_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/data/models/product_session_model.dart';
@@ -85,6 +86,8 @@ class OfferListingState extends State<OfferListing> {
                         ProductListing(
                           products: session.products,
                         )
+                      else
+                        NoProducts(),
                     ]),
                   ),
                   SliverToBoxAdapter(

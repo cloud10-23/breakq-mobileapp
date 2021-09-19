@@ -146,7 +146,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     else {
       /// ERROR
       print("Error clearing cart!");
-      yield CartLoaded(recentlyScanned: recentlyScanned, cart: cart);
+      yield CartLoaded(
+          recentlyScanned: recentlyScanned,
+          cart: Cart(cartItems: Map<Product, int>()));
     }
   }
 }
