@@ -24,7 +24,7 @@ class PriceDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BoldTitle(
-              title: 'Price: ',
+              title: 'Total: ',
               padding: EdgeInsets.symmetric(horizontal: kPaddingM),
               color: Colors.black,
               fw: FontWeight.w600,
@@ -112,7 +112,7 @@ class PriceDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BoldTitle(
-              title: 'Total Amount:',
+              title: 'Net Amount:',
               fw: FontWeight.w800,
             ),
             CustomTitle(

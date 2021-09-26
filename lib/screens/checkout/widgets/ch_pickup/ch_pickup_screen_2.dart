@@ -2,6 +2,7 @@ import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/payment.dart';
+import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
@@ -26,7 +27,9 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
         final CheckoutSession session =
             (state as SessionRefreshSuccessChState).session;
 
-        if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
+        if (session.isPaying) {
+          return FullScreenIndicator();
+        } else if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
             //TODO: Handle this case
             bottomBar: ChBottomBar(session: session),

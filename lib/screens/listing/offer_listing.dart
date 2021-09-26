@@ -2,8 +2,10 @@ import 'package:breakq/blocs/product/offer_bloc.dart';
 import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/home_models.dart';
+import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
+import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/no_products.dart';
@@ -62,39 +64,64 @@ class OfferListingState extends State<OfferListing> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           body: SafeArea(
-            child: LoadingOverlay(
-              isLoading: session.isLoading,
-              child: CustomScrollView(
-                controller: _customScrollViewController,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    backgroundColor: kWhite,
-                    primary: true,
-                    title: Text(widget.offer.name ?? "Offers",
-                        style: Theme.of(context).textTheme.headline6.fs16.w600),
-                    leading: BackButtonCircle(),
-                    actions: [
-                      SearchIconButton(),
-                      VoiceIconButton(),
-                      CartIconButton(),
-                      SizedBox(width: 10.0),
+            child: CustomScrollView(
+              controller: _customScrollViewController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: kWhite,
+                  primary: true,
+                  title: Text(widget.offer.name ?? "Offers",
+                      style: Theme.of(context).textTheme.headline6.fs16.w600),
+                  leading: BackButtonCircle(),
+                  expandedHeight: kToolbarHeight + 35,
+                  snap: true,
+                  floating: true,
+                  flexibleSpace: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          Spacer(),
+                          SearchListToolbar(
+                            currentListType: session.currentListType,
+                            searchListTypes: session.searchListTypes,
+                            onListTypeChange: (ToolbarOptionModel
+                                    newListType) =>
+                                _offerBloc.add(
+                                    ListTypeChangedProductEvent(newListType)),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(color: kWhite, height: kToolbarHeight),
+                          Spacer(),
+                        ],
+                      ),
                     ],
                   ),
-                  SliverList(
-                    delegate: SliverChildListDelegate(<Widget>[
-                      if (session.products.isNotNullOrEmpty)
-                        ProductListing(
-                          products: session.products,
-                        )
-                      else
-                        NoProducts(),
-                    ]),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: 120.0),
-                  ),
-                ],
-              ),
+                  actions: [
+                    SearchIconButton(),
+                    VoiceIconButton(),
+                    CartIconButton(),
+                    SizedBox(width: 10.0),
+                  ],
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    if (!session.isLoading && session.products.isNullOrEmpty)
+                      NoProducts()
+                    else
+                      ProductListing(
+                        products: session.products,
+                        currentListType: session.currentListType,
+                        isLoading: session.isLoading,
+                      )
+                  ]),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 120.0),
+                ),
+              ],
             ),
           ),
         );

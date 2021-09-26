@@ -10,9 +10,9 @@ import 'package:breakq/widgets/modal_bottom_sheet_item.dart';
 class SearchListToolbar extends StatefulWidget {
   const SearchListToolbar({
     Key key,
-    @required this.searchSortTypes,
-    @required this.currentSort,
-    @required this.onSortChange,
+    this.searchSortTypes,
+    this.currentSort,
+    this.onSortChange,
     this.onFilterTap,
     @required this.searchListTypes,
     @required this.currentListType,
@@ -69,27 +69,29 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
             ),
             tooltip: L10n.of(context).searchTooltipView,
           ),
-          IconButton(
-            padding: const EdgeInsets.only(right: kPaddingM),
-            onPressed: widget.onFilterTap,
-            icon: const Icon(
-              Icons.filter_list,
-              // color: kWhite,
+          if (widget.onFilterTap != null)
+            IconButton(
+              padding: const EdgeInsets.only(right: kPaddingM),
+              onPressed: widget.onFilterTap,
+              icon: const Icon(
+                Icons.filter_list,
+                // color: kWhite,
+              ),
+              tooltip: L10n.of(context).searchTooltipFilters,
             ),
-            tooltip: L10n.of(context).searchTooltipFilters,
-          ),
           const Spacer(),
-          FilterButton(
-            label: widget.currentSort.label,
-            modalTitle: L10n.of(context).searchTitleSortOrder,
-            modalItems: widget.searchSortTypes,
-            selectedItem: ModalBottomSheetItem<ToolbarOptionModel>(
-              text: widget.currentSort.label,
-              value: widget.currentSort,
+          if (widget.searchSortTypes != null)
+            FilterButton(
+              label: widget.currentSort.label,
+              modalTitle: L10n.of(context).searchTitleSortOrder,
+              modalItems: widget.searchSortTypes,
+              selectedItem: ModalBottomSheetItem<ToolbarOptionModel>(
+                text: widget.currentSort.label,
+                value: widget.currentSort,
+              ),
+              onSelection: (ToolbarOptionModel sortModel) =>
+                  widget.onSortChange(sortModel),
             ),
-            onSelection: (ToolbarOptionModel sortModel) =>
-                widget.onSortChange(sortModel),
-          ),
         ],
       ),
     );

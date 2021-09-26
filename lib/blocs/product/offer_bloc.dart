@@ -1,6 +1,8 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/models/product_session_model.dart';
+import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
 
 class OfferBloc extends ProductBloc {
@@ -10,9 +12,24 @@ class OfferBloc extends ProductBloc {
   @override
   Stream<ProductState> mapInitSessionEventToState(
       SessionInitedProductEvent event) async* {
+    List<ToolbarOptionModel> searchSortTypes;
+    List<ToolbarOptionModel> searchListTypes;
+    searchSortTypes = sortTypes
+        .map((dynamic item) =>
+            ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
+        .toList();
+
+    searchListTypes = listTypes
+        .map((dynamic item) =>
+            ToolbarOptionModel.fromJson(item as Map<String, dynamic>))
+        .toList();
     yield RefreshSuccessProductState(
       ProductSessionModel(
         offer: event.offer,
+        searchSortTypes: searchSortTypes,
+        searchListTypes: searchListTypes,
+        currentSort: searchSortTypes.first, // default is the first one
+        currentListType: searchListTypes[1], // default is the first one
       ),
     );
     add(FilteredListRequestedProductEvent());

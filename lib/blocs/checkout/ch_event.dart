@@ -62,3 +62,5 @@ class AddressAddedChEvent extends CheckoutEvent {
 class GenerateBillChEvent extends CheckoutEvent {}
 
 class ClearCartChEvent extends CheckoutEvent {}
+
+class ClearAPIErrorChEvent extends CheckoutEvent {}

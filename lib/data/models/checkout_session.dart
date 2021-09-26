@@ -40,7 +40,7 @@ class CheckoutSession {
     this.isPaying = false,
     this.apiError = '',
     this.address,
-    this.selectedAddress,
+    this.selectedAddress = -1,
     this.timetables,
     this.selectedDateIndex = 0,
     this.selectedTimeIndex = -1,

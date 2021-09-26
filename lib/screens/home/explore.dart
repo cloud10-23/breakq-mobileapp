@@ -123,7 +123,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       scrollDirection: Axis.horizontal,
-                      itemCount: 6,
+                      itemCount: 5,
                       autoplay: true,
                       duration: 500,
                       autoplayDelay: 4000,

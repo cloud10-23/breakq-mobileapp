@@ -72,7 +72,20 @@ class _CheckoutScreenState extends State<CheckoutScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return BlocBuilder<CheckoutBloc, CheckoutState>(
+    return BlocConsumer<CheckoutBloc, CheckoutState>(
+      listenWhen: (previous, current) =>
+          current is SessionRefreshSuccessChState,
+      listener: (context, state) {
+        final session = (state as SessionRefreshSuccessChState).session;
+        if (session.apiError.isNotEmpty) {
+          UI.showErrorDialog(
+            context,
+            title: "Error!",
+            message: session.apiError,
+          );
+          BlocProvider.of<CheckoutBloc>(context).add(ClearAPIErrorChEvent());
+        }
+      },
       builder: (BuildContext context, CheckoutState state) {
         if (state is! SessionRefreshSuccessChState) {
           /// Show the full screen indicator until we return here.
@@ -96,8 +109,6 @@ class _CheckoutScreenState extends State<CheckoutScreen>
               return DeliveryCheckoutSuccessDialog(order: session.order);
               break;
           }
-        } else if (session.isPaying) {
-          return FullScreenIndicator();
         }
 
         return Scaffold(

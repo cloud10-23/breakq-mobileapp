@@ -55,6 +55,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
       yield* _mapGenerateBillChEventToState();
     } else if (event is ClearCartChEvent) {
       yield* _mapClearCartChEventToState(event);
+    } else if (event is ClearAPIErrorChEvent) {
+      yield* _mapClearAPIErrorEventToState(event);
     }
   }
 
@@ -161,7 +163,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           /// the counter scans the code
           yield SessionRefreshSuccessChState(session.rebuild(isPaying: true));
 
-          CheckoutSession newSession = session.rebuild(isPaying: false);
+          newSession = session.rebuild(isPaying: false);
           switch (session.currentStep.step) {
             case 0:
               // PAY was clicked
@@ -208,7 +210,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               yield SessionRefreshSuccessChState(
                   session.rebuild(isPaying: true));
 
-              CheckoutSession newSession = session.rebuild(isPaying: false);
+              newSession = session.rebuild(isPaying: false);
 
               final selectedDateRange = session.selectedDateIndex;
               final selectedTimeSlot = session.selectedTimeIndex;
@@ -244,22 +246,27 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
         case CheckoutType.delivery:
           switch (session.currentStep.step) {
             case 0:
-              add(LoadTimeSlots(type: CheckoutType.delivery));
-              Cart cartProducts = Cart(
-                cartValue:
-                    Price.addDelivery(session.cartProducts.cartValue, 10.0),
-                cartItems: session.cartProducts.cartItems,
-                noOfProducts: session.cartProducts.noOfProducts,
-              );
-              newSession = session.rebuild(
-                cartProducts: cartProducts,
-                currentStep: session.currentStep.rebuild(step: 1),
-              );
-              getIt
-                  .get<AppGlobals>()
-                  .globalKeyCheckoutNavigator
-                  .currentState
-                  .pushNamed(CheckoutNavigatorRoutes.delivery_2);
+              if (session.selectedAddress >= 0) {
+                add(LoadTimeSlots(type: CheckoutType.delivery));
+                Cart cartProducts = Cart(
+                  cartValue:
+                      Price.addDelivery(session.cartProducts.cartValue, 10.0),
+                  cartItems: session.cartProducts.cartItems,
+                  noOfProducts: session.cartProducts.noOfProducts,
+                );
+                newSession = session.rebuild(
+                  cartProducts: cartProducts,
+                  currentStep: session.currentStep.rebuild(step: 1),
+                );
+                getIt
+                    .get<AppGlobals>()
+                    .globalKeyCheckoutNavigator
+                    .currentState
+                    .pushNamed(CheckoutNavigatorRoutes.delivery_2);
+              } else {
+                newSession = session.rebuild(
+                    apiError: "Please add and select an address");
+              }
               break;
             case 1:
               newSession = session.rebuild(
@@ -283,7 +290,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               yield SessionRefreshSuccessChState(
                   session.rebuild(isPaying: true));
 
-              CheckoutSession newSession = session.rebuild(isPaying: false);
+              newSession = session.rebuild(isPaying: false);
               final selectedDateRange = session.selectedDateIndex;
               final selectedTimeSlot = session.selectedTimeIndex;
               final selectedDate = session.timetables[selectedDateRange];
@@ -442,6 +449,17 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   Stream<CheckoutState> _mapClearCartChEventToState(
       ClearCartChEvent event) async* {
     cartBloc.add(ResetCartEvent());
+  }
+
+  Stream<CheckoutState> _mapClearAPIErrorEventToState(
+      ClearAPIErrorChEvent event) async* {
+    if (state is SessionRefreshSuccessChState) {
+      final CheckoutSession session =
+          (state as SessionRefreshSuccessChState).session;
+
+      final CheckoutSession newSession = session.rebuild(apiError: '');
+      yield SessionRefreshSuccessChState(newSession);
+    }
   }
 
   Stream<CheckoutState> _mapGenerateBillChEventToState() async* {
