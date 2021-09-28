@@ -110,9 +110,6 @@ class HomeScreenState extends State<HomeScreen> {
                 //   ),
                 // )),
                 SliverToBoxAdapter(
-                  child: _showQuickStart(),
-                ),
-                SliverToBoxAdapter(
                   child: Container(
                     height: MediaQuery.of(context).size.width * 100 / 320,
                     child: Swiper(
@@ -192,6 +189,7 @@ class HomeScreenState extends State<HomeScreen> {
                 _endPadding(),
               ],
             ),
+            bottomNavBar: _showQuickStart(),
           );
         }
       } else if (state is RefreshFailureHomeState)
@@ -211,7 +209,7 @@ class HomeScreenState extends State<HomeScreen> {
     final double width =
         (MediaQuery.of(context).size.width - kPaddingL * 2) / 4;
     return Container(
-      color: kBlue,
+      color: kWhite,
       height: 70,
       padding: EdgeInsets.symmetric(vertical: kPaddingS, horizontal: kPaddingL),
       child: Row(

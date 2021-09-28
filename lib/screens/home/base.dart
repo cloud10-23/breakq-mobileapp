@@ -9,8 +9,9 @@ import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Base extends StatelessWidget {
-  Base({@required this.body, @required this.categoryTabs});
+  Base({@required this.body, @required this.categoryTabs, this.bottomNavBar});
   final Widget body;
+  final Widget bottomNavBar;
   final List<CategoryTabModel> categoryTabs;
 
   @override
@@ -56,6 +57,7 @@ class Base extends StatelessWidget {
         ),
         floatingActionButton: ScanFloatingButtonExtended(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        bottomNavigationBar: bottomNavBar,
       ),
     );
   }

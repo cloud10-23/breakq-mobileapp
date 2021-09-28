@@ -38,7 +38,7 @@ class QuickLinkButton extends StatelessWidget {
               flex: 8,
               child: Icon(
                 quickLinks[index]['icon'],
-                color: kWhite,
+                color: kBlue,
               ),
             ),
             Spacer(flex: 2),
@@ -46,7 +46,13 @@ class QuickLinkButton extends StatelessWidget {
               flex: 3,
               child: Text(
                 quickLinks[index]['name'],
-                style: Theme.of(context).textTheme.caption.w500.white.fs10,
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    .w500
+                    .white
+                    .fs10
+                    .primaryColor,
               ),
             ),
           ],

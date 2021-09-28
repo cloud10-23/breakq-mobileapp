@@ -153,7 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nameGuest" : MessageLookupByLibrary.simpleMessage("Guest"),
     "onboardingBtnGetStarted" : MessageLookupByLibrary.simpleMessage("Get Started"),
     "onboardingBtnSkip" : MessageLookupByLibrary.simpleMessage("Skip"),
-    "onboardingPage1Body" : MessageLookupByLibrary.simpleMessage("BreakQ is a more convinient way to shop now, with a simple concept of NO MORE QUEUES!"),
+    "onboardingPage1Body" : MessageLookupByLibrary.simpleMessage("BreakQ is a more convenient way to shop now, with a simple concept of NO MORE QUEUES!"),
     "onboardingPage1Title" : MessageLookupByLibrary.simpleMessage("Welcome to BreakQ"),
     "onboardingPage2Body" : MessageLookupByLibrary.simpleMessage("Just scan the barcodes in the store to add the items in your cart for a fast checkout"),
     "onboardingPage2Title" : MessageLookupByLibrary.simpleMessage("Scan Barcode"),

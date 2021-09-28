@@ -1058,10 +1058,10 @@ class L10n {
     );
   }
 
-  /// `BreakQ is a more convinient way to shop now, with a simple concept of NO MORE QUEUES!`
+  /// `BreakQ is a more convenient way to shop now, with a simple concept of NO MORE QUEUES!`
   String get onboardingPage1Body {
     return Intl.message(
-      'BreakQ is a more convinient way to shop now, with a simple concept of NO MORE QUEUES!',
+      'BreakQ is a more convenient way to shop now, with a simple concept of NO MORE QUEUES!',
       name: 'onboardingPage1Body',
       desc: '',
       args: [],
