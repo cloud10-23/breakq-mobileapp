@@ -36,9 +36,9 @@ dependencies:
   # A simple Service Locator.
   get_it: ^6.0.0
   # BLoC Design Pattern (Business Logic Component)
-  bloc: ^7.0.0
+  bloc: ^7.2.0
   # Widgets that make it easy to integrate blocs and cubits into Flutter.
-  flutter_bloc: ^7.0.0
+  flutter_bloc: ^7.3.0
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode.
   equatable: ^2.0.3
   # Dart implementation of sprintf.

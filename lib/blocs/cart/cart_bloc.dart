@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/blocs/budget/budget_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/repositories/cart_repository.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
+import 'package:breakq/main.dart';
+import 'package:breakq/utils/app_preferences.dart';
 import 'package:equatable/equatable.dart';
 
 part 'cart_event.dart';
@@ -17,7 +20,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final BudgetBloc budgetBloc;
   final AuthBloc authBloc;
   final CartRepository _cartRepo = CartRepository();
-  List<Product> recentlyScanned;
+  final List<Product> recentlyScanned = [], suggestedProducts = [];
   CartBloc({this.budgetBloc, this.authBloc}) : super(CartInitial());
 
   @override
@@ -38,12 +41,28 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield* _mapRemoveEventToState(event);
     } else if (event is ResetCartEvent) {
       yield* _mapResetCartEventToState(event);
+    } else if (event is RecentlyScannedEvent) {
+      yield* _mapRecentlyScannedCartEventToState(event);
     }
   }
 
   Stream<CartState> _mapInitCartEventToState(InitCartEvent event) async* {
-    recentlyScanned = await ProductsRepository().getExclusiveProduct();
+    final _productsRepo = ProductsRepository();
+    suggestedProducts
+      ..clear()
+      ..addAll(await _productsRepo.getExclusiveProduct());
+    final List<String> recSIds = await getIt
+        .get<AppPreferences>()
+        .getStringList(PreferenceKey.recentlyScanned);
+
+    if (recSIds != null) {
+      for (final id in recSIds) {
+        recentlyScanned
+            .addAll(await _productsRepo.getProducts(productCode: id));
+      }
+    }
     yield CartLoaded(
+        suggestedProducts: suggestedProducts,
         recentlyScanned: recentlyScanned,
         cart: Cart(cartItems: Map<Product, int>()));
   }
@@ -51,13 +70,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapInitCartFromAPIEventToState(
       InitCartFromAPIEvent event) async* {
     yield CartLoaded.rebuild(
+        suggestedProducts: suggestedProducts,
         recentlyScanned: recentlyScanned,
         cart: Cart.fromCartApi(await _cartRepo.getCart()));
   }
 
   Stream<CartState> _mapLoadCartEventToState(LoadCartEvent event) async* {
     /// Update the UI first
-    yield CartLoaded(recentlyScanned: recentlyScanned, cart: event.cartItems);
+    yield CartLoaded(
+        suggestedProducts: suggestedProducts,
+        recentlyScanned: recentlyScanned,
+        cart: event.cartItems);
 
     /// ======== UPDATE THE API HERE ======== ///
     for (final item in event.newCartItems.keys)
@@ -76,7 +99,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       budgetBloc.add(
           BudgetProductAddedEvent(cartValue: newCart.cartValue.finalAmount));
     }
-    yield CartLoaded(recentlyScanned: recentlyScanned, cart: newCart);
+    yield CartLoaded(
+        suggestedProducts: suggestedProducts,
+        recentlyScanned: recentlyScanned,
+        cart: newCart);
   }
 
   Stream<CartState> _mapAddEventToState(AddPToCartEvent event) async* {
@@ -141,14 +167,46 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     if (await _cartRepo.deleteCart())
       yield CartLoaded(
+          suggestedProducts: suggestedProducts,
           recentlyScanned: recentlyScanned,
           cart: Cart(cartItems: Map<Product, int>()));
     else {
       /// ERROR
       print("Error clearing cart!");
       yield CartLoaded(
+          suggestedProducts: suggestedProducts,
           recentlyScanned: recentlyScanned,
           cart: Cart(cartItems: Map<Product, int>()));
     }
+  }
+
+  Stream<CartState> _mapRecentlyScannedCartEventToState(
+      RecentlyScannedEvent event) async* {
+    Cart cart;
+    if (state is CartLoaded) cart = (state as CartLoaded).cart;
+    recentlyScanned.remove(event.product);
+    recentlyScanned.add(event.product);
+    final List<String> recentlyScannedIds =
+        await getIt.get<AppPreferences>().getStringList('recentlyScanned');
+
+    if (recentlyScannedIds == null) {
+      await getIt.get<AppPreferences>().setStringList(
+          PreferenceKey.recentlyScanned, [event.product.id.toString()]);
+    } else {
+      // This sets the maximum recently scanned items
+      if (recentlyScannedIds.length >= 20) recentlyScannedIds.removeAt(0);
+      recentlyScannedIds.remove(event.product.id.toString());
+      recentlyScannedIds.add(event.product.id.toString());
+      await getIt
+          .get<AppPreferences>()
+          .setStringList(PreferenceKey.recentlyScanned, recentlyScannedIds);
+    }
+
+    // Also store the product ids
+    yield CartLoaded(
+      suggestedProducts: suggestedProducts,
+      recentlyScanned: recentlyScanned,
+      cart: cart,
+    );
   }
 }

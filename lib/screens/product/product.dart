@@ -4,7 +4,6 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/list_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';

@@ -404,6 +404,7 @@ class PreferenceKey {
   static const String language = 'language';
   static const String notification = 'notification';
   static const String darkOption = 'darkOption';
+  static const String recentlyScanned = 'recentlyScanned';
 }
 
 enum CheckoutType { walkIn, pickUp, delivery }

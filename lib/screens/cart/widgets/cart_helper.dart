@@ -30,8 +30,8 @@ class CardTemplate extends StatelessWidget {
 }
 
 class CartEmptyScreen extends StatelessWidget {
-  CartEmptyScreen({this.products});
-  final List<Product> products;
+  CartEmptyScreen({this.suggestedProducts, this.recentlyScanned});
+  final List<Product> suggestedProducts, recentlyScanned;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +94,10 @@ class CartEmptyScreen extends StatelessWidget {
                   ),
                 ),
                 CartScannerOption(),
-                CartFooter(products: products),
+                CartFooter(
+                  suggestedProducts: suggestedProducts,
+                  recentlyScanned: recentlyScanned,
+                ),
                 EndPadding(),
               ],
             ),
@@ -106,15 +109,16 @@ class CartEmptyScreen extends StatelessWidget {
 }
 
 class CartFooter extends StatelessWidget {
-  CartFooter({this.products});
-  final List<Product> products;
+  CartFooter({this.suggestedProducts, this.recentlyScanned});
+  final List<Product> suggestedProducts, recentlyScanned;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // CartRecentlyScanned(products: products),
-        if (products?.isNotEmpty ?? false)
-          CartSuggestionsBuilder(products: products),
+        if (recentlyScanned?.isNotEmpty ?? false)
+          CartRecentlyScanned(products: recentlyScanned),
+        if (suggestedProducts?.isNotEmpty ?? false)
+          CartSuggestionsBuilder(products: suggestedProducts),
       ],
     );
   }

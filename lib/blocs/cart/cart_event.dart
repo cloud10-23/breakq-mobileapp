@@ -39,4 +39,9 @@ class RemovePFromCartEvent extends CartEvent {
   final Product product;
 }
 
+class RecentlyScannedEvent extends CartEvent {
+  RecentlyScannedEvent({this.product});
+  final Product product;
+}
+
 class ResetCartEvent extends CartEvent {}

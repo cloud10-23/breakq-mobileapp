@@ -40,7 +40,10 @@ class _CartPageState extends State<CartPage> {
           }
           if ((state as CartLoaded).cart.cartItems?.isEmpty ?? true) {
             return CartEmptyScreen(
-                products: (state as CartLoaded).recentlyScanned);
+              suggestedProducts: (state as CartLoaded).suggestedProducts,
+              recentlyScanned:
+                  (state as CartLoaded).recentlyScanned.reversed.toList(),
+            );
           }
 
           return Scaffold(
@@ -105,7 +108,12 @@ class _CartPageState extends State<CartPage> {
                       CartScannerOption(),
                       _cartItemsBuilder(context, state),
                       CartFooter(
-                          products: (state as CartLoaded).recentlyScanned),
+                          recentlyScanned: (state as CartLoaded)
+                              .recentlyScanned
+                              .reversed
+                              .toList(),
+                          suggestedProducts:
+                              (state as CartLoaded).suggestedProducts),
                       PriceDetails(price: (state as CartLoaded).cart.cartValue),
                       EndPadding(),
                     ],

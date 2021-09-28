@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/data_provider.dart';
@@ -165,7 +167,6 @@ class ProductsRepository {
     });
     final List<dynamic> _rawList = await dataProvider.get(uri);
 
-    /// 1. Populate all the sub categories
     return _rawList
         .map<Product>(
             (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
@@ -175,12 +176,12 @@ class ProductsRepository {
   Future<Product> getScanProduct({
     String productId,
   }) async {
+    // final Uri uri = Uri.http(apiBase, apiExclusiveProducts);
     final Uri uri = Uri.http(apiBase, apiProducts, {
-      apiProductQuery: productId,
+      apiBarCode: productId,
     });
     final List<dynamic> _rawList = await dataProvider.get(uri);
 
-    /// 1. Populate all the sub categories
     return _rawList
         .map<Product>(
             (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
