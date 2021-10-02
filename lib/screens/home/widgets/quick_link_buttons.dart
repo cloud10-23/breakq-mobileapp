@@ -28,7 +28,7 @@ class QuickLinkButton extends StatelessWidget {
         ).pushNamed(quickLinks[index]['link']);
       },
       child: Container(
-        constraints: BoxConstraints.tight(Size.fromWidth(width)),
+        constraints: BoxConstraints.tightFor(width: width),
         // margin: const EdgeInsets.only(
         //     top: 5.0, bottom: 5.0, right: 5.0), // for card shadow
         child: Column(
@@ -38,23 +38,14 @@ class QuickLinkButton extends StatelessWidget {
               flex: 8,
               child: Icon(
                 quickLinks[index]['icon'],
-                color: kBlue,
+                color: kBlack.withOpacity(0.8),
               ),
             ),
             Spacer(flex: 2),
-            Expanded(
-              flex: 3,
-              child: Text(
-                quickLinks[index]['name'],
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    .w500
-                    .white
-                    .fs10
-                    .primaryColor,
-              ),
-            ),
+            Text(quickLinks[index]['name'],
+                style: Theme.of(context).textTheme.bodyText1.w700.fs10,
+                overflow: TextOverflow.visible,
+                maxLines: 2),
           ],
         ),
       ),

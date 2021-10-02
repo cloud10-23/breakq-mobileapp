@@ -174,7 +174,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
                         no: '53464532',
                         amount: session.cartProducts.cartValue.finalAmount),
                   )))
-                add(PaymentDoneChEvent());
+                add(PaymentDoneChEvent(billNo: session.billNo));
               else
                 newSession =
                     session.rebuild(apiError: "Unable to process payment!");
@@ -231,7 +231,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
                         no: '53464532',
                         amount: session.cartProducts.cartValue.finalAmount),
                   ))) {
-                add(PaymentDoneChEvent());
+                add(PaymentDoneChEvent(billNo: session.billNo));
                 newSession = session.rebuild(
                   isLoading: false,
                   billNo: billNo,
@@ -310,9 +310,9 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
                   amount: Amount(
                     upi: UPI(
                         no: '53464532',
-                        amount: session.cartProducts.cartValue.finalAmount),
+                        amount: session.cartProducts.cartValue.totalAmount),
                   ))) {
-                add(PaymentDoneChEvent());
+                add(PaymentDoneChEvent(billNo: session.billNo));
                 newSession = session.rebuild(
                   billNo: billNo,
                 );

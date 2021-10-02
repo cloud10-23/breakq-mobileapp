@@ -21,7 +21,11 @@ class NextPressedChEvent extends CheckoutEvent {}
 
 class BackPressedChEvent extends CheckoutEvent {}
 
-class PaymentDoneChEvent extends CheckoutEvent {}
+class PaymentDoneChEvent extends CheckoutEvent {
+  PaymentDoneChEvent({@required this.billNo});
+
+  final String billNo;
+}
 
 class LoadTimeSlots extends CheckoutEvent {
   LoadTimeSlots({@required this.type});

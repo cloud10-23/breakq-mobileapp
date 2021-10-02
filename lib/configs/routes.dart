@@ -197,7 +197,7 @@ class Routes {
       case order_detail:
         return MaterialPageRoute<OrderDetails>(
           builder: (BuildContext context) => OrderDetails(
-            order: routeSettings.arguments,
+            order: (routeSettings.arguments as Order),
           ),
         );
       case need_help:
