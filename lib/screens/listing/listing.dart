@@ -6,8 +6,6 @@ import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/search_header.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
-import 'package:breakq/widgets/no_products.dart';
-import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +18,6 @@ import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/screens/listing/widgets/tabs.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
-import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/utils/list.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -85,6 +82,8 @@ class ListingState extends State<Listing> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
+                  brightness: Brightness.light,
+                  iconTheme: IconThemeData(color: kBlack),
                   primary: true,
                   title: Text(widget.category?.title ?? "Category Name",
                       style: Theme.of(context).textTheme.headline6.fs16.w600),

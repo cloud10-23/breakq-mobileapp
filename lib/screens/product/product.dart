@@ -94,11 +94,17 @@ class _ProductScreenState extends State<ProductScreen> {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    CustomTitle(title: widget.product.title),
-                    BoldTitle(
-                      title: widget.product.description ?? "",
-                      fw: FontWeight.w500,
+                    Text(
+                      widget.product.title,
+                      style: Theme.of(context).textTheme.headline6.number.w800,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
+                    // BoldTitle(
+                    //   title: widget.product.description ?? "",
+                    //   fw: FontWeight.w500,
+                    // ),
                     ListItem(
                       title: "Quantity: ",
                       trailing: Text(

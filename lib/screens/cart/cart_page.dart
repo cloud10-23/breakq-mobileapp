@@ -53,7 +53,6 @@ class _CartPageState extends State<CartPage> {
               slivers: [
                 SliverAppBar(
                   primary: true,
-                  backgroundColor: kWhite,
                   pinned: true,
                   leading: BackButtonCircle(),
                   actions: <Widget>[
@@ -76,11 +75,11 @@ class _CartPageState extends State<CartPage> {
                           children: [
                             Icon(
                               Icons.delete,
-                            ), // color: kWhite),
+                            ),
                             Text(
                               "CLEAR",
                               style: TextStyle(
-                                  // color: kWhite,
+                                  color: kWhite,
                                   fontSize: 10.0,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -94,7 +93,8 @@ class _CartPageState extends State<CartPage> {
                       CartIconPlane(),
                       Spacer(),
                       Text('My Cart',
-                          style: Theme.of(context).textTheme.bodyText1.fs16),
+                          style:
+                              Theme.of(context).textTheme.bodyText1.fs16.white),
                       Spacer(flex: 9),
                     ],
                   ),

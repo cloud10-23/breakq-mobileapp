@@ -9,11 +9,11 @@ part of 'product_model.dart';
 Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
     id: json['id'] as int,
-    title: json['title'] as String,
+    title: json['description'] as String,
     categoryId: json['category_Id'] as int,
     brandCode: json['brand_Code'] as String,
     categoryName: json['category_Name'] as String,
-    description: json['description'] as String,
+    description: json['title'] as String,
     image: json['image'] as String,
     salePrice: (json['sale_Price'] as num)?.toDouble(),
     maxPrice: (json['max_Price'] as num)?.toDouble(),

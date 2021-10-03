@@ -76,7 +76,7 @@ class CartIconPlane extends StatelessWidget {
     return Icon(
       FontAwesome.shopping_cart,
       size: 20.0,
-      color: kBlack,
+      color: kWhite,
     );
   }
 }

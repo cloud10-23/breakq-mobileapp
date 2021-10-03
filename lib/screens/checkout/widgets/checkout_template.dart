@@ -15,6 +15,7 @@ class CheckoutTemplate extends StatelessWidget {
     this.subTitle,
     this.showBackButton = true,
     this.controller,
+    this.checkoutType = CheckoutType.walkIn,
   });
 
   final String title;
@@ -23,9 +24,22 @@ class CheckoutTemplate extends StatelessWidget {
   final Widget bottomBar;
   final bool showBackButton;
   final ScrollController controller;
+  final CheckoutType checkoutType;
 
   @override
   Widget build(BuildContext context) {
+    String bgImage;
+    switch (checkoutType) {
+      case CheckoutType.walkIn:
+        bgImage = AssetImages.checkoutWalkinIllustration;
+        break;
+      case CheckoutType.pickUp:
+        bgImage = AssetImages.checkoutSelfPickupIllustration;
+        break;
+      case CheckoutType.delivery:
+        bgImage = AssetImages.checkoutDeliveryIllustration;
+        break;
+    }
     return Scaffold(
       body: CustomScrollView(
         controller: controller, //?? ScrollController(),
@@ -33,13 +47,14 @@ class CheckoutTemplate extends StatelessWidget {
               SliverAppBar(
                 pinned: true,
                 backgroundColor: kWhite,
+                brightness: Brightness.light,
+                iconTheme: IconThemeData(color: kBlack),
                 expandedHeight: 150,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Row(
                     children: [
                       Spacer(),
-                      Image(
-                          image: AssetImage(AssetImages.checkoutIllustration)),
+                      Image(image: AssetImage(bgImage)),
                     ],
                   ),
                   title: Column(

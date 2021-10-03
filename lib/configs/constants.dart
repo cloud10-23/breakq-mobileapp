@@ -212,8 +212,12 @@ class AssetImages {
       'assets/images/illustrations/home-illustration-2.jpg';
   static const String qsIllustration =
       'assets/images/illustrations/qs_illustration.svg';
-  static const String checkoutIllustration =
+  static const String checkoutWalkinIllustration =
       'assets/images/illustrations/checkout_3.jpg';
+  static const String checkoutSelfPickupIllustration =
+      'assets/images/illustrations/checkout_2.jpg';
+  static const String checkoutDeliveryIllustration =
+      'assets/images/illustrations/checkout_delivery.jpg';
   // 'assets/images/illustrations/checkout-illustration.png';
   static const String addressIllustration =
       'assets/images/illustrations/address_illustration.svg';

@@ -42,7 +42,7 @@ class AddEditAddressState extends State<AddEditAddress> {
               expandedHeight: 150,
               flexibleSpace: FlexibleSpaceBar(
                 title: Text('Add/ Edit Address',
-                    style: Theme.of(context).textTheme.bodyText1.fs14),
+                    style: Theme.of(context).textTheme.bodyText1.fs14.white),
                 background: Row(
                   children: [
                     Spacer(),

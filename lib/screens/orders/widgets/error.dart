@@ -10,9 +10,16 @@ class OrderError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details'),
+        title: Text(
+          'Order Details',
+          style: TextStyle(
+            color: kWhite,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
         leading: BackButtonCircle(),
-        backgroundColor: kWhite,
       ),
       body: ListView(
         children: [

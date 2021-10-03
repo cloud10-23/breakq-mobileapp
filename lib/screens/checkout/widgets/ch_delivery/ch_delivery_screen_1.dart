@@ -27,6 +27,7 @@ class _ChDeliveryState extends State<ChDelivery> {
 
         if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
+            checkoutType: CheckoutType.delivery,
             //TODO: Handle this case
             bottomBar: ChBottomBar(session: session),
             showBackButton: false,
@@ -91,6 +92,7 @@ class _ChDeliveryState extends State<ChDelivery> {
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         return CheckoutTemplate(
+          checkoutType: CheckoutType.delivery,
           slivers: _listItems,
           showBackButton: false,
           subTitle: (!session.isLoading)

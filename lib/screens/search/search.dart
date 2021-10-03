@@ -105,6 +105,8 @@ class _SearchBarState extends State<SearchBar> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
+                  brightness: Brightness.light,
+                  iconTheme: IconThemeData(color: kBlack),
                   titleSpacing: 0.0,
                   primary: true,
                   title: Row(

@@ -6,6 +6,7 @@ import 'package:breakq/screens/orders/widgets/order_item.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/shimmer_box.dart';
 import 'package:flutter/material.dart';
+import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyOrders extends StatelessWidget {
@@ -18,11 +19,9 @@ class MyOrders extends StatelessWidget {
               primary: true,
               appBar: AppBar(
                 primary: true,
-                backgroundColor: kWhite,
                 leading: BackButtonCircle(),
-                title: Text(
-                  'My Orders',
-                ),
+                title: Text('My Orders',
+                    style: Theme.of(context).textTheme.headline6.fs16.white),
                 actions: <Widget>[],
               ),
               body: ListView.builder(
@@ -43,12 +42,10 @@ class MyOrders extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 primary: true,
-                backgroundColor: kWhite,
                 pinned: true,
                 leading: BackButtonCircle(),
-                title: Text(
-                  'My Orders',
-                ),
+                title: Text('My Orders',
+                    style: Theme.of(context).textTheme.headline6.fs16.white),
                 actions: <Widget>[],
               ),
               SliverToBoxAdapter(

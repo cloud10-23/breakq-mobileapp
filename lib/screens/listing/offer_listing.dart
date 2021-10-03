@@ -69,6 +69,8 @@ class OfferListingState extends State<OfferListing> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
+                  brightness: Brightness.light,
+                  iconTheme: IconThemeData(color: kBlack),
                   primary: true,
                   title: Text(widget.offer.name ?? "Offers",
                       style: Theme.of(context).textTheme.headline6.fs16.w600),

@@ -171,7 +171,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(L10n.of(context).editProfileTitle),
+        title: Text(
+          L10n.of(context).editProfileTitle,
+          style: TextStyle(
+            color: kWhite,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Column(

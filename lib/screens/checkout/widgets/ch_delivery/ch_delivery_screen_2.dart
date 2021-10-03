@@ -28,6 +28,7 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
 
         if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
+            checkoutType: CheckoutType.delivery,
             //TODO: Handle this case
             bottomBar: ChBottomBar(session: session),
             slivers: [
@@ -95,6 +96,7 @@ class _ChDeliverySlotState extends State<ChDeliverySlot> {
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         return CheckoutTemplate(
+          checkoutType: CheckoutType.delivery,
           slivers: _listItems,
           subTitle: (!session.isLoading)
               ? 'Select time slot'

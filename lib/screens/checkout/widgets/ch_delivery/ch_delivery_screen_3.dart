@@ -1,4 +1,5 @@
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
+import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/payment.dart';
@@ -31,6 +32,7 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
           return FullScreenIndicator();
         } else if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
+            checkoutType: CheckoutType.delivery,
             //TODO: Handle this case
             bottomBar: ChBottomBar(session: session),
             slivers: [
@@ -111,6 +113,7 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
         ScrollController controller = ScrollController();
 
         return CheckoutTemplate(
+          checkoutType: CheckoutType.delivery,
           slivers: _listItems,
           controller: controller,
           subTitle: 'Confirm and Pay',

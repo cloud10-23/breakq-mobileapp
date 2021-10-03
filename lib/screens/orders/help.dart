@@ -11,7 +11,15 @@ class NeedHelp extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Need Help?"),
+          title: Text(
+            "Need Help?",
+            style: TextStyle(
+              color: kWhite,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal,
+            ),
+          ),
           leading: BackButtonCircle(),
         ),
         backgroundColor: kWhite,

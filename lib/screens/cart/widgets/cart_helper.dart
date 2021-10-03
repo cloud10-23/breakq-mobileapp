@@ -39,14 +39,13 @@ class CartEmptyScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             primary: true,
-            backgroundColor: kWhite,
             pinned: true,
             title: Row(
               children: [
                 CartIconPlane(),
                 Spacer(),
                 Text('My Cart',
-                    style: Theme.of(context).textTheme.bodyText1.fs16),
+                    style: Theme.of(context).textTheme.bodyText1.fs16.white),
                 Spacer(flex: 9),
               ],
             ),
@@ -63,6 +62,7 @@ class CartEmptyScreen extends StatelessWidget {
                   color: kWhite,
                   child: Column(
                     children: [
+                      SizedBox(height: 30),
                       Image(
                         image: AssetImage(AssetImages.cartEmpty),
                         height: 120,

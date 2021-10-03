@@ -37,8 +37,8 @@ class CategoryTabsState extends State<CategoryTabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: kBlue,
-      color: Theme.of(context).appBarTheme.color,
+      color: kWhite,
+      // color: Theme.of(context).appBarTheme.color,
       height: kToolbarHeight,
       child: ScrollablePositionedList.builder(
         padding: const EdgeInsets.symmetric(horizontal: kPaddingM),

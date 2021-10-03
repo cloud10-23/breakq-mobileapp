@@ -29,6 +29,7 @@ class _ChPickupState extends State<ChPickup> {
         if (session.cartProducts?.cartItems?.keys?.isEmpty ?? true) {
           return CheckoutTemplate(
             //TODO: Handle this case
+            checkoutType: CheckoutType.pickUp,
             bottomBar: ChBottomBar(session: session),
             showBackButton: false,
             slivers: [
@@ -47,6 +48,7 @@ class _ChPickupState extends State<ChPickup> {
 
         if (session.isLoading)
           return CheckoutTemplate(
+            checkoutType: CheckoutType.pickUp,
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
@@ -111,6 +113,7 @@ class _ChPickupState extends State<ChPickup> {
         _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         return CheckoutTemplate(
+          checkoutType: CheckoutType.pickUp,
           slivers: _listItems,
           subTitle: 'Select Time Slot',
           showBackButton: false,

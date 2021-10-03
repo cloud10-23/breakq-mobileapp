@@ -121,7 +121,7 @@ class ProductListItem extends StatelessWidget {
                                   top: kPaddingS,
                                   left: kPaddingS,
                                   right: kPaddingS),
-                              height: 20,
+                              height: 48,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -352,116 +352,126 @@ class ProductListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Row(
-                          children: [
-                            Stack(
-                              children: [
-                                CachedNetworkImage(
-                                  // cacheManager: AppCacheManager.instance,
-                                  imageUrl: apiBaseFull + product.image,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      CircularProgressIndicator(
-                                          value: downloadProgress.progress)
-                                    ],
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                    AssetImages.productPlaceholder,
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Stack(
+                                children: [
+                                  CachedNetworkImage(
+                                    // cacheManager: AppCacheManager.instance,
+                                    imageUrl: apiBaseFull + product.image,
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                            value: downloadProgress.progress)
+                                      ],
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      AssetImages.productPlaceholder,
+                                      width: 75,
+                                      height: 75,
+                                      fit: BoxFit.cover,
+                                    ),
                                     width: 75,
                                     height: 75,
                                     fit: BoxFit.cover,
                                   ),
-                                  width: 75,
-                                  height: 75,
-                                  fit: BoxFit.cover,
-                                ),
-                                if (qty > 0)
-                                  Positioned(
-                                    top: 5.0,
-                                    left: 5.0,
-                                    child: ResetCartButtonCircleIcon(
-                                        onProductDel: onProductDel),
-                                  ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: kPaddingS,
-                                  bottom: kPaddingS,
-                                  left: kPaddingS,
-                                  right: kPaddingS),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    product.title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption
-                                        .black
-                                        .fs12
-                                        .w600,
-                                  ),
-                                  const Padding(
-                                      padding: EdgeInsets.only(top: 2)),
-                                  Text(
-                                    sprintf('%s', <String>[product.quantity]),
-                                    maxLines: 1,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption
-                                        .copyWith(
-                                            color: Theme.of(context).hintColor),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: kPaddingS,
-                                        right: kPaddingS,
-                                        bottom: kPaddingS,
-                                        top: 2),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "₹ " +
-                                              product.maxPrice
-                                                  .toStringAsFixed(2),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2
-                                              .number
-                                              .bold,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Visibility(
-                                          visible: product.maxPrice !=
-                                              product.salePrice,
-                                          child: Text(
-                                            "₹ " +
-                                                product.salePrice
-                                                    .toStringAsFixed(2),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption
-                                                .w300
-                                                .number
-                                                .copyWith(
-                                                    decoration: TextDecoration
-                                                        .lineThrough),
-                                          ),
-                                        ),
-                                      ],
+                                  if (qty > 0)
+                                    Positioned(
+                                      top: 5.0,
+                                      left: 5.0,
+                                      child: ResetCartButtonCircleIcon(
+                                          onProductDel: onProductDel),
                                     ),
-                                  ),
                                 ],
                               ),
-                            ),
-                          ],
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: kPaddingS,
+                                      bottom: kPaddingS,
+                                      left: kPaddingS,
+                                      right: kPaddingS),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(
+                                        product.title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .black
+                                            .fs12
+                                            .w600,
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.only(top: 2)),
+                                      Text(
+                                        sprintf(
+                                            '%s', <String>[product.quantity]),
+                                        maxLines: 1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .hintColor),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: kPaddingS,
+                                            right: kPaddingS,
+                                            bottom: kPaddingS,
+                                            top: 2),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              "₹ " +
+                                                  product.maxPrice
+                                                      .toStringAsFixed(2),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2
+                                                  .number
+                                                  .bold,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Visibility(
+                                              visible: product.maxPrice !=
+                                                  product.salePrice,
+                                              child: Text(
+                                                "₹ " +
+                                                    product.salePrice
+                                                        .toStringAsFixed(2),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption
+                                                    .w300
+                                                    .number
+                                                    .copyWith(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         if (qty <= 0)
                           ListAddItemButton(onProductAdd: onProductAdd)

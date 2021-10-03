@@ -18,7 +18,10 @@ class Invoice extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          backgroundColor: kWhite,
           title: Text("Invoice"),
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(color: kBlack),
           leading: BackButtonCircle(),
         ),
         backgroundColor: kWhite,

@@ -106,9 +106,16 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details: #${widget.order.billNo}'),
+        title: Text(
+          'Order Details: #${widget.order.billNo}',
+          style: TextStyle(
+            color: kWhite,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.normal,
+          ),
+        ),
         leading: BackButtonCircle(),
-        backgroundColor: kWhite,
       ),
       body: CustomScrollView(
         slivers: _listItems,
