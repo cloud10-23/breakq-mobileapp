@@ -44,3 +44,9 @@ class PriceFilterProductEvent extends ProductEvent {
 
   final RangeValues range;
 }
+
+class FetchRelatedProducts extends ProductEvent {
+  FetchRelatedProducts({this.productCode});
+
+  final String productCode;
+}

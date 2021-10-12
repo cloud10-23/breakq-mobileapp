@@ -1,8 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
-import 'package:breakq/configs/app_globals.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
-import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -47,8 +46,7 @@ class BarcodeScanner {
               .add(RecentlyScannedEvent(product: _product));
 
         // Get the Product to display over here
-        getIt.get<AppGlobals>().onProductPressed(_product, context,
-            then: () => this.scan(context));
+        Navigator.of(context).pushNamed(Routes.product, arguments: _product);
       } catch (e) {
         if (!isDissmissed) Navigator.of(context).pop();
         showDialog(

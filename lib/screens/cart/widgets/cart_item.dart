@@ -2,6 +2,7 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_cache_manager.dart';
@@ -24,7 +25,8 @@ class CartListItem extends StatelessWidget {
       ),
       margin: EdgeInsets.zero,
       child: InkWell(
-        onTap: () => getIt.get<AppGlobals>().onProductPressed(product, context),
+        onTap: () =>
+            Navigator.of(context).pushNamed(Routes.product, arguments: product),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,

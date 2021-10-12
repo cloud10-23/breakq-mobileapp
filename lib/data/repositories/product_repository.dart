@@ -69,6 +69,18 @@ class ProductsRepository {
         .toList();
   }
 
+  Future<List<Product>> getRelatedProducts(String productCode) async {
+    final Uri uri =
+        Uri.http(apiBase, apiRelatedProducts, {apiProductCode: productCode});
+    final List<dynamic> _rawList = await dataProvider.get(uri);
+
+    /// 1. Populate all the sub categories
+    return _rawList
+        .map<Product>(
+            (dynamic json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
   // Future<List<CategoryTabModel>> getCategoryTabs() async {
   //   final Uri uri = Uri.http(apiBase, apiCategory);
 

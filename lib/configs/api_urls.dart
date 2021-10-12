@@ -20,6 +20,7 @@ const String apiCategory = '/api/Category';
 const String apiBrand = '/api/Brand';
 const String apiProducts = '/api/Products';
 const String apiExclusiveProducts = '/api/Products/ExclusiveProducts';
+const String apiRelatedProducts = '/api/Products/RelatedProducts';
 
 /// Cart APIs
 const String apiCartAddOrUpdate = '/api/Cart/AddOrUpdateCart';

@@ -83,21 +83,18 @@ class ListAddItemButton extends StatelessWidget {
       width: 120,
       padding: const EdgeInsets.only(right: kPaddingM),
       child: FlatButton(
-          color: kWhite,
+          color: kBlue,
           onPressed: onProductAdd,
           height: 30,
           shape: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12),
+              borderSide: BorderSide(color: kWhite),
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           child: Row(
             children: [
-              Icon(Icons.add, color: kBlackAccent),
+              Icon(Icons.add, color: kWhite),
               SizedBox(width: 10.0),
               Text('Add Item',
-                  style: Theme.of(context)
-                      .textTheme
-                      .caption
-                      .copyWith(color: kBlack)),
+                  style: Theme.of(context).textTheme.caption.white.w700),
             ],
           )),
     );

@@ -42,6 +42,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Stream<HomeState> _mapInitSessionHomeEventToState(
       SessionInitedHomeEvent event) async* {
+    final _recentlyScanned = <Product>[];
+    if (state is RefreshSuccessHomeState) {
+      _recentlyScanned.clear();
+      _recentlyScanned
+          .addAll((state as RefreshSuccessHomeState).session.recentlyScanned);
+    }
     yield RefreshSuccessHomeState(HomeSessionModel(isLoading: true));
 
     Map<homeSections, dynamic> _homeDetails =
@@ -61,7 +67,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           topOffers: _homeDetails[homeSections.topOffers],
           categoryTabs: _homeDetails[homeSections.categories],
           exclusiveProducts: _exclProducts,
-          recentlyScanned: [],
+          recentlyScanned: _recentlyScanned,
           isLoading: false,
         ),
       );

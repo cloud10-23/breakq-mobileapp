@@ -1,4 +1,5 @@
 import 'package:breakq/configs/app_globals.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/widgets/no_products.dart';
 import 'package:breakq/widgets/shimmer_box.dart';
@@ -73,8 +74,8 @@ class ProductListing extends StatelessWidget {
                 child: ProductListItem(
                   product: item,
                   viewType: _viewType,
-                  onProductPressed: () =>
-                      getIt.get<AppGlobals>().onProductPressed(item, context),
+                  onProductPressed: () => Navigator.of(context)
+                      .pushNamed(Routes.product, arguments: item),
                   onProductAdd: () =>
                       getIt.get<AppGlobals>().onProductAdd(item, context),
                   onProductRem: () =>
@@ -88,8 +89,8 @@ class ProductListing extends StatelessWidget {
               return ProductListItem(
                 product: item,
                 viewType: _viewType,
-                onProductPressed: () =>
-                    getIt.get<AppGlobals>().onProductPressed(item, context),
+                onProductPressed: () => Navigator.of(context)
+                    .pushNamed(Routes.product, arguments: item),
                 onProductAdd: () =>
                     getIt.get<AppGlobals>().onProductAdd(item, context),
                 onProductRem: () =>

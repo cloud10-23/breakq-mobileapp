@@ -1,5 +1,6 @@
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/branch.dart';
@@ -65,7 +66,7 @@ class ExclProductsCard extends StatelessWidget {
         onProductDel: () =>
             getIt.get<AppGlobals>().onProductDel(product, context),
         onProductPressed: () =>
-            getIt.get<AppGlobals>().onProductPressed(product, context),
+            Navigator.of(context).pushNamed(Routes.product, arguments: product),
       ),
     );
   }

@@ -8,6 +8,25 @@ class OfferTextGreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(kPaddingS * 1.5),
+      decoration: BoxDecoration(
+        color: kGreen,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Text(
+        "$offerPercent% OFF",
+        style: Theme.of(context).textTheme.caption.fs14.white.w800,
+      ),
+    );
+  }
+}
+
+class OfferTextGreenAlt extends StatelessWidget {
+  OfferTextGreenAlt(this.offerPercent);
+  final int offerPercent;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       padding: EdgeInsets.all(kPaddingS),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),

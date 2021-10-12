@@ -39,6 +39,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       yield* _mapSortOrderEventToState(event);
     } else if (event is PriceFilterProductEvent) {
       yield* _mapPriceFilterEventToState(event);
+    } else if (event is FetchRelatedProducts) {
+      yield* _mapFetchRelatedPEventToState(event);
     }
   }
 
@@ -219,5 +221,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
       add(FilteredListRequestedProductEvent());
     }
+  }
+
+  Stream<ProductState> _mapFetchRelatedPEventToState(
+      FetchRelatedProducts event) async* {
+    final products =
+        await _productRepository.getRelatedProducts(event.productCode);
+    yield RefreshSuccessProductState(ProductSessionModel(products: products));
   }
 }
