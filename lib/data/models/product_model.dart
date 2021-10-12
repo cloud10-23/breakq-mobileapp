@@ -24,7 +24,7 @@ class Product extends Equatable {
       _$ProductFromJson(json);
 
   final int id;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'title')
   final String title;
   @JsonKey(name: 'category_Id')
   final int categoryId;
@@ -33,7 +33,7 @@ class Product extends Equatable {
   @JsonKey(name: 'category_Name')
   final String categoryName;
   final String quantity;
-  @JsonKey(name: 'title')
+  @JsonKey(name: 'description')
   final String description;
   final String image;
   final double available;

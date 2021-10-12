@@ -47,6 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
           // final List<DealsModel> _topOffers = _session.topOffers;
           final List<CategoryTabModel> categoryTabs = _session.categoryTabs;
           final List<Product> _exclProducts = _session.exclusiveProducts;
+          final List<Product> _recentlyScanned = _session.recentlyScanned;
           return Base(
             categoryTabs: categoryTabs,
             body: CustomScrollView(
@@ -160,6 +161,24 @@ class HomeScreenState extends State<HomeScreen> {
                     //       _showHorizontalScrollImages(_topOffers),
                     //     ]),
                     // SizedBox(height: kPaddingBtwnStrips),
+                    if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
+                      HomeBoldHeading(
+                        title: "Recently Scanned",
+                        icon: Icon(
+                          MaterialCommunityIcons.barcode_scan,
+                        ),
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ProductsHorizontalView(products: _recentlyScanned),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
+                      SizedBox(height: kPaddingBtwnStrips),
                     HomeBoldHeading(
                       title: "Exclusive Products",
                       icon: Icon(

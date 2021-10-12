@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +16,16 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(InitialHomeState());
+  HomeBloc({this.cartBloc}) : super(InitialHomeState());
   final ProductsRepository _productRepository = ProductsRepository();
+  final CartBloc cartBloc;
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     if (event is SessionInitedHomeEvent) {
       yield* _mapInitSessionHomeEventToState(event);
+    } else if (event is UpdateRecentlyScannedHomeEvent) {
+      yield* _mapUpdateRSHomeEventToState(event);
     }
   }
 
@@ -56,8 +61,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           topOffers: _homeDetails[homeSections.topOffers],
           categoryTabs: _homeDetails[homeSections.categories],
           exclusiveProducts: _exclProducts,
+          recentlyScanned: [],
           isLoading: false,
         ),
       );
+  }
+
+  Stream<HomeState> _mapUpdateRSHomeEventToState(
+      UpdateRecentlyScannedHomeEvent event) async* {
+    if (state is RefreshSuccessHomeState) {
+      yield RefreshSuccessHomeState((state as RefreshSuccessHomeState)
+          .session
+          .rebuild(recentlyScanned: event.recentlyScanned));
+    }
   }
 }

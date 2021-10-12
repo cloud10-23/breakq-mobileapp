@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/blocs/budget/budget_bloc.dart';
+import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/cart_model.dart';
@@ -18,10 +19,10 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final BudgetBloc budgetBloc;
-  final AuthBloc authBloc;
+  final HomeBloc homeBloc;
   final CartRepository _cartRepo = CartRepository();
   final List<Product> recentlyScanned = [], suggestedProducts = [];
-  CartBloc({this.budgetBloc, this.authBloc}) : super(CartInitial());
+  CartBloc({this.budgetBloc, this.homeBloc}) : super(CartInitial());
 
   @override
   Stream<CartState> mapEventToState(CartEvent event) async* {
@@ -61,6 +62,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             .addAll(await _productsRepo.getProducts(productCode: id));
       }
     }
+
+    homeBloc
+        .add(UpdateRecentlyScannedHomeEvent(recentlyScanned: recentlyScanned));
     yield CartLoaded(
         suggestedProducts: suggestedProducts,
         recentlyScanned: recentlyScanned,
@@ -201,6 +205,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .get<AppPreferences>()
           .setStringList(PreferenceKey.recentlyScanned, recentlyScannedIds);
     }
+
+    homeBloc
+        .add(UpdateRecentlyScannedHomeEvent(recentlyScanned: recentlyScanned));
 
     // Also store the product ids
     yield CartLoaded(

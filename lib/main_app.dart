@@ -63,7 +63,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
     _languageBloc = LanguageBloc();
     _themeBloc = ThemeBloc();
     _budgetBloc = BudgetBloc();
-    _cartBloc = CartBloc(budgetBloc: _budgetBloc)..add(InitCartEvent());
+    _cartBloc = CartBloc(
+      budgetBloc: _budgetBloc,
+      homeBloc: _homeBloc,
+    )..add(InitCartEvent());
     _authBloc = AuthBloc(
       userRepository: UserRepository(),
       cartBloc: _cartBloc,

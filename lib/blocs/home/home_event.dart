@@ -7,3 +7,8 @@ abstract class HomeEvent {
 }
 
 class SessionInitedHomeEvent extends HomeEvent {}
+
+class UpdateRecentlyScannedHomeEvent extends HomeEvent {
+  UpdateRecentlyScannedHomeEvent({this.recentlyScanned});
+  final List<Product> recentlyScanned;
+}

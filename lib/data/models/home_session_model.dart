@@ -8,6 +8,7 @@ class HomeSessionModel {
     this.topOffers,
     this.categoryTabs,
     this.exclusiveProducts,
+    this.recentlyScanned,
     this.isLoading,
   });
 
@@ -16,6 +17,7 @@ class HomeSessionModel {
     List<DealsModel> topOffers,
     List<CategoryTabModel> categoryTabs,
     List<Product> exclusiveProducts,
+    List<Product> recentlyScanned,
     bool isLoading,
   }) {
     return HomeSessionModel(
@@ -23,6 +25,7 @@ class HomeSessionModel {
       topDeals: topDeals ?? this.topDeals,
       topOffers: topOffers ?? this.topOffers,
       exclusiveProducts: exclusiveProducts ?? this.exclusiveProducts,
+      recentlyScanned: recentlyScanned ?? this.recentlyScanned,
       isLoading: isLoading ?? this.isLoading,
     );
   }
@@ -31,5 +34,6 @@ class HomeSessionModel {
   final List<DealsModel> topOffers;
   final List<CategoryTabModel> categoryTabs;
   final List<Product> exclusiveProducts;
+  final List<Product> recentlyScanned;
   final bool isLoading;
 }
