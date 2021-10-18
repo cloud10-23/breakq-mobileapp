@@ -4,7 +4,6 @@ import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
-import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/data/repositories/order_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -29,6 +28,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield* _mapInitSessionHomeEventToState(event);
     } else if (event is UpdateRecentlyScannedHomeEvent) {
       yield* _mapUpdateRSHomeEventToState(event);
+    } else if (event is BranchSelectedHomeEvent) {
+      yield* _mapBranchChangedEventToState(event);
     }
   }
 
@@ -91,12 +92,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Stream<HomeState> _mapUpdateRecentlyOrderedEventToState(
-      UpdateRecentlyScannedHomeEvent event) async* {
+  Stream<HomeState> _mapBranchChangedEventToState(
+      BranchSelectedHomeEvent event) async* {
     if (state is RefreshSuccessHomeState) {
-      yield RefreshSuccessHomeState((state as RefreshSuccessHomeState)
-          .session
-          .rebuild(recentlyScanned: event.recentlyScanned));
+      final session = (state as RefreshSuccessHomeState).session;
+      yield RefreshSuccessHomeState(session.rebuild(isLoading: true));
+      yield RefreshSuccessHomeState(session);
     }
   }
 }

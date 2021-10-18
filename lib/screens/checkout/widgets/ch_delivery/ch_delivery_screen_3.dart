@@ -87,6 +87,9 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
           isReadOnly: true,
         )));
 
+        _listItems.add(SliverToBoxAdapter(
+          child: BranchModule(),
+        ));
         // _listItems.add(SliverToBoxAdapter(
         //     child: DisplaySelectedAddress(
         //         address: session.address[session.selectedAddress ?? 0])));

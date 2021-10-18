@@ -82,6 +82,10 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
           isReadOnly: true,
         )));
 
+        _listItems.add(SliverToBoxAdapter(
+          child: BranchModule(),
+        ));
+
         final date = session.timetables[session.selectedDateIndex];
         _listItems.add(SliverToBoxAdapter(
             child: DisplaySelectedTimeSlot(

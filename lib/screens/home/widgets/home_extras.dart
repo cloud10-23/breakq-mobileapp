@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
@@ -5,7 +7,6 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/listing/widgets/product_list_item.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -104,29 +105,45 @@ class NotificationBell extends StatelessWidget {
 }
 
 class SelectBranchIcon extends StatelessWidget {
+  void _onPressed(context) {
+    // Open Branch Chooser
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      isDismissible: true,
+      builder: (context) => BranchSelectorBottomSheet(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final selectedStore = getIt.get<AppGlobals>().selectedStore?.branchName;
+    if (selectedStore != null && selectedStore.isNotEmpty) {
+      return TextButton.icon(
+        style: TextButton.styleFrom(
+          primary: kWhite,
+          textStyle: Theme.of(context).textTheme.caption,
+        ),
+        icon: Icon(
+          Entypo.location_pin,
+          size: 20.0,
+        ),
+        label: Text(selectedStore),
+        onPressed: () => _onPressed(context),
+      );
+    }
     return IconButton(
       icon: Icon(
         Entypo.location_pin,
         size: 20.0,
       ),
-      onPressed: () {
-        // Open Branch Chooser
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          useRootNavigator: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0)),
-          ),
-          clipBehavior: Clip.antiAlias,
-          isDismissible: true,
-          builder: (context) => BranchSelectorBottomSheet(),
-        );
-      },
+      onPressed: () => _onPressed(context),
     );
   }
 }

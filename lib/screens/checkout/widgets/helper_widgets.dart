@@ -10,6 +10,7 @@ import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -129,6 +130,36 @@ class CheckoutTypeSelector extends StatelessWidget {
               },
             )),
       ),
+    );
+  }
+}
+
+class BranchModule extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final store = getIt.get<AppGlobals>().selectedStore;
+    return CartHeading(
+      title: 'Branch',
+      children: [
+        ListTile(
+          leading: Icon(
+            FontAwesome5Solid.store,
+            size: 18.0,
+            color: kBlack,
+          ),
+          minVerticalPadding: 10.0,
+          title: Text(store.branchName,
+              style: Theme.of(context).textTheme.bodyText1.w700),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: kPaddingS),
+            child: Text(
+                "${store.branchName}, " + //${store[index].branchStore}, " +
+                    "${store.city}, ${store.state}," +
+                    " ${store.country}, ${store.pinCode}",
+                style: Theme.of(context).textTheme.caption.w600),
+          ),
+        ),
+      ],
     );
   }
 }

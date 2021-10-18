@@ -1,17 +1,21 @@
 import 'package:breakq/blocs/home/home_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
 import 'package:breakq/data/models/product_model.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/home/base.dart';
+import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
 import 'package:breakq/screens/home/widgets/errorPage.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
 import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
+import 'package:breakq/screens/splash.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
@@ -40,6 +44,9 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
         builder: (context, HomeState state) {
+      if (getIt.get<AppGlobals>().selectedStore?.branchName == null)
+        return BranchSelectorScreen();
+
       if (state is RefreshSuccessHomeState) {
         if (!(state?.session?.isLoading ?? true)) {
           HomeSessionModel _session = state.session;
@@ -70,8 +77,12 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           "BreakQ",
-                          style:
-                              Theme.of(context).textTheme.headline6.w700.white,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .fs16
+                              .w700
+                              .white,
                         ),
                         Spacer(),
                       ],
@@ -236,11 +247,7 @@ class HomeScreenState extends State<HomeScreen> {
           tryAgain: () =>
               BlocProvider.of<HomeBloc>(context).add(SessionInitedHomeEvent()),
         );
-
-      return FullScreenIndicator(
-        color: Theme.of(context).cardColor,
-        backgroundColor: Theme.of(context).cardColor,
-      );
+      return SplashScreen(isPrimary: false);
     });
   }
 

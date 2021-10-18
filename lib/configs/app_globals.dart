@@ -4,6 +4,7 @@ import 'package:breakq/screens/cart/cart_page.dart';
 import 'package:breakq/screens/home/widgets/set_budget.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/search/voice_search.dart';
+import 'package:breakq/data/models/stores.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -32,14 +33,8 @@ class AppGlobals {
   /// [GlobalKey] for our [HomeScreen].
   GlobalKey globalKeyHomeScreen;
 
-  /// [GlobalKey] for our [SearchScreen].
-  GlobalKey globalKeySearchScreen;
-
   /// [GlobalKey] for tab bar in [SearchScreen].
   GlobalKey globalKeySearchTabs;
-
-  /// [GlobalKey] for tab bar in [CustomNavigator].
-  // GlobalKey<NavigatorState> globalKeyCustomNavigator;
 
   /// [GlobalKey] for checkout screen in [CheckoutNavigator].
   GlobalKey<NavigatorState> globalKeyCheckoutNavigator;
@@ -61,6 +56,12 @@ class AppGlobals {
 
   /// Is user onbaorded or this is their first run?
   bool isUserOnboarded;
+
+  /// List of all the stores
+  List<Store> stores;
+
+  /// Is user onbaorded or this is their first run?
+  Store selectedStore;
 
   /// Is speech recognition available on the device?
   bool hasSpeech = false;

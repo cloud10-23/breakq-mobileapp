@@ -1,7 +1,6 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';

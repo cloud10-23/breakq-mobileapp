@@ -12,3 +12,5 @@ class UpdateRecentlyScannedHomeEvent extends HomeEvent {
   UpdateRecentlyScannedHomeEvent({this.recentlyScanned});
   final List<Product> recentlyScanned;
 }
+
+class BranchSelectedHomeEvent extends HomeEvent {}

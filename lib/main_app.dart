@@ -50,8 +50,6 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         GlobalKey(debugLabel: 'bottom_bar');
     getIt.get<AppGlobals>().globalKeyHomeScreen =
         GlobalKey(debugLabel: 'home_screen');
-    getIt.get<AppGlobals>().globalKeySearchScreen =
-        GlobalKey(debugLabel: 'search_screen');
     _initBlocs();
 
     super.initState();
@@ -121,7 +119,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
         BlocProvider<QSBloc>(create: (BuildContext context) => _qsBloc),
         BlocProvider<BudgetBloc>(create: (BuildContext context) => _budgetBloc),
       ],
-      child: BlocBuilder<ApplicationBloc, ApplicationState>(
+      child: BlocConsumer<ApplicationBloc, ApplicationState>(
+        listenWhen: (previous, current) =>
+            current is SetupSuccessApplicationState,
+        listener: (context, state) => _homeBloc.add(SessionInitedHomeEvent()),
         buildWhen:
             (ApplicationState previousState, ApplicationState currentState) =>
                 (currentState is LifecycleChangeInProgressApplicationState &&
@@ -131,7 +132,6 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           if (appState is SetupSuccessApplicationState) {
-            _homeBloc.add(SessionInitedHomeEvent());
             homeWidget = HomeScreen();
           } else if (appState is OnboardingInProgressApplicationState) {
             homeWidget = const OnboardingScreen();

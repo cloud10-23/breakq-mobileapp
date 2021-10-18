@@ -40,6 +40,7 @@ const String apiMyOrders = '/api/Order/MyOrders';
 /// Address APIs
 const String apiPostAddress = '/api/Address/AddOrUpdateAddress';
 const String apiGetAddress = '/api/Address/GetAddress';
+const String apiGetStores = '/api/Address/GetStores';
 
 /// Query Parameters
 const String apiCategoryQuery = 'categoryCode';

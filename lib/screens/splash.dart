@@ -6,7 +6,8 @@ import 'package:breakq/widgets/full_screen_indicator.dart';
 
 /// Splash screen shown while the app is loading.
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key key, this.isPrimary = true}) : super(key: key);
+  final bool isPrimary;
 
   @override
   _SplashScreenState createState() {
@@ -18,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ApplicationBloc>(context).add(SetupApplicationEvent());
+    if (widget.isPrimary)
+      BlocProvider.of<ApplicationBloc>(context).add(SetupApplicationEvent());
   }
 
   @override
@@ -27,27 +29,34 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: kWhite,
       body: LayoutBuilder(
         builder: (context, constraints) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Spacer(flex: 3),
-            Image.asset(
-              AssetImages.bq_icon_text,
-              width: constraints.maxWidth * 0.8,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  AssetImages.bq_icon_text,
+                  width: constraints.maxWidth * 0.5,
+                  fit: BoxFit.fitWidth,
+                ),
+              ],
             ),
             Spacer(flex: 2),
-            SizedBox(
-              width: 48,
-              height: 48,
-              child: CircularProgressIndicator(
-                // color: kWhite,
-                strokeWidth: 4,
-                // backgroundColor: kBlue,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  // color: kWhite,
+                  strokeWidth: 4,
+                  // backgroundColor: kBlue,
+                ),
+              ],
             ),
             Spacer(),
           ],
         ),
       ),
     );
-    return const FullScreenIndicator();
   }
 }

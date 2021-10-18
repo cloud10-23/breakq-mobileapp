@@ -1,3 +1,4 @@
+import 'package:breakq/data/repositories/store_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -158,6 +159,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     // } catch (e) {
     //   Console.log('Location ERROR', e.toString(), error: e);
     // }
+    getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
 
     // Setup is completed. On the main screen.
     yield SetupSuccessApplicationState();
