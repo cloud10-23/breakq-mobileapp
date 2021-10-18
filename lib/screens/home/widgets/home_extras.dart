@@ -72,6 +72,25 @@ class ExclProductsCard extends StatelessWidget {
   }
 }
 
+class RelatedProductsCard extends StatelessWidget {
+  RelatedProductsCard({@required this.product});
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      padding: EdgeInsets.symmetric(horizontal: 2.0),
+      child: ProductListItem(
+        viewType: ProductListItemViewType.block,
+        product: product,
+        onProductPressed: () =>
+            Navigator.of(context).pushNamed(Routes.product, arguments: product),
+      ),
+    );
+  }
+}
+
 class NotificationBell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

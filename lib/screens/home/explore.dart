@@ -48,6 +48,7 @@ class HomeScreenState extends State<HomeScreen> {
           final List<CategoryTabModel> categoryTabs = _session.categoryTabs;
           final List<Product> _exclProducts = _session.exclusiveProducts;
           final List<Product> _recentlyScanned = _session.recentlyScanned;
+          final List<Product> _recentlyOrdered = _session.recentlyOrdered;
           return Base(
             categoryTabs: categoryTabs,
             body: CustomScrollView(
@@ -203,6 +204,25 @@ class HomeScreenState extends State<HomeScreen> {
                         children: [
                           _showCategories(categoryTabs),
                         ]),
+                    SizedBox(height: kPaddingBtwnStrips),
+                    if (_recentlyOrdered != null && _recentlyOrdered.isNotEmpty)
+                      HomeBoldHeading(
+                        title: "Recently Ordered",
+                        icon: Icon(
+                          MaterialCommunityIcons.timelapse,
+                          color: kWhite,
+                        ),
+                        isBlue: true,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ProductsHorizontalView(products: _recentlyOrdered),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                   ]),
                 ),
                 _endPadding(),

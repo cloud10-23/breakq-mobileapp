@@ -146,7 +146,7 @@ class ProductListItem extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   left: kPaddingS, right: kPaddingS, top: 2),
                               child: Text(
-                                product.quantity,
+                                product.quantity ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
@@ -213,11 +213,11 @@ class ProductListItem extends StatelessWidget {
         return Card(
           elevation: 1,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+            borderRadius: BorderRadius.circular(1.0),
           ),
-          margin: EdgeInsets.zero,
+          margin: EdgeInsets.all(1.0),
           child: Container(
-            height: 290,
+            height: 180,
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius:
@@ -228,47 +228,30 @@ class ProductListItem extends StatelessWidget {
               // ),
             ),
             child: InkWell(
-              onTap: () {
-                // _showLocationScreen(context);
-              },
+              onTap: onProductPressed ?? () {},
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: <Widget>[
-                      CachedNetworkImage(
-                        // cacheManager: AppCacheManager.instance,
-                        imageUrl: apiBaseFull + product.image,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                                value: downloadProgress.progress)
-                          ],
-                        ),
-                        errorWidget: (context, url, error) => Image.asset(
-                          AssetImages.productPlaceholder,
-                          height: viewType == ProductListItemViewType.map
-                              ? 160
-                              : 200,
-                          fit: BoxFit.cover,
-                        ),
-                        height:
-                            viewType == ProductListItemViewType.map ? 160 : 200,
-                        fit: BoxFit.cover,
-                      ),
-                      if (showFavoriteButton)
-                        IconButton(
-                          icon: Icon(isFavorited
-                              ? Icons.favorite
-                              : Icons.favorite_border),
-                          color: kPrimaryColor,
-                          onPressed: onFavoriteButtonPressed ?? () {},
-                        ),
-                    ],
+                  CachedNetworkImage(
+                    // cacheManager: AppCacheManager.instance,
+                    imageUrl: apiBaseFull + product.image,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                            value: downloadProgress.progress)
+                      ],
+                    ),
+                    errorWidget: (context, url, error) => Image.asset(
+                      AssetImages.productPlaceholder,
+                      // height:
+                      //     viewType == ProductListItemViewType.map ? 160 : 200,
+                      fit: BoxFit.contain,
+                    ),
+                    // height: viewType == ProductListItemViewType.map ? 160 : 200,
+                    fit: BoxFit.contain,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -278,47 +261,9 @@ class ProductListItem extends StatelessWidget {
                         bottom: kPaddingS / 2),
                     child: Text(
                       product.title,
-                      style: Theme.of(context).textTheme.subtitle1.fs18.w600,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: kPaddingS,
-                        right: kPaddingS,
-                        bottom: kPaddingS / 2),
-                    child: Text(
-                      sprintf('%s', <String>[product.quantity]),
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                          .copyWith(color: Theme.of(context).hintColor),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: kPaddingS,
-                        right: kPaddingS,
-                        bottom: kPaddingS,
-                        top: 2),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "₹ " + product.maxPrice.toString(),
-                          style: Theme.of(context).textTheme.bodyText2.bold,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "₹ " + product.salePrice.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .w300
-                              .copyWith(decoration: TextDecoration.lineThrough),
-                        ),
-                      ],
+                      maxLines: 2,
+                      style:
+                          Theme.of(context).textTheme.caption.black.fs12.w600,
                     ),
                   ),
                 ],

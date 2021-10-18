@@ -7,7 +7,6 @@ import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
 import 'package:breakq/widgets/back_button.dart';
-import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:breakq/widgets/list_item.dart';
@@ -58,6 +57,10 @@ class _ProductScreenState extends State<ProductScreen> {
             return Scaffold(
               backgroundColor: Theme.of(context).cardColor,
               appBar: AppBar(
+                title: Text(
+                  widget.product.title ?? "Product Details",
+                  style: TextStyle(color: kWhite),
+                ),
                 leading: BackButtonCircle(),
                 actions: [
                   CartIconButton(),
@@ -65,83 +68,122 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
               body: ListView(
                 children: [
-                  CachedNetworkImage(
-                    // cacheManager: AppCacheManager.instance,
-                    height: 250,
-                    imageUrl: apiBaseFull + widget.product.image,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(
-                            value: downloadProgress.progress)
-                      ],
-                    ),
-                    errorWidget: (context, url, error) => Image.asset(
-                      AssetImages.productPlaceholder,
-                      fit: BoxFit.cover,
-                      height: 250,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(height: 40.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.product.title,
-                        style:
-                            Theme.of(context).textTheme.headline6.number.w800,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
+                  Card(
+                    margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
+                    elevation: 2.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(kPaddingL),
+                      child: Column(
+                        children: [
+                          CachedNetworkImage(
+                            // cacheManager: AppCacheManager.instance,
+                            height: 200,
+                            imageUrl: apiBaseFull + widget.product.image,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress)
+                              ],
+                            ),
+                            errorWidget: (context, url, error) => Image.asset(
+                              AssetImages.productPlaceholder,
+                              fit: BoxFit.contain,
+                              height: 200,
+                            ),
+                            fit: BoxFit.contain,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.product.title,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .number
+                                    .w800,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(width: 20),
+                              OfferTextGreen(20),
+                            ],
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 20),
-                      OfferTextGreen(20),
-                    ],
+                    ),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 5),
                   // BoldTitle(
                   //   title: widget.product.description ?? "",
                   //   fw: FontWeight.w500,
                   // ),
-                  ListItem(
-                    title: "Quantity: ",
-                    trailing: Text(
-                      sprintf('%s', <String>[widget.product.quantity]),
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(color: Theme.of(context).hintColor),
+                  Card(
+                    margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
+                    elevation: 2.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(kPaddingL),
+                      child: Column(
+                        children: [
+                          ListItem(
+                            title: "Quantity: ",
+                            trailing: Padding(
+                              padding: const EdgeInsets.only(right: kPaddingL),
+                              child: Text(
+                                sprintf(
+                                    '%s', <String>[widget.product.quantity]),
+                                maxLines: 1,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .copyWith(
+                                        color: Theme.of(context).hintColor),
+                              ),
+                            ),
+                          ),
+                          ListItem(
+                            title: "MRP: ",
+                            trailing: Padding(
+                              padding: const EdgeInsets.only(right: kPaddingL),
+                              child: Text(
+                                "₹ " +
+                                    widget.product.maxPrice.toStringAsFixed(2),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .bold
+                                    .number
+                                    .copyWith(
+                                        color: Theme.of(context).hintColor),
+                              ),
+                            ),
+                          ),
+                          ListItem(
+                            title: "Sale Price: ",
+                            trailing: Padding(
+                              padding: const EdgeInsets.only(right: kPaddingL),
+                              child: Text(
+                                "₹ " +
+                                    widget.product.salePrice.toStringAsFixed(2),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .bold
+                                    .number
+                                    .copyWith(
+                                        color: Theme.of(context).hintColor),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  ListItem(
-                    title: "MRP: ",
-                    trailing: Text(
-                      "₹ " + widget.product.maxPrice.toStringAsFixed(2),
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .bold
-                          .number
-                          .copyWith(color: Theme.of(context).hintColor),
-                    ),
-                  ),
-                  ListItem(
-                    title: "Sale Price: ",
-                    trailing: Text(
-                      "₹ " + widget.product.salePrice.toStringAsFixed(2),
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .bold
-                          .number
-                          .copyWith(color: Theme.of(context).hintColor),
-                    ),
-                  ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 5),
                   BlocBuilder<ProductBloc, ProductState>(
                     bloc: productBloc,
                     builder: (context, state) {
@@ -151,42 +193,76 @@ class _ProductScreenState extends State<ProductScreen> {
                       final _products = (state as RefreshSuccessProductState)
                           .session
                           .products;
-                      return HomeBoldHeading(
-                        title: "Related Products",
-                        icon: Icon(
-                          MaterialCommunityIcons.ticket_percent,
-                          color: kWhite,
+                      return Card(
+                        elevation: 2.0,
+                        margin:
+                            const EdgeInsets.symmetric(horizontal: kPaddingM),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: kPaddingS, bottom: kPaddingS),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(kPaddingM),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        MaterialCommunityIcons.ticket_percent,
+                                      ),
+                                      SizedBox(width: 5.0),
+                                      Text(
+                                        "Related Products",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .w700
+                                            .copyWith(
+                                              color: kBlack,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                RelatedProductsHorizontalView(
+                                    products: _products),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ]),
                         ),
-                        isBlue: true,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ProductsHorizontalView(products: _products),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
                       );
                     },
                   ),
                   if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
-                    SizedBox(height: 40.0),
+                    SizedBox(height: 5.0),
                   if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
-                    HomeBoldHeading(
-                      title: "Recently Scanned",
-                      icon: Icon(
-                        MaterialCommunityIcons.barcode_scan,
+                    Card(
+                      elevation: 2.0,
+                      margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.only(left: kPaddingS, bottom: kPaddingS),
+                        child: HomeBoldHeading(
+                          title: "Recently Scanned",
+                          icon: Icon(
+                            MaterialCommunityIcons.barcode_scan,
+                          ),
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ProductsHorizontalView(products: _recentlyScanned),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ProductsHorizontalView(products: _recentlyScanned),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
                     ),
                 ],
               ),
@@ -268,18 +344,22 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ],
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomTitle(
-                    title: "Sub Total: ",
-                    fw: FontWeight.w500,
-                  ),
-                  CustomTitle(
-                    title:
-                        "₹ ${(widget.product.maxPrice * qty).toStringAsFixed(2)}",
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: kPaddingM, vertical: kPaddingL),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Sub Total: ",
+                      style: Theme.of(context).textTheme.bodyText1.w500,
+                    ),
+                    Text(
+                      "₹ ${(widget.product.maxPrice * qty).toStringAsFixed(2)}",
+                      style: Theme.of(context).textTheme.bodyText1.w800.number,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
