@@ -3,19 +3,17 @@ import 'package:breakq/blocs/product/product_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
+import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
-import 'package:breakq/widgets/no_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
-import 'package:breakq/widgets/loading_overlay.dart';
-import 'package:breakq/utils/list.dart';
 import 'package:breakq/utils/text_style.dart';
 
 class OfferListing extends StatefulWidget {
@@ -27,8 +25,9 @@ class OfferListing extends StatefulWidget {
 }
 
 class OfferListingState extends State<OfferListing> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _customScrollViewController = ScrollController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _customScrollViewController = ScrollController();
+  final _productsRepo = ProductsRepository();
 
   OfferBloc _offerBloc;
 
@@ -108,17 +107,15 @@ class OfferListingState extends State<OfferListing> {
                     SizedBox(width: 10.0),
                   ],
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    if (!session.isLoading && session.products.isNullOrEmpty)
-                      NoProducts()
-                    else
-                      ProductListing(
-                        products: session.products,
-                        currentListType: session.currentListType,
-                        isLoading: session.isLoading,
-                      )
-                  ]),
+                ProductListing(
+                  products: session.products,
+                  currentListType: session.currentListType,
+                  isLoading: session.isLoading,
+                  onNextPage: (pageKey) async =>
+                      await _productsRepo.getOfferProducts(
+                    offer: session.offer,
+                    pageNumber: pageKey.toString(),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: 120.0),

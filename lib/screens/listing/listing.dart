@@ -1,6 +1,9 @@
 import 'package:breakq/blocs/product/product_bloc.dart';
+import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/category_model.dart';
+import 'package:breakq/data/models/product_session_model.dart';
+import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/search_header.dart';
@@ -8,9 +11,9 @@ import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
-import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/listing/widgets/search_filter_drawer.dart';
@@ -30,8 +33,9 @@ class Listing extends StatefulWidget {
 }
 
 class ListingState extends State<Listing> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _customScrollViewController = ScrollController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _customScrollViewController = ScrollController();
+  final _productsRepo = ProductsRepository();
 
   ProductBloc _productBloc;
 
@@ -83,6 +87,7 @@ class ListingState extends State<Listing> {
                 SliverAppBar(
                   backgroundColor: kWhite,
                   brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
                   iconTheme: IconThemeData(color: kBlack),
                   primary: true,
                   title: Text(widget.category?.title ?? "Category Name",
@@ -142,7 +147,7 @@ class ListingState extends State<Listing> {
                       ),
                     ),
                   ),
-                if (session.products.isNotNullOrEmpty)
+                if (session.brandTabs != null && session.brandTabs.length > 1)
                   SliverPersistentHeader(
                     pinned: true,
                     // floating: true,
@@ -154,15 +159,32 @@ class ListingState extends State<Listing> {
                       ),
                     ),
                   ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    ProductListing(
-                      products: session.products,
-                      currentListType: session.currentListType,
-                      isLoading: session.isLoading,
-                    ),
-                    SizedBox(height: 120.0),
-                  ]),
+                ProductListing(
+                  products: session.products,
+                  currentListType: session.currentListType,
+                  isLoading: session.isLoading,
+                  onNextPage: (int pageKey) async =>
+                      await _productsRepo.getProducts(
+                    category: session.activeCategoryTab.toString(),
+                    brandCode: (session.activeBrandTab == "0")
+                        ? null
+                        : session.activeBrandTab,
+                    filterBy: (session.range != null)
+                        ? (session.range.start == session.range.end)
+                            ? apiFilterByGT
+                            : apiFilterByMM
+                        : null,
+                    filterByValue: (session.range != null)
+                        ? (session.range.start == session.range.end)
+                            ? session.range.end
+                            : "${session.range.start},${session.range.end}"
+                        : null,
+                    sortBy: session.currentSort?.code,
+                    pageNumber: pageKey.toString(),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: 120.0),
                 ),
               ],
             ),

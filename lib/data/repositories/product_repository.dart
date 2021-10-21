@@ -169,13 +169,14 @@ class ProductsRepository {
 
   Future<List<Product>> getOfferProducts({
     DealsModel offer,
+    String pageNumber,
   }) async {
     final Uri uri = Uri.http(apiBase, apiOfferProducts, {
       apiStoreId: '1',
       apiName: offer.name,
       apiValue: offer.value,
       apiDescription: offer.description,
-      apiPageNumber: '1',
+      apiPageNumber: pageNumber,
     });
     final List<dynamic> _rawList = await dataProvider.get(uri);
 

@@ -251,6 +251,9 @@ class AssetImages {
   // static const String homeOffers = 'assets/images/offers/main_offer.png';
   static const String homeOffers = 'assets/images/offers/banner.png';
 
+  static const String break_the_queue =
+      'assets/images/illustrations/break_the_queue.png';
+
   static const String cat = 'assets/images/categories/cat';
 
   static const String productPlaceholder =

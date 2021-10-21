@@ -29,11 +29,12 @@ class OfferTextGreenAlt extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(kPaddingS),
       decoration: BoxDecoration(
+          color: kGreen,
           borderRadius: BorderRadius.circular(25.0),
           border: Border.all(color: Colors.green.withOpacity(0.5), width: 1.0)),
       child: Text(
         "$offerPercent% OFF",
-        style: Theme.of(context).textTheme.caption.fs8.green.w800,
+        style: Theme.of(context).textTheme.caption.fs12.green.w800.white,
       ),
     );
   }

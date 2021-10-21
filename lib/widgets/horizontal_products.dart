@@ -20,21 +20,3 @@ class ProductsHorizontalView extends StatelessWidget {
     );
   }
 }
-
-class RelatedProductsHorizontalView extends StatelessWidget {
-  RelatedProductsHorizontalView({@required this.products});
-  final List<Product> products;
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: kPaddingS),
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(
-          products.length,
-          (index) => RelatedProductsCard(product: products[index]),
-        ),
-      ),
-    );
-  }
-}

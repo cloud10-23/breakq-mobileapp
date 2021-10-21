@@ -95,6 +95,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                             fit: BoxFit.contain,
                           ),
+                          SizedBox(height: kPaddingL),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -110,7 +111,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(width: 20),
-                              OfferTextGreen(20),
+                              OfferTextGreenAlt(20),
                             ],
                           ),
                         ],
@@ -228,8 +229,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                RelatedProductsHorizontalView(
-                                    products: _products),
+                                ProductsHorizontalView(products: _products),
                                 SizedBox(
                                   height: 10,
                                 ),

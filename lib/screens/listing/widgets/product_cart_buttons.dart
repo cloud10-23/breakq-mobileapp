@@ -11,9 +11,9 @@ class GridAddButton extends StatelessWidget {
       height: 30,
       margin: EdgeInsets.all(kPaddingM),
       child: FlatButton(
-          color: kWhite,
+          color: kBlue,
           onPressed: onProductAdd,
-          child: Icon(Icons.add, color: kBlackAccent)),
+          child: Icon(Icons.add, color: kWhite)),
     );
   }
 }

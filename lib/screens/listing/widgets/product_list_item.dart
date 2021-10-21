@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
+import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
@@ -79,9 +80,10 @@ class ProductListItem extends StatelessWidget {
                         onLongPress: () {},
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Stack(
-                              alignment: Alignment.topRight,
+                              alignment: Alignment.center,
                               children: [
                                 CachedNetworkImage(
                                   // cacheManager: AppCacheManager.instance,
@@ -106,10 +108,14 @@ class ProductListItem extends StatelessWidget {
                                   height: 80,
                                   fit: BoxFit.fill,
                                 ),
+                                Positioned(
+                                    top: 5.0,
+                                    left: 5.0,
+                                    child: OfferTextGreenAlt(20)),
                                 if (qty > 0)
                                   Positioned(
-                                    top: 0.0,
-                                    right: 0.0,
+                                    top: 5.0,
+                                    right: 5.0,
                                     child: ResetCartButtonCircleIcon(
                                         onProductDel: onProductDel),
                                   ),
@@ -120,7 +126,7 @@ class ProductListItem extends StatelessWidget {
                                   top: kPaddingS,
                                   left: kPaddingS,
                                   right: kPaddingS),
-                              height: 48,
+                              height: 34,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -147,6 +153,7 @@ class ProductListItem extends StatelessWidget {
                               child: Text(
                                 product.quantity ?? "",
                                 maxLines: 1,
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption
@@ -164,6 +171,7 @@ class ProductListItem extends StatelessWidget {
                                   top: 2),
                               child: Text(
                                 "₹ " + product.salePrice.toStringAsFixed(2),
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
@@ -177,9 +185,10 @@ class ProductListItem extends StatelessWidget {
                                   right: kPaddingS,
                                   top: kPaddingS),
                               child: Text(
-                                (product.maxPrice != product.salePrice)
-                                    ? "₹ " + product.maxPrice.toStringAsFixed(2)
-                                    : '',
+                                // (product.maxPrice != product.salePrice)
+                                "₹ " + product.maxPrice.toStringAsFixed(2),
+                                // : '',
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption
@@ -274,9 +283,9 @@ class ProductListItem extends StatelessWidget {
       case ProductListItemViewType.list:
         return Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+            borderRadius: BorderRadius.circular(0.0),
           ),
-          margin: EdgeInsets.zero,
+          margin: EdgeInsets.all(1.0),
           child: InkWell(
             onTap: onProductPressed ?? () {},
             child: Container(

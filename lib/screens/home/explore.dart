@@ -17,7 +17,6 @@ import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/screens/splash.dart';
 import 'package:breakq/widgets/card_template.dart';
-import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -253,18 +252,23 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget _showQuickStart() {
     final double width =
-        (MediaQuery.of(context).size.width - kPaddingL * 2) / 4;
+        (MediaQuery.of(context).size.width - kPaddingL * 2) / 4 - 12;
     return Container(
       color: kWhite,
-      height: 70,
-      padding: EdgeInsets.symmetric(vertical: kPaddingS, horizontal: kPaddingL),
+      height: 50,
+      padding: EdgeInsets.symmetric(horizontal: kPaddingL),
       child: Row(
         children: List.generate(
-            4,
-            (index) => QuickLinkButton(
-                  index: index,
-                  width: width,
-                )),
+            7,
+            (index) => (index % 2 == 0)
+                ? QuickLinkButton(
+                    index: index ~/ 2,
+                    width: width,
+                  )
+                : VerticalDivider(
+                    thickness: 1,
+                    color: kBlack.withOpacity(0.1),
+                  )),
       ),
     );
   }

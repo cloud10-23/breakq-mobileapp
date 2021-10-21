@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 
 class BranchSelectorBottomSheet extends StatelessWidget {
   @override
@@ -75,52 +74,15 @@ class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
         elevation: 0.0,
         iconTheme: IconThemeData(color: kWhite),
         actionsIconTheme: IconThemeData(color: kWhite),
-        backgroundColor: kBlue,
-        title: Row(
-          children: [
-            Spacer(),
-            Image(
-              image: AssetImage(AssetImages.bq_icon_alt),
-              height: 30,
-            ),
-            SizedBox(width: 5),
-            Text(
-              "BreakQ",
-              style: Theme.of(context).textTheme.headline5.w700.white,
-            ),
-            Spacer(),
-          ],
-        ),
+        backgroundColor: Color(0xFF38B4FF),
       ),
       backgroundColor: kWhite,
       body: LayoutBuilder(
         builder: (context, constraints) => ListView(
           children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.width * 100 / 320,
-                  child: Swiper(
-                    pagination: SwiperPagination(
-                      alignment: Alignment.bottomCenter,
-                      builder: DotSwiperPaginationBuilder(
-                        activeColor: kBlue,
-                      ),
-                    ),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    autoplay: true,
-                    duration: 500,
-                    autoplayDelay: 4000,
-                    viewportFraction: 1.0,
-                    itemBuilder: (context, index) => Card(
-                      margin: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0)),
-                      child: Image(
-                        image: AssetImage(AssetImages.banner(index)),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+                Image.asset(
+                  AssetImages.break_the_queue,
+                  fit: BoxFit.fitWidth,
                 ),
                 SizedBox(height: 20),
                 CustomTitle(title: "Please select a branch"),
@@ -159,9 +121,18 @@ class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
               ),
         ),
       ),
-      bottomNavigationBar: ThemeButton(
-        text: "Proceed",
-        onPressed: () {
+      bottomNavigationBar: InkWell(
+        child: Container(
+            height: 50,
+            color: kBlue,
+            child: Center(
+              child: Text("Proceed",
+                  style: TextStyle(
+                    color: kWhite,
+                    fontSize: 18,
+                  )),
+            )),
+        onTap: () {
           getIt.get<AppGlobals>().selectedStore = selectedStore;
           BlocProvider.of<HomeBloc>(context).add(BranchSelectedHomeEvent());
         },

@@ -1,8 +1,10 @@
 import 'package:breakq/blocs/search/search_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/data/models/search_session_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
+import 'package:breakq/data/repositories/product_repository.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/screens/cart/cart_overlay.dart';
@@ -31,8 +33,9 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _customScrollViewController = ScrollController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _customScrollViewController = ScrollController();
+  final _productsRepo = ProductsRepository();
   var _controller = TextEditingController();
   SearchBloc _searchBloc;
 
@@ -195,20 +198,15 @@ class _SearchBarState extends State<SearchBar> {
                   ],
                   floating: true,
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    Container(
-                      color: kWhite,
-                      height: kPaddingM,
-                    ),
-                    if (session.products.isNotNullOrEmpty)
-                      ProductListing(
-                        products: session.products,
-                        currentListType: session.currentListType,
-                      )
-                    else
-                      NoProducts(),
-                  ]),
+                ProductListing(
+                  currentListType: session.currentListType,
+                  products: session.products,
+                  isLoading: false,
+                  onNextPage: (pageKey) async =>
+                      await _productsRepo.getProducts(
+                    product: session.query,
+                    pageNumber: pageKey.toString(),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(height: 120.0),

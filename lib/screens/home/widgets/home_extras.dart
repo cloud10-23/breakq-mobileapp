@@ -55,7 +55,7 @@ class ExclProductsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 110,
+      width: MediaQuery.of(context).size.width / 3,
       padding: EdgeInsets.symmetric(horizontal: 2.0),
       child: ProductListItem(
         viewType: ProductListItemViewType.grid,
@@ -66,25 +66,6 @@ class ExclProductsCard extends StatelessWidget {
             getIt.get<AppGlobals>().onProductRed(product, context),
         onProductDel: () =>
             getIt.get<AppGlobals>().onProductDel(product, context),
-        onProductPressed: () =>
-            Navigator.of(context).pushNamed(Routes.product, arguments: product),
-      ),
-    );
-  }
-}
-
-class RelatedProductsCard extends StatelessWidget {
-  RelatedProductsCard({@required this.product});
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      padding: EdgeInsets.symmetric(horizontal: 2.0),
-      child: ProductListItem(
-        viewType: ProductListItemViewType.block,
-        product: product,
         onProductPressed: () =>
             Navigator.of(context).pushNamed(Routes.product, arguments: product),
       ),
