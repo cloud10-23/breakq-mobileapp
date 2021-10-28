@@ -134,7 +134,7 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
           .where((order) =>
               session.selectedBillIds.contains(order.billNo.toString()))
           .toList();
-      List<Product> _products = [];
+      Set<Product> _products = {};
       for (final Order order in _orders) {
         _products.addAll(order.products.map((p) => p.product));
       }
@@ -142,8 +142,8 @@ class QSBloc extends BaseBloc<QSEvent, QSState> {
       if (_products?.isEmpty ?? true) {
         yield LoadFailureQSState();
       } else {
-        final QSSessionModel newSession =
-            session.rebuild(products: _products, selectedProductIds: {});
+        final QSSessionModel newSession = session
+            .rebuild(products: _products.toList(), selectedProductIds: {});
         yield SessionRefreshSuccessQSState(newSession);
       }
     }

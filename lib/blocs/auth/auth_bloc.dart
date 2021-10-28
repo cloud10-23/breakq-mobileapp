@@ -304,6 +304,8 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
       if (deletePreferences) {
         getIt.get<AppGlobals>().user = null;
         getIt.get<AppGlobals>().isUserOnboarded = false;
+        getIt.get<AppGlobals>().selectedStore = null;
+        getIt.get<AppGlobals>().stores = null;
         await getIt.get<AppPreferences>().remove(PreferenceKey.isOnboarded);
         yield AuthenticationFailureAuthState();
       }
