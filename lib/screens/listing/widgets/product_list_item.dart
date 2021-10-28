@@ -1,6 +1,7 @@
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
+import 'package:breakq/widgets/marquee.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -126,25 +127,17 @@ class ProductListItem extends StatelessWidget {
                                   top: kPaddingS,
                                   left: kPaddingS,
                                   right: kPaddingS),
-                              height: 34,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      product.title,
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption
-                                          .black
-                                          .fs12
-                                          .w600,
-                                    ),
-                                  ),
-                                ],
+                              child: MarqueeWidget(
+                                child: Text(
+                                  product.title,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .black
+                                      .fs12
+                                      .w600,
+                                ),
                               ),
                             ),
                             Padding(
@@ -267,11 +260,13 @@ class ProductListItem extends StatelessWidget {
                         right: kPaddingS,
                         top: kPaddingS,
                         bottom: kPaddingS / 2),
-                    child: Text(
-                      product.title,
-                      maxLines: 2,
-                      style:
-                          Theme.of(context).textTheme.caption.black.fs12.w600,
+                    child: MarqueeWidget(
+                      child: Text(
+                        product.title,
+                        maxLines: 2,
+                        style:
+                            Theme.of(context).textTheme.caption.black.fs12.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -357,14 +352,16 @@ class ProductListItem extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      Text(
-                                        product.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .caption
-                                            .black
-                                            .fs12
-                                            .w600,
+                                      MarqueeWidget(
+                                        child: Text(
+                                          product.title,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .black
+                                              .fs12
+                                              .w600,
+                                        ),
                                       ),
                                       const Padding(
                                           padding: EdgeInsets.only(top: 2)),
@@ -476,10 +473,12 @@ class ProductListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           if (wordToStyle.isEmpty)
-                            Text(
-                              product.title,
-                              style: Theme.of(context).textTheme.subtitle1,
-                              overflow: TextOverflow.ellipsis,
+                            MarqueeWidget(
+                              child: Text(
+                                product.title,
+                                style: Theme.of(context).textTheme.subtitle1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             )
                           else
                             RichText(

@@ -5,6 +5,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/widgets/marquee.dart';
 import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -68,85 +69,86 @@ class CartListItem extends StatelessWidget {
                             height: 65,
                             fit: BoxFit.fill,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: kPaddingS,
-                                bottom: kPaddingS,
-                                left: kPaddingM,
-                                right: kPaddingS),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  children: [
-                                    Text(
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: kPaddingS,
+                                  bottom: kPaddingS,
+                                  left: kPaddingM,
+                                  right: kPaddingS),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  MarqueeWidget(
+                                    child: Text(
                                       product.title,
-                                      maxLines: 1,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText2
                                           .w600,
                                     ),
-                                    SizedBox(width: kPaddingL),
-                                    Visibility(
-                                        visible:
-                                            (product.discountPercent ?? 0) > 0,
-                                        child: OfferTextGreen(
-                                            product.discountPercent)),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      product.quantity ?? "",
-                                      maxLines: 1,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption
-                                          .fs10
-                                          .copyWith(
-                                              color:
-                                                  Theme.of(context).hintColor),
-                                    ),
-                                    SizedBox(width: kPaddingM),
-                                    Text(
-                                      "₹ " +
-                                          product.salePrice.toStringAsFixed(2),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2
-                                          .fs10
-                                          .number
-                                          .bold,
-                                    ),
-                                    SizedBox(width: 2),
-                                    Visibility(
+                                  ),
+                                  SizedBox(width: kPaddingL),
+                                  Visibility(
                                       visible:
-                                          product.maxPrice > product.salePrice,
-                                      child: Text(
-                                        "₹ " +
-                                            product.maxPrice.toStringAsFixed(2),
+                                          (product.discountPercent ?? 0) > 0,
+                                      child: OfferTextGreen(
+                                          product.discountPercent)),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        product.quantity ?? "",
+                                        maxLines: 1,
                                         style: Theme.of(context)
                                             .textTheme
                                             .caption
                                             .fs10
-                                            .w300
-                                            .number
                                             .copyWith(
-                                                decoration:
-                                                    TextDecoration.lineThrough),
+                                                color: Theme.of(context)
+                                                    .hintColor),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                ResetCartButtonText(
-                                  onProductDel: () => getIt
-                                      .get<AppGlobals>()
-                                      .onProductDel(product, context),
-                                ),
-                              ],
+                                      SizedBox(width: kPaddingM),
+                                      Text(
+                                        "₹ " +
+                                            product.salePrice
+                                                .toStringAsFixed(2),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            .fs10
+                                            .number
+                                            .bold,
+                                      ),
+                                      SizedBox(width: 2),
+                                      Visibility(
+                                        visible: product.maxPrice >
+                                            product.salePrice,
+                                        child: Text(
+                                          "₹ " +
+                                              product.maxPrice
+                                                  .toStringAsFixed(2),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              .fs10
+                                              .w300
+                                              .number
+                                              .copyWith(
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  ResetCartButtonText(
+                                    onProductDel: () => getIt
+                                        .get<AppGlobals>()
+                                        .onProductDel(product, context),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

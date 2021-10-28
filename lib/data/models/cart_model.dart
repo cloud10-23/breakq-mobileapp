@@ -33,8 +33,8 @@ class Cart {
     return Cart(
       cartItems: cartProducts.map((cartProduct) {
         _noOfProducts += cartProduct.qty;
-        _cartValue += cartProduct.qty * cartProduct.product.maxPrice;
-        _orgCartValue += cartProduct.qty * cartProduct.product.salePrice;
+        _cartValue += cartProduct.qty * cartProduct.product.salePrice;
+        _orgCartValue += cartProduct.qty * cartProduct.product.maxPrice;
         return {cartProduct.product: cartProduct.qty};
       }).reduce((value, element) {
         value.addAll(element);
