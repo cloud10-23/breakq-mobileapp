@@ -1,32 +1,23 @@
-import 'package:breakq/blocs/home/home_bloc.dart';
-import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
 import 'package:breakq/data/models/home_models.dart';
 import 'package:breakq/data/models/home_session_model.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/main.dart';
-import 'package:breakq/screens/cart/widgets/cart_icon.dart';
-import 'package:breakq/screens/home/base.dart';
-import 'package:breakq/screens/home/widgets/branch.dart';
 import 'package:breakq/screens/home/widgets/category_card.dart';
-import 'package:breakq/screens/home/widgets/errorPage.dart';
 import 'package:breakq/screens/home/widgets/home_extras.dart';
-import 'package:breakq/screens/home/widgets/quick_link_buttons.dart';
 import 'package:breakq/screens/search/widgets/search_appbar.dart';
-import 'package:breakq/screens/splash.dart';
+import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:breakq/utils/text_style.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({Key key, this.session}) : super(key: key);
+  final HomeSessionModel session;
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -41,235 +32,187 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, HomeState state) {
-      if (getIt.get<AppGlobals>().selectedStore?.branchName == null)
-        return BranchSelectorScreen();
-
-      if (state is RefreshSuccessHomeState) {
-        if (!(state?.session?.isLoading ?? true)) {
-          HomeSessionModel _session = state.session;
-          final List<DealsModel> _topDeals = _session.topDeals;
-          // final List<DealsModel> _topOffers = _session.topOffers;
-          final List<CategoryTabModel> categoryTabs = _session.categoryTabs;
-          final List<Product> _exclProducts = _session.exclusiveProducts;
-          final List<Product> _recentlyScanned = _session.recentlyScanned;
-          final List<Product> _recentlyOrdered = _session.recentlyOrdered;
-          return Base(
-            categoryTabs: categoryTabs,
-            body: CustomScrollView(
-              controller: _customScrollViewController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  elevation: 0.0,
-                  iconTheme: IconThemeData(color: kWhite),
-                  actionsIconTheme: IconThemeData(color: kWhite),
-                  backgroundColor: kBlue,
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: kPaddingS),
-                    child: Row(
-                      children: [
-                        Spacer(flex: 2),
-                        Image(
-                          image: AssetImage(AssetImages.bq_icon_alt),
-                          height: 30,
-                        ),
-                        Text(
-                          "BreakQ",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .fs16
-                              .w700
-                              .white,
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                  pinned: true,
-                  actions: [
-                    NotificationBell(),
-                    SelectBranchIcon(),
-                    CartIconButton(),
-                    SizedBox(width: kPaddingM),
-                  ],
+    final List<CategoryTabModel> categoryTabs = widget.session.categoryTabs;
+    final List<DealsModel> _topDeals = widget.session.topDeals;
+    final List<Product> _exclProducts = widget.session.exclusiveProducts;
+    final List<Product> _recentlyScanned = widget.session.recentlyScanned;
+    final List<Product> _recentlyOrdered = widget.session.recentlyOrdered;
+    return CustomScrollView(
+      controller: _customScrollViewController,
+      slivers: <Widget>[
+        SliverAppBar(
+          elevation: 0.0,
+          iconTheme: IconThemeData(color: kWhite),
+          actionsIconTheme: IconThemeData(color: kWhite),
+          backgroundColor: kBlue,
+          title: Padding(
+            padding: const EdgeInsets.only(top: kPaddingS),
+            child: Row(
+              children: [
+                Spacer(flex: 2),
+                Image(
+                  image: AssetImage(AssetImages.bq_icon_alt),
+                  height: 30,
                 ),
-                // SliverPersistentHeader(
-                //   delegate: ServiceHeaderDelegate(
-                //       child: SearchAppBar(), minHeight: 50, maxHeight: 50),
-                //   pinned: true,
-                // ),
-                SliverAppBar(
-                  primary: false,
-                  pinned: true,
-                  toolbarHeight: 50,
-                  backgroundColor: kBlue,
-                  automaticallyImplyLeading: false,
-                  titleSpacing: 0,
-                  title: SearchAppBar(),
+                Text(
+                  "BreakQ",
+                  style: Theme.of(context).textTheme.bodyText1.fs16.w700.white,
                 ),
-                // SliverToBoxAdapter(
-                //   child: Container(color: kBlue, child: WavyHeaderImage()),
-                // ),
-                // SliverToBoxAdapter(
-                //     child: Container(
-                //   margin: EdgeInsets.only(top: kPaddingS),
-                //   height: 190,
-                //   child: Image(
-                //     image: AssetImage(AssetImages.martIllustration),
-                //     fit: BoxFit.fill,
-                //   ),
-                // )),
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: MediaQuery.of(context).size.width * 100 / 320,
-                    child: Swiper(
-                      pagination: SwiperPagination(
-                        alignment: Alignment.bottomCenter,
-                        builder: DotSwiperPaginationBuilder(
-                          activeColor: kBlue,
-                        ),
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      autoplay: true,
-                      duration: 500,
-                      autoplayDelay: 4000,
-                      viewportFraction: 1.0,
-                      itemBuilder: (context, index) => Card(
-                        margin: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0)),
-                        child: Image(
-                          image: AssetImage(AssetImages.banner(index)),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    SizedBox(height: kPaddingBtwnStrips),
-                    HomeBoldHeading(
-                        title: "Top Deals",
-                        icon: Icon(
-                          FontAwesome5Solid.percentage,
-                          color: kWhite,
-                        ),
-                        isBlue: true,
-                        children: [
-                          _showGridOfImages(_topDeals),
-                        ]),
-                    SizedBox(height: kPaddingBtwnStrips),
-                    // HomeBoldHeading(
-                    //     title: "Offers for you!",
-                    //     icon: Icon(
-                    //       Entypo.price_tag,
-                    //     ),
-                    //     children: [
-                    //       _showHorizontalScrollImages(_topOffers),
-                    //     ]),
-                    // SizedBox(height: kPaddingBtwnStrips),
-                    if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
-                      HomeBoldHeading(
-                        title: "Recently Scanned",
-                        icon: Icon(
-                          MaterialCommunityIcons.barcode_scan,
-                        ),
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ProductsHorizontalView(products: _recentlyScanned),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
-                      SizedBox(height: kPaddingBtwnStrips),
-                    HomeBoldHeading(
-                      title: "Exclusive Products",
-                      icon: Icon(
-                        MaterialCommunityIcons.ticket_percent,
-                        color: kWhite,
-                      ),
-                      isBlue: true,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ProductsHorizontalView(products: _exclProducts),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: kPaddingBtwnStrips),
-                    HomeBoldHeading(
-                        title: "Categories",
-                        icon: Icon(Icons.category_rounded),
-                        children: [
-                          _showCategories(categoryTabs),
-                        ]),
-                    SizedBox(height: kPaddingBtwnStrips),
-                    if (_recentlyOrdered != null && _recentlyOrdered.isNotEmpty)
-                      HomeBoldHeading(
-                        title: "Recently Ordered",
-                        icon: Icon(
-                          MaterialCommunityIcons.timelapse,
-                          color: kWhite,
-                        ),
-                        isBlue: true,
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ProductsHorizontalView(products: _recentlyOrdered),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                  ]),
-                ),
-                _endPadding(),
+                Spacer(),
               ],
             ),
-            bottomNavBar: _showQuickStart(),
-          );
-        }
-      } else if (state is RefreshFailureHomeState)
-        return HomeErrorPage(
-          tryAgain: () =>
-              BlocProvider.of<HomeBloc>(context).add(SessionInitedHomeEvent()),
-        );
-      return SplashScreen(isPrimary: false);
-    });
-  }
+          ),
+          pinned: true,
+          actions: [
+            NotificationBell(),
+            SelectBranchIcon(),
+            // CartIconButton(),
+            // SizedBox(width: kPaddingM),
+          ],
+        ),
 
-  Widget _showQuickStart() {
-    final double width =
-        (MediaQuery.of(context).size.width - kPaddingL * 2) / 4 - 12;
-    return Container(
-      color: kWhite,
-      height: 50,
-      padding: EdgeInsets.symmetric(horizontal: kPaddingL),
-      child: Row(
-        children: List.generate(
-            7,
-            (index) => (index % 2 == 0)
-                ? QuickLinkButton(
-                    index: index ~/ 2,
-                    width: width,
-                  )
-                : VerticalDivider(
-                    thickness: 1,
-                    color: kBlack.withOpacity(0.1),
-                  )),
-      ),
+        // SliverPersistentHeader(
+        //   delegate: ServiceHeaderDelegate(
+        //       child: SearchAppBar(), minHeight: 50, maxHeight: 50),
+        //   pinned: true,
+        // ),
+        SliverAppBar(
+          primary: false,
+          pinned: true,
+          toolbarHeight: 50,
+          backgroundColor: kBlue,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          title: SearchAppBar(),
+        ),
+        // SliverToBoxAdapter(
+        //   child: Container(color: kBlue, child: WavyHeaderImage()),
+        // ),
+        // SliverToBoxAdapter(
+        //     child: Container(
+        //   margin: EdgeInsets.only(top: kPaddingS),
+        //   height: 190,
+        //   child: Image(
+        //     image: AssetImage(AssetImages.martIllustration),
+        //     fit: BoxFit.fill,
+        //   ),
+        // )),
+        SliverToBoxAdapter(
+          child: Container(
+            height: MediaQuery.of(context).size.width * 100 / 320,
+            child: Swiper(
+              pagination: SwiperPagination(
+                alignment: Alignment.bottomCenter,
+                builder: DotSwiperPaginationBuilder(
+                  activeColor: kBlue,
+                ),
+              ),
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              autoplay: true,
+              duration: 500,
+              autoplayDelay: 4000,
+              viewportFraction: 1.0,
+              itemBuilder: (context, index) => Card(
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0)),
+                child: Image(
+                  image: AssetImage(AssetImages.banner(index)),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(<Widget>[
+            SizedBox(height: kPaddingBtwnStrips),
+            HomeBoldHeading(
+                title: "Top Deals",
+                icon: Icon(
+                  FontAwesome5Solid.percentage,
+                  color: kWhite,
+                ),
+                isBlue: true,
+                children: [
+                  _showGridOfImages(_topDeals),
+                ]),
+            SizedBox(height: kPaddingBtwnStrips),
+            // HomeBoldHeading(
+            //     title: "Offers for you!",
+            //     icon: Icon(
+            //       Entypo.price_tag,
+            //     ),
+            //     children: [
+            //       _showHorizontalScrollImages(_topOffers),
+            //     ]),
+            // SizedBox(height: kPaddingBtwnStrips),
+            if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
+              HomeBoldHeading(
+                title: "Recently Scanned",
+                icon: Icon(
+                  MaterialCommunityIcons.barcode_scan,
+                ),
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProductsHorizontalView(products: _recentlyScanned),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            if (_recentlyScanned != null && _recentlyScanned.isNotEmpty)
+              SizedBox(height: kPaddingBtwnStrips),
+            HomeBoldHeading(
+              title: "Exclusive Products",
+              icon: Icon(
+                MaterialCommunityIcons.ticket_percent,
+                color: kWhite,
+              ),
+              isBlue: true,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                ProductsHorizontalView(products: _exclProducts),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+            SizedBox(height: kPaddingBtwnStrips),
+            HomeBoldHeading(
+                title: "Categories",
+                icon: Icon(Icons.category_rounded),
+                children: [
+                  _showCategories(categoryTabs),
+                ]),
+            SizedBox(height: kPaddingBtwnStrips),
+            if (_recentlyOrdered != null && _recentlyOrdered.isNotEmpty)
+              HomeBoldHeading(
+                title: "Recently Ordered",
+                icon: Icon(
+                  MaterialCommunityIcons.timelapse,
+                  color: kWhite,
+                ),
+                isBlue: true,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProductsHorizontalView(products: _recentlyOrdered),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+          ]),
+        ),
+        _endPadding(),
+      ],
     );
   }
 
@@ -293,32 +236,6 @@ class HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // Widget _showGridOfImages(int columns, int rows) {
-  //   return Container(
-  //     margin: const EdgeInsets.all(kPaddingM),
-  //     color: kWhite,
-  //     child: Column(
-  //       children: List.generate(
-  //         columns,
-  //         (colIndex) => Padding(
-  //           padding: EdgeInsets.zero, //.symmetric(horizontal: kPaddingM),
-  //           child: Row(
-  //             children: List.generate(
-  //               rows,
-  //               (rowIndex) => Expanded(
-  //                 child: GridImage(
-  //                   colIndex: colIndex,
-  //                   rowIndex: rowIndex,
-  //                   height: 100,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _showCategories(List<CategoryTabModel> categoryTabs) {
     return Padding(

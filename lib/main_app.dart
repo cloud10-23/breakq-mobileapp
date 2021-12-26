@@ -2,6 +2,7 @@ import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
+import 'package:breakq/screens/home/base.dart';
 import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/onboarding/onboarding.dart';
 import 'package:breakq/screens/splash.dart';
@@ -132,7 +133,7 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
           Widget homeWidget;
 
           if (appState is SetupSuccessApplicationState) {
-            homeWidget = HomeScreen();
+            homeWidget = Base();
           } else if (appState is OnboardingInProgressApplicationState) {
             homeWidget = const OnboardingScreen();
           } else {

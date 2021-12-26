@@ -5,7 +5,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/image_model.dart';
 import 'package:breakq/data/models/photo_model.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 
 class PhotoGalleryScreenHeader extends StatefulWidget {
   const PhotoGalleryScreenHeader({

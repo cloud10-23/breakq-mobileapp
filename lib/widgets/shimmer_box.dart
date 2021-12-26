@@ -7,7 +7,7 @@ import 'package:shimmer/shimmer.dart';
 class ShimmerBox extends StatelessWidget {
   const ShimmerBox({
     Key key,
-    @required this.width,
+    this.width,
     @required this.height,
   }) : super(key: key);
 

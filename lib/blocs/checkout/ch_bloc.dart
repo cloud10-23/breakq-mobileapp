@@ -6,7 +6,6 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_model.dart';
 import 'package:breakq/data/models/checkout_session.dart';
-import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/data/models/payment.dart';
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/timeslot_model.dart';
@@ -24,7 +23,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
   CheckoutBloc({@required this.cartBloc}) : super(InitialChState());
 
   final CartBloc cartBloc;
-  final CheckoutRepository _checkoutRepository = CheckoutRepository();
+  final _checkoutRepository = CheckoutRepository();
+  final _orderRepository = MyOrderRepository();
 
   @override
   Stream<CheckoutState> mapEventToState(CheckoutEvent event) async* {
@@ -223,13 +223,16 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               );
 
               /// Do the API call for checking the payment is done
+              final order = await _orderRepository.getOrder(billNo);
+
+              /// Do the API call for checking the payment is done
               // PAYMENT
               if (await CheckoutRepository().checkoutPay(
                   billNo: billNo,
                   amount: Amount(
                     upi: UPI(
                         no: '53464532',
-                        amount: session.cartProducts.cartValue.finalAmount),
+                        amount: double.tryParse(order.billAmnt)),
                   ))) {
                 add(PaymentDoneChEvent(billNo: session.billNo));
                 newSession = session.rebuild(
@@ -304,13 +307,17 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               );
 
               /// Do the API call for checking the payment is done
+              final order = await _orderRepository.getOrder(billNo);
+
+              /// Do the API call for checking the payment is done
               // PAYMENT
               if (await CheckoutRepository().checkoutPay(
                   billNo: billNo,
                   amount: Amount(
                     upi: UPI(
-                        no: '53464532',
-                        amount: session.cartProducts.cartValue.totalAmount),
+                      no: '53464532',
+                      amount: double.tryParse(order.billAmnt),
+                    ),
                   ))) {
                 add(PaymentDoneChEvent(billNo: session.billNo));
                 newSession = session.rebuild(
@@ -350,7 +357,7 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
           (state as SessionRefreshSuccessChState).session;
 
       /// Do the API call for checking the payment is done
-      final Order order = await MyOrderRepository().getOrder(session.billNo);
+      final order = await _orderRepository.getOrder(session.billNo);
 
       final CheckoutSession newSession = session.rebuild(
         isCompleted: true,

@@ -109,7 +109,7 @@ class SelectBranchIcon extends StatelessWidget {
       return TextButton.icon(
         style: TextButton.styleFrom(
           primary: kWhite,
-          textStyle: Theme.of(context).textTheme.caption,
+          textStyle: Theme.of(context).textTheme.caption.w700,
         ),
         icon: Icon(
           Entypo.location_pin,

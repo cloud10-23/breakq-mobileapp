@@ -47,27 +47,41 @@ class CartListItem extends StatelessWidget {
                     Flexible(
                       child: Row(
                         children: [
-                          CachedNetworkImage(
-                            // cacheManager: AppCacheManager.instance,
-                            imageUrl: apiBaseFull + product.image,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) => Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                          IntrinsicHeight(
+                            child: Stack(
                               children: [
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress)
+                                CachedNetworkImage(
+                                  // cacheManager: AppCacheManager.instance,
+                                  imageUrl: apiBaseFull + product.image,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                          value: downloadProgress.progress)
+                                    ],
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    AssetImages.productPlaceholder,
+                                    width: 65,
+                                    height: 65,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  width: 65,
+                                  height: 65,
+                                  fit: BoxFit.fill,
+                                ),
+                                Positioned(
+                                  top: 0.0,
+                                  left: 0.0,
+                                  child: OfferTextGreenAlt(20),
+                                ),
                               ],
                             ),
-                            errorWidget: (context, url, error) => Image.asset(
-                              AssetImages.productPlaceholder,
-                              width: 65,
-                              height: 65,
-                              fit: BoxFit.fill,
-                            ),
-                            width: 65,
-                            height: 65,
-                            fit: BoxFit.fill,
                           ),
                           Flexible(
                             child: Padding(

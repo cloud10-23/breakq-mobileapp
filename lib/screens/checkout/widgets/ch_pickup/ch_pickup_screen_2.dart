@@ -4,7 +4,6 @@ import 'package:breakq/data/models/checkout_session.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/checkout/widgets/payment.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
-import 'package:breakq/widgets/loading_overlay.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/bottom_bar.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart';

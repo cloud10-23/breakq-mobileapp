@@ -104,9 +104,22 @@ class InvoiceThanksForShopping extends StatelessWidget {
 }
 
 class InvoiceBillDetails extends StatelessWidget {
-  InvoiceBillDetails({@required this.billNo, @required this.paymentMode});
+  InvoiceBillDetails({
+    @required this.billNo,
+    @required this.paymentMode,
+    @required this.billDate,
+    @required this.checkoutStatus,
+    @required this.checkoutType,
+    @required this.gstSummary,
+    @required this.paymentStatus,
+  });
   final String billNo;
+  final String billDate;
+  final String checkoutType;
+  final String checkoutStatus;
   final String paymentMode;
+  final String paymentStatus;
+  final String gstSummary;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +133,12 @@ class InvoiceBillDetails extends StatelessWidget {
               getIt.get<AppGlobals>().user.displayName ?? '(Unavailable)'),
           _tableRow(context, 'Mobile No.',
               getIt.get<AppGlobals>().user.phoneNumber ?? '(Unavailable'),
+          _tableRow(context, 'Bill Date', billDate),
+          _tableRow(context, 'Checkout Type', checkoutType),
+          _tableRow(context, 'Checkout Status', checkoutStatus),
           _tableRow(context, 'Payment Mode', paymentMode),
+          _tableRow(context, 'Payment Status', paymentStatus),
+          _tableRow(context, 'GST Summary', gstSummary),
         ],
       ),
     );

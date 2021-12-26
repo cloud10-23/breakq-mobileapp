@@ -1,7 +1,6 @@
 import 'package:breakq/blocs/search/search_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/data/models/search_session_model.dart';
 import 'package:breakq/data/models/toolbar_option_model.dart';
 import 'package:breakq/data/repositories/product_repository.dart';
@@ -16,14 +15,11 @@ import 'package:breakq/screens/listing/widgets/tabs.dart';
 import 'package:breakq/screens/search/voice_search.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
-import 'package:breakq/widgets/jumbotron.dart';
-import 'package:breakq/widgets/no_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
-import 'package:breakq/utils/list.dart';
 
 class SearchBar extends StatefulWidget {
   SearchBar({this.initialQuery});

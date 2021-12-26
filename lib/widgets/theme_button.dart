@@ -74,3 +74,40 @@ class ThemeButton extends StatelessWidget {
       );
   }
 }
+
+class ThemeFilledButton extends StatelessWidget {
+  const ThemeFilledButton({Key key, this.icon, this.label, this.onPressed})
+      : super(key: key);
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kBlue,
+      child: InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: kPaddingM * 1.5),
+          child: Row(
+            children: [
+              SizedBox(width: kPaddingL),
+              Icon(
+                icon,
+                color: kWhite,
+              ),
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.button.white,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

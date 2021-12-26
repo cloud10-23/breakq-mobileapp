@@ -1,6 +1,5 @@
 import 'package:breakq/data/models/price_model.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/widgets/price_details.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

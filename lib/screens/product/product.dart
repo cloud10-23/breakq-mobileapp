@@ -131,7 +131,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       child: Column(
                         children: [
                           ListItem(
-                            title: "Quantity: ",
+                            title: "Unit of Measurement: ",
                             trailing: Padding(
                               padding: const EdgeInsets.only(right: kPaddingL),
                               child: Text(
@@ -155,11 +155,11 @@ class _ProductScreenState extends State<ProductScreen> {
                                     widget.product.maxPrice.toStringAsFixed(2),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle1
-                                    .bold
+                                    .subtitle2
                                     .number
                                     .copyWith(
-                                        color: Theme.of(context).hintColor),
+                                        color: Colors.grey,
+                                        decoration: TextDecoration.lineThrough),
                               ),
                             ),
                           ),

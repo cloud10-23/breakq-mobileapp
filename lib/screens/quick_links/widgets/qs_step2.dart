@@ -4,7 +4,6 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/screens/listing/widgets/product_cart_buttons.dart';
 import 'package:breakq/screens/product/widgets/product_buttons.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/jumbotron.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

@@ -36,7 +36,7 @@ const double kBadgeRadius = 16.0;
 const double kTimelineDateSize = 70.0;
 
 // Colors
-const Color kPrimaryColor = Color(0xFFFDC500); //Color(0xFF1565C0);
+const Color kPrimaryColor = kBlue; // Color(0xFFFDC500); //Color(0xFF1565C0);
 const String kPrimaryColorHex = "0xFFFDC500";
 const Color kPrimaryAccentColor = Color(0x77FDC500);
 const Color kWhite = Color(0xFFFFFFFF);

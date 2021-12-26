@@ -1,9 +1,7 @@
 import 'package:breakq/configs/api_urls.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/product_model.dart';
-import 'package:breakq/utils/app_cache_manager.dart';
 import 'package:breakq/widgets/marquee.dart';
-import 'package:breakq/widgets/offer_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';

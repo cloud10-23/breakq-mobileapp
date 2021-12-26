@@ -1,5 +1,4 @@
 import 'package:breakq/configs/constants.dart';
-import 'package:breakq/configs/routes.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';

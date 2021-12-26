@@ -6,7 +6,7 @@ class BackButtonCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(Feather.arrow_left_circle),
-      onPressed: () => Navigator.pop(context),
+      onPressed: () => Navigator.maybePop(context),
     );
   }
 }

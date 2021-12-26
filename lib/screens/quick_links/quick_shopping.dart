@@ -1,6 +1,5 @@
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/configs/routes.dart';
-import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step2.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step1.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_success_dialog.dart';
@@ -180,7 +179,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
                         ),
                         tooltip: L10n.of(context).commonTooltipInfo,
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.maybePop(context);
                         },
                       ),
                     ],
@@ -278,11 +277,11 @@ class _QShoppingScreenState extends State<QShoppingScreen>
         top: false,
         child: Row(
           children: <Widget>[
-            CartFloatingButton(),
+            // CartFloatingButton(),
             Spacer(),
             ThemeButton(
               text: _currentStep == totalSteps
-                  ? L10n.of(context).QSBtnFinish
+                  ? "Finish"
                   : L10n.of(context).QSBtnNext,
               onPressed: _nextStep,
               disableTouchWhenLoading: true,

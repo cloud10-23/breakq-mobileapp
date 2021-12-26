@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:breakq/blocs/auth/auth_bloc.dart';
 import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/constants.dart';
@@ -165,8 +164,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapResetCartEventToState(ResetCartEvent event) async* {
-    Cart cart;
-    if (state is CartLoaded) cart = (state as CartLoaded).cart;
     yield CartLoading();
 
     if (await _cartRepo.deleteCart())

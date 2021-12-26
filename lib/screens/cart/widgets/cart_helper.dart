@@ -8,6 +8,7 @@ import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class CardTemplate extends StatelessWidget {
   CardTemplate({@required this.children});
@@ -40,6 +41,7 @@ class CartEmptyScreen extends StatelessWidget {
           SliverAppBar(
             primary: true,
             pinned: true,
+            backgroundColor: kBlue,
             title: Row(
               children: [
                 CartIconPlane(),
@@ -51,8 +53,6 @@ class CartEmptyScreen extends StatelessWidget {
             ),
             leading: BackButtonCircle(),
             actions: <Widget>[],
-            flexibleSpace:
-                FlexibleSpaceBar(background: Container(color: kWhite)),
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -144,8 +144,8 @@ class CartScannerOption extends StatelessWidget {
                 padding: const EdgeInsets.all(kPaddingM),
                 child: Row(
                   children: [
-                    Image(
-                      image: AssetImage(AssetImages.scan),
+                    Icon(
+                      MaterialCommunityIcons.barcode_scan,
                       color: kWhite,
                     ),
                     Spacer(),
