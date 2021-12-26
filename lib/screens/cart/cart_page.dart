@@ -195,7 +195,7 @@ class _CartPageState extends State<CartPage> {
                   isScrollControlled: true,
                   useRootNavigator: true,
                   builder: (_) => CheckoutTypeSelector(onTap: (index) {
-                    Navigator.of(context, rootNavigator: true).popAndPushNamed(
+                    Navigator.of(context, rootNavigator: true).pushNamed(
                         Routes.checkout,
                         arguments: CheckoutType.values[index]);
                   }),
