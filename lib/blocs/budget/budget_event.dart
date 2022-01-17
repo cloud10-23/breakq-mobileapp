@@ -23,3 +23,5 @@ class BudgetCheckEvent extends BudgetEvent {
 }
 
 class BudgetResetEvent extends BudgetEvent {}
+
+class BudgetIgnoreEvent extends BudgetEvent {}

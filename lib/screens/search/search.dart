@@ -10,13 +10,14 @@ import 'package:breakq/screens/cart/cart_overlay.dart';
 import 'package:breakq/screens/cart/widgets/cart_icon.dart';
 import 'package:breakq/screens/listing/widgets/product_listing.dart';
 import 'package:breakq/screens/listing/widgets/search_filter_drawer.dart';
+import 'package:breakq/screens/listing/widgets/search_header.dart';
 import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/listing/widgets/tabs.dart';
 import 'package:breakq/screens/search/voice_search.dart';
+import 'package:breakq/screens/search/widgets/search_delegate_result_list.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -98,117 +99,121 @@ class _SearchBarState extends State<SearchBar> {
           floatingActionButton: ScanFloatingButtonExtended(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          body: SafeArea(
-            child: CustomScrollView(
-              controller: _customScrollViewController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  backgroundColor: kWhite,
-                  brightness: Brightness.light,
-                  iconTheme: IconThemeData(color: kBlack),
-                  titleSpacing: 0.0,
-                  primary: true,
-                  title: Row(
-                    children: [
-                      SizedBox(width: kPaddingM),
-                      Icon(
-                        Feather.search,
-                        size: 16.0,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          autofocus: true,
-                          controller: _controller,
-                          style: Theme.of(context).textTheme.headline6.w600,
-                          decoration: InputDecoration(
-                            hintText: L10n.of(context).homePlaceholderSearch,
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .w600
-                                .copyWith(color: Colors.black45),
-                            suffix: IconButton(
-                                iconSize: 18.0,
-                                onPressed: () => _controller.clear(),
-                                icon: Icon(Feather.x_circle)),
-                            border: InputBorder.none,
-                          ),
-                          textInputAction: TextInputAction.search,
-                        ),
-                      ),
-                      if (session.isLoading)
-                        SizedBox(
-                          height: 16.0,
-                          width: 16.0,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                          ),
-                        ),
-                      IconButton(
-                        icon: Icon(
-                          Feather.mic,
+          body: CustomScrollView(
+            controller: _customScrollViewController,
+            slivers: <Widget>[
+              SliverAppBar(
+                elevation: 0,
+                backgroundColor: kBlue,
+                brightness: Brightness.light,
+                titleSpacing: 0.0,
+                primary: true,
+                title: Container(
+                  padding: const EdgeInsets.only(
+                    left: kPaddingM,
+                    right: kPaddingM,
+                    bottom: kPaddingM,
+                  ),
+                  child: Card(
+                    color: getIt.get<AppGlobals>().isPlatformBrightnessDark
+                        ? Theme.of(context).accentColor
+                        : Theme.of(context).cardColor,
+                    margin: const EdgeInsets.all(0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(kBoxDecorationRadius),
+                      side: BorderSide(width: 0.5, color: Colors.black45),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: kPaddingM),
+                        Icon(
+                          Feather.search,
                           size: 16.0,
+                          color: kBlack,
                         ),
-                        onPressed: () => _voiceSearch(),
-                      ),
-                    ],
-                  ),
-                  leading: BackButtonCircle(),
-                  expandedHeight: kToolbarHeight + 35,
-                  snap: true,
-                  flexibleSpace: Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Spacer(),
-                          SearchListToolbar(
-                            searchSortTypes: session.searchSortTypes,
-                            currentSort: session.currentSort,
-                            onFilterTap: () {
-                              _scaffoldKey.currentState.openEndDrawer();
-                            },
-                            onSortChange: (ToolbarOptionModel newSort) {
-                              _searchBloc
-                                  .add(SortOrderChangedSearchEvent(newSort));
-                            },
-                            currentListType: session.currentListType,
-                            searchListTypes: session.searchListTypes,
-                            onListTypeChange: (ToolbarOptionModel
-                                    newListType) =>
-                                _searchBloc.add(
-                                    ListTypeChangedSearchEvent(newListType)),
+                        Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            controller: _controller,
+                            style: Theme.of(context).textTheme.headline6.w600,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: kPaddingS),
+                              hintText: L10n.of(context).homePlaceholderSearch,
+                              hintStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .w600
+                                  .black,
+                              suffix: IconButton(
+                                  iconSize: 18.0,
+                                  onPressed: () => _controller.clear(),
+                                  icon: Icon(Feather.x_circle, color: kBlack)),
+                              border: InputBorder.none,
+                            ),
+                            textInputAction: TextInputAction.search,
                           ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(color: kWhite, height: kToolbarHeight),
-                          Spacer(),
-                        ],
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    CartIconButton(),
-                    SizedBox(width: 10.0),
-                  ],
-                  floating: true,
-                ),
-                ProductListing(
-                  currentListType: session.currentListType,
-                  products: session.products,
-                  isLoading: false,
-                  onNextPage: (pageKey) async =>
-                      await _productsRepo.getProducts(
-                    product: session.query,
-                    pageNumber: pageKey.toString(),
+                        ),
+                        if (session.isLoading)
+                          SizedBox(
+                            height: 16.0,
+                            width: 16.0,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.0,
+                            ),
+                          ),
+                        IconButton(
+                          icon: Icon(
+                            Feather.mic,
+                            size: 16.0,
+                            color: kBlack,
+                          ),
+                          onPressed: () => _voiceSearch(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(height: 120.0),
+                leading: BackButtonCircle(),
+                actions: [
+                  Center(child: CartIconButton()),
+                  SizedBox(width: 10.0),
+                ],
+                pinned: true,
+              ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: SearchHeader(
+                  expandedHeight: 40,
+                  child: SearchListToolbar(
+                    searchSortTypes: session.searchSortTypes,
+                    currentSort: session.currentSort,
+                    onFilterTap: () {
+                      _scaffoldKey.currentState.openEndDrawer();
+                    },
+                    onSortChange: (ToolbarOptionModel newSort) {
+                      _searchBloc.add(SortOrderChangedSearchEvent(newSort));
+                    },
+                    currentListType: session.currentListType,
+                    searchListTypes: session.searchListTypes,
+                    onListTypeChange: (ToolbarOptionModel newListType) =>
+                        _searchBloc
+                            .add(ListTypeChangedSearchEvent(newListType)),
+                  ),
                 ),
-              ],
-            ),
+              ),
+              ProductListing(
+                currentListType: session.currentListType,
+                products: session.products,
+                isLoading: false,
+                onNextPage: (pageKey) async => await _productsRepo.getProducts(
+                  product: session.query,
+                  pageNumber: pageKey.toString(),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 120.0),
+              ),
+            ],
           ),
         );
       },

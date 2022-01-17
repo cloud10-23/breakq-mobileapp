@@ -71,6 +71,8 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                             style: TextStyle(color: kBlue),
                           ),
                           onPressed: () {
+                            BlocProvider.of<BudgetBloc>(context)
+                                .add(BudgetIgnoreEvent());
                             Navigator.pop(context);
                           },
                         ),

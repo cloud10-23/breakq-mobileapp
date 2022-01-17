@@ -9,7 +9,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -41,9 +40,6 @@ class AppGlobals {
 
   /// Dark Theme option
   DarkOption darkThemeOption = DarkOption.alwaysOff;
-
-  /// User's current position.
-  LocationData currentPosition;
 
   /// Business/Location categories.
   List<CategoryModel> categories;

@@ -49,13 +49,11 @@ class _SearchListToolbarState extends State<SearchListToolbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-          left: kPaddingM, top: kPaddingS, bottom: kPaddingS),
+      padding: const EdgeInsets.only(left: kPaddingM),
       color: getIt.get<AppGlobals>().isPlatformBrightnessDark
           ? Theme.of(context).scaffoldBackgroundColor
           // : kBlue,
           : kWhite,
-      height: 35,
       child: Row(
         children: <Widget>[
           IconButton(

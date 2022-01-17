@@ -34,11 +34,13 @@ dependencies:
   path: null
 
   # A simple Service Locator.
-  get_it: ^6.0.0
+  get_it: ^7.2.0
   # BLoC Design Pattern (Business Logic Component)
-  bloc: ^7.2.0
+  # bloc: ^8.0.2
+  bloc: ^7.2.1
   # Widgets that make it easy to integrate blocs and cubits into Flutter.
-  flutter_bloc: ^7.3.0
+  # flutter_bloc: ^8.0.1
+  flutter_bloc: ^7.3.3
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode.
   equatable: ^2.0.3
   # Dart implementation of sprintf.
@@ -46,13 +48,13 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
   shared_preferences: ^2.0.4
   # A Flutter plugin to easily handle realtime location in iOS and Android.
-  location: ^4.0.0-nullsafety.0
+  # location: ^4.0.0-nullsafety.0
   # Introduction/Onboarding package for flutter app with some customizations possibilities.
   introduction_screen: ^2.0.0
   # A package provides an easy way to add shimmer effect in Flutter project.
-  shimmer: ^1.1.1
+  shimmer: ^2.0.0
   # A widget provided to the flutter scroll component drop-down refresh and pull up load.
-  pull_to_refresh: ^1.6.2
+  pull_to_refresh: ^2.0.0
   # Custom Radio Buttons and Grouped Check Box Button.
   custom_radio_grouped_button: any
   # The best swiper(carousel) for flutter, with multiple layouts, infinite loop. Compatible with Android & iOS.
@@ -62,11 +64,11 @@ dependencies:
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   # share: ^0.6.5+2
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.
-  image_picker: ^0.7.2+1
+  image_picker: ^0.8.4+4
   # A list with helper methods to programmatically scroll to an item.
-  scrollable_positioned_list: ^0.1.7
+  scrollable_positioned_list: ^0.2.3
   # Flutter library for simple and fast QR code rendering via a Widget or custom painter.
-  qr_flutter: ^3.2.0
+  qr_flutter: ^4.0.0
   # Slidable list item with directional slide actions that can be dismissed.
   # flutter_slidable: ^0.5.7
   # A Markdown renderer for Flutter.
@@ -78,10 +80,10 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   #Firebase Deps
-  firebase_core: ^0.8.0-nullsafety.1
-  firebase_auth: ^0.21.0-nullsafety.0
+  firebase_core: ^1.11.0
+  firebase_auth: ^3.3.5
   google_sign_in: ^5.0.0
-  flutter_facebook_auth: ^2.0.2+1
+  flutter_facebook_auth: ^4.0.1
 
   #Barcode Scanning
   # qrscan: ^0.2.21
@@ -90,12 +92,12 @@ dependencies:
   # qr_code_scanner: ^0.3.0
 
   # Speech To Text
-  speech_to_text: ^3.1.0
+  speech_to_text: ^4.2.0
 
   # SVG Assets
-  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_svg: ^1.0.1
 
-  flutter_badged: ^1.0.3
+  flutter_badged: ^2.0.2
 
   #Icons
   flutter_icons: ^1.1.0
@@ -104,7 +106,7 @@ dependencies:
   pin_code_fields: ^7.0.0
 
   # Phone Number codes
-  intl_phone_field: ^1.4.4
+  intl_phone_field: ^3.0.0
 
   #Json Annotation:
   json_annotation: #^4.1.0

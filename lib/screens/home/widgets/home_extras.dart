@@ -77,6 +77,7 @@ class NotificationBell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+        padding: const EdgeInsets.all(0),
         icon: Icon(
           AntDesign.bells,
           size: 20.0,
@@ -105,21 +106,22 @@ class SelectBranchIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedStore = getIt.get<AppGlobals>().selectedStore?.branchName;
-    if (selectedStore != null && selectedStore.isNotEmpty) {
-      return TextButton.icon(
-        style: TextButton.styleFrom(
-          primary: kWhite,
-          textStyle: Theme.of(context).textTheme.caption.w700,
-        ),
-        icon: Icon(
-          Entypo.location_pin,
-          size: 20.0,
-        ),
-        label: Text(selectedStore),
-        onPressed: () => _onPressed(context),
-      );
-    }
+    // if (selectedStore != null && selectedStore.isNotEmpty) {
+    //   return TextButton.icon(
+    //     style: TextButton.styleFrom(
+    //       primary: kWhite,
+    //       textStyle: Theme.of(context).textTheme.caption.w700,
+    //     ),
+    //     icon: Icon(
+    //       Entypo.location_pin,
+    //       size: 20.0,
+    //     ),
+    //     label: Text(selectedStore),
+    //     onPressed: () => _onPressed(context),
+    //   );
+    // }
     return IconButton(
+      padding: const EdgeInsets.all(0),
       icon: Icon(
         Entypo.location_pin,
         size: 20.0,

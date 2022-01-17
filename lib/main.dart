@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:location/location.dart';
 import 'package:breakq/blocs/app_observer.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
@@ -27,6 +26,10 @@ Future<void> main() async {
 
   /// The App's [BlocObserver].
   Bloc.observer = AppObserver();
+  // BlocOverrides.runZoned(
+  //   () {},
+  //   blocObserver: AppObserver(),
+  // );
 
   /// For setting the status bar color:
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -57,6 +60,5 @@ Future<void> initCameras() async {
 void initServiceLocator() {
   getIt.registerLazySingleton<AppPreferences>(() => AppPreferences());
   getIt.registerLazySingleton<AppTheme>(() => AppTheme());
-  getIt.registerLazySingleton<Location>(() => Location());
   getIt.registerLazySingleton<AppGlobals>(() => AppGlobals());
 }

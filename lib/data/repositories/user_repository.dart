@@ -98,36 +98,21 @@ class UserRepository {
   }
 
   Future<UserCredential> signInWithFacebook() async {
-    try {
-      // by default the login method has the next permissions ['email','public_profile']
-      AccessToken _accessToken = await FacebookAuth.instance.login();
-      print(_accessToken.toJson());
-      // get the user data
-      final userData = await FacebookAuth.instance.getUserData();
-      print(userData);
-      final OAuthCredential credential = FacebookAuthProvider.credential(
-          _accessToken
-              .token); // _token is your facebook access token as a string
+    // by default the login method has the next permissions ['email','public_profile']
+    AccessToken _accessToken =
+        (await FacebookAuth.instance.login()).accessToken;
+    print(_accessToken.toJson());
+    // get the user data
+    final userData = await FacebookAuth.instance.getUserData();
+    print(userData);
+    final OAuthCredential credential = FacebookAuthProvider.credential(
+        _accessToken.token); // _token is your facebook access token as a string
 
 // FirebaseUser is deprecated
-      final UserCredential userCred =
-          await _firebaseAuth.signInWithCredential(credential);
+    final UserCredential userCred =
+        await _firebaseAuth.signInWithCredential(credential);
 
-      return userCred;
-    } on FacebookAuthException catch (e) {
-      switch (e.errorCode) {
-        case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
-          print("You have a previous login operation in progress");
-          break;
-        case FacebookAuthErrorCode.CANCELLED:
-          print("login cancelled");
-          break;
-        case FacebookAuthErrorCode.FAILED:
-          print("login failed");
-          break;
-      }
-      return null;
-    }
+    return userCred;
   }
 
   Future<void> signOutFacebook() async {

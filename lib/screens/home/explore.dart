@@ -10,7 +10,6 @@ import 'package:breakq/screens/search/widgets/search_appbar.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_icons/flutter_icons.dart';
