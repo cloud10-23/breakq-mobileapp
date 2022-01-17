@@ -65,23 +65,49 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                           "You have crossed the budget! You can review the cart," +
                               " ignore it or change the budget.",
                       actions: [
-                        TextButton(
-                          child: Text(
-                            "Ignore",
-                            style: TextStyle(color: kBlue),
-                          ),
-                          onPressed: () {
-                            BlocProvider.of<BudgetBloc>(context)
-                                .add(BudgetIgnoreEvent());
-                            Navigator.pop(context);
-                          },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              child: Text(
+                                "Ignore",
+                                style: TextStyle(color: kBlue),
+                              ),
+                              onPressed: () {
+                                BlocProvider.of<BudgetBloc>(context)
+                                    .add(BudgetIgnoreEvent());
+                                Navigator.pop(context);
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                "Modify Budget",
+                                style: TextStyle(color: kBlue),
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                                final _showSuccess = await getIt
+                                    .get<AppGlobals>()
+                                    .showSetBudget(context);
+                                if (_showSuccess != null) {
+                                  final _snackBar = SnackBar(
+                                      content: Text(
+                                          "Budget has been set successfully!"));
+                                  ScaffoldMessenger.maybeOf(context)
+                                      .showSnackBar(_snackBar);
+                                }
+                              },
+                            ),
+                          ],
                         ),
-                        ElevatedButton(
-                          child: Text("Go to Cart"),
-                          style: ElevatedButton.styleFrom(primary: kBlue),
-                          onPressed: () {
-                            Navigator.popAndPushNamed(context, Routes.cart);
-                          },
+                        Center(
+                          child: ElevatedButton(
+                            child: Text("Go to Cart"),
+                            style: ElevatedButton.styleFrom(primary: kBlue),
+                            onPressed: () {
+                              Navigator.popAndPushNamed(context, Routes.cart);
+                            },
+                          ),
                         ),
                       ],
                     );
