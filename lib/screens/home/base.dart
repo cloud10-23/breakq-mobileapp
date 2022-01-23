@@ -139,56 +139,67 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                   : null,
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
-              bottomNavigationBar: SnakeNavigationBar.color(
-                key: bottomNavigationKey,
-                currentIndex: (_controller.index == 3) ? 4 : _controller.index,
-                showUnselectedLabels: true,
-                showSelectedLabels: true,
-                height: 65,
-                snakeShape: SnakeShape.rectangle,
-                backgroundColor: kWhite,
-                behaviour: SnakeBarBehaviour.floating,
-                selectedLabelStyle:
-                    Theme.of(context).textTheme.caption.fs12.w500,
-                unselectedLabelStyle:
-                    Theme.of(context).textTheme.caption.fs12.w500,
-                onTap: (position) async {
-                  if (position == 3) {
-                    final _showSuccess =
-                        await getIt.get<AppGlobals>().showSetBudget(context);
-                    if (_showSuccess != null) {
-                      final _snackBar = SnackBar(
-                          content: Text("Budget has been set successfully!"));
-                      ScaffoldMessenger.maybeOf(context)
-                          .showSnackBar(_snackBar);
+              bottomNavigationBar: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                      top: BorderSide(color: kBlue, width: 2),
+                      bottom: BorderSide(color: kBlue, width: 2)),
+                ),
+                child: SnakeNavigationBar.color(
+                  key: bottomNavigationKey,
+                  currentIndex:
+                      (_controller.index == 3) ? 4 : _controller.index,
+                  showUnselectedLabels: true,
+                  showSelectedLabels: true,
+                  height: 65,
+                  snakeViewColor: kWhite,
+                  snakeShape: SnakeShape.rectangle,
+                  selectedItemColor: kBlue,
+                  backgroundColor: kBlue,
+                  unselectedItemColor: kWhite,
+                  behaviour: SnakeBarBehaviour.floating,
+                  selectedLabelStyle:
+                      Theme.of(context).textTheme.caption.fs12.w500.white,
+                  unselectedLabelStyle:
+                      Theme.of(context).textTheme.caption.fs12.w500.white,
+                  onTap: (position) async {
+                    if (position == 3) {
+                      final _showSuccess =
+                          await getIt.get<AppGlobals>().showSetBudget(context);
+                      if (_showSuccess != null) {
+                        final _snackBar = SnackBar(
+                            content: Text("Budget has been set successfully!"));
+                        ScaffoldMessenger.maybeOf(context)
+                            .showSnackBar(_snackBar);
+                      }
+                      setState(() {
+                        _controller.animateTo(0);
+                      });
+                      return;
+                    } else if (position == 4) {
+                      setState(() {
+                        _controller.animateTo(3);
+                      });
+                      return;
                     }
                     setState(() {
-                      _controller.animateTo(0);
+                      _controller.animateTo(position);
                     });
-                    return;
-                  } else if (position == 4) {
-                    setState(() {
-                      _controller.animateTo(3);
-                    });
-                    return;
-                  }
-                  setState(() {
-                    _controller.animateTo(position);
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Ionicons.ios_home), label: "Home"),
-                  BottomNavigationBarItem(
-                      icon: Icon(quickLinks[0]['icon']),
-                      label: "Quick Shopping"),
-                  BottomNavigationBarItem(
-                      icon: Icon(quickLinks[3]['icon']), label: "My Orders"),
-                  BottomNavigationBarItem(
-                      icon: Icon(quickLinks[1]['icon']), label: "Set Budget"),
-                  BottomNavigationBarItem(
-                      icon: CartIconWithBadge(), label: "Cart"),
-                ],
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Ionicons.ios_home), label: "Home"),
+                    BottomNavigationBarItem(
+                        icon: Icon(quickLinks[0]['icon']),
+                        label: "Quick Shopping"),
+                    BottomNavigationBarItem(
+                        icon: Icon(quickLinks[3]['icon']), label: "My Orders"),
+                    BottomNavigationBarItem(
+                        icon: Icon(quickLinks[1]['icon']), label: "Set Budget"),
+                    BottomNavigationBarItem(
+                        icon: CartIconWithBadge(), label: "Cart"),
+                  ],
+                ),
               ),
             ),
           );

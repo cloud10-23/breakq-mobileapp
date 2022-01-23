@@ -50,6 +50,8 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
 
         final List<Widget> _listItems = <Widget>[];
 
+        _listItems.add(SliverToBoxAdapter(child: AdsModule()));
+
         _listItems.add(SliverToBoxAdapter(
             child: StepShowModule(
           currentStep: 2,
@@ -95,8 +97,6 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
         _listItems.add(SliverToBoxAdapter(
           child: CartProductsModule(products: session.cartProducts.cartItems),
         ));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         _listItems.add(SliverToBoxAdapter(
           child: PriceDetails(price: session.cartProducts.cartValue),

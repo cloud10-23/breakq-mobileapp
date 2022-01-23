@@ -44,21 +44,25 @@ class HomeScreenState extends State<HomeScreen> {
           iconTheme: IconThemeData(color: kWhite),
           actionsIconTheme: IconThemeData(color: kWhite),
           backgroundColor: kBlue,
+          leadingWidth: 15,
           title: Padding(
             padding: const EdgeInsets.only(top: kPaddingS),
-            child: Row(
-              children: [
-                Spacer(flex: 2),
-                Image(
-                  image: AssetImage(AssetImages.bq_icon_alt),
-                  height: 30,
-                ),
-                Text(
-                  "BreakQ",
-                  style: Theme.of(context).textTheme.bodyText1.fs16.w700.white,
-                ),
-                Spacer(),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: [
+                  Image(
+                    image: AssetImage(AssetImages.bq_icon_alt),
+                    height: 30,
+                  ),
+                  Text(
+                    "BreakQ",
+                    style:
+                        Theme.of(context).textTheme.bodyText1.fs16.w700.white,
+                  ),
+                  Spacer(),
+                ],
+              ),
             ),
           ),
           pinned: true,

@@ -68,9 +68,10 @@ class _ProductScreenState extends State<ProductScreen> {
               ),
               body: ListView(
                 children: [
+                  SizedBox(height: kPaddingL),
                   Card(
-                    margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
-                    elevation: 2.0,
+                    margin: const EdgeInsets.symmetric(horizontal: kPaddingL),
+                    elevation: 5.0,
                     child: Padding(
                       padding: const EdgeInsets.all(kPaddingL),
                       child: Column(

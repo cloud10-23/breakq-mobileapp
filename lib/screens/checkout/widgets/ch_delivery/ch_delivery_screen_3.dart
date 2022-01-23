@@ -50,6 +50,8 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
 
         final List<Widget> _listItems = <Widget>[];
 
+        _listItems.add(SliverToBoxAdapter(child: AdsModule()));
+
         _listItems.add(SliverToBoxAdapter(
             child: StepShowModule(
           currentStep: 2,
@@ -103,8 +105,6 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
         _listItems.add(SliverToBoxAdapter(
           child: CartProductsModule(products: session.cartProducts.cartItems),
         ));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         _listItems.add(SliverToBoxAdapter(
           child: PriceDetails(price: session.cartProducts.cartValue),

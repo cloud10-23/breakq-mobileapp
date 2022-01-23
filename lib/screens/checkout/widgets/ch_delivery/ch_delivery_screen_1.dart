@@ -89,8 +89,6 @@ class _ChDeliveryState extends State<ChDelivery> {
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
-
         return CheckoutTemplate(
           checkoutType: CheckoutType.delivery,
           slivers: _listItems,

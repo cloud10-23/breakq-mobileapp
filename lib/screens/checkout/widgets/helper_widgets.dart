@@ -11,6 +11,7 @@ import 'package:breakq/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -197,17 +198,20 @@ class StepShowModule extends StatelessWidget {
 }
 
 class AdsModule extends StatelessWidget {
-  AdsModule({this.index});
-  final int index;
-
   @override
   Widget build(BuildContext context) {
-    return CardTemplate(
-      children: [
-        Image(
+    return Container(
+      height: 50,
+      child: Swiper(
+        scrollDirection: Axis.horizontal,
+        autoplay: true,
+        duration: 500,
+        autoplayDelay: 1000,
+        itemBuilder: (context, index) => Image(
           image: AssetImage(AssetImages.ads(index)),
-        )
-      ],
+        ),
+        itemCount: 2,
+      ),
     );
   }
 }

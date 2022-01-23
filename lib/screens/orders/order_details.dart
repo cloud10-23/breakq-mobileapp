@@ -10,6 +10,7 @@ import 'package:breakq/widgets/price_details.dart';
 import 'package:breakq/screens/checkout/widgets/ch_delivery/ch_delivery_address.dart';
 import 'package:breakq/screens/checkout/widgets/ch_pickup/time_slot_picker.dart';
 import 'package:breakq/screens/checkout/widgets/helper_widgets.dart';
+import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -102,6 +103,34 @@ class _OrderDetailsState extends State<OrderDetails> {
       ),
     ));
 
+    _listItems.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingL)));
+
+    _listItems.add(SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: kPaddingM, vertical: kPaddingS),
+        child: ElevatedButton.icon(
+          icon: Icon(Ionicons.md_download),
+          label: Text('Download Invoice'.toUpperCase()),
+          style: ElevatedButton.styleFrom(primary: kPrimaryColor),
+          onPressed: () => ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Download in progress...'))),
+        ),
+      ),
+    ));
+
+    _listItems.add(SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
+        child: ElevatedButton.icon(
+          icon: Icon(Ionicons.ios_close_circle),
+          label: Text('Cancel Order'.toUpperCase()),
+          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    ));
+
     _listItems.add(SliverToBoxAdapter(child: FooterModule()));
 
     return Scaffold(
@@ -121,36 +150,27 @@ class _OrderDetailsState extends State<OrderDetails> {
         slivers: _listItems,
       ),
       bottomNavigationBar: Container(
-        color: kWhite,
+        decoration: BoxDecoration(
+          border: Border(
+              top: BorderSide(color: kBlue, width: 2),
+              bottom: BorderSide(color: kBlue, width: 2)),
+        ),
         child: Row(
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(kPaddingM),
-                child: OutlinedButton.icon(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, Routes.need_help),
-                  icon: Icon(Feather.life_buoy),
-                  label: Text('Need Help?'),
-                  style: OutlinedButton.styleFrom(primary: kBlack),
-                ),
+              child: ThemeFilledButton(
+                label: 'Need Help?',
+                icon: Feather.life_buoy,
+                onPressed: () => Navigator.pushNamed(context, Routes.need_help),
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(kPaddingM),
-                child: ElevatedButton.icon(
-                    icon: Icon(Feather.file),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.order_invoice,
-                          arguments: widget.order);
-                    },
-                    style: ElevatedButton.styleFrom(primary: kBlue),
-                    label: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: kPaddingL),
-                      child: Text('Invoice'),
-                    )),
+              child: ThemeFilledButton(
+                alternate: true,
+                label: 'Invoice',
+                icon: Feather.file,
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(Routes.order_invoice, arguments: widget.order),
               ),
             ),
           ],

@@ -47,6 +47,8 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
 
         _listItems.add(SliverToBoxAdapter(child: SizedBox(height: kPaddingS)));
 
+        _listItems.add(SliverToBoxAdapter(child: AdsModule()));
+
         _listItems.add(SliverToBoxAdapter(
             child: CheckoutTypeModule(
           index: 0,
@@ -59,13 +61,9 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
           child: BranchModule(),
         ));
 
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 2)));
-
         _listItems.add(SliverToBoxAdapter(
           child: CartProductsModule(products: session.cartProducts.cartItems),
         ));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         _listItems.add(SliverToBoxAdapter(
           child: PriceDetails(price: session.cartProducts.cartValue),

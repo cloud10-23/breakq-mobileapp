@@ -76,16 +76,18 @@ class ThemeButton extends StatelessWidget {
 }
 
 class ThemeFilledButton extends StatelessWidget {
-  const ThemeFilledButton({Key key, this.icon, this.label, this.onPressed})
+  const ThemeFilledButton(
+      {Key key, this.icon, this.label, this.onPressed, this.alternate = false})
       : super(key: key);
   final IconData icon;
   final String label;
   final VoidCallback onPressed;
+  final bool alternate;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kBlue,
+      color: (alternate) ? kWhite : kBlue,
       child: InkWell(
         onTap: onPressed,
         child: Padding(
@@ -95,12 +97,14 @@ class ThemeFilledButton extends StatelessWidget {
               SizedBox(width: kPaddingL),
               Icon(
                 icon,
-                color: kWhite,
+                color: (!alternate) ? kWhite : kBlue,
               ),
               Expanded(
                 child: Text(
                   label,
-                  style: Theme.of(context).textTheme.button.white,
+                  style: (!alternate)
+                      ? Theme.of(context).textTheme.button.white
+                      : Theme.of(context).textTheme.button.primaryColor,
                   textAlign: TextAlign.center,
                 ),
               ),

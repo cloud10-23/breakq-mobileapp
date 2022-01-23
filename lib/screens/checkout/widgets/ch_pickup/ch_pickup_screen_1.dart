@@ -78,6 +78,8 @@ class _ChPickupState extends State<ChPickup> {
 
         final List<Widget> _listItems = <Widget>[];
 
+        _listItems.add(SliverToBoxAdapter(child: AdsModule()));
+
         _listItems.add(SliverToBoxAdapter(
             child: CheckoutTypeModule(
           index: 1,
@@ -109,8 +111,6 @@ class _ChPickupState extends State<ChPickup> {
             .add(SliverToBoxAdapter(child: TimeSlotModule(session: session)));
 
         _listItems.add(SliverToBoxAdapter(child: FooterModule()));
-
-        _listItems.add(SliverToBoxAdapter(child: AdsModule(index: 0)));
 
         return CheckoutTemplate(
           checkoutType: CheckoutType.pickUp,

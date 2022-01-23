@@ -54,11 +54,33 @@ class Invoice extends StatelessWidget {
           InvoiceQRCode(billNo: '${order.billNo}'),
         ],
       ),
-      bottomNavigationBar: ThemeFilledButton(
-        label: 'Go to Home Page',
-        icon: FontAwesome.home,
-        onPressed: () =>
-            Navigator.of(context).popUntil((route) => route.isFirst),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+              top: BorderSide(color: kBlue, width: 2),
+              bottom: BorderSide(color: kBlue, width: 2)),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: ThemeFilledButton(
+                label: 'Go to Home Page',
+                icon: FontAwesome.home,
+                onPressed: () =>
+                    Navigator.of(context).popUntil((route) => route.isFirst),
+              ),
+            ),
+            Expanded(
+              child: ThemeFilledButton(
+                alternate: true,
+                label: 'Download Invoice',
+                icon: FontAwesome.download,
+                onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Download in progress...'))),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

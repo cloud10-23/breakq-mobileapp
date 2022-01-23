@@ -10,13 +10,15 @@ import 'package:breakq/utils/text_style.dart';
 class CartIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kPaddingM),
-      child: InkWell(
-          onTap: () {
-            Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart);
-          },
-          child: CartIconWithBadge()),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(right: kPaddingL),
+        child: InkWell(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).pushNamed(Routes.cart);
+            },
+            child: CartIconWithBadge()),
+      ),
     );
   }
 }

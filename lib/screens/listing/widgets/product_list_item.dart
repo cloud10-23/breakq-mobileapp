@@ -51,6 +51,7 @@ class ProductListItem extends StatelessWidget {
     switch (viewType) {
       case ProductListItemViewType.grid:
         return Card(
+          elevation: 5.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(0.0),
           ),
