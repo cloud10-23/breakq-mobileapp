@@ -48,7 +48,7 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
   shared_preferences: ^2.0.4
   # A Flutter plugin to easily handle realtime location in iOS and Android.
-  # location: ^4.0.0-nullsafety.0
+  location: ^4.3.0
   # Introduction/Onboarding package for flutter app with some customizations possibilities.
   introduction_screen: ^2.0.0
   # A package provides an easy way to add shimmer effect in Flutter project.

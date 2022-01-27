@@ -10,6 +10,7 @@ import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main_app.dart';
 import 'package:breakq/utils/app_preferences.dart';
+import 'package:location/location.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -61,4 +62,5 @@ void initServiceLocator() {
   getIt.registerLazySingleton<AppPreferences>(() => AppPreferences());
   getIt.registerLazySingleton<AppTheme>(() => AppTheme());
   getIt.registerLazySingleton<AppGlobals>(() => AppGlobals());
+  getIt.registerLazySingleton<Location>(() => Location());
 }

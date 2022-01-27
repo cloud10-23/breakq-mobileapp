@@ -59,7 +59,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                     padding: const EdgeInsets.only(
                         left: kPaddingL, right: kPaddingM, bottom: kPaddingL),
                     child: Text(
-                      'This is a sample answer to the FAQ question that is given above. We can have FAQs and answers like this',
+                      'This is a sample answer to the FAQ question that is'
+                      ' given above. We can have FAQs and answers like this',
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   )

@@ -1,5 +1,7 @@
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/price_model.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +95,10 @@ class PriceDetails extends StatelessWidget {
                 fw: FontWeight.w600,
               ),
               BoldTitle(
-                title: '₹ ' + (price.delivery.toStringAsFixed(2)),
+                title: '₹ ' +
+                    ((price.delivery *
+                            getIt.get<AppGlobals>().selectedStore?.distance)
+                        .toStringAsFixed(2)),
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: Colors.black54,
                 fw: FontWeight.w500,

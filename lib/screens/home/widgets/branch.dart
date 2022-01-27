@@ -103,7 +103,7 @@ class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
                     child: Text(
                         "${_stores[index].branchName}, " + //${_stores[index].branchStore}, " +
                             "${_stores[index].city}, ${_stores[index].state}," +
-                            " ${_stores[index].country}, ${_stores[index].pinCode}",
+                            " ${_stores[index].country}, ${_stores[index].pinCode} \n ${_stores[index].distance.toStringAsFixed(2)} KM",
                         style: Theme.of(context).textTheme.caption.w600),
                   ),
                   trailing: Radio(

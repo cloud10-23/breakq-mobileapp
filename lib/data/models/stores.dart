@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'stores.g.dart';
@@ -14,6 +16,7 @@ class Store {
   final String country;
   final String latitude;
   final String longitude;
+  final double distance;
 
   Store({
     this.storeId,
@@ -26,9 +29,10 @@ class Store {
     this.country,
     this.latitude,
     this.longitude,
+    this.distance,
   });
 
-  factory Store.rebuild(Store store) {
+  factory Store.rebuild(Store store, lat, long) {
     return Store(
       storeId: store.storeId,
       mobileNo: store.mobileNo,
@@ -40,7 +44,17 @@ class Store {
       country: store.country,
       latitude: store.latitude,
       longitude: store.longitude,
+      distance: calculateDistance(double.tryParse(store.latitude),
+          double.tryParse(store.longitude), lat, long),
     );
+  }
+
+  static double calculateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 
   factory Store.fromJson(Map<String, dynamic> json) => _$StoreFromJson(json);

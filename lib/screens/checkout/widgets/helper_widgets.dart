@@ -206,7 +206,7 @@ class AdsModule extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         autoplay: true,
         duration: 500,
-        autoplayDelay: 1000,
+        autoplayDelay: 4000,
         itemBuilder: (context, index) => Image(
           image: AssetImage(AssetImages.ads(index)),
         ),

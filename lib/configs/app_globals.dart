@@ -13,6 +13,7 @@ import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/data/models/category_model.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:location/location.dart';
 
 /// Class to store runtime global settings.
 class AppGlobals {
@@ -55,6 +56,9 @@ class AppGlobals {
 
   /// List of all the stores
   List<Store> stores;
+
+  /// Location
+  LocationData currentPosition;
 
   /// Is user onbaorded or this is their first run?
   Store selectedStore;

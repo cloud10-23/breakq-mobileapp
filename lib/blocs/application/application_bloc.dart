@@ -1,4 +1,5 @@
 import 'package:breakq/data/repositories/store_repository.dart';
+import 'package:breakq/utils/console.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_preferences.dart';
 import 'package:breakq/utils/string.dart';
+import 'package:location/location.dart';
 
 part 'application_event.dart';
 part 'application_state.dart';
@@ -119,46 +121,46 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
       _mapInitLocationServicesApplicationEventToState() async* {
     // LocationAccuracy.powerSave may cause infinite loops on Android
     // while calling getLocation().
-    // getIt.get<Location>().changeSettings(accuracy: LocationAccuracy.low);
 
     /// Checks if the location service is enabled.
-    // try {
-    //   bool serviceEnabled = await getIt.get<Location>().serviceEnabled();
-    //   if (serviceEnabled == null || !serviceEnabled) {
-    //     /// Request the activation of the location service.
-    //     final bool serviceRequestedResult =
-    //         await getIt.get<Location>().requestService();
-    //     serviceEnabled = serviceRequestedResult;
-    //   }
+    try {
+      bool serviceEnabled = await getIt.get<Location>().serviceEnabled();
+      if (serviceEnabled == null || !serviceEnabled) {
+        /// Request the activation of the location service.
+        final bool serviceRequestedResult =
+            await getIt.get<Location>().requestService();
+        serviceEnabled = serviceRequestedResult;
+      }
 
-    //   /// Checks if the app has permission to access location.
-    //   PermissionStatus permissionGranted =
-    //       await getIt.get<Location>().hasPermission();
-    //   if (permissionGranted != PermissionStatus.granted) {
-    //     final PermissionStatus permissionRequestedResult =
-    //         await getIt.get<Location>().requestPermission();
-    //     permissionGranted = permissionRequestedResult;
-    //   }
-    //   if (permissionGranted == PermissionStatus.granted) {
-    //     // getLocation() may loop forever on emulators if location is set to 'None'.
-    //     getIt.get<AppGlobals>().currentPosition =
-    //         await getIt.get<Location>().getLocation();
-    //   } else {
-    //     getIt.get<AppGlobals>().currentPosition =
-    //         LocationData.fromMap(<String, double>{
-    //       'latitude': kDefaultLat,
-    //       'longitude': kDefaultLon,
-    //       'accuracy': 0.0,
-    //       'altitude': 0.0,
-    //       'speed': 0.0,
-    //       'speed_accuracy': 0.0,
-    //       'heading': 0.0,
-    //       'time': 0.0,
-    //     });
-    //   }
-    // } catch (e) {
-    //   Console.log('Location ERROR', e.toString(), error: e);
-    // }
+      /// Checks if the app has permission to access location.
+      PermissionStatus permissionGranted =
+          await getIt.get<Location>().hasPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        final PermissionStatus permissionRequestedResult =
+            await getIt.get<Location>().requestPermission();
+        permissionGranted = permissionRequestedResult;
+      }
+      if (permissionGranted == PermissionStatus.granted) {
+        // getIt.get<Location>().changeSettings(accuracy: LocationAccuracy.low);
+        // getLocation() may loop forever on emulators if location is set to 'None'.
+        getIt.get<AppGlobals>().currentPosition =
+            await getIt.get<Location>().getLocation();
+      } else {
+        getIt.get<AppGlobals>().currentPosition =
+            LocationData.fromMap(<String, double>{
+          'latitude': kDefaultLat,
+          'longitude': kDefaultLon,
+          'accuracy': 0.0,
+          'altitude': 0.0,
+          'speed': 0.0,
+          'speed_accuracy': 0.0,
+          'heading': 0.0,
+          'time': 0.0,
+        });
+      }
+    } catch (e) {
+      Console.log('Location ERROR', e.toString(), error: e);
+    }
     getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
 
     // Setup is completed. On the main screen.
