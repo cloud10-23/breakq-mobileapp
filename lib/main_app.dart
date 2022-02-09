@@ -1,18 +1,16 @@
 import 'package:breakq/blocs/budget/budget_bloc.dart';
 import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/blocs/orders/orders_bloc.dart';
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
 import 'package:breakq/data/repositories/user_repository.dart';
 import 'package:breakq/screens/home/base.dart';
-import 'package:breakq/screens/home/explore.dart';
 import 'package:breakq/screens/onboarding/onboarding.dart';
 import 'package:breakq/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
-import 'package:breakq/blocs/language/language_bloc.dart';
 import 'package:breakq/blocs/home/home_bloc.dart';
-import 'package:breakq/blocs/theme/theme_bloc.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
@@ -30,9 +28,8 @@ final RouteObserver<PageRoute<dynamic>> routeObserver =
 ApplicationBloc _applicationBloc;
 AuthBloc _authBloc;
 HomeBloc _homeBloc;
-LanguageBloc _languageBloc;
-ThemeBloc _themeBloc;
 BudgetBloc _budgetBloc;
+OrdersBloc _ordersBloc;
 CartBloc _cartBloc;
 QSBloc _qsBloc;
 
@@ -59,22 +56,18 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
   /// Init all [Bloc]s here.
   void _initBlocs() async {
     _homeBloc = HomeBloc();
-    _languageBloc = LanguageBloc();
-    _themeBloc = ThemeBloc();
     _budgetBloc = BudgetBloc();
     _cartBloc = CartBloc(
       budgetBloc: _budgetBloc,
       homeBloc: _homeBloc,
-    )..add(InitCartEvent());
+    );
     _authBloc = AuthBloc(
       userRepository: UserRepository(),
-      cartBloc: _cartBloc,
     );
     _qsBloc = QSBloc(cartBloc: _cartBloc);
+    _ordersBloc = OrdersBloc(qsBloc: _qsBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
-      languageBloc: _languageBloc,
-      themeBloc: _themeBloc,
     );
   }
 
@@ -84,11 +77,10 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
 
     _authBloc.close();
     _homeBloc.close();
-    _languageBloc.close();
-    _themeBloc.close();
     _cartBloc.close();
     _qsBloc.close();
     _budgetBloc.close();
+    _ordersBloc.close();
     _applicationBloc.close();
     super.dispose();
   }
@@ -113,17 +105,19 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
             create: (BuildContext context) => _applicationBloc),
         BlocProvider<AuthBloc>(create: (BuildContext context) => _authBloc),
         BlocProvider<HomeBloc>(create: (BuildContext context) => _homeBloc),
-        // BlocProvider<LanguageBloc>(
-        //     create: (BuildContext context) => _languageBloc),
-        BlocProvider<ThemeBloc>(create: (BuildContext context) => _themeBloc),
         BlocProvider<CartBloc>(create: (BuildContext context) => _cartBloc),
         BlocProvider<QSBloc>(create: (BuildContext context) => _qsBloc),
         BlocProvider<BudgetBloc>(create: (BuildContext context) => _budgetBloc),
+        BlocProvider<OrdersBloc>(create: (BuildContext context) => _ordersBloc),
       ],
       child: BlocConsumer<ApplicationBloc, ApplicationState>(
         listenWhen: (previous, current) =>
             current is SetupSuccessApplicationState,
-        listener: (context, state) => _homeBloc.add(SessionInitedHomeEvent()),
+        listener: (context, state) {
+          _homeBloc.add(SessionInitedHomeEvent());
+          _cartBloc.add(InitCartEvent());
+          _ordersBloc.add(LoadOrdersEvent());
+        },
         buildWhen:
             (ApplicationState previousState, ApplicationState currentState) =>
                 (currentState is LifecycleChangeInProgressApplicationState &&
@@ -140,34 +134,29 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
             homeWidget = const SplashScreen();
           }
 
-          return BlocBuilder<ThemeBloc, ThemeState>(
-            builder: (BuildContext context, ThemeState theme) {
-              return BlocListener<AuthBloc, AuthState>(
-                listenWhen: (previous, current) =>
-                    current is LogoutSuccessAuthState,
-                listener: (context, state) =>
-                    _applicationBloc.add(SetupApplicationEvent()),
-                child: MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  supportedLocales: L10n.delegate.supportedLocales,
-                  localizationsDelegates: const <
-                      LocalizationsDelegate<dynamic>>[
-                    L10n.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  localeResolutionCallback:
-                      (Locale locale, Iterable<Locale> supportedLocales) =>
-                          kDefaultLocale,
-                  navigatorObservers: <NavigatorObserver>[routeObserver],
-                  onGenerateRoute: Routes().generateRoute,
-                  theme: getIt.get<AppTheme>().lightTheme,
-                  darkTheme: getIt.get<AppTheme>().darkTheme,
-                  themeMode: ThemeMode.light,
-                  home: homeWidget,
-                ),
-              );
-            },
+          return BlocListener<AuthBloc, AuthState>(
+            listenWhen: (previous, current) =>
+                current is LogoutSuccessAuthState,
+            listener: (context, state) =>
+                _applicationBloc.add(SetupApplicationEvent()),
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              supportedLocales: L10n.delegate.supportedLocales,
+              localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+                L10n.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              localeResolutionCallback:
+                  (Locale locale, Iterable<Locale> supportedLocales) =>
+                      kDefaultLocale,
+              navigatorObservers: <NavigatorObserver>[routeObserver],
+              onGenerateRoute: Routes().generateRoute,
+              theme: getIt.get<AppTheme>().lightTheme,
+              darkTheme: getIt.get<AppTheme>().darkTheme,
+              themeMode: ThemeMode.light,
+              home: homeWidget,
+            ),
           );
         },
       ),

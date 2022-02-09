@@ -35,6 +35,7 @@ class _SearchBarState extends State<SearchBar> {
   final _productsRepo = ProductsRepository();
   var _controller = TextEditingController();
   SearchBloc _searchBloc;
+  String query;
 
   @override
   void initState() {
@@ -43,7 +44,10 @@ class _SearchBarState extends State<SearchBar> {
     getIt.get<AppGlobals>().globalKeySearchTabs =
         GlobalKey<CategoryTabsState>();
     _controller.addListener(() {
-      _searchBloc.add(QuerySearchEvent(query: _controller.text));
+      if (_controller.text != query) {
+        query = _controller.text;
+        _searchBloc.add(QuerySearchEvent(query: query));
+      }
     });
     if (widget.initialQuery?.isNotEmpty ?? false) {
       _controller.text = widget.initialQuery;
@@ -146,7 +150,11 @@ class _SearchBarState extends State<SearchBar> {
                                   .black,
                               suffix: IconButton(
                                   iconSize: 18.0,
-                                  onPressed: () => _controller.clear(),
+                                  onPressed: () {
+                                    BlocProvider.of<SearchBloc>(context)
+                                        .add(QuerySearchEvent(query: ''));
+                                    _controller.clear();
+                                  },
                                   icon: Icon(Feather.x_circle, color: kBlack)),
                               border: InputBorder.none,
                             ),

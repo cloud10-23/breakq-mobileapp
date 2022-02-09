@@ -17,18 +17,21 @@ class StoresRepository {
     final List<dynamic> _rawList = await dataProvider.get(uri);
 
     if (_rawList.isNotEmpty) {
-      List<Store> stores = _rawList
+      return _rawList
           .map<Store>(
               (dynamic json) => Store.fromJson(json as Map<String, dynamic>))
           .toList();
-      final currentLocation = getIt.get<AppGlobals>().currentPosition;
-      final newStores = <Store>[];
-      stores.forEach((store) {
-        newStores.add(Store.rebuild(
-            store, currentLocation.latitude, currentLocation.longitude));
-      });
-      return newStores;
     }
     return [];
+  }
+
+  Future<List<Store>> calculateDistances(List<Store> stores) async {
+    final currentLocation = getIt.get<AppGlobals>().currentPosition;
+    final newStores = <Store>[];
+    stores.forEach((store) {
+      newStores.add(Store.rebuild(
+          store, currentLocation.latitude, currentLocation.longitude));
+    });
+    return newStores;
   }
 }

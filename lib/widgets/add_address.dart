@@ -2,12 +2,10 @@ import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/repositories/address_repository.dart';
+import 'package:breakq/utils/form_validator.dart';
 import 'package:breakq/widgets/edit_text_widgets.dart';
 import 'package:breakq/widgets/theme_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -69,7 +67,9 @@ class AddEditAddressState extends State<AddEditAddress> {
                           initialValue: address?.fullName,
                           isFirstField: true,
                           onSaved: (name) => address.setName = name,
-                          error: "Please enter your name!",
+                          validators: [
+                            FormValidator.isRequired("Please enter your name!")
+                          ],
                           autoFillHints: [AutofillHints.name],
                         ),
                         FilledEditText(
@@ -77,7 +77,18 @@ class AddEditAddressState extends State<AddEditAddress> {
                           initialValue: address?.phone,
                           inputTpe: TextInputType.phone,
                           onSaved: (phone) => address.setPhone = phone,
-                          error: "Please enter your mobile number!",
+                          validators: [
+                            FormValidator.isRequired(
+                                "Please enter your mobile number!"),
+                            FormValidator.isMinLength(
+                                length: 10,
+                                errorMessage:
+                                    "Please enter a valid mobile number!"),
+                            FormValidator.isMaxLength(
+                                length: 10,
+                                errorMessage:
+                                    "Please enter a valid mobile number!"),
+                          ],
                           autoFillHints: [AutofillHints.telephoneNumber],
                         ),
                         Row(
@@ -90,7 +101,18 @@ class AddEditAddressState extends State<AddEditAddress> {
                                 inputTpe: TextInputType.number,
                                 onSaved: (pinCode) =>
                                     address.setPinCode = pinCode,
-                                error: "Please fill the pin code!",
+                                validators: [
+                                  FormValidator.isRequired(
+                                      "Please fill the pin code!"),
+                                  FormValidator.isMinLength(
+                                      length: 6,
+                                      errorMessage:
+                                          "Please enter a valid pin code!"),
+                                  FormValidator.isMaxLength(
+                                      length: 6,
+                                      errorMessage:
+                                          "Please enter a valid pin code!"),
+                                ],
                                 autoFillHints: [AutofillHints.postalCode],
                               ),
                             ),
@@ -103,7 +125,10 @@ class AddEditAddressState extends State<AddEditAddress> {
                                 onSaved: (houseNo) =>
                                     address.setHouseNo = houseNo,
                                 inputTpe: TextInputType.streetAddress,
-                                error: "Please fill the house no!",
+                                validators: [
+                                  FormValidator.isRequired(
+                                      "Please fill the house no!")
+                                ],
                                 autoFillHints: [
                                   AutofillHints.streetAddressLevel1
                                 ],
@@ -116,7 +141,10 @@ class AddEditAddressState extends State<AddEditAddress> {
                           initialValue: address?.street,
                           onSaved: (street) => address.setStreet = street,
                           inputTpe: TextInputType.streetAddress,
-                          error: "Please fill the address line!",
+                          validators: [
+                            FormValidator.isRequired(
+                                "Please fill the address line!")
+                          ],
                           autoFillHints: [AutofillHints.streetAddressLevel2],
                         ),
                         FilledEditText(
@@ -133,7 +161,10 @@ class AddEditAddressState extends State<AddEditAddress> {
                                 hint: "State",
                                 initialValue: address?.state,
                                 onSaved: (state) => address.setState = state,
-                                error: "Please fill the state!",
+                                validators: [
+                                  FormValidator.isRequired(
+                                      "Please fill the state!")
+                                ],
                                 autoFillHints: [AutofillHints.addressState],
                               ),
                             ),
@@ -144,7 +175,10 @@ class AddEditAddressState extends State<AddEditAddress> {
                                 hint: "City",
                                 initialValue: address?.city,
                                 onSaved: (city) => address.setCityTown = city,
-                                error: "Please fill the city!",
+                                validators: [
+                                  FormValidator.isRequired(
+                                      "Please fill the city!")
+                                ],
                                 isLastField: true,
                                 autoFillHints: [AutofillHints.addressCity],
                               ),

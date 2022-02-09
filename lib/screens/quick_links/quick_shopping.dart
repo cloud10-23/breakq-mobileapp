@@ -1,5 +1,7 @@
 import 'package:breakq/blocs/quick_shopping/qs_bloc.dart';
+import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/routes.dart';
+import 'package:breakq/main.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step2.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_step1.dart';
 import 'package:breakq/screens/quick_links/widgets/qs_success_dialog.dart';
@@ -51,7 +53,6 @@ class _QShoppingScreenState extends State<QShoppingScreen>
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<QSBloc>(context).add(LoadBillsQSEvent());
     wizardPages.add(StepsWizardPageModel.fromJson(<String, dynamic>{
       'step': 1,
       'body': QSStep1(),
@@ -128,8 +129,7 @@ class _QShoppingScreenState extends State<QShoppingScreen>
       listener: (context, state) {
         if (state is SessionRefreshSuccessQSState &&
             state.session.isSubmitted) {
-          Navigator.of(context, rootNavigator: true)
-              .popAndPushNamed(Routes.cart);
+          getIt.get<AppGlobals>().homeController.animateTo(3);
           Navigator.of(context, rootNavigator: true)
               .push(MaterialPageRoute(builder: (context) => QSSuccessDialog()));
         }

@@ -44,7 +44,8 @@ class HomeScreenState extends State<HomeScreen> {
           iconTheme: IconThemeData(color: kWhite),
           actionsIconTheme: IconThemeData(color: kWhite),
           backgroundColor: kBlue,
-          leadingWidth: 15,
+          titleSpacing: 0.0,
+          leadingWidth: 30,
           title: Padding(
             padding: const EdgeInsets.only(top: kPaddingS),
             child: Padding(

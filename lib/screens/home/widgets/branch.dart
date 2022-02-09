@@ -2,6 +2,7 @@ import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/stores.dart';
+import 'package:breakq/data/repositories/store_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
@@ -58,12 +59,21 @@ class BranchSelectorScreen extends StatefulWidget {
 }
 
 class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
-  final _stores = getIt.get<AppGlobals>().stores;
+  final _stores = [];
   Store selectedStore;
   @override
   void initState() {
     super.initState();
-    if (_stores != null && _stores.isNotEmpty) selectedStore = _stores[0];
+    asyncInit();
+  }
+
+  void asyncInit() async {
+    getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
+    setState(() {
+      _stores.clear();
+      _stores.addAll(getIt.get<AppGlobals>().stores);
+      if (_stores != null && _stores.isNotEmpty) selectedStore = _stores[0];
+    });
   }
 
   @override
@@ -87,37 +97,42 @@ class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
                 CustomTitle(title: "Please select a branch"),
                 SizedBox(height: 50),
               ] +
-              List.generate(
-                _stores.length,
-                (index) => ListTile(
-                  leading: Icon(
-                    FontAwesome5Solid.store,
-                    size: 18.0,
-                    color: kBlack,
-                  ),
-                  minVerticalPadding: 10.0,
-                  title: Text(_stores[index].branchName,
-                      style: Theme.of(context).textTheme.bodyText1.w700),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: kPaddingS),
-                    child: Text(
-                        "${_stores[index].branchName}, " + //${_stores[index].branchStore}, " +
-                            "${_stores[index].city}, ${_stores[index].state}," +
-                            " ${_stores[index].country}, ${_stores[index].pinCode} \n ${_stores[index].distance.toStringAsFixed(2)} KM",
-                        style: Theme.of(context).textTheme.caption.w600),
-                  ),
-                  trailing: Radio(
-                    value: _stores[index],
-                    groupValue: selectedStore,
-                    onChanged: (value) => setState(() {
-                      selectedStore = _stores[index];
-                    }),
-                  ),
-                  onTap: () => setState(() {
-                    selectedStore = _stores[index];
-                  }),
-                ),
-              ),
+              ((_stores.isEmpty)
+                  ? <Widget>[Center(child: CircularProgressIndicator())]
+                  : List.generate(
+                      _stores.length,
+                      (index) => ListTile(
+                        leading: Icon(
+                          FontAwesome5Solid.store,
+                          size: 18.0,
+                          color: kBlack,
+                        ),
+                        minVerticalPadding: 10.0,
+                        title: Text(_stores[index].branchName,
+                            style: Theme.of(context).textTheme.bodyText1.w700),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: kPaddingS),
+                          child: Text(
+                              "${_stores[index].branchName}, " + //${_stores[index].branchStore}, " +
+                                  "${_stores[index].city}, ${_stores[index].state}," +
+                                  " ${_stores[index].country}, ${_stores[index].pinCode} \n" +
+                                  ((_stores[index].distance != null)
+                                      ? " ${_stores[index].distance?.toStringAsFixed(2) ?? ''} KM"
+                                      : ''),
+                              style: Theme.of(context).textTheme.caption.w600),
+                        ),
+                        trailing: Radio(
+                          value: _stores[index],
+                          groupValue: selectedStore,
+                          onChanged: (value) => setState(() {
+                            selectedStore = _stores[index];
+                          }),
+                        ),
+                        onTap: () => setState(() {
+                          selectedStore = _stores[index];
+                        }),
+                      ),
+                    )),
         ),
       ),
       bottomNavigationBar: InkWell(

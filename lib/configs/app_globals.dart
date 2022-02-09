@@ -39,6 +39,9 @@ class AppGlobals {
   /// [GlobalKey] for checkout screen in [CheckoutNavigator].
   GlobalKey<NavigatorState> globalKeyCheckoutNavigator;
 
+  /// [TabController] for home screen.
+  TabController homeController;
+
   /// Dark Theme option
   DarkOption darkThemeOption = DarkOption.alwaysOff;
 

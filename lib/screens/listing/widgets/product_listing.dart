@@ -72,6 +72,13 @@ class _ProductListingState extends State<ProductListing> {
   }
 
   @override
+  void didUpdateWidget(covariant ProductListing oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _pagingController.refresh();
+    _fetchPage(1);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final defaultListType = ToolbarOptionModel.fromJson(listTypes[0]);
 

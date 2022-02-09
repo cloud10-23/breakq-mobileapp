@@ -1,17 +1,13 @@
 import 'package:breakq/data/repositories/store_repository.dart';
 import 'package:breakq/utils/console.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/blocs/auth/auth_bloc.dart';
-import 'package:breakq/blocs/language/language_bloc.dart';
-import 'package:breakq/blocs/theme/theme_bloc.dart';
 import 'package:breakq/configs/app_theme.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/main.dart';
 import 'package:breakq/utils/app_preferences.dart';
-import 'package:breakq/utils/string.dart';
 import 'package:location/location.dart';
 
 part 'application_event.dart';
@@ -19,14 +15,10 @@ part 'application_state.dart';
 
 class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   ApplicationBloc({
-    this.languageBloc,
     this.authBloc,
-    this.themeBloc,
   }) : super(InitialApplicationState());
 
   final AuthBloc authBloc;
-  final LanguageBloc languageBloc;
-  final ThemeBloc themeBloc;
 
   @override
   Stream<ApplicationState> mapEventToState(ApplicationEvent event) async* {
@@ -47,22 +39,7 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     yield SetupInProgressApplicationState();
 
     /// Load server/global settings.
-    add(SettingsLoadedApplicationEvent());
-
-    /// Get the previously selected language from preferences.
-    final String selectedLanguage =
-        await getIt.get<AppPreferences>().getString(PreferenceKey.language);
-
-    /// Save current language to globals.
-    if (selectedLanguage.isNullOrEmpty) {
-      languageBloc.add(ChangeRequestedLanguageEvent(kDefaultLocale));
-    } else {
-      languageBloc.add(ChangeRequestedLanguageEvent(Locale(selectedLanguage)));
-    }
-
-    /// Get the previously selected dark option from preferences.
-    // final String selectedDarkOption =
-    //     await getIt.get<AppPreferences>().getString(PreferenceKey.darkOption);
+    // add(SettingsLoadedApplicationEvent());
 
     /// Deafult dark option is 'dynamic'.
     DarkOption darkOption = DarkOption.alwaysOff;
@@ -75,37 +52,33 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     // }
     // Save the dark option value for future use.
     getIt.get<AppGlobals>().darkThemeOption = darkOption;
-    themeBloc.add(ChangeRequestedThemeEvent(
-        darkOption: getIt.get<AppGlobals>().darkThemeOption));
 
     /// Get the current app version.
-    final String oldVersion =
-        await getIt.get<AppPreferences>().getString(PreferenceKey.appVersion);
+    // final String oldVersion =
+    //     await getIt.get<AppPreferences>().getString(PreferenceKey.appVersion);
 
     /// Is the user onboarded already?
     getIt.get<AppGlobals>().isUserOnboarded = await getIt
         .get<AppPreferences>()
         .containsKey(PreferenceKey.isOnboarded);
 
-    // New install/version?
-    if (oldVersion != kAppVersion) {
-      // Save the new version info.
-      await getIt
-          .get<AppPreferences>()
-          .setString(PreferenceKey.appVersion, kAppVersion);
-      // Clear logged in user info, and force to re-login.
-      // await getIt.get<AppPreferences>().remove(PreferenceKey.user);
-    } else {
-      if (getIt.get<AppGlobals>()?.isUserOnboarded ?? false) {
-        // Validate token/profile data if exists
-        authBloc.add(ProfileLoadedAuthEvent());
-      }
-    }
+    // // New install/version?
+    // if (oldVersion != kAppVersion) {
+    //   // Save the new version info.
+    //   await getIt
+    //       .get<AppPreferences>()
+    //       .setString(PreferenceKey.appVersion, kAppVersion);
+    //   // Clear logged in user info, and force to re-login.
+    //   // await getIt.get<AppPreferences>().remove(PreferenceKey.user);
+    // } else {
+    // }
 
     // If user is onboarded, continue to location services initialization.
     if (getIt.get<AppGlobals>()?.isUserOnboarded ?? false) {
       /// Init location services.
+      authBloc.add(ProfileLoadedAuthEvent());
       add(LocationServicesInitedApplicationEvent());
+      yield SetupSuccessApplicationState();
     } else {
       /// User is not onboarded. Lets welcome them.
       yield OnboardingInProgressApplicationState();
@@ -161,7 +134,6 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     } catch (e) {
       Console.log('Location ERROR', e.toString(), error: e);
     }
-    getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
 
     // Setup is completed. On the main screen.
     yield SetupSuccessApplicationState();

@@ -64,11 +64,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       final SearchSessionModel session =
           (state as RefreshSuccessSearchState).session;
 
-      List<Product> _products;
+      final List<Product> _products = [];
       if (session.query?.isNotEmpty ?? false) {
-        _products = await _productRepository.getProducts(
-          product: session.query,
-        );
+        _products.clear();
+        if (num.tryParse(session.query) != null) {
+          _products.addAll(await _productRepository.getProducts(
+            productCode: session.query,
+          ));
+        } else {
+          _products.addAll(await _productRepository.getProducts(
+            product: session.query,
+          ));
+        }
       }
 
       yield RefreshSuccessSearchState(session.rebuild(
@@ -81,18 +88,24 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapQuerySearchEventToState(
       QuerySearchEvent event) async* {
     if (state is RefreshSuccessSearchState) {
-      if (event.query.isNotEmpty) {
-        final SearchSessionModel session =
-            (state as RefreshSuccessSearchState).session;
+      final SearchSessionModel session =
+          (state as RefreshSuccessSearchState).session;
 
+      if ((event.query?.isEmpty ?? true) || event.query.length <= 3) {
         yield RefreshSuccessSearchState(session.rebuild(
-          query: event.query,
-          products: null,
-          isLoading: true,
+          products: [],
+          isLoading: false,
         ));
-
-        add(FilteredListRequestedSearchEvent());
+        return;
       }
+
+      yield RefreshSuccessSearchState(session.rebuild(
+        query: event.query,
+        products: null,
+        isLoading: true,
+      ));
+
+      add(FilteredListRequestedSearchEvent());
     }
   }
 

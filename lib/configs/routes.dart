@@ -186,13 +186,7 @@ class Routes {
       /// My Orders
       case orders:
         return MaterialPageRoute<MyOrders>(
-          builder: (BuildContext context) => BlocProvider<OrdersBloc>(
-            create: (_) => OrdersBloc()
-              ..add(
-                LoadOrdersEvent(),
-              ),
-            child: MyOrders(),
-          ),
+          builder: (BuildContext context) => MyOrders(),
         );
       case order_detail:
         return MaterialPageRoute<OrderDetails>(

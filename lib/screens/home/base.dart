@@ -30,13 +30,14 @@ class Base extends StatefulWidget {
 }
 
 class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController controller;
   final bottomNavigationKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 4, vsync: this);
+    getIt.get<AppGlobals>().homeController = controller;
   }
 
   @override
@@ -113,20 +114,14 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                     );
                 },
                 child: TabBarView(
-                  controller: _controller,
+                  controller: controller,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
                     HomeScreen(
                       session: session,
                     ),
                     QShoppingScreen(),
-                    BlocProvider<OrdersBloc>(
-                      create: (_) => OrdersBloc()
-                        ..add(
-                          LoadOrdersEvent(),
-                        ),
-                      child: MyOrders(),
-                    ),
+                    MyOrders(),
                     CartPage(),
                   ],
                 ),
@@ -134,7 +129,7 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
               drawer: Drawer(
                 child: DrawerScreen(categories: categoryTabs),
               ),
-              floatingActionButton: (_controller.index % 2 == 0)
+              floatingActionButton: (controller.index % 2 == 0)
                   ? ScanFloatingButtonExtended()
                   : null,
               floatingActionButtonLocation:
@@ -147,8 +142,7 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                 ),
                 child: SnakeNavigationBar.color(
                   key: bottomNavigationKey,
-                  currentIndex:
-                      (_controller.index == 3) ? 4 : _controller.index,
+                  currentIndex: (controller.index == 3) ? 4 : controller.index,
                   showUnselectedLabels: true,
                   showSelectedLabels: true,
                   height: 65,
@@ -173,17 +167,17 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                             .showSnackBar(_snackBar);
                       }
                       setState(() {
-                        _controller.animateTo(0);
+                        controller.animateTo(0);
                       });
                       return;
                     } else if (position == 4) {
                       setState(() {
-                        _controller.animateTo(3);
+                        controller.animateTo(3);
                       });
                       return;
                     }
                     setState(() {
-                      _controller.animateTo(position);
+                      controller.animateTo(position);
                     });
                   },
                   items: [
@@ -214,9 +208,9 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
   }
 
   Future<bool> _onBackPressed(BuildContext context) async {
-    if (_controller.index > 0) {
+    if (controller.index > 0) {
       setState(() {
-        _controller.animateTo(0);
+        controller.animateTo(0);
       });
       return false;
     }

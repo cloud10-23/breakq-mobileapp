@@ -18,14 +18,13 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
-  AuthBloc({@required UserRepository userRepository, @required this.cartBloc})
+  AuthBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(InitialAuthState());
   // AuthBloc() : super(InitialAuthState());
 
   final UserRepository _userRepository;
-  final CartBloc cartBloc;
   String _verID = '';
 
   StreamSubscription subscription;
@@ -273,25 +272,16 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
   Stream<AuthState> _mapGetProfileAuthEventToState() async* {
     yield LoadingAuthState();
 
-    final bool hasToken = await getIt
-        .get<AppPreferences>()
-        .containsKey(PreferenceKey.isOnboarded);
+    getIt.get<AppGlobals>().user = _userRepository.getUser();
+    // User user = _userRepository.getUser();
+    // getIt.get<AppGlobals>().user = UserModel(
+    //   facebookId: user.uid,
+    //   fullName: user.displayName,
+    //   email: user.email,
+    //   profilePhoto: user.photoURL,
+    // );
 
-    if (hasToken) {
-      getIt.get<AppGlobals>().user = _userRepository.getUser();
-      // User user = _userRepository.getUser();
-      // getIt.get<AppGlobals>().user = UserModel(
-      //   facebookId: user.uid,
-      //   fullName: user.displayName,
-      //   email: user.email,
-      //   profilePhoto: user.photoURL,
-      // );
-
-      add(UserSavedAuthEvent(getIt.get<AppGlobals>().user));
-      cartBloc.add(InitCartFromAPIEvent());
-    } else {
-      yield AuthenticationFailureAuthState();
-    }
+    yield LoginSuccessAuthState();
   }
 
   Stream<AuthState> _mapLogoutAuthEventToState() async* {

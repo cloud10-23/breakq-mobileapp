@@ -1,5 +1,5 @@
 import 'package:breakq/configs/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:breakq/utils/form_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 
@@ -139,7 +139,6 @@ class FilledEditText extends StatefulWidget {
   final String hint;
   final String initialValue;
   final int maxLine;
-  final String error;
   final TextInputType inputTpe;
   final FormFieldSetter onSaved;
   final bool isFirstField;
@@ -147,6 +146,7 @@ class FilledEditText extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final TextCapitalization capitalization;
   final Iterable<String> autoFillHints;
+  final List<String Function(String)> validators;
 
   FilledEditText({
     this.fontSize = 20.0,
@@ -155,7 +155,7 @@ class FilledEditText extends StatefulWidget {
     this.onchanged,
     @required this.hint,
     this.initialValue,
-    this.error,
+    this.validators = const [],
     this.maxLine = 1,
     this.onSaved,
     this.inputTpe,
@@ -188,12 +188,7 @@ class FilledEditTextState extends State<FilledEditText> {
         textCapitalization: widget.capitalization ?? TextCapitalization.words,
         textInputAction:
             (widget.isLastField) ? TextInputAction.done : TextInputAction.next,
-        validator: (value) {
-          if (value.isEmpty && widget.error != null) {
-            return widget.error;
-          }
-          return null;
-        },
+        validator: FormValidator.validators(widget.validators),
         // onFieldSubmitted: widget.onSaved,
         onSaved: widget.onSaved,
         style: Theme.of(context).textTheme.bodyText1.fs14.number,

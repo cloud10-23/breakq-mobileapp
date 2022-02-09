@@ -22,7 +22,17 @@ class Price {
     );
   }
 
-  factory Price.calc(double orgPrice, double price, {double extraOffer = 10}) {
+  factory Price.addProduct(Price oldPrice, double productPrice) {
+    return Price(
+      totalAmount: (oldPrice.finalAmount ?? 0) + productPrice,
+      discount: oldPrice.discount,
+      extraOffer: oldPrice.extraOffer,
+      finalAmount: (oldPrice.finalAmount ?? 0) + productPrice,
+      savings: oldPrice.savings,
+    );
+  }
+
+  factory Price.calc(double orgPrice, double price, {double extraOffer = 0}) {
     return Price(
       totalAmount: orgPrice,
       discount: orgPrice - price,

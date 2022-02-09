@@ -4,7 +4,7 @@ import 'package:breakq/data/models/product_model.dart';
 import 'package:flutter/foundation.dart';
 
 class Cart {
-  Cart({this.cartItems, this.cartValue, this.noOfProducts});
+  Cart({this.cartItems, this.cartValue, this.noOfProducts = 0});
   Map<Product, int> cartItems;
   int noOfProducts;
   Price cartValue;
@@ -55,6 +55,9 @@ class Cart {
       cartItems[product] += quantity;
     } else
       cartItems[product] = quantity;
+    cartValue =
+        Price.addProduct(cartValue ?? Price(), product.salePrice * quantity);
+    noOfProducts += quantity;
     return cartItems[product];
   }
 
@@ -68,10 +71,16 @@ class Cart {
       return 0;
     }
     this.cartItems[product] -= quantity;
+    cartValue =
+        Price.addProduct(cartValue ?? Price(), -product.salePrice * quantity);
+    noOfProducts -= quantity;
     return this.cartItems[product];
   }
 
   void removeProduct({@required Product product}) {
-    this.cartItems.remove(product);
+    final qty = this.cartItems.remove(product);
+    cartValue =
+        Price.addProduct(cartValue ?? Price(), -product.salePrice * qty);
+    noOfProducts -= qty;
   }
 }

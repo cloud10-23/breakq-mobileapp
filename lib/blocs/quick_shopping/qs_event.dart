@@ -5,7 +5,11 @@ abstract class QSEvent {
   String toString() => '$runtimeType';
 }
 
-class LoadBillsQSEvent extends QSEvent {}
+class LoadBillsQSEvent extends QSEvent {
+  LoadBillsQSEvent({this.orders});
+
+  final List<Order> orders;
+}
 
 class SelectAllBillsQSEvent extends QSEvent {}
 

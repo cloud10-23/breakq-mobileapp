@@ -68,9 +68,9 @@ class _TimeSlotModuleState extends State<TimeSlotModule> {
               children:
                   List.generate(selectedDate.timeSchedules.length, (index) {
                 final time = selectedDate.timeSchedules[index];
-                // if (time.enabled)
-                return _timetableItem(index, selectedTimeIndex, time.time);
-                // return Container();
+                if (time.enabled)
+                  return _timetableItem(index, selectedTimeIndex, time.time);
+                return Container();
               }),
             ),
           )
