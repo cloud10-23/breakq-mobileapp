@@ -2,11 +2,13 @@ import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/orders/widgets/error.dart';
+import 'package:breakq/screens/orders/widgets/invoice.dart';
 import 'package:breakq/screens/orders/widgets/invoice_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pdf/pdf.dart';
 
 class Invoice extends StatelessWidget {
   Invoice({@required this.order});
@@ -75,8 +77,11 @@ class Invoice extends StatelessWidget {
                 alternate: true,
                 label: 'Download Invoice',
                 icon: FontAwesome.download,
-                onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Download in progress...'))),
+                onPressed: () {
+                  generateInvoice(order, PdfPageFormat.a4);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Download in progress...')));
+                },
               ),
             ),
           ],

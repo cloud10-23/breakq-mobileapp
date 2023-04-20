@@ -10,8 +10,10 @@ class GridAddButton extends StatelessWidget {
     return Container(
       height: 30,
       margin: EdgeInsets.all(kPaddingM),
-      child: FlatButton(
-          color: kBlue,
+      child: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: kBlue,
+          ),
           onPressed: onProductAdd,
           child: Icon(Icons.add, color: kWhite)),
     );
@@ -82,13 +84,15 @@ class ListAddItemButton extends StatelessWidget {
     return Container(
       width: 120,
       padding: const EdgeInsets.only(right: kPaddingM),
-      child: FlatButton(
-          color: kBlue,
+      child: TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: kBlue,
+            fixedSize: Size.fromHeight(30),
+            shape: ContinuousRectangleBorder(
+                side: BorderSide(color: kWhite),
+                borderRadius: BorderRadius.all(Radius.circular(25.0))),
+          ),
           onPressed: onProductAdd,
-          height: 30,
-          shape: OutlineInputBorder(
-              borderSide: BorderSide(color: kWhite),
-              borderRadius: BorderRadius.all(Radius.circular(25.0))),
           child: Row(
             children: [
               Icon(Icons.add, color: kWhite),
@@ -125,7 +129,7 @@ class ListAddRemButtons extends StatelessWidget {
                 bottomLeft: Radius.circular(25.0),
               ),
             ),
-            child: FlatButton(
+            child: TextButton(
               onPressed: onRem,
               child: Icon(Icons.remove, color: kBlack, size: 15.0),
             ),
@@ -140,13 +144,15 @@ class ListAddRemButtons extends StatelessWidget {
           ),
           Container(
             width: 35,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25.0),
-                bottomRight: Radius.circular(25.0),
-              )),
-              color: kBlue,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(25.0),
+                  bottomRight: Radius.circular(25.0),
+                )),
+                backgroundColor: kBlue,
+              ),
               onPressed: onAdd,
               child: Icon(Icons.add, color: kWhite, size: 15),
             ),
@@ -180,7 +186,8 @@ class ListAddRemButtonSmall extends StatelessWidget {
                 bottomLeft: Radius.circular(25.0),
               ),
             ),
-            child: FlatButton(
+            child: TextButton(
+              style: TextButton.styleFrom(padding: EdgeInsets.all(0)),
               onPressed: onRem,
               child: Icon(Icons.remove, color: kBlack, size: 12.0),
             ),
@@ -194,13 +201,16 @@ class ListAddRemButtonSmall extends StatelessWidget {
           ),
           Container(
             width: 25,
-            child: FlatButton(
+            child: TextButton(
+              style: TextButton.styleFrom(
+              padding: EdgeInsets.all(0),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                 topRight: Radius.circular(25.0),
                 bottomRight: Radius.circular(25.0),
               )),
-              color: kBlue,
+              backgroundColor: kBlue,
+              ),
               onPressed: onAdd,
               child: Icon(Icons.add, color: kWhite, size: 12),
             ),
@@ -239,15 +249,16 @@ class ResetCartButtonText extends StatelessWidget {
     return Container(
       width: 70,
       margin: EdgeInsets.all(kPaddingS),
-      child: FlatButton(
+      child: TextButton(
+              style: TextButton.styleFrom(
           padding: EdgeInsets.all(kPaddingS),
-          color: kWhite,
-          onPressed: onProductDel,
-          height: 15,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shape: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black12),
+          backgroundColor: kWhite,
+          fixedSize: Size.fromHeight(15),
+          shape: ContinuousRectangleBorder(
+              side: BorderSide(color: Colors.black12),
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
+              ),
+          onPressed: onProductDel,
           child: Row(
             children: [
               Icon(Icons.delete, color: kBlackAccent, size: 15),

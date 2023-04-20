@@ -121,12 +121,14 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(
                 left: kPaddingM, right: kPaddingM, bottom: kPaddingM),
-            child: FlatButton(
-              color: kWhite,
-              highlightColor: kBlue,
+            child: TextButton(
+              style: TextButton.styleFrom(
+              backgroundColor: kWhite,
+              shadowColor: kBlue,
               shape: const RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.all(Radius.circular(kBoxDecorationRadius))),
+              ),
               onPressed: () {
                 if (widget.onClose != null) {
                   widget.onClose();

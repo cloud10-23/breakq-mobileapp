@@ -12,17 +12,21 @@ class StoresRepository {
   final DataProvider dataProvider;
 
   Future<List<Store>> getStores() async {
-    final Uri uri = Uri.http(apiBase, apiGetStores);
+    // final Uri uri = Uri.http(apiBase, apiGetStores);
 
-    final List<dynamic> _rawList = await dataProvider.get(uri);
+    // final List<dynamic> _rawList = await dataProvider.get(uri);
 
-    if (_rawList.isNotEmpty) {
-      return _rawList
-          .map<Store>(
-              (dynamic json) => Store.fromJson(json as Map<String, dynamic>))
-          .toList();
-    }
-    return [];
+    // if (_rawList.isNotEmpty) {
+    //   return _rawList
+    //       .map<Store>(
+    //           (dynamic json) => Store.fromJson(json as Map<String, dynamic>))
+    //       .toList();
+    // }
+    return [
+      Store(storeId: 1,branchName: "Branch 1",branchStore: "",city: "Chennai",country: "India",mobileNo: "+91 9874327722",state: "TN", distance: 1),
+      Store(storeId: 2,branchName: "Branch 2",branchStore: "",city: "Chennai",country: "India",mobileNo: "+91 9923557229",state: "TN",distance: 10),
+      Store(storeId: 3,branchName: "Branch 3",branchStore: "",city: "Chennai",country: "India",mobileNo: "+91 7321039223",state: "TN",distance: 7),
+    ];
   }
 
   Future<List<Store>> calculateDistances(List<Store> stores) async {

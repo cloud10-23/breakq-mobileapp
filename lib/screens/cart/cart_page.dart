@@ -188,7 +188,10 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
             Spacer(),
-            RaisedButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kBlue,
+              ),
               onPressed: () {
                 return showModalBottomSheet(
                   context: context,

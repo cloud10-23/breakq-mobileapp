@@ -1,0 +1,3 @@
+BreakQ is an E-Commerce app that enables users to self-checkout at their local stores faster, by scanning the products and adding to cart and simply paying at the counter.
+
+We use location in this app to identify the branch of the store that is closer to their location, if they are in the store, based on the location, their branch will be auto selected.We use location in this app to identify the branch of the store that is closer to their location, if they are in the store, based on the location, their branch will be auto selected. It is also used to calculate the approx. delivery fee.

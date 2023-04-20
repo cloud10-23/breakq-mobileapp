@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:breakq/blocs/home/home_bloc.dart';
 import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/stores.dart';
 import 'package:breakq/data/repositories/store_repository.dart';
 import 'package:breakq/main.dart';
+import 'package:breakq/utils/app_preferences.dart';
 import 'package:breakq/widgets/bold_title.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:flutter/material.dart';
@@ -68,12 +71,30 @@ class _BranchSelectorScreenState extends State<BranchSelectorScreen> {
   }
 
   void asyncInit() async {
-    getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
+    if (await AppPreferences.instance.containsKey(PreferenceKey.stores)) {
+      getIt.get<AppGlobals>().stores = [];
+      final List<String> stores =
+          await AppPreferences.instance.getStringList(PreferenceKey.stores);
+
+      if (stores == null || stores.length <= 0) {
+        getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
+      } else {
+        for (final s in stores)
+          getIt.get<AppGlobals>().stores.add(Store.fromJson(jsonDecode(s)));
+      }
+    } else {
+      getIt.get<AppGlobals>().stores = await StoresRepository().getStores();
+    }
+
     setState(() {
       _stores.clear();
       _stores.addAll(getIt.get<AppGlobals>().stores);
       if (_stores != null && _stores.isNotEmpty) selectedStore = _stores[0];
     });
+    final stores = <String>[];
+    for (final s in getIt.get<AppGlobals>().stores)
+      stores.add(jsonEncode(s.toJson()));
+    await AppPreferences.instance.setStringList(PreferenceKey.stores, stores);
   }
 
   @override

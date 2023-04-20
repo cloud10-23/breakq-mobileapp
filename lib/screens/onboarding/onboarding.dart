@@ -55,7 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           .textTheme
           .subtitle1
           .copyWith(color: kWhite, height: 1.8),
-      descriptionPadding:
+      bodyPadding:
           const EdgeInsets.fromLTRB(kPaddingM, 0, kPaddingM, kPaddingM),
       imagePadding: const EdgeInsets.all(kPaddingL),
       boxDecoration: BoxDecoration(
@@ -86,9 +86,9 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         body: Stack(
           children: <Widget>[
             IntroductionScreen(
-              globalBackgroundColor: kWhite,
+              globalBackgroundColor: kBlue,
               showSkipButton: true,
-              skipFlex: 0,
+              skipOrBackFlex: 0,
               nextFlex: 0,
               dotsDecorator: DotsDecorator(
                 size: const Size(10.0, 10.0), // size of dots

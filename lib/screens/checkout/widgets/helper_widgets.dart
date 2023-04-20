@@ -43,7 +43,7 @@ class ShowQRModule extends StatelessWidget {
         ),
         SizedBox(height: kPaddingL),
         Center(
-          child: QrImage(
+          child: QrImageWidget(
             data: billNo ?? 'ERROR',
             version: QrVersions.auto,
             backgroundColor: kWhite,

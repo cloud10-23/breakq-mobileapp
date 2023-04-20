@@ -4,6 +4,7 @@ import 'package:breakq/data/models/address.dart';
 import 'package:breakq/data/models/cart_api_model.dart';
 import 'package:breakq/data/models/my_order.dart';
 import 'package:breakq/screens/orders/widgets/error.dart';
+import 'package:breakq/screens/orders/widgets/invoice.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/price_details.dart';
@@ -14,6 +15,7 @@ import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pdf/pdf.dart';
 
 class OrderDetails extends StatefulWidget {
   OrderDetails({@required this.order});
@@ -114,8 +116,11 @@ class _OrderDetailsState extends State<OrderDetails> {
           icon: Icon(Ionicons.md_download),
           label: Text('Download Invoice'.toUpperCase()),
           style: ElevatedButton.styleFrom(primary: kPrimaryColor),
-          onPressed: () => ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Download in progress...'))),
+          onPressed: () {
+            generateInvoice(widget.order, PdfPageFormat.a4);
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Download in progress...')));
+          },
         ),
       ),
     ));

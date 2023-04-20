@@ -37,7 +37,7 @@ const double kTimelineDateSize = 70.0;
 
 // Colors
 const Color kPrimaryColor = kBlue; // Color(0xFFFDC500); //Color(0xFF1565C0);
-const String kPrimaryColorHex = "0xFFFDC500";
+const String kPrimaryColorHex = "1565C0";
 const Color kPrimaryAccentColor = Color(0x77FDC500);
 const Color kWhite = Color(0xFFFFFFFF);
 const Color kBlack = Color(0xFF333333);
@@ -412,6 +412,7 @@ class PreferenceKey {
   static const String notification = 'notification';
   static const String darkOption = 'darkOption';
   static const String recentlyScanned = 'recentlyScanned';
+  static const String stores = 'stores';
 }
 
 enum CheckoutType { walkIn, pickUp, delivery }

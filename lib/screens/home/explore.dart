@@ -1,3 +1,5 @@
+import 'package:breakq/blocs/cart/cart_bloc.dart';
+import 'package:breakq/blocs/orders/orders_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/configs/routes.dart';
 import 'package:breakq/data/models/category_tab_model.dart';
@@ -11,6 +13,7 @@ import 'package:breakq/utils/text_style.dart';
 import 'package:breakq/widgets/card_template.dart';
 import 'package:breakq/widgets/horizontal_products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -26,6 +29,8 @@ class HomeScreenState extends State<HomeScreen> {
   final ScrollController _customScrollViewController = ScrollController();
   @override
   void initState() {
+    BlocProvider.of<CartBloc>(context).add(InitCartEvent());
+    BlocProvider.of<OrdersBloc>(context).add(LoadOrdersEvent());
     super.initState();
   }
 

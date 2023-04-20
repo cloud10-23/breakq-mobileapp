@@ -56,8 +56,10 @@ class UI {
       message: message,
       actions: <Widget>[
         Builder(
-          builder: (context) => FlatButton(
-            color: kBlue,
+          builder: (context) => TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: kBlue,
+            ),
             child: Text(buttonText),
             onPressed: () {
               Navigator.of(context).pop();
@@ -86,15 +88,16 @@ class UI {
       icon: Icons.help,
       // iconBackgroundColor: kBlue200,
       actions: <Widget>[
-        FlatButton(
-          textColor: Theme.of(context).buttonColor,
+        TextButton(
+            style: TextButton.styleFrom(
+            ),
           child: Text(okButtonText ?? L10n.of(context).commonBtnOk),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop();
             onConfirmation();
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text(cancelButtonText ?? L10n.of(context).commonBtnCancel),
           onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
         ),
@@ -116,8 +119,10 @@ class UI {
       iconBackgroundColor: Colors.red,
       barrierDissmissable: true,
       actions: <Widget>[
-        FlatButton(
-          color: Theme.of(context).buttonColor,
+        TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: Theme.of(context).buttonColor,
+        ),
           child: Text(L10n.of(context).commonBtnClose.toUpperCase()),
           onPressed: () {
             if (onPressed != null) {

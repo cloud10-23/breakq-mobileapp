@@ -131,9 +131,11 @@ class OrderItem extends StatelessWidget {
             SizedBox(height: 5),
             Container(
               constraints: BoxConstraints.tight(Size.fromHeight(35)),
-              child: RaisedButton(
-                elevation: 0.0,
-                padding: EdgeInsets.zero,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0.0,
+                  padding: EdgeInsets.zero,
+                ),
                 child: Text('View Details'),
                 onPressed: () => Navigator.of(context)
                     .pushNamed(Routes.order_detail, arguments: order),

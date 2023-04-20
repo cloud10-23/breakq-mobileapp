@@ -115,8 +115,6 @@ class _MainAppState extends State<MainApp> /*with WidgetsBindingObserver */ {
             current is SetupSuccessApplicationState,
         listener: (context, state) {
           _homeBloc.add(SessionInitedHomeEvent());
-          _cartBloc.add(InitCartEvent());
-          _ordersBloc.add(LoadOrdersEvent());
         },
         buildWhen:
             (ApplicationState previousState, ApplicationState currentState) =>

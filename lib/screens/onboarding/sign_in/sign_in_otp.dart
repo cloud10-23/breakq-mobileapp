@@ -197,7 +197,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                     style: Theme.of(context).textTheme.bodyText1.w500,
                     textAlign: TextAlign.center,
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {},
                     child: Text(
                       L10n.of(context).signInOTPResend,

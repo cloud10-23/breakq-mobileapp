@@ -96,8 +96,9 @@ class PriceDetails extends StatelessWidget {
               ),
               BoldTitle(
                 title: '₹ ' +
-                    ((price.delivery *
-                            getIt.get<AppGlobals>().selectedStore?.distance)
+                    (((price.delivery ?? 0) *
+                            (getIt.get<AppGlobals>().selectedStore?.distance ??
+                                1))
                         .toStringAsFixed(2)),
                 padding: EdgeInsets.symmetric(horizontal: kPaddingM),
                 color: Colors.black54,

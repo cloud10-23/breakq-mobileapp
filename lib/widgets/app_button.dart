@@ -34,7 +34,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

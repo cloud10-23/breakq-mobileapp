@@ -206,7 +206,7 @@ class _ChBottomBarWithButtonState extends State<ChBottomBarWithButton> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      RaisedButton(
+                      ElevatedButton(
                         onPressed: widget.onTap ??
                             () {
                               BlocProvider.of<CheckoutBloc>(context)

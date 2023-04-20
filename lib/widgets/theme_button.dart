@@ -37,8 +37,11 @@ class ThemeButton extends StatelessWidget {
     if (!alternate)
       return SizedBox(
         height: kButtonHeight,
-        child: RaisedButton(
-          padding: EdgeInsets.symmetric(horizontal: kPaddingL),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(horizontal: kPaddingL),
+            backgroundColor: kBlue,
+          ),
           onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,8 +59,10 @@ class ThemeButton extends StatelessWidget {
     else
       return SizedBox(
         height: kButtonHeight,
-        child: OutlineButton(
-          padding: EdgeInsets.symmetric(horizontal: kPaddingL),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(horizontal: kPaddingL),
+          ),
           onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

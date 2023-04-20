@@ -29,14 +29,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  camera: null
+  camera: ^0.10.0
   path_provider: null
   path: null
 
   # A simple Service Locator.
   get_it: ^7.2.0
   # BLoC Design Pattern (Business Logic Component)
-  # bloc: ^8.0.2
+  # bloc: ^8.0.2https://pub.dev/packages/location
   bloc: ^7.2.1
   # Widgets that make it easy to integrate blocs and cubits into Flutter.
   # flutter_bloc: ^8.0.1
@@ -48,9 +48,9 @@ dependencies:
   # Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android.
   shared_preferences: ^2.0.4
   # A Flutter plugin to easily handle realtime location in iOS and Android.
-  location: ^4.3.0
+  location: ^4.4.0
   # Introduction/Onboarding package for flutter app with some customizations possibilities.
-  introduction_screen: ^2.0.0
+  introduction_screen: ^3.0.2
   # A package provides an easy way to add shimmer effect in Flutter project.
   shimmer: ^2.0.0
   # A widget provided to the flutter scroll component drop-down refresh and pull up load.
@@ -66,9 +66,11 @@ dependencies:
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.
   image_picker: ^0.8.4+4
   # A list with helper methods to programmatically scroll to an item.
-  scrollable_positioned_list: ^0.2.3
+  scrollable_positioned_list: ^0.3.2
   # Flutter library for simple and fast QR code rendering via a Widget or custom painter.
-  qr_flutter: ^4.0.0
+  qr_flutter:
+    git: 
+      url: https://github.com/insinfo/qr.flutter.git
   # Slidable list item with directional slide actions that can be dismissed.
   # flutter_slidable: ^0.5.7
   # A Markdown renderer for Flutter.
@@ -92,7 +94,7 @@ dependencies:
   # qr_code_scanner: ^0.3.0
 
   # Speech To Text
-  speech_to_text: ^4.2.0
+  speech_to_text: ^5.6.0
 
   # SVG Assets
   flutter_svg: ^1.0.1
@@ -106,7 +108,7 @@ dependencies:
   pin_code_fields: ^7.0.0
 
   # Phone Number codes
-  intl_phone_field: ^3.0.0
+  intl_phone_field: ^3.1.0
 
   #Json Annotation:
   json_annotation: #^4.1.0
@@ -115,7 +117,10 @@ dependencies:
   infinite_scroll_pagination: ^3.1.0
 
   # For bottom navigation
-  flutter_snake_navigationbar: ^0.5.0
+  flutter_snake_navigationbar: ^0.6.1
+  pdf: ^3.7.1
+  open_file: ^3.2.1
+  platform: ^3.1.0
   # fancy_bottom_navigation: ^0.3.3
 
 dev_dependencies:

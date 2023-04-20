@@ -441,7 +441,7 @@ class InvoiceQRCode extends StatelessWidget {
         style: Theme.of(context).textTheme.caption.bold,
       ),
       Center(
-        child: QrImage(
+        child: QrImageWidget(
           data: billNo ?? 'ERROR',
           version: QrVersions.auto,
           backgroundColor: kWhite,
