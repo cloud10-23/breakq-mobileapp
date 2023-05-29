@@ -15,6 +15,7 @@ import 'package:location/location.dart';
 GetIt getIt = GetIt.instance;
 
 Future<void> main() async {
+  //new branch
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
