@@ -74,7 +74,7 @@ class OfferListingState extends State<OfferListing> {
                   title: Text(widget.offer.name ?? "Offers",
                       style: Theme.of(context).textTheme.headline6.fs16.w600),
                   leading: BackButtonCircle(),
-                  expandedHeight: kToolbarHeight + 35,
+                  expandedHeight: kToolbarHeight + 45,
                   snap: true,
                   floating: true,
                   flexibleSpace: Stack(

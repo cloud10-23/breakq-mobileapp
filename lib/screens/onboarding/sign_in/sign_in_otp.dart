@@ -168,6 +168,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
               listenWhen: (previous, current) =>
                   current is LoginFailureAuthState,
               listener: (BuildContext context, AuthState loginListener) {
+                print("login error check");
                 if (loginListener is LoginFailureAuthState) {
                   _otpController.clear();
                   _errorController.add(ErrorAnimationType.shake);

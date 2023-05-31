@@ -26,13 +26,13 @@ class GridImage extends StatelessWidget {
         child: CachedNetworkImage(
           // cacheManager: AppCacheManager.instance,
           imageUrl: image,
-          progressIndicatorBuilder: (context, url, downloadProgress) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(value: downloadProgress.progress)
-            ],
-          ),
+          // progressIndicatorBuilder: (context, url, downloadProgress) => Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     CircularProgressIndicator(value: downloadProgress.progress)
+          //   ],
+          // ),
           errorWidget: (context, url, error) => Image.asset(
             AssetImages.productPlaceholder,
             height: width,

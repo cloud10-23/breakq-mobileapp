@@ -18,6 +18,7 @@ import 'package:breakq/screens/search/widgets/search_delegate_result_list.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
@@ -108,8 +109,8 @@ class _SearchBarState extends State<SearchBar> {
             slivers: <Widget>[
               SliverAppBar(
                 elevation: 0,
+                expandedHeight: 45,
                 backgroundColor: kBlue,
-                brightness: Brightness.light,
                 titleSpacing: 0.0,
                 primary: true,
                 title: Container(
@@ -184,14 +185,14 @@ class _SearchBarState extends State<SearchBar> {
                 leading: BackButtonCircle(),
                 actions: [
                   Center(child: CartIconButton()),
-                  SizedBox(width: 10.0),
+                  SizedBox(width: 5.0),
                 ],
-                pinned: true,
+                pinned: true, systemOverlayStyle: SystemUiOverlayStyle.light,
               ),
               SliverPersistentHeader(
                 pinned: true,
                 delegate: SearchHeader(
-                  expandedHeight: 40,
+                  expandedHeight: 45,
                   child: SearchListToolbar(
                     searchSortTypes: session.searchSortTypes,
                     currentSort: session.currentSort,

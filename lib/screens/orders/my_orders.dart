@@ -37,6 +37,8 @@ class MyOrders extends StatelessWidget {
         }
 
         final List<Order> _orders = (state as OrdersLoadedState).orders;
+        // print(_orders[0].paymentStatus);
+        // print(_orders[1].paymentStatus);
 
         return Scaffold(
           primary: true,

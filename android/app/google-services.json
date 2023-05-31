@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "646080947072",
-    "project_id": "breakq-app",
-    "storage_bucket": "breakq-app.appspot.com"
+    "project_number": "527760188827",
+    "project_id": "breakq-2bc7a",
+    "storage_bucket": "breakq-2bc7a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:646080947072:android:a490ad59f49d6a5e87d765",
+        "mobilesdk_app_id": "1:527760188827:android:a8e8a2ae6f25daca012d3e",
         "android_client_info": {
           "package_name": "com.breakq.breakq"
         }
       },
       "oauth_client": [
         {
-          "client_id": "646080947072-r8n06eu28q9ktffaic5qpp29s078gadf.apps.googleusercontent.com",
+          "client_id": "527760188827-6e44gaurv8c0km0md6jpat20pafdl634.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.breakq.breakq",
-            "certificate_hash": "c95939498782e6fed5b5aec584fc731eec4f4dbd"
+            "certificate_hash": "5238aeaf33ea69b3015c8a523f9ed3321e12633f"
           }
         },
         {
-          "client_id": "646080947072-jlop3t73ib42c5hb9hte2d65hdikqn6d.apps.googleusercontent.com",
+          "client_id": "527760188827-35n91igh5ph7lr0jnio1k8beupoe7evk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAgGeBFmdSSymTn_FgEcddTFbv_G2h88V8"
+          "current_key": "AIzaSyDMY_TVRCtO0fNTMi8Q_dcp6VYQUFwmkPg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "646080947072-jlop3t73ib42c5hb9hte2d65hdikqn6d.apps.googleusercontent.com",
+              "client_id": "527760188827-35n91igh5ph7lr0jnio1k8beupoe7evk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

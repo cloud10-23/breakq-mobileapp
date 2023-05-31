@@ -3,8 +3,11 @@ import 'package:breakq/configs/routes.dart';
 import 'package:breakq/screens/onboarding/sign_in/sign_in_base.dart';
 import 'package:breakq/screens/onboarding/sign_in/widgets/sign_in_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
+
+import '../../../blocs/application/application_bloc.dart';
 
 class IntroMain extends StatelessWidget {
   // IntroMain({@required this.onMobileLogin});
@@ -33,7 +36,14 @@ class IntroMain extends StatelessWidget {
                 ),
               ),
               // Spacer(),
-              Image(image: AssetImage(AssetImages.homeIllustration)),
+              GestureDetector(
+                  onTap: (){
+                    // Navigator.of(context)
+                    //     .popUntil(ModalRoute.withName(Routes.o_home));
+                    // BlocProvider.of<ApplicationBloc>(context)
+                    //     .add(OnboardingCompletedApplicationEvent());
+                  },
+                  child: Image(image: AssetImage(AssetImages.homeIllustration))),
               // Spacer(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(
