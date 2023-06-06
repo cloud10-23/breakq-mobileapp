@@ -158,7 +158,7 @@ class _ChBottomBarWithButtonState extends State<ChBottomBarWithButton> {
               ),
               SizedBox(height: 5.0),
               Text(
-                'View price details',
+                'View Price details',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1

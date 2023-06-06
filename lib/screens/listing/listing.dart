@@ -133,7 +133,7 @@ class ListingState extends State<Listing> {
                     CartIconButton(),
                     SizedBox(width: 10.0),
                   ],
-                  floating: true, systemOverlayStyle: SystemUiOverlayStyle.dark,
+                  floating: true,
                 ),
                 if (session.subCategoryTabs.isNotNullOrEmpty)
                   SliverPersistentHeader(

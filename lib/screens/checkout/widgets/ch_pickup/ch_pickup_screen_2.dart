@@ -13,6 +13,7 @@ import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class ChPickupConfirm extends StatefulWidget {
   @override
@@ -20,6 +21,25 @@ class ChPickupConfirm extends StatefulWidget {
 }
 
 class _ChPickupConfirmState extends State<ChPickupConfirm> {
+
+  final _razorpay = Razorpay();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _razorpay.clear(); // Removes all listeners
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -117,11 +137,77 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
             buttonText: 'Pay',
             onTap: () => showPayment(
                 context,
-                () => BlocProvider.of<CheckoutBloc>(context)
-                    .add(NextPressedChEvent())),
+                    () => openCheckout(session?.cartProducts?.cartValue?.finalAmount.toString())),
+            // onTap: () => showPayment(
+            //     context,
+            //     () => BlocProvider.of<CheckoutBloc>(context)
+            //         .add(NextPressedChEvent())),
           ),
         );
       },
     );
   }
+
+  //open razorpay
+  void openCheckout(String billAmount) async {
+    // int num1 = int.parse((int.parse(billAmount.toString())).toStringAsFixed(0));
+    // print("rounded price: $num1");
+    var options = {
+      'key': 'rzp_test_TqCucpSjoIG3bg',
+      'amount': num.parse(billAmount.toString()) * 100,
+      'name': 'BreakQ',
+      'description': 'Placing new order',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print("rzpSUCCESS: ${response.orderId}-${response.paymentId}-${response.signature}");
+    BlocProvider.of<CheckoutBloc>(context)
+        .add(NextPressedChEvent());
+    // showPayment(
+    //     context,
+    //         () => BlocProvider.of<CheckoutBloc>(context)
+    //         .add(NextPressedChEvent()));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("SUCCESS: ${response.paymentId}"),
+      duration: const Duration(seconds: 1),
+    ));
+    // makePayment(response.paymentId.toString(), widget.id, rate.toString())
+    //     .then((value) {
+    //   if (value.status == true) {
+    //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //       content: Text("Razorpay payment successfully done"),
+    //       duration: Duration(seconds: 1),
+    //     ));
+    //     Navigator.pop(context);
+    //   }
+    // });
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print("rzpERROR: ${response.code} - ${response.message}");
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("ERROR: ${response.code} - ${response.message}"),
+      duration: const Duration(seconds: 4),
+    ));
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print("rzpEXTERNALWALLET: ${response.walletName}");
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("EXTERNAL_WALLET: ${response.walletName}"),
+      duration: const Duration(seconds: 1),
+    ));
+  }
+
 }

@@ -27,19 +27,26 @@ void showPayment(BuildContext context, VoidCallback onTap, {allowCash = true}) {
                 child: Row(
                   children: List.generate(
                     4,
-                    (index) => PaymentModeCard(index, () {
-                      if (!allowCash && index == 0) {
+                    (index) => PaymentModeCard(index,
+                            () {
+                      if (allowCash && index == 0) {
+                        print("cash payments");
                         /// Cash mode, just say to go to the counter
                         Navigator.pop(context);
                         UI.showMessage(context,
                             title: "Cash Payment",
                             buttonText: "OK",
                             message: "Please pay cash at the counter");
+                      } else if(index == 3){
+                        print("coupon option");
+                        Navigator.pop(context);
                       } else {
                         onTap();
+                        print("other than cash payments");
                         Navigator.pop(context);
                       }
-                    }),
+                    }
+                    ),
                   ),
                 ),
               ),
