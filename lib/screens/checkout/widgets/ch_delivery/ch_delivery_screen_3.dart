@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:breakq/blocs/checkout/ch_bloc.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/checkout_session.dart';
@@ -190,8 +192,11 @@ class _ChDeliveryConfirmState extends State<ChDeliveryConfirm> {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print("rzpERROR: ${response.code} - ${response.message}");
+    final jsonResponse = jsonDecode(response.message);
+    // Extract the description value
+    final description = jsonResponse['error']['description'];
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("ERROR: ${response.code} - ${response.message}"),
+      content: Text(description),
       duration: const Duration(seconds: 4),
     ));
   }
