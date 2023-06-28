@@ -122,6 +122,7 @@ dependencies:
   open_file: ^3.2.1
   platform: ^3.1.0
   razorpay_flutter: 1.2.5
+  provider: ^6.0.5
   # fancy_bottom_navigation: ^0.3.3
 
 dev_dependencies:

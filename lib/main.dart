@@ -11,6 +11,9 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main_app.dart';
 import 'package:breakq/utils/app_preferences.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
+
+import 'blocs/checkout_provider.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -46,7 +49,13 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   // Inflate the MainApp widget.
-  runApp(MainApp());
+  runApp(
+    MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => CheckoutProvider()),
+    ],
+    child: MainApp(),
+  ),);
 }
 
 /// Completes with a list of available cameras.

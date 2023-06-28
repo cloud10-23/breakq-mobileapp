@@ -15,7 +15,10 @@ import 'package:breakq/widgets/jumbotron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+import '../../../../blocs/checkout_provider.dart';
 
 class ChPickupConfirm extends StatefulWidget {
   @override
@@ -174,6 +177,7 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print("rzpSUCCESS: ${response.orderId}-${response.paymentId}-${response.signature}");
+    Provider.of<CheckoutProvider>(context, listen: false).storePaymentId(response.paymentId);
     BlocProvider.of<CheckoutBloc>(context)
         .add(NextPressedChEvent());
     // showPayment(

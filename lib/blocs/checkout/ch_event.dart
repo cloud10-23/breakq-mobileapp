@@ -17,7 +17,9 @@ class CheckoutTypeSelectedChEvent extends CheckoutEvent {
   final CheckoutType type;
 }
 
-class NextPressedChEvent extends CheckoutEvent {}
+class NextPressedChEvent extends CheckoutEvent {
+
+}
 
 class BackPressedChEvent extends CheckoutEvent {}
 

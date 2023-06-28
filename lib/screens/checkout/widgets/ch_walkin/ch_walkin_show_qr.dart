@@ -12,7 +12,10 @@ import 'package:breakq/widgets/jumbotron.dart';
 import 'package:breakq/widgets/price_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+
+import '../../../../blocs/checkout_provider.dart';
 
 class ChWalkInShowQr extends StatefulWidget {
   @override
@@ -147,6 +150,7 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
       content: Text("SUCCESS: ${response.paymentId}"),
       duration: const Duration(seconds: 1),
     ));
+    Provider.of<CheckoutProvider>(context, listen: false).storePaymentId(response.paymentId);
     BlocProvider.of<CheckoutBloc>(context)
         .add(NextPressedChEvent());
   }
