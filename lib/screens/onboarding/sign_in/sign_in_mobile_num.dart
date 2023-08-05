@@ -109,7 +109,6 @@ class _SignInWidgetState extends State<SignInWidget>
                     child: Form(
                       key: keyPhoneInput,
                       child: IntlPhoneField(
-                        // focusNode: FocusNode()..requestFocus(),
                         controller: _textPhoneController,
                         initialCountryCode: 'IN',
                         keyboardType: TextInputType.phone,
