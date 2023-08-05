@@ -37,6 +37,7 @@ class BarcodeScanner {
 
       // Make a call to repository to get the product details:
       try {
+        print("try scan");
         Product _product =
             await ProductsRepository().getScanProduct(productId: scanText);
         // If Loading Screen is not yet dismissed
@@ -48,6 +49,7 @@ class BarcodeScanner {
         // Get the Product to display over here
         Navigator.of(context).pushNamed(Routes.product, arguments: _product);
       } catch (e) {
+        print("catch scan");
         if (!isDissmissed) Navigator.of(context).pop();
         showDialog(
             context: context,

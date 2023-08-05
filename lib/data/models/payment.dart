@@ -21,7 +21,7 @@ class Payment {
 @JsonSerializable(includeIfNull: false, explicitToJson: true)
 class Amount {
   double cash;
-  Card card;
+  CardMode card;
   UPI upi;
   Coupon coupon;
 
@@ -38,16 +38,16 @@ abstract class PaymentMode {
 }
 
 @JsonSerializable(includeIfNull: false)
-class Card implements PaymentMode {
+class CardMode implements PaymentMode {
   @override
   @JsonKey(name: 'card_No')
   String no;
   @override
   double amount;
 
-  Card({this.no, this.amount});
+  CardMode({this.no, this.amount});
 
-  factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
+  factory CardMode.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
 
   Map<String, dynamic> toJson() => _$CardToJson(this);
 }

@@ -11,10 +11,15 @@ import 'package:breakq/configs/app_globals.dart';
 import 'package:breakq/main_app.dart';
 import 'package:breakq/utils/app_preferences.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
+
+import 'blocs/checkout_provider.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 GetIt getIt = GetIt.instance;
 
 Future<void> main() async {
+  //new branch
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,9 +48,20 @@ Future<void> main() async {
 
   /// Initialise Firebase Core
   await Firebase.initializeApp();
+  await FirebaseAppCheck.instance
+  // Your personal reCaptcha public key goes here:
+      .activate(
+    androidProvider: AndroidProvider.debug
+  );
 
   // Inflate the MainApp widget.
-  runApp(MainApp());
+  runApp(
+    MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => CheckoutProvider()),
+    ],
+    child: MainApp(),
+  ),);
 }
 
 /// Completes with a list of available cameras.

@@ -39,7 +39,7 @@ class LinkButton extends StatelessWidget {
                         .textTheme
                         .button
                         .fs16
-                        .copyWith(color: Theme.of(context).accentColor),
+                        .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
             ),
             trailing ?? Container()

@@ -86,15 +86,14 @@ class ListingState extends State<Listing> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
-                  brightness: Brightness.light,
-                  systemOverlayStyle: SystemUiOverlayStyle.dark,
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
                   iconTheme: IconThemeData(color: kBlack),
                   primary: true,
                   title: Text(widget.category?.title ?? "Category Name",
                       style: Theme.of(context).textTheme.headline6.fs16.w600),
                   automaticallyImplyLeading: true,
                   leading: BackButtonCircle(),
-                  expandedHeight: kToolbarHeight + 35,
+                  expandedHeight: kToolbarHeight + 45,
                   snap: true,
                   flexibleSpace: Stack(
                     children: [

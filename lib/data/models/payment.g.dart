@@ -36,7 +36,7 @@ Amount _$AmountFromJson(Map<String, dynamic> json) {
     cash: (json['cash'] as num)?.toDouble(),
     card: json['card'] == null
         ? null
-        : Card.fromJson(json['card'] as Map<String, dynamic>),
+        : CardMode.fromJson(json['card'] as Map<String, dynamic>),
     upi: json['upi'] == null
         ? null
         : UPI.fromJson(json['upi'] as Map<String, dynamic>),
@@ -62,14 +62,14 @@ Map<String, dynamic> _$AmountToJson(Amount instance) {
   return val;
 }
 
-Card _$CardFromJson(Map<String, dynamic> json) {
-  return Card(
+CardMode _$CardFromJson(Map<String, dynamic> json) {
+  return CardMode(
     no: json['card_No'] as String,
     amount: (json['amount'] as num)?.toDouble(),
   );
 }
 
-Map<String, dynamic> _$CardToJson(Card instance) {
+Map<String, dynamic> _$CardToJson(CardMode instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

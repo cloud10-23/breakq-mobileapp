@@ -4,6 +4,7 @@ import 'package:breakq/generated/l10n.dart';
 import 'package:breakq/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/utils/text_style.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -47,7 +48,6 @@ class CheckoutTemplate extends StatelessWidget {
               SliverAppBar(
                 pinned: true,
                 backgroundColor: kWhite,
-                brightness: Brightness.light,
                 iconTheme: IconThemeData(color: kBlack),
                 expandedHeight: 150,
                 flexibleSpace: FlexibleSpaceBar(
@@ -104,7 +104,7 @@ class CheckoutTemplate extends StatelessWidget {
                           .add(BackPressedChEvent());
                     },
                   ),
-                ),
+                ), systemOverlayStyle: SystemUiOverlayStyle.dark,
               ),
             ] +
             slivers,

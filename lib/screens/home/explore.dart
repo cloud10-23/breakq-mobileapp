@@ -226,24 +226,30 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _showGridOfImages(List<DealsModel> deals) {
-    return Container(
-      margin: const EdgeInsets.all(kPaddingM),
-      color: kWhite,
-      child: Wrap(
-        children: List.generate(
-          deals.length,
-          (index) => GridImage(
-            image: deals[index].image,
-            width: (MediaQuery.of(context).size.width -
-                    kPaddingM * 4 -
-                    kPaddingS) /
-                3,
-            onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
-                arguments: deals[index]),
+    // if(deals.length == null){
+    //   return Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // } else{
+      return Container(
+        margin: const EdgeInsets.all(kPaddingM),
+        color: kWhite,
+        child: Wrap(
+          children: List.generate(
+            deals.length,
+                (index) => GridImage(
+              image: deals[index].image,
+              width: (MediaQuery.of(context).size.width -
+                  kPaddingM * 4 -
+                  kPaddingS) /
+                  3,
+              onPressed: () => Navigator.pushNamed(context, Routes.offerListing,
+                  arguments: deals[index]),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    // }
   }
 
   Widget _showCategories(List<CategoryTabModel> categoryTabs) {

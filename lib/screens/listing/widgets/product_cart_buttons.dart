@@ -7,15 +7,19 @@ class GridAddButton extends StatelessWidget {
   final Function onProductAdd;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      margin: EdgeInsets.all(kPaddingM),
-      child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: kBlue,
-          ),
-          onPressed: onProductAdd,
-          child: Icon(Icons.add, color: kWhite)),
+    return GestureDetector(
+      onTap: (){
+        onProductAdd();
+      },
+      child: Container(
+        height: 30,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: kBlue
+        ),
+        margin: EdgeInsets.all(kPaddingM),
+        child: Icon(Icons.add, color: kWhite),
+      ),
     );
   }
 }

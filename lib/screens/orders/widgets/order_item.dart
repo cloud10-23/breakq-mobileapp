@@ -79,11 +79,12 @@ class OrderItem extends StatelessWidget {
                   ],
                 ),
                 Spacer(flex: 5),
-                if (order.paymentStatus == "Paid")
+                if (order.paymentStatus == "Paid")...[
                   Image(
                     image: AssetImage(AssetImages.paid_image),
                     height: 70,
                   ),
+                ],
                 Spacer(),
               ],
             ),

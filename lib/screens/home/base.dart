@@ -145,7 +145,7 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                   currentIndex: (controller.index == 3) ? 4 : controller.index,
                   showUnselectedLabels: true,
                   showSelectedLabels: true,
-                  height: 65,
+                  height: 70,
                   snakeViewColor: kWhite,
                   snakeShape: SnakeShape.rectangle,
                   selectedItemColor: kBlue,
@@ -184,8 +184,69 @@ class _BaseState extends State<Base> with SingleTickerProviderStateMixin {
                     BottomNavigationBarItem(
                         icon: Icon(Ionicons.ios_home), label: "Home"),
                     BottomNavigationBarItem(
-                        icon: Icon(quickLinks[0]['icon']),
-                        label: "Quick Shopping"),
+                      icon: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              quickLinks[0]['icon'],
+                              color: kWhite, // Set the unselected icon color
+                            ),
+                            Text(
+                              "Quick\nShopping",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: kWhite, // Set the unselected label color
+                                fontSize: 12.0,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      activeIcon: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              quickLinks[0]['icon'],
+                              color: kBlue, // Set the unselected icon color
+                            ),
+                            Text(
+                              "Quick\nShopping",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: kBlue, // Set the unselected label color
+                                fontSize: 12.0,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // label: "Quick\nShopping",
+                    ),
+                    // BottomNavigationBarItem(
+                    //     icon: Center(child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(quickLinks[0]['icon']),
+                    //         Text("Quick\nShopping",
+                    //         textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //               color: kWhite,
+                    //               fontSize: 12.0,
+                    //             fontStyle: FontStyle.normal
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     )),
+                    // ),
+                    // BottomNavigationBarItem(
+                    //     icon: Icon(quickLinks[0]['icon']), label: "Quick\nShopping"),
                     BottomNavigationBarItem(
                         icon: Icon(quickLinks[3]['icon']), label: "My Orders"),
                     BottomNavigationBarItem(

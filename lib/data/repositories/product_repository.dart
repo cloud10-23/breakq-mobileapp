@@ -34,7 +34,7 @@ class ProductsRepository {
         .map<DealsModel>(
             (dynamic json) => DealsModel.fromJson(json as Map<String, dynamic>))
         .toList();
-
+    // print("topdeals ${_topDeals[0].description}");
     /// III - Categories:
     ///
     /// 1. Populate all the sub categories

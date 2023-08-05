@@ -9,6 +9,7 @@ import 'package:breakq/utils/form_utils.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
 /// action.
@@ -54,10 +55,12 @@ class _SignInWidgetState extends State<SignInWidget>
     super.dispose();
   }
 
-  void _validateForm() {
+  Future<void> _validateForm() async {
     FormUtils.hideKeyboard(context);
 
     if (keyPhoneInput.currentState.validate()) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("phone", _phoneNum);
       _loginBloc.add(LoginRequestedAuthEvent(
         phone: _phoneNum,
       ));

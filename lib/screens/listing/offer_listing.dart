@@ -10,6 +10,7 @@ import 'package:breakq/screens/listing/widgets/search_list_toolbar.dart';
 import 'package:breakq/screens/search/widgets/search_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakq/data/models/product_session_model.dart';
 import 'package:breakq/screens/listing/widgets/product_listing.dart';
@@ -68,13 +69,12 @@ class OfferListingState extends State<OfferListing> {
               slivers: <Widget>[
                 SliverAppBar(
                   backgroundColor: kWhite,
-                  brightness: Brightness.light,
                   iconTheme: IconThemeData(color: kBlack),
                   primary: true,
                   title: Text(widget.offer.name ?? "Offers",
                       style: Theme.of(context).textTheme.headline6.fs16.w600),
                   leading: BackButtonCircle(),
-                  expandedHeight: kToolbarHeight + 35,
+                  expandedHeight: kToolbarHeight + 45,
                   snap: true,
                   floating: true,
                   flexibleSpace: Stack(
@@ -105,7 +105,7 @@ class OfferListingState extends State<OfferListing> {
                     VoiceIconButton(),
                     CartIconButton(),
                     SizedBox(width: 10.0),
-                  ],
+                  ], systemOverlayStyle: SystemUiOverlayStyle.dark,
                 ),
                 ProductListing(
                   products: session.products,

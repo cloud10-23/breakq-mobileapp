@@ -15,6 +15,10 @@ import 'package:breakq/data/repositories/order_repository.dart';
 import 'package:breakq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:breakq/blocs/base_bloc.dart';
+import 'package:provider/provider.dart';
+
+import '../checkout_provider.dart';
+
 
 part 'ch_event.dart';
 part 'ch_state.dart';
@@ -150,7 +154,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
-
+      final paymentId = event.paymentId;
+      print("payment id $paymentId");
       yield SessionRefreshSuccessChState(session.rebuild(isLoading: true));
 
       CheckoutSession newSession = session.rebuild(isLoading: false);
@@ -170,8 +175,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               if (await CheckoutRepository().checkoutPay(
                   billNo: session.billNo,
                   amount: Amount(
-                    upi: UPI(
-                        no: '53464532',
+                    card: CardMode(
+                        no: paymentId,
                         amount: session.cartProducts.cartValue.finalAmount),
                   )))
                 add(PaymentDoneChEvent(billNo: session.billNo));
@@ -230,8 +235,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               if (await CheckoutRepository().checkoutPay(
                   billNo: billNo,
                   amount: Amount(
-                    upi: UPI(
-                        no: '53464532',
+                    card: CardMode(
+                        no: paymentId,
                         amount: double.tryParse(order.billAmnt)),
                   ))) {
                 add(PaymentDoneChEvent(billNo: session.billNo));
@@ -314,8 +319,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
               if (await CheckoutRepository().checkoutPay(
                   billNo: billNo,
                   amount: Amount(
-                    upi: UPI(
-                      no: '53464532',
+                    card: CardMode(
+                      no: paymentId,
                       amount: double.tryParse(order.billAmnt),
                     ),
                   ))) {

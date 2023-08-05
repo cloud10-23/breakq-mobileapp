@@ -30,7 +30,6 @@ import 'package:breakq/screens/orders/my_orders.dart';
 import 'package:breakq/screens/orders/order_details.dart';
 import 'package:breakq/screens/product/product.dart';
 import 'package:breakq/screens/quick_links/quick_shopping.dart';
-import 'package:breakq/screens/search/search.dart';
 import 'package:breakq/widgets/add_address.dart';
 import 'package:breakq/widgets/full_screen_indicator.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +37,8 @@ import 'package:breakq/screens/edit_profile/edit_profile.dart';
 import 'package:breakq/screens/empty.dart';
 import 'package:breakq/widgets/photo_gallery.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../screens/search/search.dart';
 
 /// Generate [MaterialPageRoute] for our screens.
 class Routes {
@@ -148,13 +149,13 @@ class Routes {
 
       /// Search
       case search:
-        return MaterialPageRoute<SearchBar>(
+        return MaterialPageRoute<AppSearchBar>(
           builder: (BuildContext context) => BlocProvider<SearchBloc>(
             create: (_) => SearchBloc()
               ..add(
                 SessionInitedSearchEvent(),
               ),
-            child: SearchBar(
+            child: AppSearchBar(
               initialQuery: routeSettings.arguments,
             ),
           ),

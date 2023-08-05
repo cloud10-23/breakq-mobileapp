@@ -12,6 +12,7 @@ import 'package:breakq/widgets/theme_text_input.dart';
 import 'package:breakq/utils/text_style.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Signin widget to be used wherever we need user to log in before taking any
 /// action.
@@ -168,6 +169,7 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
               listenWhen: (previous, current) =>
                   current is LoginFailureAuthState,
               listener: (BuildContext context, AuthState loginListener) {
+                print("login error check");
                 if (loginListener is LoginFailureAuthState) {
                   _otpController.clear();
                   _errorController.add(ErrorAnimationType.shake);
@@ -198,7 +200,13 @@ class _SignInOTPWidgetState extends State<SignInOTPWidget>
                     textAlign: TextAlign.center,
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      // SharedPreferences preferences = await SharedPreferences.getInstance();
+                      // String _phoneNum = preferences.getString("phone");
+                      // _loginBloc.add(LoginRequestedAuthEvent(
+                      //   phone: _phoneNum,
+                      // ));
+                    },
                     child: Text(
                       L10n.of(context).signInOTPResend,
                       style: Theme.of(context)

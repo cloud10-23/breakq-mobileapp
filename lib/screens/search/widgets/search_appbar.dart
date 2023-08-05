@@ -20,7 +20,7 @@ class SearchAppBar extends StatelessWidget {
       height: 50,
       child: Card(
         color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-            ? Theme.of(context).accentColor
+            ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).cardColor,
         margin: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(

@@ -127,7 +127,7 @@ class _PickerState extends State<Picker> {
       itemBuilder: (BuildContext context, int index) {
         final PickerItem<dynamic> item = _items[index];
         final Widget trailing = _itemsSelected.contains(item)
-            ? Icon(Icons.check, color: Theme.of(context).accentColor)
+            ? Icon(Icons.check, color: Theme.of(context).hintColor)
             : null;
         return ListItem(
           title: item.text,
@@ -136,12 +136,12 @@ class _PickerState extends State<Picker> {
                   .textTheme
                   .subtitle1
                   .fs18
-                  .copyWith(color: Theme.of(context).accentColor)
+                  .copyWith(color: Theme.of(context).hintColor)
               : null,
           leading: item.precedingIcon != null
               ? Icon(item.precedingIcon,
                   color: trailing != null
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).hintColor)
               : null,
           trailing: trailing,
