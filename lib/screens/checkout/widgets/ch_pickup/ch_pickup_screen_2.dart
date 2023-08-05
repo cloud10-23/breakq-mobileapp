@@ -177,9 +177,8 @@ class _ChPickupConfirmState extends State<ChPickupConfirm> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print("rzpSUCCESS: ${response.orderId}-${response.paymentId}-${response.signature}");
-    Provider.of<CheckoutProvider>(context, listen: false).storePaymentId(response.paymentId);
     BlocProvider.of<CheckoutBloc>(context)
-        .add(NextPressedChEvent());
+        .add(NextPressedChEvent(paymentId: response.paymentId));
     // showPayment(
     //     context,
     //         () => BlocProvider.of<CheckoutBloc>(context)

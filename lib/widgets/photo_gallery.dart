@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:breakq/configs/constants.dart';
 import 'package:breakq/data/models/image_model.dart';
@@ -40,8 +41,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
       backgroundColor: kBlack,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        brightness: Brightness.dark,
-        elevation: 0,
+        elevation: 0, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: SafeArea(
         top: false,
@@ -130,7 +130,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: index == _index
-                                  ? Theme.of(context).accentColor
+                                  ? Theme.of(context).colorScheme.secondary
                                   : Theme.of(context).dividerColor,
                               width: 2,
                             ),

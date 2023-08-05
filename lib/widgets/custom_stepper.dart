@@ -195,7 +195,7 @@ class _StepperState extends State<CustomStepper> with TickerProviderStateMixin {
           : Colors.black38;
     } else {
       return widget.steps[index].isActive
-          ? themeData.accentColor
+          ? themeData.hintColor
           : themeData.backgroundColor;
     }
   }

@@ -194,6 +194,8 @@ class AuthBloc extends BaseBloc<AuthEvent, AuthState> {
         if (e?.code == 'invalid-credential' ||
             e?.code == 'invalid-verification-code')
           yield LoginFailureAuthState('Invalid OTP!');
+        else if (e?.code == 'credential-already-in-use')
+          yield LoginFailureAuthState('This credential is already associated with a different user account.');
         else {
           yield LoginFailureAuthState(
               "Sorry! Couldn't link your social account " +

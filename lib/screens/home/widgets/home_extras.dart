@@ -143,7 +143,7 @@ class SelectBranch extends StatelessWidget {
       height: 40,
       child: Card(
         color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-            ? Theme.of(context).accentColor
+            ? Theme.of(context).colorScheme.secondary
             : kBlack,
         margin: const EdgeInsets.all(0),
         // shape: RoundedRectangleBorder(

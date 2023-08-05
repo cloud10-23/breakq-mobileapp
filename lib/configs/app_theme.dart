@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:breakq/configs/constants.dart';
+import 'package:flutter/services.dart';
 
 enum DarkOption { dynamic, alwaysOn, alwaysOff }
 
@@ -12,13 +13,12 @@ class AppTheme {
     lightTheme = ThemeData(
       fontFamily: kFontFamily,
       brightness: Brightness.light,
-      accentColor: kBlue,
+      hintColor: kBlue,
       primaryColor: kPrimaryColor,
       scaffoldBackgroundColor: const Color(0xfff8f8f8),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color(0xfff5f5f5),
       ),
-      buttonColor: kBlue900,
       buttonTheme: const ButtonThemeData(
         textTheme: ButtonTextTheme.primary,
         minWidth: 88,
@@ -74,7 +74,7 @@ class AppTheme {
     darkTheme = ThemeData(
       fontFamily: kFontFamily,
       brightness: Brightness.dark,
-      accentColor: kPrimaryColor, // const Color(0xff18e68d)
+      hintColor: kPrimaryColor, // const Color(0xff18e68d)
       toggleableActiveColor: kPrimaryColor,
       scaffoldBackgroundColor: const Color(0xff20242b),
       cardColor: const Color(0xff2b2f38),
@@ -82,7 +82,6 @@ class AppTheme {
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.grey[900],
       ),
-      buttonColor: kPrimaryColor,
       buttonTheme: const ButtonThemeData(
         textTheme: ButtonTextTheme.accent,
         minWidth: 88,
@@ -104,8 +103,7 @@ class AppTheme {
         hoverColor: Color(0x0a000000),
       ),
       appBarTheme: AppBarTheme(
-        brightness: Brightness.dark,
-        color: Colors.grey[900],
+        color: Colors.grey[900], systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.white,

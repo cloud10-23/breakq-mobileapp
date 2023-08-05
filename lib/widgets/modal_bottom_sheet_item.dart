@@ -95,7 +95,7 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
                                 _selected != null && item.text == _selected.text
                                     ? Icon(
                                         Icons.radio_button_checked,
-                                        color: Theme.of(context).accentColor,
+                                        color: Theme.of(context).colorScheme.secondary,
                                       )
                                     : Icon(
                                         Icons.radio_button_unchecked,

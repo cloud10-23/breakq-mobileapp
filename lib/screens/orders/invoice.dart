@@ -7,6 +7,7 @@ import 'package:breakq/screens/orders/widgets/invoice_widgets.dart';
 import 'package:breakq/widgets/back_button.dart';
 import 'package:breakq/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pdf/pdf.dart';
 
@@ -24,8 +25,7 @@ class Invoice extends StatelessWidget {
         centerTitle: true,
         // backgroundColor: kWhite,
         title: Text("Invoice"),
-        brightness: Brightness.light,
-        leading: BackButtonCircle(),
+        leading: BackButtonCircle(), systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       backgroundColor: kWhite,
       body: ListView(

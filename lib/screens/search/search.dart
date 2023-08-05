@@ -23,14 +23,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:breakq/utils/text_style.dart';
 
-class SearchBar extends StatefulWidget {
-  SearchBar({this.initialQuery});
+class AppSearchBar extends StatefulWidget {
+  AppSearchBar({this.initialQuery});
   final String initialQuery;
   @override
-  _SearchBarState createState() => _SearchBarState();
+  _AppSearchBarState createState() => _AppSearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _AppSearchBarState extends State<AppSearchBar> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _customScrollViewController = ScrollController();
   final _productsRepo = ProductsRepository();
@@ -121,7 +121,7 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   child: Card(
                     color: getIt.get<AppGlobals>().isPlatformBrightnessDark
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Theme.of(context).cardColor,
                     margin: const EdgeInsets.all(0),
                     shape: RoundedRectangleBorder(

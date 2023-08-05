@@ -109,10 +109,10 @@ class IntroMain extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Expanded(
-                            child: SignInSocialButton(social: Social.google)),
-                        Expanded(
-                            child: SignInSocialButton(social: Social.facebook)),
+                        // Expanded(
+                        //     child: SignInSocialButton(social: Social.google)),
+                        // Expanded(
+                        //     child: SignInSocialButton(social: Social.facebook)),
                       ],
                     ),
                   ),
