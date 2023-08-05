@@ -14,6 +14,7 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import 'blocs/checkout_provider.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -47,6 +48,11 @@ Future<void> main() async {
 
   /// Initialise Firebase Core
   await Firebase.initializeApp();
+  await FirebaseAppCheck.instance
+  // Your personal reCaptcha public key goes here:
+      .activate(
+    androidProvider: AndroidProvider.debug
+  );
 
   // Inflate the MainApp widget.
   runApp(

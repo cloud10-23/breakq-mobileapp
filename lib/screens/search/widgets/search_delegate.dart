@@ -79,7 +79,7 @@ class SearchProductsDelegate extends SearchDelegate<String> {
     // );
 
     return theme.copyWith(
-      primaryColor: theme.appBarTheme.color,
+      primaryColor: theme.appBarTheme.backgroundColor,
       primaryIconTheme: theme.primaryIconTheme,
       primaryColorBrightness: Brightness.dark,
       primaryTextTheme:

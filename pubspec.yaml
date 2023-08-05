@@ -66,7 +66,7 @@ dependencies:
   # Flutter plugin for selecting images from the Android and iOS image library, and taking new pictures with the camera.
   image_picker: ^0.8.4+4
   # A list with helper methods to programmatically scroll to an item.
-  scrollable_positioned_list: ^0.3.2
+  scrollable_positioned_list: ^0.2.2
   # Flutter library for simple and fast QR code rendering via a Widget or custom painter.
   qr_flutter:
     git: 
@@ -82,8 +82,8 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   #Firebase Deps
-  firebase_core: ^1.11.0
-  firebase_auth: ^3.3.5
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.7.1
   google_sign_in: ^5.0.0
   flutter_facebook_auth: ^4.0.1
 
@@ -123,7 +123,10 @@ dependencies:
   platform: ^3.1.0
   razorpay_flutter: 1.2.5
   provider: ^6.0.5
+  firebase_app_check: ^0.1.1+14
   # fancy_bottom_navigation: ^0.3.3
+
+  firebase_core_platform_interface: 4.8.0
 
 dev_dependencies:
   flutter_test:

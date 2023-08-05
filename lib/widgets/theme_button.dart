@@ -40,7 +40,7 @@ class ThemeButton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: kPaddingL),
-            backgroundColor: kBlue,
+            primary: kBlue,
           ),
           onPressed: disableTouchWhenLoading && showLoading ? null : onPressed,
           child: Row(

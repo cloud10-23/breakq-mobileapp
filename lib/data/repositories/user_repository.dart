@@ -21,6 +21,7 @@ class UserRepository {
       PhoneVerificationCompleted phoneVerificationCompleted,
       PhoneCodeSent phoneCodeSent,
       PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout) async {
+    _firebaseAuth.setSettings(appVerificationDisabledForTesting: false, forceRecaptchaFlow: true);
     _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: timeOut,
@@ -34,7 +35,6 @@ class UserRepository {
       String verificationId, String smsCode) async {
     AuthCredential authCredential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
-
     return authCredential;
   }
 
@@ -101,7 +101,7 @@ class UserRepository {
     // by default the login method has the next permissions ['email','public_profile']
     AccessToken _accessToken =
         (await FacebookAuth.instance.login()).accessToken;
-    print(_accessToken.toJson());
+    print("fb access token: ${_accessToken.toJson()}");
     // get the user data
     final userData = await FacebookAuth.instance.getUserData();
     print(userData);

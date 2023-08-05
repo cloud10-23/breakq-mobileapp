@@ -64,8 +64,9 @@ class SignInSocialButton extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Spacer(flex: 1),
+              // Spacer(flex: 1),
               (social == Social.google)
                   ? Image(
                       image: AssetImage("assets/images/google-icon.png"),
@@ -75,7 +76,7 @@ class SignInSocialButton extends StatelessWidget {
                       size: 18.0,
                       color: kWhite,
                     ),
-              Spacer(flex: 2),
+              // Spacer(flex: 1),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -85,7 +86,6 @@ class SignInSocialButton extends StatelessWidget {
                       : Theme.of(context).textTheme.caption.w600.white,
                 ),
               ),
-              Spacer(flex: 4),
             ],
           ),
         ),

@@ -18,7 +18,11 @@ class CheckoutTypeSelectedChEvent extends CheckoutEvent {
 }
 
 class NextPressedChEvent extends CheckoutEvent {
+  final String paymentId;
 
+  NextPressedChEvent({@required this.paymentId});
+
+  List<Object> get props => [paymentId];
 }
 
 class BackPressedChEvent extends CheckoutEvent {}

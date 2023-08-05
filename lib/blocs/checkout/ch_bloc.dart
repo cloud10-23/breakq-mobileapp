@@ -154,9 +154,8 @@ class CheckoutBloc extends BaseBloc<CheckoutEvent, CheckoutState> {
     if (state is SessionRefreshSuccessChState) {
       final CheckoutSession session =
           (state as SessionRefreshSuccessChState).session;
-      BuildContext context;
-      String paymentId = Provider.of<CheckoutProvider>(context, listen: false).paymentId;
-      print("paymentid $paymentId");
+      final paymentId = event.paymentId;
+      print("payment id $paymentId");
       yield SessionRefreshSuccessChState(session.rebuild(isLoading: true));
 
       CheckoutSession newSession = session.rebuild(isLoading: false);

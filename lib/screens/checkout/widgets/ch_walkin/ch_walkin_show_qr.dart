@@ -150,9 +150,8 @@ class _ChWalkInShowQrState extends State<ChWalkInShowQr> {
       content: Text("SUCCESS: ${response.paymentId}"),
       duration: const Duration(seconds: 1),
     ));
-    Provider.of<CheckoutProvider>(context, listen: false).storePaymentId(response.paymentId);
     BlocProvider.of<CheckoutBloc>(context)
-        .add(NextPressedChEvent());
+        .add(NextPressedChEvent(paymentId: response.paymentId));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
